@@ -9,6 +9,11 @@ public class Unit : MonoBehaviour {
     [SerializeField] public Rigidbody Rigidbody { get; private set; }
     [SerializeField] public Animator Animator { get; private set; }
 
+    private void Awake()
+    {
+        Initialize(null);
+    }
+
     public void Initialize (Player owner) {
         //Owner
         this.Owner = owner;
@@ -18,12 +23,15 @@ public class Unit : MonoBehaviour {
         state.Enter ();
 
         //Controller
-        controller = GetComponentInChildren<Controller>();
+        if (controller == null)
+        {
+            controller = GetComponentInChildren<Controller>();
+        }
         
         //RigidBody
         if (Rigidbody == null)
         {
-            Rigidbody = transform.Find("Model").GetComponent<Rigidbody>();
+            Rigidbody = GetComponentInChildren<Rigidbody>();
         }
         
         // Animator

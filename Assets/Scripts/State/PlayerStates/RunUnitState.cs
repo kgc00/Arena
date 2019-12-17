@@ -20,23 +20,17 @@ public class RunUnitState : UnitState
     {
         var playerIsStationary = Math.Abs(input.Forward) <= 0 && Math.Abs(input.Horizontal) <= 0;
         if (playerIsStationary) return new IdleUnitState(Owner);
-
-        var motion = GetMovementFromInput(input);
-
-        UpdatePlayerRotation(input, motion);
-        UpdatePlayerPosition(input, motion);
-        UpdateCameraPosition(input, motion);
-        Owner.Animator.SetBool(Moving, true);
+        
         return null;
     }
 
-    private void UpdateCameraPosition(InputValues input, Vector3 motion)
+    public override void HandleFixedUpdate(InputValues input)
     {
-        if (Camera.main == null) return;
-        var cameraTransform = Camera.main.transform;
+        var motion = GetMovementFromInput(input);
 
-        // Target direction relative to the camera
-        cameraTransform.position += new Vector3(motion.x, 0, motion.z);
+        UpdatePlayerRotation(input, motion);
+        UpdatePlayerPositionTr(input, motion);
+        Owner.Animator.SetBool(Moving, true);
     }
 
     private void UpdatePlayerRotation(InputValues input, Vector3 motion)
@@ -85,7 +79,7 @@ public class RunUnitState : UnitState
         return motion;
     }
 
-    private void UpdatePlayerPosition(InputValues input, Vector3 motion)
+    private void UpdatePlayerPositionTr(InputValues input, Vector3 motion)
     {
         //reduce input for diagonal movement
         motion *= Mathf.Abs(input.Horizontal) == 1 && Mathf.Abs(input.Forward) == 1 ? 0.0f : 1;

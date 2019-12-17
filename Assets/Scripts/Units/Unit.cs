@@ -34,10 +34,12 @@ public class Unit : MonoBehaviour {
     }
 
     void Update () {
+        // handle state
         var newState = state?.HandleInput (controller.InputValues);
         if (newState == null) return;
         state = newState;
         state.Enter();
+        
     }
 
     private void FixedUpdate()

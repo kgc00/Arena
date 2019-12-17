@@ -2,6 +2,7 @@ using System;
 using Controls;
 using Enums;
 using UnityEngine;
+    using Utils;
 
 public class RunUnitState : UnitState
 {
@@ -52,26 +53,19 @@ public class RunUnitState : UnitState
 
     private void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion)
     {
-        Debug.Log("updating for keyboard");
-        // var mousePos = MousePosFromScreenPoint();
-        //
-        // var difference = mousePos - Owner.transform.position;
-        // Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
-        //     Quaternion.LookRotation(difference),
-        //     Time.deltaTime * 10f);
+        // Debug.Log("updating for keyboard");
+        var mousePos = Utils.MouseHelper.GetWorldPosition();
+        
+        var difference = mousePos - Owner.transform.position;
+        Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
+            Quaternion.LookRotation(difference),
+            Time.deltaTime * 10f);
     }
-    
-    public static Vector3 MousePosFromScreenPoint () {
-        return Camera.main.ScreenToWorldPoint (
-            new Vector3 (
-                Input.mousePosition.x,
-                Camera.main.nearClipPlane,
-                Input.mousePosition.z));
-    }
+   
     
     private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion)
     {        
-        Debug.Log("updating for gamepad");
+        // Debug.Log("updating for gamepad");
 
         var posX = input.Turn * movementSpeed * Time.deltaTime ;
         var posY = 0;

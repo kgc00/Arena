@@ -1,78 +1,82 @@
 using System;
 using Controls;
 using Enums;
+using Units;
 using UnityEngine;
 
-public class IdleUnitState : UnitState
+namespace State.PlayerStates
 {
-    private readonly float movementSpeed;
-    private static readonly int Moving = Animator.StringToHash("Moving");
-
-    public IdleUnitState(Unit Owner) : base(Owner)
+    public class IdleUnitState : UnitState
     {
-        movementSpeed = Owner.BaseStats.MovementSpeed.Value;
-    }
+        private readonly float movementSpeed;
+        private static readonly int Moving = Animator.StringToHash("Moving");
 
-    public override void Enter()
-    {
-        if (Owner.Animator == null || !Owner.Animator) return;
-        Owner.Animator.SetBool(Moving, false);
-    }
-
-    public override UnitState HandleInput(InputValues input)
-    {
-        if (Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0) return new RunUnitState(Owner);
-
-        if (input.Look > 0 || input.Turn > 0)
+        public IdleUnitState(Unit owner) : base(owner)
         {
-            var motion = GetMovementFromInput(input);
-            UpdatePlayerRotation(input, motion);
+            movementSpeed = owner.BaseStats.MovementSpeed.Value;
         }
 
-        return null;
-    }
+        public override void Enter()
+        {
+            if (Owner.Animator == null || !Owner.Animator) return;
+            Owner.Animator.SetBool(Moving, false);
+        }
 
-    private void UpdatePlayerRotation(InputValues input, Vector3 motion)
-    {
-        if (input.ActiveControl == ControllerType.Delta)
-            UpdatePlayerRotationForKeyboard(input, motion);
-        else if (input.ActiveControl == ControllerType.GamePad)
-            UpdatePlayerRotationForGamepad(input, motion);
-        else
-            Debug.Log("updating for neither");
-    }
+        public override UnitState HandleUpdate(InputValues input)
+        {
+            if (Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0) return new RunUnitState(Owner);
 
-    private void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion)
-    {
-        // Debug.Log("updating for keyboard");
-        var mousePos = Utils.MouseHelper.GetWorldPosition();
+            if (input.Look > 0 || input.Turn > 0)
+            {
+                var motion = GetMovementFromInput(input);
+                UpdatePlayerRotation(input, motion);
+            }
 
-        var transform = Owner.transform;
-        var difference = mousePos - transform.position;
-        Owner.transform.rotation = Quaternion.Slerp(transform.rotation,
-            Quaternion.LookRotation(difference), Time.deltaTime * 10f);
-    }
+            return null;
+        }
 
-    private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion)
-    {
-        // Debug.Log("updating for gamepad");
+        private void UpdatePlayerRotation(InputValues input, Vector3 motion)
+        {
+            if (input.ActiveControl == ControllerType.Delta)
+                UpdatePlayerRotationForKeyboard(input, motion);
+            else if (input.ActiveControl == ControllerType.GamePad)
+                UpdatePlayerRotationForGamepad(input, motion);
+            else
+                Debug.Log("updating for neither");
+        }
 
-        var posX = input.Turn * movementSpeed * Time.deltaTime;
-        var posY = 0;
-        var posZ = input.Look * movementSpeed * Time.deltaTime;
-        var rotationVal = new Vector3(posX, posY, posZ);
+        private void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion)
+        {
+            // Debug.Log("updating for keyboard");
+            var mousePos = Utils.MouseHelper.GetWorldPosition();
 
-        Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation, Quaternion.LookRotation(rotationVal),
-            Time.deltaTime * 10f);
-    }
+            var transform = Owner.transform;
+            var difference = mousePos - transform.position;
+            Owner.transform.rotation = Quaternion.Slerp(transform.rotation,
+                Quaternion.LookRotation(difference), Time.deltaTime * 10f);
+        }
 
-    private Vector3 GetMovementFromInput(InputValues input)
-    {
-        var posX = input.Horizontal * movementSpeed * Time.deltaTime;
-        var posY = 0;
-        var posZ = input.Forward * movementSpeed * Time.deltaTime;
+        private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion)
+        {
+            // Debug.Log("updating for gamepad");
 
-        var motion = new Vector3(posX, posY, posZ);
-        return motion;
+            var posX = input.Turn * movementSpeed * Time.deltaTime;
+            var posY = 0;
+            var posZ = input.Look * movementSpeed * Time.deltaTime;
+            var rotationVal = new Vector3(posX, posY, posZ);
+
+            Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation, Quaternion.LookRotation(rotationVal),
+                Time.deltaTime * 10f);
+        }
+
+        private Vector3 GetMovementFromInput(InputValues input)
+        {
+            var posX = input.Horizontal * movementSpeed * Time.deltaTime;
+            var posY = 0;
+            var posZ = input.Forward * movementSpeed * Time.deltaTime;
+
+            var motion = new Vector3(posX, posY, posZ);
+            return motion;
+        }
     }
 }

@@ -1,29 +1,40 @@
 ﻿using UnityEngine;
+using  System.Linq;
+using Enums;
+using Units;
 
 public class FollowPlayer : MonoBehaviour
 {
-    private Transform playerTransform;
+    private Transform unitTransform;
     private Unit unit;
     readonly Vector3 offset = new Vector3(0,10,-10);
     
-    // Start is called before the first frame update
     void Start()
     {
-        // playerTransform = FindObjectOfType<Player>().transform.Find("Unit").transform;
-        playerTransform = FindObjectOfType<Unit>().transform;
+        AssignUnitTransform();
+    }
+
+    private void AssignUnitTransform()
+    {
+        unitTransform = FindObjectsOfType<Unit>()
+            .FirstOrDefault(element => element.Owner.ControlType == ControlType.LOCAL)
+            ?.transform;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if (playerTransform == null)
+        if (unitTransform == null)
+        {
+            AssignUnitTransform();
             return;
+        }
         
         
         var target = new Vector3(
-            playerTransform.position.x + offset.x,
+            unitTransform.position.x + offset.x,
             offset.y,
-            playerTransform.position.z + offset.z
+            unitTransform.position.z + offset.z
             );
 
         

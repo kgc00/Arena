@@ -1,5 +1,7 @@
 ﻿using Controls;
 using Enums;
+using State;
+using Units;
 using UnityEngine;
 
 namespace Utils
@@ -28,7 +30,7 @@ namespace Utils
         }
     }
 
-    public static class UnitRotation
+    public static class RotationHelper
     {
         public static void UpdatePlayerRotation(InputValues input, Unit owner, Stat movementSpeed)
         {
@@ -78,6 +80,22 @@ namespace Utils
 
             var motion = new Vector3(posX, posY, posZ);
             return motion;
+        }
+    }
+
+    public static class StateHelper
+    {
+        public static UnitState StateFromEnum(UnitStateEnum stateEnum, Unit owner)
+        {
+            switch (stateEnum)
+            {
+                case UnitStateEnum.AiIdle:
+                    return new State.AiStates.IdleUnitState(owner);
+                case UnitStateEnum.PlayerIdle:
+                    return new State.PlayerStates.IdleUnitState(owner);
+                default:
+                    return null;
+            }
         }
     }
 }

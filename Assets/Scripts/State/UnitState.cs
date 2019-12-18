@@ -1,12 +1,18 @@
 using Controls;
+using Units;
+using UnityEngine;
 
-public class UnitState {
-    public Unit Owner;
+namespace State
+{
+    public class UnitState {
+        protected readonly Unit Owner;
 
-    public UnitState (Unit Owner) {
-        this.Owner = Owner;
+        public UnitState (Unit owner) {
+            this.Owner = owner;
+        }
+        public virtual void Enter () { }
+        public virtual UnitState HandleUpdate (InputValues input) { return null; }
+        public virtual void HandleFixedUpdate (InputValues input) {  }
+        public virtual void HandleCollisionEnter(Collision other){ }
     }
-    public virtual void Enter () { }
-    public virtual UnitState HandleInput (InputValues input) { return null; }
-    public virtual void HandleFixedUpdate (InputValues input) {  }
 }

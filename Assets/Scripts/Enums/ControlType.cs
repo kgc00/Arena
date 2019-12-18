@@ -1,5 +1,8 @@
-public enum ControlType {
-    LOCAL,
-    REMOTE,
-    AI
+namespace Enums
+{
+    public enum ControlType {
+        LOCAL,
+        REMOTE,
+        AI
+    }
 }

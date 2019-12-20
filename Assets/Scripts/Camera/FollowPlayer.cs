@@ -17,7 +17,7 @@ public class FollowPlayer : MonoBehaviour
     private void AssignUnitTransform()
     {
         unitTransform = FindObjectsOfType<Unit>()
-            .FirstOrDefault(element => element.Owner.ControlType == ControlType.LOCAL)
+            .FirstOrDefault(element => element.Owner.ControlType == ControlType.Local)
             ?.transform;
     }
 

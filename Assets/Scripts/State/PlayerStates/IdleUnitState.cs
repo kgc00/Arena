@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
+using Abilities.AttackAbilities;
 using Controls;
 using Enums;
 using Units;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace State.PlayerStates
 {
@@ -32,7 +35,19 @@ namespace State.PlayerStates
                 UpdatePlayerRotation(input, motion);
             }
 
+            Debug.Log(input.FirePhase);
+            if (input.Fire == 1 && input.FirePhase == InputActionPhase.Performed)
+            {
+                HandleFire();
+            }
+
             return null;
+        }
+
+        private void HandleFire()
+        {
+            // var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
+            // Debug.Log(abil);
         }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)

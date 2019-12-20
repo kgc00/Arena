@@ -10,7 +10,7 @@ namespace Utils
         public static Transform GetClosestPlayerUnit(Vector3 currentLocation)
         {
             var sortedPlayers = FindObjectsOfType<Unit>()
-                .Where(unit => unit.Owner.ControlType != ControlType.AI)
+                .Where(unit => unit.Owner.ControlType != ControlType.Ai)
                 ?.OrderBy(playerUnit => Vector3.Distance(currentLocation, playerUnit.transform.position))
                 ?.ToList();
 

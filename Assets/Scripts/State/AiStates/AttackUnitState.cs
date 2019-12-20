@@ -9,7 +9,7 @@ namespace State.AiStates
 {
     public class AttackUnitState : UnitState
     {
-        private Transform targetPlayerTransform;
+        private readonly Transform targetPlayerTransform;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int Attacking = Animator.StringToHash("Attacking");
         private float attackRange = 3.0f;
@@ -69,7 +69,7 @@ namespace State.AiStates
             if (objectAsUnit == null) return;
 
             // is the object a player controlled unit?
-            if (objectAsUnit.Owner.ControlType == ControlType.AI) return;
+            if (objectAsUnit.Owner.ControlType == ControlType.Ai) return;
 
            DamageUnit(other);
         }

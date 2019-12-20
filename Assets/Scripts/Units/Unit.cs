@@ -1,4 +1,5 @@
 using System;
+using Abilities;
 using Controls;
 using State;
 using State.PlayerStates;
@@ -15,6 +16,7 @@ namespace Units
         UnitState state;
         [SerializeField] private UnitStateEnum initialUnitState;
         [SerializeField] Controller controller;
+        public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
 
         public void Initialize (Player owner) {
@@ -31,10 +33,13 @@ namespace Units
             // Animator
             if (Animator == null) Animator = GetComponentInChildren<Animator>();
             
-            
             // Health
             if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>();
             HealthComponent.Initialize(this);
+
+            // Abilities
+            if (AbilityComponent == null)AbilityComponent= gameObject.AddComponent<AbilityComponent>();
+            AbilityComponent.Initialize(this);
             
             //State
             state = Utils.StateHelper.StateFromEnum(initialUnitState, this);
@@ -47,7 +52,6 @@ namespace Units
             if (newState == null) return;
             state = newState;
             state.Enter();
-        
         }
 
         private void FixedUpdate()

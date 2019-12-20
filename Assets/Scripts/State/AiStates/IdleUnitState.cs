@@ -26,15 +26,15 @@ namespace State.AiStates
             Owner.Animator.SetBool(Moving, false);
         }
 
-        public override UnitState HandleUpdate(InputValues input)
-        {
-            // TODO: add some leashing mechanic or vision limiter
-            
-            if (playerTransform == null) playerTransform = Locator.GetClosestPlayerUnit(Owner.transform.position);
-
-            if (playerTransform == null) return null;
-            
-            return new ChaseUnitState(Owner, playerTransform);
-        }
+        // public override UnitState HandleUpdate(InputValues input)
+        // {
+        //     // TODO: add some leashing mechanic or vision limiter
+        //     
+        //     if (playerTransform == null) playerTransform = Locator.GetClosestPlayerUnit(Owner.transform.position);
+        //
+        //     if (playerTransform == null) return null;
+        //     
+        //     return new ChaseUnitState(Owner, playerTransform);
+        // }
     }
 }

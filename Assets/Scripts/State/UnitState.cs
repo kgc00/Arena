@@ -1,6 +1,7 @@
 using Controls;
 using Units;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace State
 {
@@ -11,8 +12,11 @@ namespace State
             this.Owner = owner;
         }
         public virtual void Enter () { }
-        public virtual UnitState HandleUpdate (InputValues input) { return null; }
-        public virtual void HandleFixedUpdate (InputValues input) {  }
+        public virtual UnitState HandleUpdate () { return null; }
+        public virtual void HandleFixedUpdate () {  }
         public virtual void HandleCollisionEnter(Collision other){ }
+        public virtual void HandleOnFire(InputAction.CallbackContext context) { }
+        public virtual void HandleOnLook(InputAction.CallbackContext context) { }
+        public virtual void HandleOnMove(InputAction.CallbackContext context) { }
     }
 }

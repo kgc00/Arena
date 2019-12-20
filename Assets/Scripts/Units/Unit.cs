@@ -13,7 +13,7 @@ namespace Units
         public BaseStats BaseStats { get; private set; } = new BaseStats();
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }
-        UnitState state;
+        public UnitState State { get; protected set; }
         [SerializeField] private UnitStateEnum initialUnitState;
         [SerializeField] Controller controller;
         public AbilityComponent AbilityComponent { get; private set; }
@@ -42,26 +42,26 @@ namespace Units
             AbilityComponent.Initialize(this);
             
             //State
-            state = Utils.StateHelper.StateFromEnum(initialUnitState, this);
-            state.Enter ();
+            State = Utils.StateHelper.StateFromEnum(initialUnitState, this);
+            State.Enter ();
         }
 
         void Update () {
             // handle state
-            var newState = state?.HandleUpdate (controller.InputValues);
+            var newState = State?.HandleUpdate ();
             if (newState == null) return;
-            state = newState;
-            state.Enter();
+            State = newState;
+            State.Enter();
         }
 
         private void FixedUpdate()
         {
-            state?.HandleFixedUpdate(controller.InputValues);
+            State?.HandleFixedUpdate();
         }
 
         private void OnCollisionEnter(Collision other)
         {
-            state?.HandleCollisionEnter(other);
+            State?.HandleCollisionEnter(other);
         }
     }
 }

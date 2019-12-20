@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Units;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +8,7 @@ namespace Controls
 
         [SerializeField] private Rigidbody body; 
         [SerializeField] private PlayerInputMappings playerInput;
-    
+        public Unit Owner { get; private set; }
         // #region MultipleHandlers
         public void OnEnable()
         {
@@ -16,11 +16,15 @@ namespace Controls
             {
                 InputValues = new InputValues();
             }
-        
             if (playerInput == null)
             {
                 playerInput = new PlayerInputMappings();
                 playerInput.Player.SetCallbacks(this);
+            }
+        
+            if (Owner == null)
+            {
+                Owner = GetComponentInParent<Unit>();
             }
             playerInput.Player.Enable();
         }
@@ -32,23 +36,26 @@ namespace Controls
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            InputValues.Horizontal = context.ReadValue<Vector2> ().x;
-            InputValues.Forward = context.ReadValue<Vector2> ().y;
+            Owner.State.HandleOnMove(context);
+            // InputValues.Horizontal = context.ReadValue<Vector2> ().x;
+            // InputValues.Forward = context.ReadValue<Vector2> ().y;
             // Debug.Log($"{InputValues.Horizontal}{InputValues.Forward}");
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
-            InputValues.Turn = context.ReadValue<Vector2> ().x;
-            InputValues.Look = context.ReadValue<Vector2> ().y;
+            Owner.State.HandleOnLook(context);
+            // InputValues.Turn = context.ReadValue<Vector2> ().x;
+            // InputValues.Look = context.ReadValue<Vector2> ().y;
             InputValues.SetControlType(context.action.activeControl.displayName);
             // Debug.Log($"{InputValues.ActiveControl}");
         }
 
         public void OnFire(InputAction.CallbackContext context)
         {
-            InputValues.Fire = context.ReadValue<Single>();
-            InputValues.FirePhase = context.phase;
+            Owner.State.HandleOnFire(context);
+            // InputValues.Fire = context.ReadValue<Single>();
+            // InputValues.FirePhase = context.phase;
             // Debug.Log($"context {context}");
         }
         // #endregion

@@ -1,6 +1,7 @@
 ﻿using Controls;
 using Enums;
 using State;
+using State.AiStates;
 using Units;
 using UnityEngine;
 
@@ -8,22 +9,18 @@ namespace Utils
 {
     public static class MouseHelper
     {
-
         //Method 4
-        static Plane plane = new Plane(Vector3.up, 0f);
+        private static Plane plane = new Plane(Vector3.up, 0f);
 
-        static Camera cam = Camera.main;
+        private static readonly Camera cam = Camera.main;
 
         public static Vector3 GetWorldPosition()
         {
             if (cam != null)
             {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                var ray = cam.ScreenPointToRay(Input.mousePosition);
 
-                if (plane.Raycast(ray, out float distanceToPlane))
-                {
-                    return ray.GetPoint(distanceToPlane);
-                }
+                if (plane.Raycast(ray, out var distanceToPlane)) return ray.GetPoint(distanceToPlane);
             }
 
             return Vector3.zero;
@@ -35,24 +32,25 @@ namespace Utils
         public static void UpdatePlayerRotation(InputValues input, Unit owner, Stat movementSpeed)
         {
             var motion = GetMovementFromInput(input, movementSpeed);
-            
+
             if (input.ActiveControl == ControllerType.Delta)
                 UpdatePlayerRotationForKeyboard(input, motion, owner);
-            else if (input.ActiveControl ==  ControllerType.GamePad)
+            else if (input.ActiveControl == ControllerType.GamePad)
                 UpdatePlayerRotationForGamepad(input, motion, owner, movementSpeed);
             else
                 Debug.Log("updating for neither");
         }
 
-        private static void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion, Unit owner, Stat movementSpeed)
+        private static void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion, Unit owner,
+            Stat movementSpeed)
         {
             // Debug.Log("updating for gamepad");
 
-            var posX = input.Turn * movementSpeed.Value * Time.deltaTime ;
+            var posX = input.Turn * movementSpeed.Value * Time.deltaTime;
             var posY = 0;
-            var posZ = input.Look * movementSpeed.Value * Time.deltaTime ;    
-            var rotationVal = new Vector3(posX,posY,posZ);
-        
+            var posZ = input.Look * movementSpeed.Value * Time.deltaTime;
+            var rotationVal = new Vector3(posX, posY, posZ);
+
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,
                 Quaternion.LookRotation(rotationVal),
                 Time.deltaTime * 10f);
@@ -61,16 +59,16 @@ namespace Utils
         private static void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion, Unit owner)
         {
             // Debug.Log("updating for keyboard");
-            var mousePos = Utils.MouseHelper.GetWorldPosition();
+            var mousePos = MouseHelper.GetWorldPosition();
 
             var transform = owner.transform;
-            
+
             var difference = mousePos - transform.position;
             owner.transform.rotation = Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(difference),
                 Time.deltaTime * 10f);
         }
-        
+
         public static Vector3 GetMovementFromInput(InputValues input, Stat movementSpeedStat)
         {
             var movementSpeed = movementSpeedStat.Value;
@@ -90,12 +88,24 @@ namespace Utils
             switch (stateEnum)
             {
                 case UnitStateEnum.AiIdle:
-                    return new State.AiStates.IdleUnitState(owner);
-                case UnitStateEnum.PlayerIdle:
+                    return new IdleUnitState(owner);
+                case UnitStateEnum.PlayerActive:
                     return new State.PlayerStates.IdleUnitState(owner);
                 default:
                     return null;
             }
+        }
+    }
+
+    public static class ControlTypeHelper
+    {
+        public static ControllerType GetControlType(string displayName)
+        {
+            if (displayName == "Delta")
+                return ControllerType.Delta;
+            if (displayName == "Right Stick")
+                return ControllerType.GamePad;
+            return ControllerType.None;
         }
     }
 }

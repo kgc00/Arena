@@ -3,7 +3,7 @@
     public enum UnitStateEnum
     {
         None,
-        PlayerIdle,
+        PlayerActive,
         AiIdle
     }
 }

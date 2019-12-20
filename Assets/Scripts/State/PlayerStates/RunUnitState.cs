@@ -17,23 +17,23 @@ namespace State.PlayerStates
             body = owner.Rigidbody;
             movementSpeed = 5 * owner.BaseStats.MovementSpeed.Value;
         }
-
-        public override UnitState HandleUpdate(InputValues input)
-        {
-            var playerIsStationary = Math.Abs(input.Forward) <= 0 && Math.Abs(input.Horizontal) <= 0;
-            if (playerIsStationary) return new IdleUnitState(Owner);
-        
-            return null;
-        }
-
-        public override void HandleFixedUpdate(InputValues input)
-        {
-            var motion = GetMovementFromInput(input);
-
-            UpdatePlayerRotation(input, motion);
-            UpdatePlayerPositionTr(input, motion);
-            Owner.Animator.SetBool(Moving, true);
-        }
+        //
+        // public override UnitState HandleUpdate(InputValues input)
+        // {
+        //     var playerIsStationary = Math.Abs(input.Forward) <= 0 && Math.Abs(input.Horizontal) <= 0;
+        //     if (playerIsStationary) return new IdleUnitState(Owner);
+        //
+        //     return null;
+        // }
+        //
+        // public override void HandleFixedUpdate(InputValues input)
+        // {
+        //     var motion = GetMovementFromInput(input);
+        //
+        //     UpdatePlayerRotation(input, motion);
+        //     UpdatePlayerPositionTr(input, motion);
+        //     Owner.Animator.SetBool(Moving, true);
+        // }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)
         {

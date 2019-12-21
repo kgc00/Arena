@@ -37,7 +37,7 @@ namespace State.PlayerStates
             }
 
 
-            // Debug.Log(input.FireInteraction is PressInteraction);
+            Debug.Log(input.FireInteraction);
             if (Math.Abs(input.Fire - 1) < .01f && input.FireInteraction is PressInteraction)
             {
                 HandleFire();

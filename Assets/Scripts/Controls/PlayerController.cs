@@ -20,7 +20,10 @@ namespace Controls
             if (playerInput == null)
             {
                 playerInput = new PlayerInputMappings();
-                playerInput.Player.SetCallbacks(this);
+                // playerInput.Player.SetCallbacks(this);
+                playerInput.Player.Fire.performed += OnFire;
+                playerInput.Player.Look.performed += OnLook;
+                playerInput.Player.Move.performed += OnMove;
             }
             playerInput.Player.Enable();
         }
@@ -56,6 +59,7 @@ namespace Controls
             InputValues.FirePhase = context.phase;
             InputValues.FireInteraction = context.interaction;
             
+            Debug.Log($"context {context.phase}");
             
             Debug.Log($"context {context.interaction}");
         }

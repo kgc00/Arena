@@ -10,10 +10,7 @@ namespace Controls
         public float Look;
         public float Turn;
         public ControllerType ActiveControl { get; private set; }
-
         public float Fire;
-        public InputActionPhase FirePhase;
-        public bool HasStartedFire { get; set; }
         public IInputInteraction FireInteraction { get; set; }
 
         public InputValues()
@@ -24,7 +21,6 @@ namespace Controls
             Turn = 0;
             Fire = 0;
             ActiveControl = ControllerType.None;
-            HasStartedFire = false;
             FireInteraction = null;
         }
         
@@ -33,9 +29,7 @@ namespace Controls
             float look,
             float turn,
             float fire,
-            InputActionPhase firePhase,
             ControllerType activeControl,
-            bool hasStartedFire, 
             IInputInteraction fireInteraction)
         {
             Forward = forward;
@@ -43,9 +37,7 @@ namespace Controls
             Look = look;
             Turn = turn;
             Fire = fire;
-            FirePhase = firePhase;
             ActiveControl = activeControl;
-            HasStartedFire = hasStartedFire;
             FireInteraction = fireInteraction;
         }
 

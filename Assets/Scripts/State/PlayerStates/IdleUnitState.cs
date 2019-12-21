@@ -38,19 +38,19 @@ namespace State.PlayerStates
 
 
             // Debug.Log(input.FireInteraction is PressInteraction);
-            if (Math.Abs(input.Fire - 1) < .01f && input.FireInteraction is PressInteraction)
+            if (Math.Abs(input.Fire - 1) < .01f && input.HasStartedFire)
             {
-                HandleFire();
+                HandleFire(MouseHelper.GetWorldPosition());
                 input.HasStartedFire = false;
             }
 
             return null;
         }
 
-        private void HandleFire()
+        private void HandleFire(Vector3 targetLocation)
         {
             var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
-            abil.Activate();
+            if (abil != null) abil.Activate(targetLocation);
         }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)

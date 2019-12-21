@@ -57,7 +57,7 @@ namespace Controls
             InputValues.FireInteraction = context.interaction;
             
             
-            Debug.Log($"context {context.interaction}");
+            // Debug.Log($"context {context.interaction}");
         }
         // #endregion
     }

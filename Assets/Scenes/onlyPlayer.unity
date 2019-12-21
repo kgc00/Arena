@@ -1281,6 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5f7049563846caa4f0f66c32c415f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: {fileID: 0}
   affectedTargets: 02000000
 --- !u!1 &914575998
 GameObject:

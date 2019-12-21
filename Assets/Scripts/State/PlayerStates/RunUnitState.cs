@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Abilities.AttackAbilities;
 using Controls;
 using Enums;
 using Units;
@@ -20,10 +22,22 @@ namespace State.PlayerStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
+            if (Math.Abs(input.Fire - 1) < .01f && input.HasStartedFire)
+            {
+                HandleFire();
+                input.HasStartedFire = false;
+            }
+            
             var playerIsStationary = Math.Abs(input.Forward) <= 0 && Math.Abs(input.Horizontal) <= 0;
             if (playerIsStationary) return new IdleUnitState(Owner);
         
             return null;
+        }
+
+        private void HandleFire()
+        {
+            // var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
+            // abil.Activate();
         }
 
         public override void HandleFixedUpdate(InputValues input)

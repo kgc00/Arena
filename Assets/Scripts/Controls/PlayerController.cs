@@ -47,9 +47,17 @@ namespace Controls
 
         public void OnFire(InputAction.CallbackContext context)
         {
+            if (context.phase == InputActionPhase.Started)
+            {
+                InputValues.HasStartedFire = true;
+            }
+            
             InputValues.Fire = context.ReadValue<Single>();
             InputValues.FirePhase = context.phase;
-            // Debug.Log($"context {context}");
+            InputValues.FireInteraction = context.interaction;
+            
+            
+            Debug.Log($"context {context.interaction}");
         }
         // #endregion
     }

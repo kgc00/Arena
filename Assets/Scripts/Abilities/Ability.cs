@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Units;
+using UnityEngine;
 
 namespace Abilities
 {
@@ -6,7 +7,8 @@ namespace Abilities
     {
         public float Range { get; protected set; }
 
-        public float CooldownTime{ get; protected set; } 
+        public float CooldownTime{ get; protected set; }
+        public Unit Owner;
         public abstract void Activate ();
     }
 }

@@ -5,7 +5,8 @@ using Controls;
 using Enums;
 using Units;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
+using Utils;
 
 namespace State.PlayerStates
 {
@@ -35,10 +36,12 @@ namespace State.PlayerStates
                 UpdatePlayerRotation(input, motion);
             }
 
-            Debug.Log(input.FirePhase);
-            if (input.Fire == 1 && input.FirePhase == InputActionPhase.Performed)
+
+            // Debug.Log(input.FireInteraction is PressInteraction);
+            if (Math.Abs(input.Fire - 1) < .01f && input.FireInteraction is PressInteraction)
             {
                 HandleFire();
+                input.HasStartedFire = false;
             }
 
             return null;
@@ -46,8 +49,8 @@ namespace State.PlayerStates
 
         private void HandleFire()
         {
-            // var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
-            // Debug.Log(abil);
+            var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
+            abil.Activate();
         }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)
@@ -63,12 +66,17 @@ namespace State.PlayerStates
         private void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion)
         {
             // Debug.Log("updating for keyboard");
-            var mousePos = Utils.MouseHelper.GetWorldPosition();
+            var mousePos = MouseHelper.GetWorldPosition();
 
             var transform = Owner.transform;
             var difference = mousePos - transform.position;
-            Owner.transform.rotation = Quaternion.Slerp(transform.rotation,
-                Quaternion.LookRotation(difference), Time.deltaTime * 10f);
+            var difQuat = Quaternion.LookRotation(difference);
+            var difEuler = difQuat.eulerAngles;
+            var difEulerAdjusted = new Vector3(transform.rotation.x, difEuler.y, transform.rotation.z);
+            var final = Quaternion.Euler(difEulerAdjusted);
+            Owner.transform.rotation = final;
+            // Quaternion.Slerp(transform.rotation,
+            // final, Time.deltaTime);
         }
 
         private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion)

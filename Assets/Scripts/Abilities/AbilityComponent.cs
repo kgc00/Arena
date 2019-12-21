@@ -13,8 +13,11 @@ namespace Abilities
         {
             Owner = owner;
             equippedAbilities = GetComponents<Ability>().ToList();
-            
-            // Debug.Log(equippedAbilities[0].name);
+
+            foreach (var ability in equippedAbilities)
+            {
+                ability.Owner = owner;
+            }
         }
     }
 }

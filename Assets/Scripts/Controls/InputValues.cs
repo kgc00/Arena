@@ -13,6 +13,8 @@ namespace Controls
 
         public float Fire;
         public InputActionPhase FirePhase;
+        public bool HasStartedFire { get; set; }
+        public IInputInteraction FireInteraction { get; set; }
 
         public InputValues()
         {
@@ -22,6 +24,8 @@ namespace Controls
             Turn = 0;
             Fire = 0;
             ActiveControl = ControllerType.None;
+            HasStartedFire = false;
+            FireInteraction = null;
         }
         
         public InputValues(float forward,
@@ -30,7 +34,9 @@ namespace Controls
             float turn,
             float fire,
             InputActionPhase firePhase,
-            ControllerType activeControl)
+            ControllerType activeControl,
+            bool hasStartedFire, 
+            IInputInteraction fireInteraction)
         {
             Forward = forward;
             Horizontal = horizontal;
@@ -39,6 +45,8 @@ namespace Controls
             Fire = fire;
             FirePhase = firePhase;
             ActiveControl = activeControl;
+            HasStartedFire = hasStartedFire;
+            FireInteraction = fireInteraction;
         }
 
         public void SetControlType(string displayName)

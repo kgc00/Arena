@@ -1,4 +1,6 @@
-﻿using Units;
+﻿using System;
+using Enums;
+using Units;
 using UnityEngine;
 
 namespace Projectiles
@@ -13,11 +15,9 @@ namespace Projectiles
         //optional param for setting projectile speed
         public void Initialize (Vector3 dir, System.Action<GameObject> callback, float speed = 1.5f)
         {
-            this.Direction = dir;
+            this.Direction = new Vector3(transform.forward.x, 0, transform.forward.z);
             this.onConnected = callback;
             this.speed = speed;
-
-            transform.rotation = Quaternion.LookRotation(Direction);
         }
         
         void Update () {
@@ -27,7 +27,7 @@ namespace Projectiles
         
         private void MoveGameObject ()
         {
-            transform.position += transform.forward * (speed * Time.deltaTime);
+            transform.position +=  Direction * (speed * Time.deltaTime);
         }
         
         private void OnCollisionEnter(Collision other)
@@ -37,6 +37,12 @@ namespace Projectiles
             {
                 onConnected (unit.gameObject);
                 Destroy (gameObject);
+            }
+            
+            var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
+            if (hitGeometry)
+            {
+                Destroy(gameObject);
             }
         }
     }

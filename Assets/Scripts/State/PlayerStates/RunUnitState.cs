@@ -1,10 +1,13 @@
 using System;
 using System.Linq;
+using Abilities;
 using Abilities.AttackAbilities;
 using Controls;
 using Enums;
 using Units;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Utils;
 
 namespace State.PlayerStates
 {
@@ -13,6 +16,7 @@ namespace State.PlayerStates
         private Rigidbody body;
         private readonly float movementSpeed;
         private static readonly int Moving = Animator.StringToHash("Moving");
+        private float threshold = 0.1f;
 
         public RunUnitState(Unit owner) : base(owner)
         {
@@ -22,22 +26,32 @@ namespace State.PlayerStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (Math.Abs(input.Fire - 1) < .01f && input.HasStartedFire)
-            {
-                HandleFire();
-                input.HasStartedFire = false;
-            }
+            CheckShouldFire(input);
             
-            var playerIsStationary = Math.Abs(input.Forward) <= 0 && Math.Abs(input.Horizontal) <= 0;
+            var playerIsStationary = Math.Abs(input.Forward) <= threshold && Math.Abs(input.Horizontal) <= threshold;
             if (playerIsStationary) return new IdleUnitState(Owner);
         
             return null;
         }
 
-        private void HandleFire()
+        private void CheckShouldFire(InputValues input)
         {
-            // var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
-            // abil.Activate();
+            // Debug.Log($"input.HasStartedFire {input.HasStartedFire}");
+            bool notFiring = input.Fire < 0.4f || !input.HasStartedFire;
+            if (notFiring) return;
+            
+            if (input.ActiveControl == ControllerType.Delta)
+                HandleFire(MouseHelper.GetWorldPosition());
+            else if (input.ActiveControl == ControllerType.GamePad)
+                HandleFire(RotationHelper.GetUnitForward(Owner));
+            else
+                Debug.Log("updating for neither");
+        }
+
+        private void HandleFire(Vector3 targetLocation)
+        {
+            var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is AttackAbility);
+            if (abil != null) abil.Activate(targetLocation);
         }
 
         public override void HandleFixedUpdate(InputValues input)

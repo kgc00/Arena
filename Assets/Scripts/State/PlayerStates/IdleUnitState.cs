@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Abilities;
 using Abilities.AttackAbilities;
 using Controls;
 using Enums;
@@ -37,19 +38,27 @@ namespace State.PlayerStates
             }
 
 
-            // Debug.Log(input.FireInteraction is PressInteraction);
-            if (Math.Abs(input.Fire - 1) < .01f && input.HasStartedFire)
-            {
-                HandleFire(MouseHelper.GetWorldPosition());
-                input.HasStartedFire = false;
-            }
+            CheckShouldFire(input);
 
             return null;
         }
 
+        private void CheckShouldFire(InputValues input)
+        {
+            bool notFiring = input.Fire < 0.4f || !input.HasStartedFire;
+            if (notFiring) return;
+
+            if (input.ActiveControl == ControllerType.Delta)
+                HandleFire(MouseHelper.GetWorldPosition());
+            else if (input.ActiveControl == ControllerType.GamePad)
+                HandleFire(RotationHelper.GetUnitForward(Owner));
+            else
+                Debug.Log("updating for neither");
+        }
+
         private void HandleFire(Vector3 targetLocation)
         {
-            var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is ShootCrossbow);
+            var abil = Owner.AbilityComponent.equippedAbilities.FirstOrDefault(ability => ability is AttackAbility);
             if (abil != null) abil.Activate(targetLocation);
         }
 

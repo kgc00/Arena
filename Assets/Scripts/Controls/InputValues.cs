@@ -59,5 +59,10 @@ namespace Controls
                 ActiveControl = ControllerType.GamePad;
             }
         }
+
+        public virtual void ResetValues()
+        {
+            this.HasStartedFire = false;
+        }
     }
 }

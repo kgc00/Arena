@@ -6,10 +6,12 @@ using UnityEngine;
 
 namespace Utils
 {
+    public static class GamepadHelper
+    {
+    }
+
     public static class MouseHelper
     {
-
-        //Method 4
         static Plane plane = new Plane(Vector3.up, 0f);
 
         static Camera cam = Camera.main;
@@ -32,6 +34,12 @@ namespace Utils
 
     public static class RotationHelper
     {
+        public static Vector3 GetUnitForward(Unit owner)
+        {
+            var transform = owner.transform;
+            return transform.position + transform.forward * 25;
+        }
+        
         public static void UpdatePlayerRotation(InputValues input, Unit owner, Stat movementSpeed)
         {
             var motion = GetMovementFromInput(input, movementSpeed);
@@ -48,9 +56,9 @@ namespace Utils
         {
             // Debug.Log("updating for gamepad");
 
-            var posX = input.Turn * movementSpeed.Value * Time.deltaTime ;
+            var posX = input.Turn * movementSpeed.Value * Time.deltaTime;
             var posY = 0;
-            var posZ = input.Look * movementSpeed.Value * Time.deltaTime ;    
+            var posZ = input.Look * movementSpeed.Value * Time.deltaTime;    
             var rotationVal = new Vector3(posX,posY,posZ);
         
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,

@@ -47,7 +47,12 @@ namespace Controls
 
         public void OnFire(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Started)
+            // Must use this if statement- it sets HasStartedFire to true for this frame and
+            //  is not overwritten by subsequent input calls on the same frame.  If we modify this if statement
+            //  to also set false in certain conditions, the 'true' state will never make it to consumers.
+            
+            // HasStartedFire must be reset in late update to keep an accurate picture of user input.
+            if(context.phase == InputActionPhase.Started && context.interaction is UnityEngine.InputSystem.Interactions.PressInteraction)
             {
                 InputValues.HasStartedFire = true;
             }
@@ -55,9 +60,6 @@ namespace Controls
             InputValues.Fire = context.ReadValue<Single>();
             InputValues.FirePhase = context.phase;
             InputValues.FireInteraction = context.interaction;
-            
-            
-            // Debug.Log($"context {context.interaction}");
         }
         // #endregion
     }

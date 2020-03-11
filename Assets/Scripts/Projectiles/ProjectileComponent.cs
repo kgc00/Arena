@@ -20,7 +20,7 @@ namespace Projectiles
             this.speed = speed;
         }
         
-        void Update () {
+        void FixedUpdate () {
             MoveGameObject ();
         }
 

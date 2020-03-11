@@ -3,6 +3,7 @@ namespace Enums
     public enum ControlType {
         Local,
         Remote,
-        Ai
+        Ai,
+        UnassignedS
     }
 }

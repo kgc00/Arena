@@ -11,11 +11,21 @@ public class FollowPlayer : MonoBehaviour
     
     void Start()
     {
+        Debug.Log("1");
         AssignUnitTransform();
     }
 
     private void AssignUnitTransform()
     {
+        Debug.Log("2");
+
+        var test = FindObjectsOfType<Unit>();
+        var test2 = FindObjectsOfType<Unit>().FirstOrDefault(element => element.Owner.ControlType == ControlType.Local);
+        
+        Debug.Log($"test: {test}");
+        // Debug.Log($"test2: {test2}");
+        Debug.Log("3");
+
         unitTransform = FindObjectsOfType<Unit>()
             .FirstOrDefault(element => element.Owner.ControlType == ControlType.Local)
             ?.transform;
@@ -26,6 +36,8 @@ public class FollowPlayer : MonoBehaviour
     {
         if (unitTransform == null)
         {
+            Debug.Log("null");
+
             AssignUnitTransform();
             return;
         }

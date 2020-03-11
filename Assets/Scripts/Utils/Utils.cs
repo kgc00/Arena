@@ -1,4 +1,5 @@
-﻿using Controls;
+﻿using System.Collections.Generic;
+using Controls;
 using Enums;
 using State;
 using Units;
@@ -6,10 +7,16 @@ using UnityEngine;
 
 namespace Utils
 {
-    public static class GamepadHelper
+    public static class PlayerHelper
     {
+        private static HashSet<Player> players = new HashSet<Player>();
+        public static void AddPlayer(Player newPlayer)
+        {
+            if (players.Contains(newPlayer)) return;
+            players.Add(newPlayer);
+        }
     }
-
+    
     public static class MouseHelper
     {
         static Plane plane = new Plane(Vector3.up, 0f);

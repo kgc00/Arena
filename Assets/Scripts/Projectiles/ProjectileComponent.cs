@@ -15,7 +15,8 @@ namespace Projectiles
         //optional param for setting projectile speed
         public void Initialize (Vector3 dir, System.Action<GameObject> callback, float speed = 1.5f)
         {
-            this.Direction = new Vector3(transform.forward.x, 0, transform.forward.z);
+            var forward = gameObject.transform.forward;
+            this.Direction = new Vector3(forward.x, 0, forward.z);
             this.onConnected = callback;
             this.speed = speed;
         }

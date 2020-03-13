@@ -1663,6 +1663,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melee AI
       objectReference: {fileID: 0}
+    - target: {fileID: 3640983151590248203, guid: 0d0b3aeef1472cc46884d42cf29387f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3640983151590248246, guid: 0d0b3aeef1472cc46884d42cf29387f5,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -9,26 +9,6 @@ using Random = UnityEngine.Random;
 
 namespace Spawner
 {
-    [CreateAssetMenu(fileName = "SpawnTable", menuName = "ScriptableObjects/SpawnTable", order = 1), Serializable]
-    public class SpawnTable : ScriptableObject
-    {
-        [SerializeField] public List<WaveTable> Waves;
-    }
-    
-    [CreateAssetMenu(fileName = "WaveTable", menuName = "ScriptableObjects/WaveTable", order = 2), Serializable]
-    public class WaveTable : ScriptableObject
-    {
-        [SerializeField] public List<EnemyTable> Wave;
-        [SerializeField] public int WaveNumber;
-    }
-
-    [CreateAssetMenu(fileName = "EnemyTable", menuName = "ScriptableObjects/EnemyTable", order = 3), Serializable]
-    public class EnemyTable : ScriptableObject
-    {
-        [SerializeField] public Enemies Enemy;
-        [SerializeField] public int Amount;
-    }
-
     public enum Enemies
     {
         Melee,
@@ -42,44 +22,89 @@ namespace Spawner
     public enum Intervals
     {
         Timer,
-        Wave
+        WaveLastEnemyAlive,
+        WaveCertainEnemyDies
+    }
+    
+    public interface IInterval
+    {
+        bool Enabled { get; }
+        void Enable();
+        void Disable();
+        void HandleUpdate();
     }
 
-    public class Interval
+    public interface ITimerInterval : IInterval
     {
-        public Intervals IntervalType { get; } = Intervals.Timer;
+        float SpawnInterval { get; }
+        float TimeSinceLastSpawn { get; }
     }
+    
+    public abstract class Interval : MonoBehaviour
+    {
+        public IInterval IntervalType { get; private set; }
+        public Spawner Owner { get; private set; }
+        public Action Spawn { get; private set; }
+
+        public Interval Initialize(Action spawn, Spawner owner)
+        {
+            Spawn = spawn;
+            Owner = owner;
+            return this;
+        }
+    }
+    
+    public class TimerInterval : Interval, ITimerInterval
+    {
+        public bool Enabled { get; private set; }
+        public void Enable() => Enabled = true;
+        public void Disable() => Enabled = false;
+
+        public float SpawnInterval { get; private set; } = 6f;
+        public float TimeSinceLastSpawn { get; private set;}
+
+        private void OnEnable()
+        {
+            Enabled = true;
+        }
+
+        public void Update()
+        {
+            HandleUpdate();
+        }
+
+        public void HandleUpdate()
+        {
+            if (!Enabled) return;
+
+            TimeSinceLastSpawn += Time.deltaTime;
+
+            if (TimeSinceLastSpawn < SpawnInterval) return;
+            
+            Spawn();
+            TimeSinceLastSpawn = 0f;
+        }
+    }
+
 
     public class WaveHandler
     {
         private SpawnTable spawnTable;
         private WaveTable current;
-        private Spawner spawner;
+        private Spawner owner;
 
-        public WaveHandler(SpawnTable table, Spawner spawner)
+        public WaveHandler(SpawnTable table, Spawner owner)
         {
             spawnTable = table;
             current =  table.Waves[0];
-            this.spawner = spawner;
-        }
-
-        private bool ShouldSpawn()
-        {
-            return true;
+            this.owner = owner;
         }
 
         public void Spawn()
         {
-            if (!ShouldSpawn()) return;
-
-            HandleSpawn();
-        }
-
-        private void HandleSpawn()
-        {
-            Vector3 spawnerPos = spawner.transform.position;
-            Vector3 extentNegative = spawnerPos - spawner.Bounds/2;
-            Vector3 extentPositive = spawnerPos + spawner.Bounds/2;
+            Vector3 spawnerPos = owner.transform.position;
+            Vector3 extentNegative = spawnerPos - owner.Bounds/2;
+            Vector3 extentPositive = spawnerPos + owner.Bounds/2;
             foreach (EnemyTable enemyTable in current.Wave)
             {
                 Debug.Log($"Spawning {enemyTable.Amount} {enemyTable.Enemy}");
@@ -89,10 +114,10 @@ namespace Spawner
                     var y = 1.0f;
                     var z = Random.Range(extentNegative.z, extentPositive.z);
                     var spawnPos = new Vector3(x,y,z);
-                    spawner.owningPlayer.InstantiateUnit(
+                    owner.OwningPlayer.InstantiateUnit(
                         Resources.Load<GameObject>("Units/Slime/Melee AI"),
                         spawnPos
-                        );
+                    );
                 }
             }
         }
@@ -104,16 +129,19 @@ namespace Spawner
         public Vector3 Bounds { get; private set; }
         [SerializeField] private Interval interval;
         [SerializeField] private WaveHandler handler;
-        public Player owningPlayer { get; private set; }
+        public Player OwningPlayer { get; private set; }
 
         private void OnEnable()
         {
             Bounds = new Vector3(size, 1f, size);
             // WILL BREAK IF WE ADD MORE THAN ONE AI PLAYER
-            owningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
-            handler = new WaveHandler(Resources.Load<SpawnTable>("Data/Spawns/SpawnTable"), this);
+            OwningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
+            if (handler == null) handler = new WaveHandler(Resources.Load<SpawnTable>("Data/Spawns/SpawnTable"), this);
+            if (interval == null) interval = gameObject.AddComponent<TimerInterval>().Initialize(handler.Spawn, this);
+            
             handler.Spawn();
         }
+        
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {

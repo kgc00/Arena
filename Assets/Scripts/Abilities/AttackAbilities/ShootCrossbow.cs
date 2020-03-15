@@ -49,7 +49,6 @@ namespace Abilities.AttackAbilities
 
         public override void OnAbilityConnected(GameObject targetedUnit)
         {
-            Debug.Log("triggered");
             var healthComponent = targetedUnit.GetComponent<HealthComponent>();
             if (healthComponent == null)
             {

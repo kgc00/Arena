@@ -22,10 +22,10 @@ namespace Stats
             var prevAmount = CurrentHp;
             CurrentHp = Mathf.Clamp (CurrentHp + amount, 0, MaxHp);
 
-            Debug.Log($"current health {CurrentHp}");
+            // Debug.Log($"current health {CurrentHp}");
             if (CurrentHp <= 0)
             {
-                Debug.Log("we died");
+                // Debug.Log("we died");
                 // unit has died
                 // Owner.UnitDeath();
             }

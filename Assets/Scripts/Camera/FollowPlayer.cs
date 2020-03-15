@@ -28,7 +28,7 @@ public class FollowPlayer : MonoBehaviour
         {
             Debug.Log("null");
 
-            AssignUnitTransform();
+            // AssignUnitTransform();
             return;
         }
         

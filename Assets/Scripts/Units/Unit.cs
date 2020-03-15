@@ -9,7 +9,9 @@ using Utils;
 
 namespace Units
 {
-    public class Unit : MonoBehaviour {
+    public class Unit : MonoBehaviour, IDamageable, IAbilityUser
+    {
+        public static Action<Unit> OnDeath = delegate {  };
         public Player Owner { get; private set; }
         public BaseStats BaseStats { get; private set; } = new BaseStats();
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
@@ -51,6 +53,7 @@ namespace Units
             // handle state
             var newState = state?.HandleUpdate (controller.InputValues);
             if (newState == null) return;
+            state.Exit();
             state = newState;
             state.Enter();
         }
@@ -63,6 +66,12 @@ namespace Units
         private void OnCollisionEnter(Collision other)
         {
             state?.HandleCollisionEnter(other);
+        }
+
+        public void UnitDeath()
+        {
+            OnDeath(this);
+            Destroy(gameObject, 0.1f);
         }
     }
 }

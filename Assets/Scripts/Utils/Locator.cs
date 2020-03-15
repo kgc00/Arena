@@ -14,7 +14,8 @@ namespace Utils
                 ?.OrderBy(playerUnit => Vector3.Distance(currentLocation, playerUnit.transform.position))
                 ?.ToList();
 
-            return sortedPlayers[0].transform;
+            
+            return sortedPlayers.Count > 0 ? sortedPlayers[0].transform : null;
         }
     }
 }

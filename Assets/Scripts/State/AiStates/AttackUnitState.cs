@@ -27,8 +27,15 @@ namespace State.AiStates
             Owner.Animator.SetBool(Moving, false);
         }
 
+        public override void Exit()
+        {
+            Owner.Animator.SetBool(Attacking, false);
+        }
+
         public override UnitState HandleUpdate(InputValues input)
         {
+            if (targetPlayerTransform == null) return new IdleUnitState(Owner);
+            
             if (ShouldReturnToIdle(out var unitState)) return unitState;
             if (ShouldReturnToChase(out unitState)) return unitState;
 

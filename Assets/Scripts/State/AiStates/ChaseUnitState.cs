@@ -27,6 +27,8 @@ namespace State.AiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
+            if (targetPlayerTransform == null) return new IdleUnitState(Owner);
+            
             UpdateUnitLocation();
             UpdateUnitRotation();
             

@@ -25,9 +25,9 @@ namespace Stats
             // Debug.Log($"current health {CurrentHp}");
             if (CurrentHp <= 0)
             {
-                // Debug.Log("we died");
+                Debug.Log($"{Owner} died");
                 // unit has died
-                // Owner.UnitDeath();
+                Owner.UnitDeath();
             }
 
             onHealthChanged (Owner, prevAmount);

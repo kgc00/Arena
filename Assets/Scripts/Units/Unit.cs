@@ -21,8 +21,9 @@ namespace Units
         [SerializeField] Controller controller;
         public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
+        public bool Initialized { get; private set; } = false;
 
-        public void Initialize (Player owner) {
+        public Unit Initialize (Player owner) {
             //Owner
             this.Owner = owner;
 
@@ -47,9 +48,14 @@ namespace Units
             //State
             state = Utils.StateHelper.StateFromEnum(initialUnitState, this);
             state.Enter ();
+
+            Initialized = true;
+            return this;
         }
 
         void Update () {
+            if (!Initialized) return;
+            
             // handle state
             var newState = state?.HandleUpdate (controller.InputValues);
             if (newState == null) return;

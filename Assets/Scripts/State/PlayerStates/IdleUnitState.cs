@@ -48,6 +48,8 @@ namespace State.PlayerStates
             bool notFiring = input.Fire < 0.4f || !input.HasStartedFire;
             if (notFiring) return;
 
+            Debug.Log(input.Fire);
+
             if (input.ActiveControl == ControllerType.Delta)
                 HandleFire(MouseHelper.GetWorldPosition());
             else if (input.ActiveControl == ControllerType.GamePad)

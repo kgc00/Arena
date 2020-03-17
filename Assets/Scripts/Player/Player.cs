@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
         if (units == null) throw new Exception("no unit has been assigned");
         foreach (var unit in units)
         {
+            Debug.Log(unit);
+            Debug.Log(this);
             unit.Initialize(this);
         }
     }

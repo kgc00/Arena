@@ -3,10 +3,12 @@ public class BaseStats {
     public Stat Attack { get; private set; }
     public Stat Defense { get; private set; }
     public Stat Health { get; private set; }
-    public BaseStats () {
-        MovementSpeed = new Stat (1f);
-        Attack = new Stat (1f);
-        Defense = new Stat (1f);
-        Health = new Stat (3f);
+    public Stat Bounty { get; private set; }
+    public BaseStats(Stats.Stats initStatValues) {
+        MovementSpeed = new Stat (initStatValues.MovementSpeed);
+        Attack = new Stat (initStatValues.Attack);
+        Defense = new Stat (initStatValues.Defense);
+        Health = new Stat (initStatValues.Health);
+        Bounty = new Stat (initStatValues.Bounty);
     }
 }

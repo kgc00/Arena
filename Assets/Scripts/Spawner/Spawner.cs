@@ -115,12 +115,14 @@ namespace Spawner
                     var z = Random.Range(extentNegative.z, extentPositive.z);
                     var spawnPos = new Vector3(x,y,z);
                     owner.OwningPlayer.InstantiateUnit(
-                        Resources.Load<GameObject>("Units/Slime/Melee AI"),
+                        Resources.Load<GameObject>(SpawnHelper.PathFromEnemyType(enemyTable.Enemy)),
                         spawnPos
                     );
                 }
             }
         }
+
+        
     }
 
     public class Spawner : MonoBehaviour

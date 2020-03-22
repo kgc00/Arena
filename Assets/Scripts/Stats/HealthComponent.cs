@@ -11,10 +11,11 @@ namespace Stats
         public float CurrentHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
         
-        public void Initialize (Unit owner) {
+        public HealthComponent Initialize (Unit owner) {
             this.Owner = owner;
             this.MaxHp = owner.BaseStats.Health.Value;
             CurrentHp = MaxHp;
+            return this;
         }
 
         public void AdjustHealth (float amount) {

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:Spawner:WaveTable
   Wave:
   - {fileID: 11400000, guid: 8a505fae52fb6cb4193117dd18244348, type: 2}
+  - {fileID: 11400000, guid: eea3e16504f6fd84ab9f9468ae9f98e1, type: 2}
   WaveNumber: 1

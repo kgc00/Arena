@@ -3,7 +3,11 @@
     public enum UnitStateEnum
     {
         None,
-        PlayerIdle,
-        AiIdle
+        Player,
+        MeleeAi,    
+        RangedAi,
+        ChargingAi,
+        SuicideAi,
+        BossAi
     }
 }

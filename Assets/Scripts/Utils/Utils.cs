@@ -1,12 +1,30 @@
 ﻿using System.Collections.Generic;
 using Controls;
 using Enums;
+using Spawner;
 using State;
+using State.MeleeAiStates;
+using State.RangedAiStates;
 using Units;
 using UnityEngine;
 
 namespace Utils
 {
+    public static class SpawnHelper
+    {
+        public static string PathFromEnemyType(Enemies enemy)
+        {
+            switch (enemy)
+            {
+                case Enemies.Melee:
+                    return "Units/Enemies/Slime/Melee AI";
+                case Enemies.Ranged:
+                    return "Units/Enemies/Lich/Ranged AI";
+            }
+
+            return null;
+        }
+    }
     public static class PlayerHelper
     {
         private static HashSet<Player> players = new HashSet<Player>();
@@ -104,10 +122,12 @@ namespace Utils
         {
             switch (stateEnum)
             {
-                case UnitStateEnum.AiIdle:
-                    return new State.AiStates.IdleUnitState(owner);
-                case UnitStateEnum.PlayerIdle:
+                case UnitStateEnum.Player:
                     return new State.PlayerStates.IdleUnitState(owner);
+                case UnitStateEnum.MeleeAi:
+                    return new State.MeleeAiStates.IdleUnitState(owner);
+                case UnitStateEnum.RangedAi:
+                    return new State.RangedAiStates.IdleUnitState(owner);
                 default:
                     return null;
             }

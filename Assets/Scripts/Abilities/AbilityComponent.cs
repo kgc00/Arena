@@ -9,7 +9,7 @@ namespace Abilities
     {
         public Unit Owner { get; private set; }
         [SerializeField] public List<Ability> equippedAbilities;
-        public void Initialize(Unit owner)
+        public AbilityComponent Initialize(Unit owner)
         {
             Owner = owner;
             equippedAbilities = GetComponents<Ability>().ToList();
@@ -18,6 +18,8 @@ namespace Abilities
             {
                 ability.Owner = owner;
             }
+
+            return this;
         }
     }
 }

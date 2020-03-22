@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Spawner
+namespace Spawner.Data
 {
     [CreateAssetMenu(fileName = "EnemyTable", menuName = "ScriptableObjects/EnemyTable", order = 3), Serializable]
     public class EnemyTable : ScriptableObject

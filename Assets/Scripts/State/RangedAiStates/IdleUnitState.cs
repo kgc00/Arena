@@ -21,6 +21,8 @@ namespace State.RangedAiStates
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Moving, false);
+            
+            Debug.Log("entering idle");
         }
 
         public override UnitState HandleUpdate(InputValues input)

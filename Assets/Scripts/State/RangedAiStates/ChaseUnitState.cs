@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Units;
 using UnityEngine;
-using IdleUnitState = State.RangedAiStates.IdleUnitState;
 
 namespace State.RangedAiStates
 {
@@ -11,7 +10,7 @@ namespace State.RangedAiStates
         Transform targetPlayerTransform;
         private float movementSpeed;
         private static readonly int Moving = Animator.StringToHash("Moving");
-        private float attackRange = 3.0f;
+        private float attackRange = 12.0f;
         private static readonly int Attacking = Animator.StringToHash("Attacking");
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
@@ -24,11 +23,21 @@ namespace State.RangedAiStates
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Moving, true);
+
+            Debug.Log("entering chase");
+        }
+
+        public override void Exit()
+        {
+            if (Owner.Animator == null || !Owner.Animator) return;
+            Owner.Animator.SetBool(Moving, false);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
             if (targetPlayerTransform == null) return new IdleUnitState(Owner);
+
+            Debug.Log("chase update");
             
             UpdateUnitLocation();
             UpdateUnitRotation();

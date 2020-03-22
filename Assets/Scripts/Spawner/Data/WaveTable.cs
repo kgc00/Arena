@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spawner
+namespace Spawner.Data
 {
     [CreateAssetMenu(fileName = "WaveTable", menuName = "ScriptableObjects/WaveTable", order = 2), Serializable]
     public class WaveTable : ScriptableObject

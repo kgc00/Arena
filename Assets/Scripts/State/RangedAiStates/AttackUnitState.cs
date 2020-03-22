@@ -12,8 +12,8 @@ namespace State.RangedAiStates
         private readonly Transform targetPlayerTransform;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int Attacking = Animator.StringToHash("Attacking");
-        private float attackRange = 3.0f;
-        private float padding = 2.0f;
+        private float attackRange = 10.0f;
+        private float padding = 1.0f;
 
         public AttackUnitState(Unit owner, Transform targetPlayerTransform) : base(owner)
         {
@@ -24,17 +24,21 @@ namespace State.RangedAiStates
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Attacking, true);
-            Owner.Animator.SetBool(Moving, false);
+            
+            Debug.Log("entering attack");
         }
 
         public override void Exit()
         {
+            if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Attacking, false);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
             if (targetPlayerTransform == null) return new IdleUnitState(Owner);
+
+            Debug.Log("Attack update");
             
             if (ShouldReturnToIdle(out var unitState)) return unitState;
             if (ShouldReturnToChase(out unitState)) return unitState;

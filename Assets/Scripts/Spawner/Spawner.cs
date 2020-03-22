@@ -5,6 +5,7 @@ using UnityEngine;
 using Utils;
 using  System.Linq;
 using Enums;
+using Spawner.Data;
 using Random = UnityEngine.Random;
 
 namespace Spawner

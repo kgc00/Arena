@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: EnemyTable
-  m_EditorClassIdentifier: Assembly-CSharp:Spawner:EnemyTable
+  m_Script: {fileID: 11500000, guid: 197cc9a3fcb24cb39899456fe9eb7090, type: 3}
+  m_Name: melee1
+  m_EditorClassIdentifier: 
   Enemy: 0
   Amount: 4

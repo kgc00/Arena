@@ -53,8 +53,8 @@ namespace Units
             
             //State
             state = StateHelper.StateFromEnum(stateBehaviour, this);
-            Debug.Log(stateBehaviour);
-            Debug.Log(state);
+            // Debug.Log(stateBehaviour);
+            // Debug.Log(state);
             state.Enter ();
 
             Initialized = true;

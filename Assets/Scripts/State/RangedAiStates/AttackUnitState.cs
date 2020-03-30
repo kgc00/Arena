@@ -1,4 +1,5 @@
-﻿using Controls;
+﻿using System.Threading.Tasks;
+using Controls;
 using Enums;
 using JetBrains.Annotations;
 using Stats;
@@ -24,10 +25,19 @@ namespace State.RangedAiStates
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Attacking, true);
+
+            Activate();
             
             Debug.Log("entering attack");
         }
 
+        async Task Activate()
+        {
+            await Task.Delay(1000);
+            
+            Debug.Log("Test");
+        }
+        
         public override void Exit()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
@@ -88,7 +98,7 @@ namespace State.RangedAiStates
         private void DamageUnit(Collision other)
         {
             // Apply damage
-            other.gameObject.GetComponent<HealthComponent>().AdjustHealth(-Owner.BaseStats.Attack.Value);
+            other.gameObject.GetComponent<HealthComponent>().AdjustHealth(-1f);
             Debug.Log("hit player");
         }
     }

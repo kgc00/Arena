@@ -21,7 +21,7 @@ namespace State.PlayerStates
         public RunUnitState(Unit owner) : base(owner)
         {
             body = owner.Rigidbody;
-            movementSpeed = 5 * owner.BaseStats.MovementSpeed.Value;
+            movementSpeed = 5;
         }
 
         public override UnitState HandleUpdate(InputValues input)

@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Spawner.Data
 {
-    [CreateAssetMenu(fileName = "WaveTable", menuName = "ScriptableObjects/WaveTable", order = 2), Serializable]
+    [CreateAssetMenu(fileName = "Wave Table", menuName = "ScriptableObjects/Spawns/Wave Table", order = 2), Serializable]
     public class WaveTable : ScriptableObject
     {
-        [SerializeField] public List<EnemyTable> Wave;
+        [SerializeField] public List<UnitTable> Wave;
         [SerializeField] public int WaveNumber;
     }
 }

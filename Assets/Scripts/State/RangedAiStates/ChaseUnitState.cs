@@ -16,7 +16,7 @@ namespace State.RangedAiStates
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
             targetPlayerTransform = playerTransform;
-            movementSpeed = owner.BaseStats.MovementSpeed.Value;
+            movementSpeed = 4;
         }
 
         public override void Enter()

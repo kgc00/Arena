@@ -84,7 +84,7 @@ namespace State.MeleeAiStates
         private void DamageUnit(Collision other)
         {
             // Apply damage
-            other.gameObject.GetComponent<HealthComponent>().AdjustHealth(-Owner.BaseStats.Attack.Value);
+            other.gameObject.GetComponent<HealthComponent>().AdjustHealth(-1f);
             Debug.Log("hit player");
         }
     }

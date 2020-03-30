@@ -6,19 +6,11 @@ using Utils;
 using  System.Linq;
 using Enums;
 using Spawner.Data;
+using Units.Data;
 using Random = UnityEngine.Random;
 
 namespace Spawner
 {
-    public enum Enemies
-    {
-        Melee,
-        Charging,
-        Ranged,
-        BombThrowing,
-        SuicideBomber,
-        Boss
-    }
 
     public enum Intervals
     {
@@ -106,18 +98,19 @@ namespace Spawner
             Vector3 spawnerPos = owner.transform.position;
             Vector3 extentNegative = spawnerPos - owner.Bounds/2;
             Vector3 extentPositive = spawnerPos + owner.Bounds/2;
-            foreach (EnemyTable enemyTable in current.Wave)
+            foreach (UnitTable unitTable in current.Wave)
             {
-                Debug.Log($"Spawning {enemyTable.Amount} {enemyTable.Enemy}");
-                for (int i = 0; i < enemyTable.Amount; i++)
+                Debug.Log($"Spawning {unitTable.Amount} {unitTable.Unit}");
+                for (int i = 0; i < unitTable.Amount; i++)
                 {
                     var x = Random.Range(extentNegative.x, extentPositive.x);
                     var y = 1.0f;
                     var z = Random.Range(extentNegative.z, extentPositive.z);
                     var spawnPos = new Vector3(x,y,z);
                     owner.OwningPlayer.InstantiateUnit(
-                        Resources.Load<GameObject>(SpawnHelper.PathFromEnemyType(enemyTable.Enemy)),
-                        spawnPos
+                        SpawnHelper.PrefabFromUnitType(unitTable.Unit),
+                        unitData: SpawnHelper.DataFromUnitType(unitTable.Unit),
+                        pos: spawnPos
                     );
                 }
             }

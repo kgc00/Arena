@@ -4,6 +4,6 @@ namespace Enums
         Local,
         Remote,
         Ai,
-        UnassignedS
+        Unassigned
     }
 }

@@ -1,4 +1,5 @@
-﻿using Units;
+﻿using Abilities.Data;
+using Units;
 using UnityEngine;
 
 namespace Abilities

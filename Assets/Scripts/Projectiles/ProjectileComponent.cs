@@ -41,10 +41,7 @@ namespace Projectiles
             }
             
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
-            if (hitGeometry)
-            {
-                Destroy(gameObject);
-            }
+            if (hitGeometry) Destroy(gameObject);
         }
     }
 }

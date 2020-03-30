@@ -4,6 +4,7 @@ using Controls;
 using State;
 using State.PlayerStates;
 using Stats;
+using Units.Data;
 using UnityEngine;
 using Utils;
 
@@ -13,8 +14,7 @@ namespace Units
     {
         public static Action<Unit> OnDeath = delegate {  };
         public Player Owner { get; private set; }
-        public BaseStats BaseStats { get; private set; }
-        public Stats.Stats initStatValues;
+        public Units.Types type;
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }
         UnitState state;
@@ -22,10 +22,11 @@ namespace Units
         Controller controller;
         public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
-        public ExperienceComponent ExperienceComponent { get; private set;  }
+        public ExperienceComponent ExperienceComponent { get; private set; }
+        public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
-        public Unit Initialize (Player owner) {
+        public Unit Initialize (Player owner, UnitData data) {
             //Owner
             this.Owner = owner;
 
@@ -38,18 +39,14 @@ namespace Units
             // Animator
             if (Animator == null) Animator = GetComponentInChildren<Animator>();
             
-            //Stats
-            if(initStatValues == null) throw new Exception("Initial Stat Values must be set.");
-            if (BaseStats == null)BaseStats = new BaseStats(initStatValues);
-            
             // Health
-            if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>().Initialize(this);
+            if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>().Initialize(this, data.health);
 
             // Abilities
-            if (AbilityComponent == null)AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this);
+            if (AbilityComponent == null)AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this, data.abilities);
             
             //Experience
-            if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>().Initialize(this);
+            if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>().Initialize(this, data.experience);
             
             //State
             state = StateHelper.StateFromEnum(stateBehaviour, this);
@@ -60,6 +57,8 @@ namespace Units
             Initialized = true;
             return this;
         }
+
+        void Test() => Debug.Log("Called");
 
         void Update () {
             if (!Initialized) return;

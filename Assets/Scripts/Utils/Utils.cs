@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Abilities;
+using Abilities.AttackAbilities;
+using Abilities.Data;
 using Controls;
 using Enums;
 using Spawner;
@@ -6,35 +10,97 @@ using State;
 using State.MeleeAiStates;
 using State.RangedAiStates;
 using Units;
+using Units.Data;
 using UnityEngine;
+using Types = Abilities.Types;
 
 namespace Utils
 {
-    public static class SpawnHelper
+    public static class AbilityFactory
     {
-        public static string PathFromEnemyType(Enemies enemy)
+        public static List<Ability> CreateAbilitiesFromData(List<AbilityData> data, Unit owner)
         {
-            switch (enemy)
+            List<Ability> retVal = new List<Ability>();
+            foreach (var ability in data)
             {
-                case Enemies.Melee:
-                    return "Units/Enemies/Slime/Melee AI";
-                case Enemies.Ranged:
-                    return "Units/Enemies/Lich/Ranged AI";
+                Ability instance;
+                switch (ability.type)
+                {
+                    case Types.ShootCrossbow:
+                        instance = owner.gameObject.AddComponent<ShootCrossbow>().Initialize((AttackAbilityData)ability, owner);
+                        retVal.Add(instance);
+                        break;
+                    default:
+                        break;
+                }
             }
 
-            return null;
+            return retVal;
         }
     }
+
+    public static class SpawnHelper
+    {
+        public static GameObject PrefabFromUnitType(Units.Types unit)
+        {
+            string s = "";
+            switch (unit)
+            {
+                // Enemies
+                case Units.Types.Melee:
+                    s = "Units/Enemies/Slime/Melee AI";
+                    break;
+                case Units.Types.Ranged:
+                    s = "Units/Enemies/Lich/Ranged AI";
+                    break;
+
+                // Playables
+                case Units.Types.Hunter:
+                    s = "Units/Playable Characters/Hunter";
+                    break;
+            }
+
+            if (s == "") throw new Exception("Unable to locate Prefab");
+
+            return Resources.Load<GameObject>(s);
+        }
+
+        public static UnitData DataFromUnitType(Units.Types unit)
+        {
+            var s = "";
+            switch (unit)
+            {
+                // Enemies
+                case Units.Types.Melee:
+                    s = "Data/Beastiary/Melee Ai Data";
+                    break;
+                case Units.Types.Ranged:
+                    s = "Data/Beastiary/Ranged Ai Data";
+                    break;
+
+                // Playable
+                case Units.Types.Hunter:
+                    s = "Data/Playable Characters/Hunter Data";
+                    break;
+            }
+
+            if (s == "") throw new Exception("Unable to locate Data");
+
+            return Resources.Load<UnitData>(s);
+        }
+    }
+
     public static class PlayerHelper
     {
         private static HashSet<Player> players = new HashSet<Player>();
+
         public static void AddPlayer(Player newPlayer)
         {
             if (players.Contains(newPlayer)) return;
             players.Add(newPlayer);
         }
     }
-    
+
     public static class MouseHelper
     {
         static Plane plane = new Plane(Vector3.up, 0f);
@@ -64,28 +130,29 @@ namespace Utils
             var transform = owner.transform;
             return transform.position + transform.forward * 25;
         }
-        
+
         public static void UpdatePlayerRotation(InputValues input, Unit owner, Stat movementSpeed)
         {
             var motion = GetMovementFromInput(input, movementSpeed);
-            
+
             if (input.ActiveControl == ControllerType.Delta)
                 UpdatePlayerRotationForKeyboard(input, motion, owner);
-            else if (input.ActiveControl ==  ControllerType.GamePad)
+            else if (input.ActiveControl == ControllerType.GamePad)
                 UpdatePlayerRotationForGamepad(input, motion, owner, movementSpeed);
             else
                 Debug.Log("updating for neither");
         }
 
-        private static void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion, Unit owner, Stat movementSpeed)
+        private static void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion, Unit owner,
+            Stat movementSpeed)
         {
             // Debug.Log("updating for gamepad");
 
             var posX = input.Turn * movementSpeed.Value * Time.deltaTime;
             var posY = 0;
-            var posZ = input.Look * movementSpeed.Value * Time.deltaTime;    
-            var rotationVal = new Vector3(posX,posY,posZ);
-        
+            var posZ = input.Look * movementSpeed.Value * Time.deltaTime;
+            var rotationVal = new Vector3(posX, posY, posZ);
+
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,
                 Quaternion.LookRotation(rotationVal),
                 Time.deltaTime * 10f);
@@ -97,13 +164,13 @@ namespace Utils
             var mousePos = Utils.MouseHelper.GetWorldPosition();
 
             var transform = owner.transform;
-            
+
             var difference = mousePos - transform.position;
             owner.transform.rotation = Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(difference),
                 Time.deltaTime * 10f);
         }
-        
+
         public static Vector3 GetMovementFromInput(InputValues input, Stat movementSpeedStat)
         {
             var movementSpeed = movementSpeedStat.Value;

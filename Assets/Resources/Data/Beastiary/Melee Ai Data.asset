@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd0273c783324ecd800477c8f46a51b6, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: e299bbfc1057413ca68d6bd1b6d2649b, type: 3}
+  m_Name: Melee Ai Data
   m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  Health: 3
-  Attack: 1
-  Defense: 0
-  Bounty: 3
+  abilities: []
+  health:
+    maxHp: 3
+    currentHp: 3
+  experience:
+    currentExp: 0
+    bounty: 2

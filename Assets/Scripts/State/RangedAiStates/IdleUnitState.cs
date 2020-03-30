@@ -13,7 +13,7 @@ namespace State.RangedAiStates
 
         public IdleUnitState(Unit owner) : base(owner)
         {
-            movementSpeed = owner.BaseStats.MovementSpeed.Value;
+            movementSpeed = 4f;
             // playerTransform = Locator.GetClosestPlayerUnit(Owner.transform.position);
         }
 

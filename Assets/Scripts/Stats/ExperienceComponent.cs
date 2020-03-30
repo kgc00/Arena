@@ -1,4 +1,5 @@
 ﻿using Enums;
+using Stats.Data;
 using Units;
 using UnityEngine;
 
@@ -11,10 +12,10 @@ namespace Stats
         public int CurrentExp { get; private set; }
         public int Bounty;
         
-        public ExperienceComponent Initialize (Unit owner) {
+        public ExperienceComponent Initialize (Unit owner, ExperienceData data) {
             this.Owner = owner;
-            CurrentExp = 0;
-            this.Bounty = (int)owner.BaseStats.Bounty.Value;
+            CurrentExp = data.currentExp;
+            this.Bounty = data.bounty;
             Unit.OnDeath += AwardBounty;
             return this;
         }
@@ -26,20 +27,18 @@ namespace Stats
             CheckForLevelUp(CurrentExp);
         }
 
-         void CheckForLevelUp(int currentExp)
-        {
-            
-        }
+         void CheckForLevelUp(int currentExp) { }
 
         private void AwardBounty(Unit unit)
         {
             // Award xp to local player if monster died
             bool unitWasNotAi = unit.Owner.ControlType != ControlType.Ai;
-            bool thisIsNotAPlayer = Owner.Owner.ControlType != ControlType.Local;
-            if (unitWasNotAi || thisIsNotAPlayer) return;
+            bool ownerIsAi = Owner.Owner.ControlType != ControlType.Local;
             
-            Debug.Log($"Awarding {unit.BaseStats.Bounty.Value} EXP");
-            AdjustExperience((int)unit.BaseStats.Bounty.Value);
+            if (unitWasNotAi || ownerIsAi) return;
+            
+            Debug.Log($"Awarding {unit.ExperienceComponent.Bounty} EXP");
+            AdjustExperience(unit.ExperienceComponent.Bounty);
         }
     }
 }

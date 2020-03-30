@@ -13,7 +13,7 @@ namespace State.MeleeAiStates
 
         public IdleUnitState(Unit owner) : base(owner)
         {
-            movementSpeed = owner.BaseStats.MovementSpeed.Value;
+            movementSpeed = 2f;
             // playerTransform = Locator.GetClosestPlayerUnit(Owner.transform.position);
         }
 

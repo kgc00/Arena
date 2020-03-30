@@ -1,20 +1,21 @@
-﻿using Units;
+﻿using Stats.Data;
+using Units;
 using UnityEngine;
 
 namespace Stats
 {
     public class HealthComponent : MonoBehaviour
     {
-        public static System.Action<Unit, float> onHealthChanged = delegate { };
-        public Unit Owner;
+        public static System.Action<Unit, float> OnHealthChanged = delegate { };
+        public Unit Owner { get; private set; }
         public float MaxHp { get; private set; }
         public float CurrentHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
         
-        public HealthComponent Initialize (Unit owner) {
+        public HealthComponent Initialize (Unit owner, HealthData healthData) {
             this.Owner = owner;
-            this.MaxHp = owner.BaseStats.Health.Value;
-            CurrentHp = MaxHp;
+            this.MaxHp = healthData.maxHp;
+            CurrentHp = healthData.currentHp;
             return this;
         }
 
@@ -23,7 +24,7 @@ namespace Stats
             var prevAmount = CurrentHp;
             CurrentHp = Mathf.Clamp (CurrentHp + amount, 0, MaxHp);
 
-            // Debug.Log($"current health {CurrentHp}");
+            Debug.Log($"current health {CurrentHp}");
             if (CurrentHp <= 0)
             {
                 Debug.Log($"{Owner} died");
@@ -31,14 +32,14 @@ namespace Stats
                 Owner.UnitDeath();
             }
 
-            onHealthChanged (Owner, prevAmount);
+            OnHealthChanged (Owner, prevAmount);
         }
 
         internal void Refill () {
             var prevAmount = CurrentHp;
             CurrentHp = MaxHp;
 
-            onHealthChanged (Owner, prevAmount);
+            OnHealthChanged (Owner, prevAmount);
         }
     }
 }

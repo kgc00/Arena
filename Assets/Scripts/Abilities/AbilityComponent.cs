@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Abilities.Data;
 using Units;
 using UnityEngine;
 
@@ -9,16 +10,10 @@ namespace Abilities
     {
         public Unit Owner { get; private set; }
         [SerializeField] public List<Ability> equippedAbilities;
-        public AbilityComponent Initialize(Unit owner)
+        public AbilityComponent Initialize(Unit owner, List<AbilityData> abilities)
         {
             Owner = owner;
-            equippedAbilities = GetComponents<Ability>().ToList();
-
-            foreach (var ability in equippedAbilities)
-            {
-                ability.Owner = owner;
-            }
-
+            equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, owner);
             return this;
         }
     }

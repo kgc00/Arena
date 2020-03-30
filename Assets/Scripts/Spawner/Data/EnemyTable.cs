@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Spawner.Data
 {
-    [CreateAssetMenu(fileName = "EnemyTable", menuName = "ScriptableObjects/EnemyTable", order = 3), Serializable]
-    public class EnemyTable : ScriptableObject
+    [CreateAssetMenu(fileName = "Unit Table", menuName = "ScriptableObjects/Spawns/Unit Table", order = 3), Serializable]
+    public class UnitTable : ScriptableObject
     {
-        [SerializeField] public Enemies Enemy;
+        [SerializeField] public Units.Types Unit;
         [SerializeField] public int Amount;
     }
 }

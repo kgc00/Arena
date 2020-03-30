@@ -16,7 +16,7 @@ namespace State.MeleeAiStates
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
             targetPlayerTransform = playerTransform;
-            movementSpeed = owner.BaseStats.MovementSpeed.Value;
+            movementSpeed = 2;
         }
 
         public override void Enter()

@@ -2,12 +2,19 @@ using System;
 using System.Collections.Generic;
 using Enums;
 using Units;
+using Units.Data;
 using UnityEngine;
 using Utils;
 
-public class Player : MonoBehaviour {
-   [SerializeField] List<Unit> units;
-    public ControlType ControlType { get => controlType; }
+public class Player : MonoBehaviour
+{
+    [SerializeField] List<Unit> units;
+
+    public ControlType ControlType
+    {
+        get => controlType;
+    }
+
     [SerializeField] private ControlType controlType;
 
     private void Awake()
@@ -18,13 +25,12 @@ public class Player : MonoBehaviour {
         {
             // Debug.Log(unit);
             // Debug.Log(this);
-            unit.Initialize(this);
+            unit.Initialize(this,
+                data: SpawnHelper.DataFromUnitType(unit.type)
+            );
         }
     }
-    
-    public void InstantiateUnit(GameObject toInstantiate, Vector3 pos)
-    {
-       Instantiate(toInstantiate, pos, Quaternion.identity)?.GetComponent<Unit>()?.Initialize(this);
-    }
-    
+
+    public void InstantiateUnit(GameObject instance, UnitData unitData, Vector3 pos) =>
+        Instantiate(instance, pos, Quaternion.identity)?.GetComponent<Unit>()?.Initialize(this, unitData);
 }

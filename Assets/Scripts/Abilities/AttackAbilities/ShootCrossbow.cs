@@ -1,6 +1,8 @@
 ﻿using System;
+using Abilities.Data;
 using Projectiles;
 using Stats;
+using Units;
 using UnityEngine;
 
 namespace Abilities.AttackAbilities
@@ -8,16 +10,23 @@ namespace Abilities.AttackAbilities
     public class ShootCrossbow : AttackAbility
     {
         private Vector3 debugCurrentTarget;
-        private void OnEnable()
-        {
-            Damage = 1f;
-        }
 
         public override void Activate(Vector3 targetLocation)
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
         }
+
+        public override Ability Initialize(AttackAbilityData data, Unit owner)
+        {
+            Owner = owner;
+            Damage = data.Damage;
+            Range = data.Range;
+            AreaOfEffectRadius = data.AreaOfEffectRadius;
+            AffectedTargets = data.AffectedFactions;
+            return this;
+        }
+
 
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile)
         {
@@ -49,14 +58,10 @@ namespace Abilities.AttackAbilities
 
         public override void OnAbilityConnected(GameObject targetedUnit)
         {
-            var healthComponent = targetedUnit.GetComponent<HealthComponent>();
-            if (healthComponent == null)
-            {
-                Destroy(gameObject, 0.05f);
-                return;
-            }
-
-            healthComponent.AdjustHealth(-Damage);
+            var unit = targetedUnit.GetComponent<Unit>();
+            if (!AffectedTargets.Contains(unit.Owner.ControlType)) return;
+            
+            unit.HealthComponent.AdjustHealth(-Damage);
         }
     }
 }

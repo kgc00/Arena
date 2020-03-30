@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99db38d539150549afe946c94e12fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initStatValues: {fileID: 11400000, guid: 629681409c7c75f4f866c8fd868e3883, type: 2}
+  type: 3
   stateBehaviour: 3
 --- !u!54 &4962293764892747484
 Rigidbody:

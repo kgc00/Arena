@@ -18,7 +18,7 @@ namespace State.PlayerStates
 
         public IdleUnitState(Unit owner) : base(owner)
         {
-            movementSpeed = owner.BaseStats.MovementSpeed.Value;
+            movementSpeed = 5f;
         }
 
         public override void Enter()

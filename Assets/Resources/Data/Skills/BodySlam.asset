@@ -9,9 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
-  m_Name: Wave1
+  m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
+  m_Name: BodySlam
   m_EditorClassIdentifier: 
-  Wave:
-  - {fileID: 11400000, guid: 346e2ee80a78a8641ba269fdc93dead8, type: 2}
-  WaveNumber: 1
+  displayName: Body Slam
+  description: 
+  energyCost: 0
+  cooldown: 1
+  range: 3
+  areaOfEffectRadius: 0
+  type: 1
+  damage: 1
+  affectedFactions: 0000000002000000

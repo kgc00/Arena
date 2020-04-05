@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e299bbfc1057413ca68d6bd1b6d2649b, type: 3}
   m_Name: Ranged Ai Data
   m_EditorClassIdentifier: 
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: 9df6ed3037e55d94f8bf6fe79cf19f79, type: 2}
   health:
     maxHp: 4
     currentHp: 4
   experience:
     currentExp: 0
     bounty: 6
+  state: 3

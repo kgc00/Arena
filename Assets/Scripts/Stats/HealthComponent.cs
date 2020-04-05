@@ -20,11 +20,11 @@ namespace Stats
         }
 
         public void AdjustHealth (float amount) {
-            Debug.Log("adjusting health");
+            // Debug.Log("adjusting health");
             var prevAmount = CurrentHp;
             CurrentHp = Mathf.Clamp (CurrentHp + amount, 0, MaxHp);
 
-            Debug.Log($"current health {CurrentHp}");
+            // Debug.Log($"current health {CurrentHp}");
             if (CurrentHp <= 0)
             {
                 Debug.Log($"{Owner} died");

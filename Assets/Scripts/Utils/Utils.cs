@@ -5,6 +5,7 @@ using Abilities.AttackAbilities;
 using Abilities.Data;
 using Controls;
 using Enums;
+using JetBrains.Annotations;
 using Spawner;
 using State;
 using State.MeleeAiStates;
@@ -16,21 +17,34 @@ using Types = Abilities.Types;
 
 namespace Utils
 {
+    public static class MathHelpers
+    {
+        public static T Clamp<T>(T val, T min, T max) where T : IComparable<T>
+        {
+            if (val.CompareTo(min) < 0) return min;
+            else if(val.CompareTo(max) > 0) return max;
+            else return val;
+        }
+    }
     public static class AbilityFactory
     {
         public static List<Ability> CreateAbilitiesFromData(List<AbilityData> data, Unit owner)
         {
             List<Ability> retVal = new List<Ability>();
-            foreach (var ability in data)
+            foreach (var a in data)
             {
+                if (a == null) throw new Exception("Skill SO was unassigned");
+                
                 Ability instance;
-                switch (ability.type)
+                switch (a.type)
                 {
                     case Types.ShootCrossbow:
-                        instance = owner.gameObject.AddComponent<ShootCrossbow>().Initialize((AttackAbilityData)ability, owner);
+                        instance = owner.gameObject.AddComponent<ShootCrossbow>().Initialize((AttackAbilityData)a, owner);
                         retVal.Add(instance);
                         break;
-                    default:
+                    case Types.BodySlam:
+                        instance = owner.gameObject.AddComponent<BodySlam>().Initialize((AttackAbilityData)a, owner);
+                        retVal.Add(instance);
                         break;
                 }
             }

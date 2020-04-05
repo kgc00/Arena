@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Shoot Crossbow
+  m_Name: ShootCB
   m_EditorClassIdentifier: Assembly-CSharp:Abilities.Data:AttackAbilityData
-  DisplayName: Shoot Crossbow
-  Range: -1
-  EnergyCost: 0
-  AreaOfEffectRadius: 0
-  Description: Shoot
+  displayName: 
+  description: 
+  energyCost: 0
+  cooldown: 2
+  range: 0
+  areaOfEffectRadius: 0
   type: 0
-  Damage: 1
-  AffectedFactions: 02000000
+  damage: 1
+  affectedFactions: 02000000

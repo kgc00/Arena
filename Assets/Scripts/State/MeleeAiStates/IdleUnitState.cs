@@ -7,20 +7,22 @@ namespace State.MeleeAiStates
 {
     public class IdleUnitState : UnitState
     {
-        private readonly float movementSpeed;
-        private static readonly int Moving = Animator.StringToHash("Moving");
+        private readonly float movementSpeed = 2f;
         private Transform playerTransform;
+        private static readonly int Idle = Animator.StringToHash("Idle");
 
-        public IdleUnitState(Unit owner) : base(owner)
-        {
-            movementSpeed = 2f;
-            // playerTransform = Locator.GetClosestPlayerUnit(Owner.transform.position);
-        }
+        public IdleUnitState(Unit owner) : base(owner) { }
 
         public override void Enter()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetBool(Moving, false);
+            Owner.Animator.SetTrigger(Idle);
+        }
+
+        public override void Exit()
+        {
+            if (Owner.Animator == null || !Owner.Animator) return;
+            Owner.Animator.ResetTrigger(Idle);
         }
 
         public override UnitState HandleUpdate(InputValues input)

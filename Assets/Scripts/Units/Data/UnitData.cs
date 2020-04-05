@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Abilities;
 using Abilities.Data;
+using State;
 using Stats.Data;
 using UnityEngine;
 
@@ -15,5 +15,7 @@ namespace Units.Data
         [SerializeField] public HealthData health;
         // exp
         [SerializeField] public ExperienceData experience;
+        // States
+        [SerializeField] public UnitStateEnum state;
     }
 }

@@ -7,37 +7,37 @@ namespace State.RangedAiStates
 {
     public class ChaseUnitState : UnitState
     {
-        Transform targetPlayerTransform;
-        private float movementSpeed;
+        readonly Transform targetPlayerTransform;
+        private readonly float movementSpeed;
         private static readonly int Moving = Animator.StringToHash("Moving");
-        private float attackRange = 12.0f;
-        private static readonly int Attacking = Animator.StringToHash("Attacking");
+        private readonly float attackRange;
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
             targetPlayerTransform = playerTransform;
             movementSpeed = 4;
+            attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
         }
 
         public override void Enter()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetBool(Moving, true);
+            Owner.Animator.SetTrigger(Moving);
 
-            Debug.Log("entering chase");
+            // Debug.Log("entering chase");
         }
 
         public override void Exit()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetBool(Moving, false);
+            Owner.Animator.ResetTrigger(Moving);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
             if (targetPlayerTransform == null) return new IdleUnitState(Owner);
 
-            Debug.Log("chase update");
+            // Debug.Log("chase update");
             
             UpdateUnitLocation();
             UpdateUnitRotation();
@@ -61,10 +61,7 @@ namespace State.RangedAiStates
 
             var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
             if (distanceToUnit > attackRange) return false;
-
             
-            Owner.Animator.SetBool(Attacking, true);
-            Owner.Animator.SetBool(Moving, false);
             unitState = new AttackUnitState(Owner, targetPlayerTransform);
             return true;
         }
@@ -72,8 +69,8 @@ namespace State.RangedAiStates
         private void UpdateUnitLocation()
         {
             Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
-                targetPlayerTransform.position,
-                movementSpeed * Time.deltaTime);
+                                                            targetPlayerTransform.position,
+                                                            movementSpeed * Time.deltaTime);
         }
     }
 }

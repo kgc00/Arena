@@ -2,12 +2,12 @@
 using Enums;
 using UnityEngine;
 
-namespace Abilities.AttackAbilities
+namespace Abilities
 {
     public interface IDamageDealer
     {
         
         [SerializeField]  float Damage { get; }
-        [SerializeField] List<ControlType> AffectedTargets { get; }
+        [SerializeField] List<ControlType> AffectedFactions { get; }
     }
 }

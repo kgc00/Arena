@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e299bbfc1057413ca68d6bd1b6d2649b, type: 3}
   m_Name: Melee Ai Data
   m_EditorClassIdentifier: 
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: e37c9188fce8bfd4c88b25e2453c92ed, type: 2}
   health:
     maxHp: 3
     currentHp: 3
   experience:
     currentExp: 0
     bounty: 2
+  state: 2

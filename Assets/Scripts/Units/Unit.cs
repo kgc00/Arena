@@ -2,7 +2,6 @@ using System;
 using Abilities;
 using Controls;
 using State;
-using State.PlayerStates;
 using Stats;
 using Units.Data;
 using UnityEngine;
@@ -18,11 +17,11 @@ namespace Units
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }
         UnitState state;
-        [SerializeField] private UnitStateEnum stateBehaviour;
         Controller controller;
         public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
         public ExperienceComponent ExperienceComponent { get; private set; }
+        public CoroutineHelper CoroutineHelper { get; private set; }
         public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
@@ -48,10 +47,11 @@ namespace Units
             //Experience
             if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>().Initialize(this, data.experience);
             
+            // CoroutineHelper
+            if (CoroutineHelper == null) CoroutineHelper = gameObject.AddComponent<CoroutineHelper>().Initialize(this);
+            
             //State
-            state = StateHelper.StateFromEnum(stateBehaviour, this);
-            // Debug.Log(stateBehaviour);
-            // Debug.Log(state);
+            state = StateHelper.StateFromEnum(data.state, this);
             state.Enter ();
 
             Initialized = true;

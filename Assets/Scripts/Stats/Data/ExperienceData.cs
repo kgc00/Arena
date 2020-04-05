@@ -6,7 +6,7 @@ namespace Stats.Data
     [Serializable]
     public class ExperienceData
     {
-        [SerializeField] public int currentExp;
+        [HideInInspector] public int currentExp;
         [SerializeField] public int bounty;
     }
 }

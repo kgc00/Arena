@@ -58,7 +58,8 @@ namespace Spawner
 
         private void OnEnable()
         {
-            Enabled = true;
+            // Enabled = true;
+            Enabled = false;
         }
 
         public void Update()
@@ -121,15 +122,24 @@ namespace Spawner
 
     public class Spawner : MonoBehaviour
     {
+        #region Properties
+        [Header("Center")]
+        [Range(-20f, 20f), SerializeField] private float xCenter = 0f;
+        [Range(-20f, 20f), SerializeField] private float zCenter = 0f;
+        [Header("Size")]
+        [Range(-25f, 25f), SerializeField] private float xOffset = 0f;
+        [Range(-25f, 25f), SerializeField] private float zOffset = 0f;
         [Range(1f, 50f), SerializeField] private float size = 48f;
         public Vector3 Bounds { get; private set; }
         [SerializeField] private Interval interval;
         [SerializeField] private WaveHandler handler;
         public Player OwningPlayer { get; private set; }
+        #endregion
 
         private void OnEnable()
         {
-            Bounds = new Vector3(size, 1f, size);
+            transform.position = new Vector3(xCenter, 0, zCenter);
+            Bounds = new Vector3(size+ xOffset, 1f, size + zOffset);
             // WILL BREAK IF WE ADD MORE THAN ONE AI PLAYER
             OwningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
             if (handler == null) handler = new WaveHandler(Resources.Load<SpawnTable>("Data/Spawns/SpawnTable"), this);
@@ -142,9 +152,11 @@ namespace Spawner
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
+            transform.position = new Vector3(xCenter, 0, zCenter);
+            Vector3 debugPos = new Vector3(size + xOffset, 1f, size + zOffset);
             Gizmos.DrawWireCube(
                 transform.position,
-                new Vector3(size, 1f, size)
+                debugPos
             );
         }
 #endif

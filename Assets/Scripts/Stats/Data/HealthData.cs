@@ -7,6 +7,6 @@ namespace Stats.Data
     public class HealthData
     {
         [SerializeField] public float maxHp;
-        [SerializeField] public float currentHp;
+        [HideInInspector] public float currentHp;
     }
 }

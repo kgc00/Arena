@@ -153,7 +153,6 @@ GameObject:
   - component: {fileID: 2637915664189274584}
   - component: {fileID: 2637915664189274566}
   - component: {fileID: 2637915664189274567}
-  - component: {fileID: 2637915664189274565}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -189,8 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99db38d539150549afe946c94e12fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initStatValues: {fileID: 11400000, guid: b44a33acda644f441a3abb203ea669c1, type: 2}
-  stateBehaviour: 1
+  type: 0
 --- !u!54 &2637915664189274566
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -221,20 +219,6 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
---- !u!114 &2637915664189274565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2637915664189274586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5f7049563846caa4f0f66c32c415f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
-  affectedTargets: 02000000
 --- !u!1001 &2637915664091064776
 PrefabInstance:
   m_ObjectHideFlags: 0

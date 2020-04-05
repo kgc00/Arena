@@ -1,6 +1,7 @@
 ﻿namespace Abilities
 {
     public enum Types {
-        ShootCrossbow
+        ShootCrossbow,
+        BodySlam
     }
 }

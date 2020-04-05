@@ -4,32 +4,56 @@ using JetBrains.Annotations;
 using Stats;
 using Units;
 using UnityEngine;
+using System.Collections;
 
 namespace State.MeleeAiStates
 {
     public class AttackUnitState : UnitState
     {
         private readonly Transform targetPlayerTransform;
-        private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int Attacking = Animator.StringToHash("Attacking");
-        private float attackRange = 3.0f;
-        private float padding = 2.0f;
+        private readonly float attackRange;
+        private float padding = 1.0f;
+        private static readonly int Idle = Animator.StringToHash("Idle");
+        private bool attackComplete;
 
         public AttackUnitState(Unit owner, Transform targetPlayerTransform) : base(owner)
         {
             this.targetPlayerTransform = targetPlayerTransform;
+            attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
+            attackComplete = false;
         }
 
         public override void Enter()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetBool(Attacking, true);
-            Owner.Animator.SetBool(Moving, false);
+            Owner.Animator.SetTrigger(Attacking);  
         }
 
+        private IEnumerator HandleAttack()
+        {
+            
+            if (Owner.Animator == null || !Owner.Animator) yield break;
+            Owner.Animator.SetTrigger(Idle);
+            
+            while (Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            
+            Owner.Animator.ResetTrigger(Idle);
+            Owner.Animator.SetTrigger(Attacking);
+            yield return new WaitForSeconds(0.45f);
+            
+            Owner.AbilityComponent.longestRangeAbility.Activate(targetPlayerTransform.position);
+            Debug.Log("Finishing attack execution");
+            attackComplete = true;
+        } 
+        
         public override void Exit()
         {
-            Owner.Animator.SetBool(Attacking, false);
+            if (Owner.Animator == null || !Owner.Animator) return;
+            Owner.Animator.ResetTrigger(Attacking);
         }
 
         public override UnitState HandleUpdate(InputValues input)
@@ -40,7 +64,17 @@ namespace State.MeleeAiStates
             if (ShouldReturnToChase(out unitState)) return unitState;
 
             UpdateUnitRotation();
+            if (ShouldAttack(out unitState)) return unitState;
             return unitState;
+        }
+
+        private bool ShouldAttack(out UnitState unitState)
+        {
+            unitState = null;
+            if (!attackComplete || Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown) return false;
+
+            unitState = new AttackUnitState(Owner, targetPlayerTransform);
+            return true;
         }
 
         private bool ShouldReturnToIdle([CanBeNull] out UnitState unitState)
@@ -56,7 +90,7 @@ namespace State.MeleeAiStates
             var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
             if (distanceToUnit <= attackRange + padding) return false;
             
-            Owner.Animator.SetBool(Attacking, false);
+            Owner.Animator.SetTrigger(Attacking);
             unitState = new ChaseUnitState(Owner, targetPlayerTransform);
             return true;
         }

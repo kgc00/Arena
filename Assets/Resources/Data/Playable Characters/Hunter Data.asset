@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Hunter Data
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 11400000, guid: 23180b37dc2d8bf4ea73a4aad8023327, type: 2}
+  - {fileID: 11400000, guid: 2ee4e34026eeca249b8027b80678a1d5, type: 2}
   health:
     maxHp: 3
     currentHp: 3
   experience:
     currentExp: 0
     bounty: 3
+  state: 1

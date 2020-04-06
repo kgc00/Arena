@@ -7,6 +7,7 @@ using  System.Linq;
 using Enums;
 using Spawner.Data;
 using Units.Data;
+using UnityEngine.InputSystem.Controls;
 using Random = UnityEngine.Random;
 
 namespace Spawner
@@ -32,6 +33,13 @@ namespace Spawner
         float SpawnInterval { get; }
         float TimeSinceLastSpawn { get; }
     }
+
+    public interface IUnitInterval : IInterval
+    {
+        float DelayBetweenWaves { get; }
+        float CurrentDelay { get; }
+        List<Unit> CurrentWave { get; }
+    }
     
     public abstract class Interval : MonoBehaviour
     {
@@ -39,11 +47,43 @@ namespace Spawner
         public Spawner Owner { get; private set; }
         public Action Spawn { get; private set; }
 
-        public Interval Initialize(Action spawn, Spawner owner)
+        public virtual Interval Initialize(Action spawn, Spawner owner)
         {
             Spawn = spawn;
             Owner = owner;
             return this;
+        }
+    }
+
+    public class ContinuousInterval : Interval, IUnitInterval
+    {
+        public bool Enabled { get; private set; }
+        public void Enable() => Enabled = true;
+        public void Disable() => Enabled = false;
+        public float DelayBetweenWaves { get; private set; } = 0f;
+        public float CurrentDelay { get; private set; } = 0f;
+        public List<Unit> CurrentWave { get; private set;} = new List<Unit>();
+        public override Interval Initialize(Action spawn, Spawner owner)
+        {
+            CurrentWave = owner.OwningPlayer.Units;
+            return base.Initialize(spawn, owner);
+        }
+        private void OnEnable() => Enabled = true;
+        public void Update() => HandleUpdate();
+        public void HandleUpdate()
+        {
+            if (!Enabled) return;
+            
+            // return if wave is alive
+            if (CurrentWave.Count > 0) return;
+
+            CurrentDelay = Mathf.Clamp(CurrentDelay - Time.deltaTime, 0, DelayBetweenWaves);
+
+            // wait for delay between waves
+            if (CurrentDelay > 0) return;
+            
+            Spawn();
+            CurrentDelay = DelayBetweenWaves;
         }
     }
     
@@ -56,16 +96,9 @@ namespace Spawner
         public float SpawnInterval { get; private set; } = 6f;
         public float TimeSinceLastSpawn { get; private set;}
 
-        private void OnEnable()
-        {
-            // Enabled = true;
-            Enabled = false;
-        }
+        private void OnEnable() => Enabled = false;
 
-        public void Update()
-        {
-            HandleUpdate();
-        }
+        public void Update() => HandleUpdate();
 
         public void HandleUpdate()
         {
@@ -116,8 +149,6 @@ namespace Spawner
                 }
             }
         }
-
-        
     }
 
     public class Spawner : MonoBehaviour
@@ -131,8 +162,8 @@ namespace Spawner
         [Range(-25f, 25f), SerializeField] private float zOffset = 0f;
         [Range(1f, 50f), SerializeField] private float size = 48f;
         public Vector3 Bounds { get; private set; }
-        [SerializeField] private Interval interval;
-        [SerializeField] private WaveHandler handler;
+        [SerializeField] public Interval Interval {get; private set;}
+        [SerializeField] public WaveHandler Handler {get; private set;}
         public Player OwningPlayer { get; private set; }
         #endregion
 
@@ -142,10 +173,10 @@ namespace Spawner
             Bounds = new Vector3(size+ xOffset, 1f, size + zOffset);
             // WILL BREAK IF WE ADD MORE THAN ONE AI PLAYER
             OwningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
-            if (handler == null) handler = new WaveHandler(Resources.Load<SpawnTable>("Data/Spawns/SpawnTable"), this);
-            if (interval == null) interval = gameObject.AddComponent<TimerInterval>().Initialize(handler.Spawn, this);
+            if (Handler == null) Handler = new WaveHandler(Resources.Load<SpawnTable>("Data/Spawns/SpawnTable"), this);
+            if (Interval == null) Interval = gameObject.AddComponent<ContinuousInterval>().Initialize(Handler.Spawn, this);
             
-            handler.Spawn();
+            Handler.Spawn();
         }
         
 #if UNITY_EDITOR

@@ -86,6 +86,7 @@ namespace Units
         public void UnitDeath()
         {
             OnDeath(this);
+            Owner.RemoveUnit(this);
             Destroy(gameObject, 0.1f);
         }
     }

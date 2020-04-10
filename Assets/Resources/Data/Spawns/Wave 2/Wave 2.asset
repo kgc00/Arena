@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9090be4779543d881112b08ef6bf0ad, type: 3}
-  m_Name: SpawnTable
+  m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
+  m_Name: Wave 2
   m_EditorClassIdentifier: 
-  Waves:
-  - {fileID: 11400000, guid: d9f2638c24a71e34db2e18fbaecf464b, type: 2}
-  - {fileID: 11400000, guid: 8c5426b76377d83469823c0cb8e13bbf, type: 2}
+  Wave:
+  - {fileID: 11400000, guid: e0cff18432dde9d418ef19922c38615d, type: 2}
+  - {fileID: 11400000, guid: e6355a4a9b09eb545a7d576613d96b3a, type: 2}
+  WaveNumber: 2

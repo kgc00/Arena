@@ -117,13 +117,15 @@ namespace Spawner
     public class WaveHandler
     {
         private SpawnTable spawnTable;
-        private WaveTable current;
+        private WaveTable currentWave;
+        private int currentIndex;
         private Spawner owner;
 
         public WaveHandler(SpawnTable table, Spawner owner)
         {
             spawnTable = table;
-            current =  table.Waves[0];
+            currentIndex = 0;
+            currentWave =  table.Waves[currentIndex];
             this.owner = owner;
         }
 
@@ -132,7 +134,7 @@ namespace Spawner
             Vector3 spawnerPos = owner.transform.position;
             Vector3 extentNegative = spawnerPos - owner.Bounds/2;
             Vector3 extentPositive = spawnerPos + owner.Bounds/2;
-            foreach (UnitTable unitTable in current.Wave)
+            foreach (UnitTable unitTable in currentWave.Wave)
             {
                 Debug.Log($"Spawning {unitTable.Amount} {unitTable.Unit}");
                 for (int i = 0; i < unitTable.Amount; i++)
@@ -148,6 +150,10 @@ namespace Spawner
                     );
                 }
             }
+
+            if (spawnTable.Waves.Count <= currentIndex) return;
+            currentIndex++;
+            currentWave = spawnTable.Waves[currentIndex];
         }
     }
 
@@ -155,12 +161,16 @@ namespace Spawner
     {
         #region Properties
         [Header("Center")]
-        [Range(-20f, 20f), SerializeField] private float xCenter = 0f;
-        [Range(-20f, 20f), SerializeField] private float zCenter = 0f;
+        [Range(-20f, 20f), SerializeField] private float xPos = 0f;
+        [Range(-20f, 20f), SerializeField] private float zPos = 0f;
         [Header("Size")]
-        [Range(-25f, 25f), SerializeField] private float xOffset = 0f;
-        [Range(-25f, 25f), SerializeField] private float zOffset = 0f;
+        [Range(-25f, 25f), SerializeField] private float xModifier = 0f;
+        [Range(-25f, 25f), SerializeField] private float zModifier = 0f;
         [Range(1f, 50f), SerializeField] private float size = 48f;
+
+        [Header("Data")]
+        [SerializeField] public Intervals interval;
+        [SerializeField] public SpawnTable table;
         public Vector3 Bounds { get; private set; }
         [SerializeField] public Interval Interval {get; private set;}
         [SerializeField] public WaveHandler Handler {get; private set;}
@@ -169,12 +179,12 @@ namespace Spawner
 
         private void OnEnable()
         {
-            transform.position = new Vector3(xCenter, 0, zCenter);
-            Bounds = new Vector3(size+ xOffset, 1f, size + zOffset);
+            transform.position = new Vector3(xPos, 0, zPos);
+            Bounds = new Vector3(size+ xModifier, 1f, size + zModifier);
             // WILL BREAK IF WE ADD MORE THAN ONE AI PLAYER
             OwningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
-            if (Handler == null) Handler = new WaveHandler(Resources.Load<SpawnTable>("Data/Spawns/SpawnTable"), this);
-            if (Interval == null) Interval = gameObject.AddComponent<ContinuousInterval>().Initialize(Handler.Spawn, this);
+            if (Handler == null) Handler = new WaveHandler(table, this);
+            if (Interval == null) Interval = SpawnHelper.IntervalFromType(interval, gameObject).Initialize(Handler.Spawn, this);
             
             Handler.Spawn();
         }
@@ -183,8 +193,8 @@ namespace Spawner
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            transform.position = new Vector3(xCenter, 0, zCenter);
-            Vector3 debugPos = new Vector3(size + xOffset, 1f, size + zOffset);
+            transform.position = new Vector3(xPos, 0, zPos);
+            Vector3 debugPos = new Vector3(size + xModifier, 1f, size + zModifier);
             Gizmos.DrawWireCube(
                 transform.position,
                 debugPos

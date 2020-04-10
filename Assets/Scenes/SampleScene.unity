@@ -893,12 +893,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dcd1a18d00c4f20829d9e98a46a96de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xCenter: 0
-  zCenter: 0
-  xOffset: 25
-  zOffset: 0
+  xPos: 0
+  zPos: 0
+  xModifier: 0
+  zModifier: 0
   size: 18
-  interval: {fileID: 0}
+  interval: 1
+  table: {fileID: 11400000, guid: d9a51eb62276d4644b6ebbef93668afa, type: 2}
 --- !u!4 &1796953109
 Transform:
   m_ObjectHideFlags: 0

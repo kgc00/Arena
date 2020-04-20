@@ -8,7 +8,8 @@ using UnityEngine;
 namespace Abilities
 {
     public abstract class AttackAbility : Ability, IDamageDealer {
-        public abstract void OnAbilityConnected (GameObject targetedUnit);
+        public virtual void OnAbilityConnected (GameObject targetedUnit){}
+        public virtual void OnAbilityConnected (GameObject targetedUnit, GameObject projectile){}
         public float Damage { get; protected set;}
         public List<ControlType> AffectedFactions { get; protected set; }
         public int AreaOfEffectRadius { get; protected set; }

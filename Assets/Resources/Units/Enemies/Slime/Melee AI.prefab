@@ -36,8 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3640983151590248246}
   - component: {fileID: 3640983151590248244}
-  - component: {fileID: 3640983151590248245}
-  - component: {fileID: 3640983151590248247}
+  - component: {fileID: -1309334750830225620}
   m_Layer: 0
   m_Name: Melee AI
   m_TagString: Untagged
@@ -74,8 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  stateBehaviour: 2
---- !u!54 &3640983151590248245
+--- !u!54 &-1309334750830225620
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,20 +89,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!136 &3640983151590248247
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3640983151590248203}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &3640983151786924125
 GameObject:
   m_ObjectHideFlags: 0

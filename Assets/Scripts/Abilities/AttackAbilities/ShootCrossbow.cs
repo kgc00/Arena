@@ -1,4 +1,5 @@
 ﻿using Abilities.Data;
+using Enums;
 using Projectiles;
 using Units;
 using UnityEngine;
@@ -46,12 +47,23 @@ namespace Abilities.AttackAbilities
                 ) as GameObject;
         }
 
-        public override void OnAbilityConnected(GameObject targetedUnit)
+        public override void OnAbilityConnected(GameObject other, GameObject projectile)
         {
-            var unit = targetedUnit.GetComponent<Unit>();
+            var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
+            var unit = other.transform.root.GetComponentInChildren<Unit>();
+            
+            
+            if (hitGeometry)
+            {
+                Destroy(projectile);
+                return;
+            }
+
+            if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
             
             unit.HealthComponent.AdjustHealth(-Damage);
+            Destroy(projectile);
         }
     }
 }

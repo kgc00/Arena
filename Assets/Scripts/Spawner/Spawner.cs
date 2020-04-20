@@ -150,8 +150,8 @@ namespace Spawner
                     );
                 }
             }
-
-            if (spawnTable.Waves.Count <= currentIndex) return;
+            
+            if (spawnTable.Waves.Count - 1 <= currentIndex) return;
             currentIndex++;
             currentWave = spawnTable.Waves[currentIndex];
         }

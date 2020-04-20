@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ranged Ai Data
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 11400000, guid: 9df6ed3037e55d94f8bf6fe79cf19f79, type: 2}
+  - {fileID: 11400000, guid: b70d2997f2ca8f2408b15a12f943811e, type: 2}
   health:
     maxHp: 4
     currentHp: 4

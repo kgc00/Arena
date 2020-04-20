@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
-  m_Name: ShootCB
+  m_Name: ShootCrossbow
   m_EditorClassIdentifier: Assembly-CSharp:Abilities.Data:AttackAbilityData
   displayName: 
   description: 
   energyCost: 0
-  cooldown: 2
+  cooldown: 0
   range: 0
   areaOfEffectRadius: 0
   type: 0

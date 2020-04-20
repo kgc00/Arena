@@ -22,9 +22,33 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Fire",
+                    "name": "Skill 1",
                     "type": "Button",
-                    "id": "0d45f07e-8c31-4a34-8e64-c181a48917e0",
+                    "id": "57e974dd-8bd4-4c1a-9ab2-2e87ddce7131",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                },
+                {
+                    "name": "Skill 2",
+                    "type": "Button",
+                    "id": "1faefd06-eb51-4467-89dd-69e82b153322",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                },
+                {
+                    "name": "Skill 3",
+                    "type": "Button",
+                    "id": "c143cae0-8497-49d8-97d0-5c8c8d5161b3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press,Hold"
+                },
+                {
+                    "name": "Skill 4",
+                    "type": "Button",
+                    "id": "c2a4656c-c30d-45af-904c-193badd42561",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press,Hold"
@@ -198,56 +222,89 @@
                 },
                 {
                     "name": "",
-                    "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
+                    "id": "3b20d82f-0832-4806-ad8d-f69d72a7383b",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Fire",
+                    "action": "Skill 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
-                    "path": "<Mouse>/leftButton",
+                    "id": "27df41c1-ac7d-4ce9-831d-722b0ce277e5",
+                    "path": "<Keyboard>/#(Q)",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Fire",
+                    "action": "Skill 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "886e731e-7071-4ae4-95c0-e61739dad6fd",
-                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "id": "63dccdb1-643a-4aed-8d69-c6a79b6554f5",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Touch",
-                    "action": "Fire",
+                    "groups": ";Gamepad",
+                    "action": "Skill 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ee3d0cd2-254e-47a7-a8cb-bc94d9658c54",
-                    "path": "<Joystick>/trigger",
+                    "id": "871b7698-a591-49cc-b43a-ad34206f2932",
+                    "path": "<Keyboard>/#(E)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
-                    "action": "Fire",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8255d333-5683-4943-a58a-ccb207ff1dce",
-                    "path": "<XRController>/{PrimaryAction}",
+                    "id": "96eeb49d-c15f-480b-a978-7228a7765c2b",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "XR",
-                    "action": "Fire",
+                    "groups": ";Gamepad",
+                    "action": "Skill 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aba26a59-6d96-45ce-9b77-210211f67330",
+                    "path": "<Keyboard>/#(R)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ba0ca9f-19a7-4833-a144-37c54c215c6d",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Skill 4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3c9cc5f-18a2-484a-8387-b6f5f5096131",
+                    "path": "<Keyboard>/#(F)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill 4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -8,40 +8,22 @@ namespace Projectiles
     
     public class ProjectileComponent : MonoBehaviour
     {
-        System.Action<GameObject> onConnected;
+        Action<GameObject, GameObject> onConnected;
         float speed = 1.5f;
         private Vector3 Direction { get; set; }
 
         //optional param for setting projectile speed
-        public void Initialize (Vector3 dir, System.Action<GameObject> callback, float speed = 1.5f)
+        public void Initialize (Vector3 dir, Action<GameObject, GameObject> callback, float speed = 1.5f)
         {
             var forward = gameObject.transform.forward;
-            this.Direction = new Vector3(forward.x, 0, forward.z);
-            this.onConnected = callback;
+            Direction = new Vector3(forward.x, 0, forward.z);
+            onConnected = callback;
             this.speed = speed;
         }
         
-        void FixedUpdate () {
-            MoveGameObject ();
-        }
+        void FixedUpdate () => MoveGameObject ();
+        private void MoveGameObject () => transform.position +=  Direction * (speed * Time.deltaTime);
 
-        
-        private void MoveGameObject ()
-        {
-            transform.position +=  Direction * (speed * Time.deltaTime);
-        }
-        
-        private void OnCollisionEnter(Collision other)
-        {
-            var unit = other.gameObject.GetComponent<Unit>();
-            if (unit != null)
-            {
-                onConnected (unit.gameObject);
-                Destroy (gameObject);
-            }
-            
-            var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
-            if (hitGeometry) Destroy(gameObject);
-        }
+        private void OnTriggerEnter(Collider other)  => onConnected (other.gameObject, gameObject);
     }
 }

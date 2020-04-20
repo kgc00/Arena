@@ -35,9 +35,33 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""Skill 1"",
                     ""type"": ""Button"",
-                    ""id"": ""0d45f07e-8c31-4a34-8e64-c181a48917e0"",
+                    ""id"": ""57e974dd-8bd4-4c1a-9ab2-2e87ddce7131"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press,Hold""
+                },
+                {
+                    ""name"": ""Skill 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1faefd06-eb51-4467-89dd-69e82b153322"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press,Hold""
+                },
+                {
+                    ""name"": ""Skill 3"",
+                    ""type"": ""Button"",
+                    ""id"": ""c143cae0-8497-49d8-97d0-5c8c8d5161b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press,Hold""
+                },
+                {
+                    ""name"": ""Skill 4"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2a4656c-c30d-45af-904c-193badd42561"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press,Hold""
@@ -211,56 +235,89 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
+                    ""id"": ""3b20d82f-0832-4806-ad8d-f69d72a7383b"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Skill 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""27df41c1-ac7d-4ce9-831d-722b0ce277e5"",
+                    ""path"": ""<Keyboard>/#(Q)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Skill 1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""id"": ""63dccdb1-643a-4aed-8d69-c6a79b6554f5"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Skill 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ee3d0cd2-254e-47a7-a8cb-bc94d9658c54"",
-                    ""path"": ""<Joystick>/trigger"",
+                    ""id"": ""871b7698-a591-49cc-b43a-ad34206f2932"",
+                    ""path"": ""<Keyboard>/#(E)"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Skill 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8255d333-5683-4943-a58a-ccb207ff1dce"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
+                    ""id"": ""96eeb49d-c15f-480b-a978-7228a7765c2b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Fire"",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Skill 3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aba26a59-6d96-45ce-9b77-210211f67330"",
+                    ""path"": ""<Keyboard>/#(R)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Skill 3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ba0ca9f-19a7-4833-a144-37c54c215c6d"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Skill 4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3c9cc5f-18a2-484a-8387-b6f5f5096131"",
+                    ""path"": ""<Keyboard>/#(F)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Skill 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -837,7 +894,10 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_Skill1 = m_Player.FindAction("Skill 1", throwIfNotFound: true);
+        m_Player_Skill2 = m_Player.FindAction("Skill 2", throwIfNotFound: true);
+        m_Player_Skill3 = m_Player.FindAction("Skill 3", throwIfNotFound: true);
+        m_Player_Skill4 = m_Player.FindAction("Skill 4", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -902,14 +962,20 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_Skill1;
+    private readonly InputAction m_Player_Skill2;
+    private readonly InputAction m_Player_Skill3;
+    private readonly InputAction m_Player_Skill4;
     public struct PlayerActions
     {
         private @PlayerInputMappings m_Wrapper;
         public PlayerActions(@PlayerInputMappings wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
+        public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
+        public InputAction @Skill3 => m_Wrapper.m_Player_Skill3;
+        public InputAction @Skill4 => m_Wrapper.m_Player_Skill4;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -925,9 +991,18 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
-                @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
-                @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @Skill1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill1;
+                @Skill1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill1;
+                @Skill1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill1;
+                @Skill2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill2;
+                @Skill2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill2;
+                @Skill2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill2;
+                @Skill3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill3;
+                @Skill3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill3;
+                @Skill3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill3;
+                @Skill4.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill4;
+                @Skill4.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill4;
+                @Skill4.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkill4;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -938,9 +1013,18 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
+                @Skill1.started += instance.OnSkill1;
+                @Skill1.performed += instance.OnSkill1;
+                @Skill1.canceled += instance.OnSkill1;
+                @Skill2.started += instance.OnSkill2;
+                @Skill2.performed += instance.OnSkill2;
+                @Skill2.canceled += instance.OnSkill2;
+                @Skill3.started += instance.OnSkill3;
+                @Skill3.performed += instance.OnSkill3;
+                @Skill3.canceled += instance.OnSkill3;
+                @Skill4.started += instance.OnSkill4;
+                @Skill4.performed += instance.OnSkill4;
+                @Skill4.canceled += instance.OnSkill4;
             }
         }
     }
@@ -1107,7 +1191,10 @@ public class @PlayerInputMappings : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
+        void OnSkill1(InputAction.CallbackContext context);
+        void OnSkill2(InputAction.CallbackContext context);
+        void OnSkill3(InputAction.CallbackContext context);
+        void OnSkill4(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

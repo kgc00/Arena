@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using System.Collections.Generic;
+using Enums;
 using UnityEngine.InputSystem;
 
 namespace Controls
@@ -11,10 +12,8 @@ namespace Controls
         public float Turn;
         public ControllerType ActiveControl { get; private set; }
 
-        public float Fire;
-        public InputActionPhase FirePhase;
-        public bool HasStartedFire { get; set; }
-        public IInputInteraction FireInteraction { get; set; }
+        public Dictionary<ButtonType, ButtonValues> ButtonValues;
+            
 
         public InputValues()
         {
@@ -22,10 +21,14 @@ namespace Controls
             Horizontal = 0;
             Look = 0;
             Turn = 0;
-            Fire = 0;
             ActiveControl = ControllerType.None;
-            HasStartedFire = false;
-            FireInteraction = null;
+            ButtonValues = new Dictionary<ButtonType, ButtonValues>()
+            {
+                [ButtonType.Skill1] = new ButtonValues(ButtonType.Skill1),
+                [ButtonType.Skill2] = new ButtonValues(ButtonType.Skill2),
+                [ButtonType.Skill3] = new ButtonValues(ButtonType.Skill3),
+                [ButtonType.Skill4] = new ButtonValues(ButtonType.Skill4)
+            };
         }
         
         public InputValues(float forward,
@@ -42,11 +45,14 @@ namespace Controls
             Horizontal = horizontal;
             Look = look;
             Turn = turn;
-            Fire = fire;
-            FirePhase = firePhase;
             ActiveControl = activeControl;
-            HasStartedFire = hasStartedFire;
-            FireInteraction = fireInteraction;
+            ButtonValues = new Dictionary<ButtonType, ButtonValues>()
+            {
+                [ButtonType.Skill1] = new ButtonValues(ButtonType.Skill1),
+                [ButtonType.Skill2] = new ButtonValues(ButtonType.Skill2),
+                [ButtonType.Skill3] = new ButtonValues(ButtonType.Skill3),
+                [ButtonType.Skill4] = new ButtonValues(ButtonType.Skill4)
+            };
         }
 
         public void SetControlType(string displayName)
@@ -62,7 +68,10 @@ namespace Controls
 
         public virtual void ResetValues()
         {
-            this.HasStartedFire = false;
+            foreach (var keyValuePair in ButtonValues)
+            {
+                keyValuePair.Value.HasStartedPress = false;
+            }
         }
     }
 }

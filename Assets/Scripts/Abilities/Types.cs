@@ -2,6 +2,9 @@
 {
     public enum Types {
         ShootCrossbow,
-        BodySlam
+        BodySlam,
+        IceBolt,
+        Mark,
+        Prey
     }
 }

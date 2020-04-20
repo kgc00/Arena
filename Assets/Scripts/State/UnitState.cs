@@ -16,5 +16,6 @@ namespace State
         public virtual UnitState HandleUpdate (InputValues input) { return null; }
         public virtual void HandleFixedUpdate (InputValues input) {  }
         public virtual void HandleCollisionEnter(Collision other){ }
+        public virtual void HandleDrawGizmos(){}
     }
 }

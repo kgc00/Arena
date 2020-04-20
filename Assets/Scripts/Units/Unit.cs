@@ -21,6 +21,7 @@ namespace Units
         public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
         public ExperienceComponent ExperienceComponent { get; private set; }
+        public StatusComponent StatusComponent { get; private set; }
         public CoroutineHelper CoroutineHelper { get; private set; }
         public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
@@ -49,6 +50,9 @@ namespace Units
             
             // CoroutineHelper
             if (CoroutineHelper == null) CoroutineHelper = gameObject.AddComponent<CoroutineHelper>().Initialize(this);
+            
+            // Status 
+            if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
             
             //State
             state = StateHelper.StateFromEnum(data.state, this);
@@ -88,6 +92,11 @@ namespace Units
             OnDeath(this);
             Owner.RemoveUnit(this);
             Destroy(gameObject, 0.1f);
+        }
+
+        private void OnDrawGizmos()
+        {
+            state?.HandleDrawGizmos();
         }
     }
 }

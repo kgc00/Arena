@@ -42,7 +42,9 @@ namespace State.PlayerStates
 
             if (remainingDuration <= 0f)
             {
-                return new IdleUnitState(Owner);
+                bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
+
+                return playerIsMoving ? (UnitState) new RunUnitState(Owner) : new IdleUnitState(Owner);
             }
 
             remainingDuration -= Time.deltaTime;

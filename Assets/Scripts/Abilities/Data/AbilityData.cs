@@ -12,5 +12,7 @@ namespace Abilities.Data
         [SerializeField] public int range; // maximum targeting or travel range
         [SerializeField] public int areaOfEffectRadius; // 0 (none), 100f, 200f
         [SerializeField] public Types type; // used by factory to create ability
+        [SerializeField] public float startupTime; // delays attack to render targeting graphics
+        [SerializeField] public int indicatorType; // Used by shader/ 0=none, 1=circular, 2=linear
     }
 }

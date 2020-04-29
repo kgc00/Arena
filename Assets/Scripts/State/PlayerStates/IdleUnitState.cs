@@ -17,6 +17,9 @@ namespace State.PlayerStates
         public override UnitState HandleUpdate(InputValues input)
         {
             base.HandleUpdate(input);
+            
+            if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
+                return unitState;
 
             bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
             if (playerIsMoving) return new RunUnitState(Owner);

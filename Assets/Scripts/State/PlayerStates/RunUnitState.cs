@@ -21,6 +21,9 @@ namespace State.PlayerStates
         {
             base.HandleUpdate(input);
             
+            if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
+                return unitState;
+            
             var playerIsStationary = Math.Abs(input.Forward) <= movementThreshold && 
                                            Math.Abs(input.Horizontal) <= movementThreshold;
             

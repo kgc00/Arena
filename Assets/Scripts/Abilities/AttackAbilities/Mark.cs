@@ -1,4 +1,5 @@
-﻿using Enums;
+﻿using System.Collections;
+using Enums;
 using Projectiles;
 using Stats;
 using Units;
@@ -8,11 +9,18 @@ namespace Abilities.AttackAbilities
 {
     public class Mark : AttackAbility
     {
-        
         public override void Activate(Vector3 targetLocation)
         {
+            Debug.Log($"Is on cooldown: {Cooldown.IsOnCooldown}");
             if (Cooldown.IsOnCooldown) return;
 
+            StartCoroutine(HandleActivation(targetLocation));
+        }
+
+        private IEnumerator HandleActivation(Vector3 targetLocation)
+        {
+            yield return new WaitForSeconds(StartupTime);
+            
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
 

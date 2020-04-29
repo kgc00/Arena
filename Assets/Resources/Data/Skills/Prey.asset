@@ -15,9 +15,11 @@ MonoBehaviour:
   displayName: 
   description: 
   energyCost: 0
-  cooldown: 2
+  cooldown: 1
   range: 0
   areaOfEffectRadius: 0
   type: 4
+  startupTime: 0
+  indicatorType: 0
   damage: 1
   affectedFactions: 02000000

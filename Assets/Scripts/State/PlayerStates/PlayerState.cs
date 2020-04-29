@@ -4,6 +4,7 @@ using Abilities;
 using Abilities.AttackAbilities;
 using Controls;
 using Enums;
+using JetBrains.Annotations;
 using Units;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
@@ -15,10 +16,12 @@ namespace State.PlayerStates
     {
         protected readonly float movementSpeed;
         protected readonly float movementThreshold = 0.1f;
+        protected StateSkillBehaviour skillBehaviour;
 
         public PlayerState(Unit owner) : base(owner)
         {
             movementSpeed = 5f;
+            skillBehaviour = new StateSkillBehaviour(owner);
         }
 
         public override UnitState HandleUpdate(InputValues input)
@@ -28,8 +31,6 @@ namespace State.PlayerStates
                 var motion = GetMovementFromInput(input);
                 UpdatePlayerRotation(input, motion);
             }
-
-            CheckShouldActivateSkill(input);
 
             return null;
         }
@@ -53,32 +54,8 @@ namespace State.PlayerStates
 
             Owner.transform.position += motion;
         }
-
-        private void CheckShouldActivateSkill(InputValues input)
-        {
-            foreach (var kvp in input.ButtonValues)
-            {
-                var buttonVal = kvp.Value;
-                var type = kvp.Key;
-                bool notFiring = buttonVal.PressValue < 0.4f || !buttonVal.HasStartedPress;
-                if (notFiring) continue;
-            
-                if (input.ActiveControl == ControllerType.Delta)
-                    HandleSkillActivation(MouseHelper.GetWorldPosition(), type);
-                else if (input.ActiveControl == ControllerType.GamePad)
-                    HandleSkillActivation(RotationHelper.GetUnitForward(Owner), type);
-                else
-                    Debug.Log("updating for neither");
-            }
-        }
-
-        private void HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType)
-        {
-            Owner.AbilityComponent.equippedAbilities.TryGetValue(buttonType, out var ability);
-            
-            if (ability == null) return;
-            ability.Activate(targetLocation);
-        }
+        
+        
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)
         {
@@ -94,39 +71,12 @@ namespace State.PlayerStates
         {
             // get mouse pos
             var mousePos = MouseHelper.GetWorldPosition();
-
-            #region Vars
-            var transform = Owner.transform;
-            var position = transform.position;
-            var rotation = transform.rotation;
-            #endregion
             
-            // 1.) Grab the normalized euler angles for the look direction
-            // 2.) Clamp the values to use the existing x and z, only alter the y
-            var difEuler = Quaternion.LookRotation((mousePos - position).normalized).eulerAngles;
-            var difEulerAdjusted = new Vector3(rotation.x, difEuler.y, rotation.z);
+            // lock y to unit's current y
+            var lookTarget = new Vector3(mousePos.x, Owner.transform.position.y, mousePos.z);
             
-            // for debugging
-            // lookDir = difEulerAdjusted;
-            
-            // Set the player's rotation to the new angle
-            var updatedRot = Quaternion.Euler(difEulerAdjusted);
-            Owner.transform.rotation = updatedRot;
+            Owner.transform.LookAt(lookTarget);
         }
-
-        #region LegacyRotation
-        // private void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion)
-        // {
-        //     // non functional but almost works... player needs to be 'locked' to x and z and only
-        //     // rotate on the y axis.  otherwise this is very compact code to acheive that effect.
-        //     var mousePos = MouseHelper.GetWorldPosition();
-        //
-        //     var difference = mousePos - Owner.transform.position;
-        //     Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
-        //                                                 Quaternion.LookRotation(difference),
-        //                                                 Time.deltaTime * 10f);
-        // }
-        #endregion
 
         private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion)
         {

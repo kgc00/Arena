@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
-  m_Name: ShootCrossbow
+  m_Name: LEGACY_ShootCrossbow
   m_EditorClassIdentifier: Assembly-CSharp:Abilities.Data:AttackAbilityData
   displayName: 
   description: 
@@ -19,5 +19,7 @@ MonoBehaviour:
   range: 0
   areaOfEffectRadius: 0
   type: 0
+  startupTime: 0
+  indicatorType: 0
   damage: 1
   affectedFactions: 02000000

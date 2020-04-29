@@ -3,6 +3,8 @@
     Properties {
         _BaseColor ("Base Color", Color) = (1,1,1,1)
         _AreaColor ("Area Color", Color) = (1, 1, 1)
+        _DebugEndPos ("Debug End Pos", Vector) = (1,1,1)
+        _DebugVal ("Debug Val", Float) = 1
     }
     
     SubShader {
@@ -52,32 +54,21 @@
         float _Head;
         float _Height;
         
+        float3 _DebugEndPos;
+        float _DebugVal;
  
         struct Input {
             float2 uv_MainTex;
             float3 worldPos;
         };
+
+        float2x2 rotate2d(float _angle){
+            return float2x2(cos(_angle),-sin(_angle),
+                            sin(_angle),cos(_angle));
+        }
         
         SurfaceOutput handleCircular(Input IN, inout SurfaceOutput o) {
-            //const float PI = 3.14159265;    
-            float dist = distance(_Center, IN.worldPos);  
-            //half4 c = tex2D (_MainTex, IN.uv_MainTex);
-            // radius of 40 = range of 1 
-            // range of 20 = radius of 
-            //float toUse = sin(_Radius/10 * PI);
-            //float2 coors = (toUse, toUse);
-            
-           // half4 c = tex2D (
-           // _MainTex,
-           // // scale the texture
-           // (coors * IN.uv_MainTex) - 
-           // // center the texture
-           // ((coors / 2) - float2(0.5, 0.5)));
-             
-            //o.Albedo = c.rgb;
-            //o.Alpha = c.a;
-            
-            
+            float dist = distance(_Center, IN.worldPos); 
             if (dist > _Radius && 
                 dist < (_Radius + _Border)) {
                 o.Albedo = _AreaColor.rgb;
@@ -94,6 +85,18 @@
             return o;
         }
         
+        // Computes the signed distance from a line segment
+        float segment_distance(float2 p, float2 start, float2 end) {
+            float2 center = (start + end) * 0.5;
+            float len = length(end - start);
+            float2 dir = (end - start) / len;
+            float2 rel_p = p - center;
+            float dist1 = abs(dot(rel_p, float2(dir.y, -dir.x)));
+            float dist2 = abs(dot(rel_p, dir)) - 0.5*len;
+            return max(dist1, dist2);
+        }
+        
+        // Computes the signed distance from a line
         float line_distance(float2 p, float2 p1, float2 p2) {
             float2 center = (p1 + p2) * 0.5;
             float len = length(p2 - p1);
@@ -102,58 +105,31 @@
             return dot(rel_p, float2(dir.y, -dir.x));
         }
         
-        // Computes the signed distance from a line segment
-        float segment_distance(float2 p, float2 p1, float2 p2) {
-            float2 center = (p1 + p2) * 0.5;
-            float len = length(p2 - p1);
-            float2 dir = (p2 - p1) / len;
-            float2 rel_p = p - center;
-            float dist1 = abs(dot(rel_p, float2(dir.y, -dir.x)));
-            float dist2 = abs(dot(rel_p, dir)) - 0.5*len;
-            return max(dist1, dist2);
+        // Computes the centers of a circle with
+        // given radius passing through p1 & p2
+        float4 inscribed_circle(float2 p1, float2 p2, float radius)
+        {
+            float q = length(p2-p1);
+            float2 m = (p1+p2)/2.0;
+            float2 d = float2( sqrt(radius*radius - (q*q/4.0)) * (p1.y-p2.y)/q,
+            sqrt(radius*radius - (q*q/4.0)) * (p2.x-p1.x)/q);
+            return float4(m+d, m-d);
+        }
+
+        float arrow(float2 texcoord, float2 startPos, float2 endPos, float _DebugVal){
+            // will need to do the head later
+            return segment_distance(texcoord, startPos,endPos);
         }
         
-        float arrow_triangle(float2 texcoord,
-                            float body, float head, float height,
-                            float linewidth, float antialias, 
-                            float2 start, float2 end, float debug) {
-            float w = linewidth/2.0 + antialias;
-            // Head : 3 lines
-            float d1 = line_distance(texcoord,
-            end, end - head*float2(+1.0,-height));
-            float d2 = line_distance(texcoord,
-            end - head*float2(+1.0,+height), end);
-            float d3 = texcoord.x - end.x + head;
-            
-            // REMOVING THE ARROW HEAD
-            // ...rotation is messed up
-            //d1 = 99;
-            //d2 = 99;
-            d3 = -1;
-            
-            // Body : 1 segment
-            float d4 = segment_distance(texcoord,
-            start, end - float2(linewidth,0.0));
-            float d = min(max(max(d1, d2), -d3), d4);
-            return d;
-        }
-        
-        SurfaceOutput handleLinear(Input IN, inout SurfaceOutput o) {
-            _Body = 15;
-            _Width = 2;
-            _Head = 2;
-            //_Height = 0.4;
-                
-            float2 curPos = float2(IN.worldPos.x, IN.worldPos.z);
+        SurfaceOutput handleLinear(Input IN, inout SurfaceOutput o) {                
+            float2 texcoor = float2(IN.worldPos.x, IN.worldPos.z);
             float2 startPos = float2(_StartPos.x, _StartPos.z);
             float2 endPos = float2(_EndPos.x, _EndPos.z);
            
-            bool test = arrow_triangle(curPos, 15,  _Head,
-                                        0.4, _Width,  0.001,
-                                        startPos, endPos,
-                                        _Height) < 1;    
-                                            
-            if ( test ) {
+                                        
+            bool shouldRender = arrow(texcoor, startPos, endPos, _DebugVal) < 1;
+                                                         
+            if ( shouldRender ) {
                 o.Alpha = 0.5;
                 o.Albedo = _AreaColor.rgb;
             }
@@ -161,11 +137,18 @@
             return o;
         }
         
+        // Plot a line on Y using a value between 0.0-1.0
+        float plot(float2 st, float pct){
+        float thickness = 0.5; // _DebugVal; // 0.02
+          return  smoothstep( pct - thickness, pct, st.y) -
+                  smoothstep( pct, pct + thickness, st.y);
+        }
+        
         void surf (Input IN, inout SurfaceOutput o) { 
-            if (_IndicatorType == 0) {
+            if (_IndicatorType == 1) {
                 handleCircular(IN, o);
-            } else if (_IndicatorType == 1) {
-                 handleLinear(IN, o);
+            } else if (_IndicatorType == 2) {
+                handleLinear(IN, o);
             }
         }
         ENDCG

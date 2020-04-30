@@ -21,11 +21,10 @@ namespace Abilities
             Range = data.range;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
-            Cooldown.CooldownTime = data.cooldown;
+            Cooldown = new Cooldown(data.cooldown);
             StartupTime = data.startupTime;
             IndicatorType = data.indicatorType;
             return this;
         }
-
     }
 }

@@ -13,6 +13,11 @@ namespace Abilities
         public bool UnFreeze() => IsFrozen = false;
         public bool IsOnCooldown => TimeLeft > 0f;
         public float SetOnCooldown() => TimeLeft = (float) CooldownTime;
+
+        public Cooldown(float cooldownTime)
+        {
+            CooldownTime = cooldownTime;
+        }
         
         // Must be called from ability component's update loop
         public float UpdateCooldown(float deltaTime)

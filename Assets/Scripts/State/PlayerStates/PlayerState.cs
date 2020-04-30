@@ -40,7 +40,7 @@ namespace State.PlayerStates
             var motion = GetMovementFromInput(input);
 
             UpdatePlayerRotation(input, motion);
-            UpdatePlayerPositionTr(input, motion);
+            UpdatePlayerPositionForce(input, motion);
         }
         
         private void UpdatePlayerPositionTr(InputValues input, Vector3 motion)
@@ -55,7 +55,17 @@ namespace State.PlayerStates
             Owner.transform.position += motion;
         }
         
-        
+        private void UpdatePlayerPositionForce(InputValues input, Vector3 motion)
+        {
+            // east = (1, 0)
+            // west = (-1, 0)
+            // north = (0, 1)
+            // south = (0, -1)
+
+            // TODO: reduce input for diagonal movement
+
+            Owner.Rigidbody.AddForce( motion.normalized * 50f);
+        }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)
         {
@@ -65,7 +75,6 @@ namespace State.PlayerStates
                 UpdatePlayerRotationForGamepad(input, motion);
         }
 
-        private Vector3 lookDir = new Vector3(0,0,0);
 
         private void UpdatePlayerRotationForKeyboard(InputValues input, Vector3 motion)
         {
@@ -102,7 +111,9 @@ namespace State.PlayerStates
             return motion;
         }
         
+        
 #if UNITY_EDITOR
+        private Vector3 lookDir = new Vector3(0,0,0);
         public override void HandleDrawGizmos()
         {
             return;

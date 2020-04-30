@@ -11,7 +11,6 @@ namespace Abilities.AttackAbilities
     {
         public override void Activate(Vector3 targetLocation)
         {
-            Debug.Log($"Is on cooldown: {Cooldown.IsOnCooldown}");
             if (Cooldown.IsOnCooldown) return;
 
             StartCoroutine(HandleActivation(targetLocation));
@@ -61,7 +60,6 @@ namespace Abilities.AttackAbilities
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             
-            
             if (hitGeometry)
             {
                 Destroy(projectile);
@@ -71,8 +69,10 @@ namespace Abilities.AttackAbilities
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
             
-            unit.HealthComponent.AdjustHealth(-Damage);
+            
             AddMark(unit);
+            var moveDirection = other.transform.position - projectile.transform.position;
+            other.GetComponentInParent<Rigidbody>()?.AddForce( moveDirection.normalized * 7500f);
             Destroy(projectile);
         }
 

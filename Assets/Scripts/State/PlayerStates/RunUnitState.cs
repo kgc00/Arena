@@ -19,10 +19,10 @@ namespace State.PlayerStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            base.HandleUpdate(input);
-            
             if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
                 return unitState;
+
+            base.HandleUpdate(input);
             
             var playerIsStationary = Math.Abs(input.Forward) <= movementThreshold && 
                                            Math.Abs(input.Horizontal) <= movementThreshold;

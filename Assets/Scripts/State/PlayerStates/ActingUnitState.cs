@@ -1,15 +1,8 @@
 using System;
-using System.Linq;
 using Abilities;
-using Abilities.AttackAbilities;
 using Controls;
-using Enums;
-using JetBrains.Annotations;
-using UI.Targeting;
 using Units;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
-using Utils;
 
 namespace State.PlayerStates
 {
@@ -26,20 +19,16 @@ namespace State.PlayerStates
 
         public override void Enter()
         {
-            Debug.Log("Entered");
             Shader.SetGlobalFloat("_IndicatorType", Ability.IndicatorType);
         }
 
         public override void Exit()
         {
-            Debug.Log("Exited");
             Shader.SetGlobalFloat("_IndicatorType", 0);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            base.HandleUpdate(input);
-
             if (remainingDuration <= 0f)
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
@@ -47,6 +36,8 @@ namespace State.PlayerStates
                 return playerIsMoving ? (UnitState) new RunUnitState(Owner) : new IdleUnitState(Owner);
             }
 
+            base.HandleUpdate(input);
+            
             remainingDuration -= Time.deltaTime;
             
             return null;

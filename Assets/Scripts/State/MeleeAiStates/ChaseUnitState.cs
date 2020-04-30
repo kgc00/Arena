@@ -34,12 +34,15 @@ namespace State.MeleeAiStates
         {
             if (targetPlayerTransform == null) return new IdleUnitState(Owner);
             
-            UpdateUnitLocation();
-            UpdateUnitRotation();
-            
             if (ShouldEnterAttack(out var unitState)) return unitState;
             
             return null;
+        }
+
+        public override void HandleFixedUpdate(InputValues input)
+        {
+            UpdateUnitLocation();
+            UpdateUnitRotation();
         }
 
         private void UpdateUnitRotation()
@@ -63,9 +66,11 @@ namespace State.MeleeAiStates
 
         private void UpdateUnitLocation()
         {
-            Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
-                                                            targetPlayerTransform.position,
-                                                            movementSpeed * Time.deltaTime);
+            var moveDirection = targetPlayerTransform.position - Owner.transform.position;
+            Owner.Rigidbody.AddForce( moveDirection.normalized * 50f);
+            // Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
+            //                                                 targetPlayerTransform.position,
+            //                                                 movementSpeed * Time.deltaTime);
         }
     }
 }

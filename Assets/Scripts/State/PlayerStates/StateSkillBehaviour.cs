@@ -39,7 +39,7 @@ namespace State.PlayerStates
                 else
                     Debug.Log("updating for neither");
 
-                if (ability != null && ability.Cooldown.IsOnCooldown) return false;
+                if (ability == null || ability.Cooldown.IsOnCooldown) return false;
                 
                 unitState = new ActingUnitState(Owner, ability);
                 return true;

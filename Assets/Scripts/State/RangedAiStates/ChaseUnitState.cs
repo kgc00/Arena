@@ -68,9 +68,11 @@ namespace State.RangedAiStates
 
         private void UpdateUnitLocation()
         {
-            Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
-                                                            targetPlayerTransform.position,
-                                                            movementSpeed * Time.deltaTime);
+            var moveDirection = targetPlayerTransform.position - Owner.transform.position;
+            Owner.Rigidbody.AddForce( moveDirection.normalized * 50f);
+            // Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
+            //                                                 targetPlayerTransform.position,
+            //                                                 movementSpeed * Time.deltaTime);
         }
     }
 }

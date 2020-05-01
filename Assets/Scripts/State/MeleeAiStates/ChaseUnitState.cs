@@ -1,5 +1,6 @@
 ﻿using Controls;
 using JetBrains.Annotations;
+using Stats;
 using Units;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace State.MeleeAiStates
     public class ChaseUnitState : UnitState
     {
         readonly Transform targetPlayerTransform;
+        private readonly Unit targetUnit;
         private readonly float movementSpeed = 2f;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private readonly float attackRange;
@@ -15,6 +17,7 @@ namespace State.MeleeAiStates
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
             targetPlayerTransform = playerTransform;
+            targetUnit = playerTransform.GetComponentInChildren<Unit>();
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
         }
 
@@ -32,7 +35,10 @@ namespace State.MeleeAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (targetPlayerTransform == null) return new IdleUnitState(Owner);
+            bool invalidTarget = targetPlayerTransform == null ||
+                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
+            
+            if (invalidTarget) return new IdleUnitState(Owner);
             
             if (ShouldEnterAttack(out var unitState)) return unitState;
             
@@ -41,6 +47,11 @@ namespace State.MeleeAiStates
 
         public override void HandleFixedUpdate(InputValues input)
         {
+            bool invalidTarget = targetPlayerTransform == null ||
+                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
+
+            if (invalidTarget) return;
+                
             UpdateUnitLocation();
             UpdateUnitRotation();
         }

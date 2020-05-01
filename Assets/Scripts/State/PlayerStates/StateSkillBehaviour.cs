@@ -39,7 +39,8 @@ namespace State.PlayerStates
                 else
                     Debug.Log("updating for neither");
 
-                if (ability == null || ability.Cooldown.IsOnCooldown) return false;
+                if (ability == null) return false;
+
                 
                 unitState = new ActingUnitState(Owner, ability);
                 return true;
@@ -51,7 +52,9 @@ namespace State.PlayerStates
         {
             Owner.AbilityComponent.equippedAbilities.TryGetValue(buttonType, out var ability);
             
-            if (ability == null) return null;
+            if (ability == null || ability.Cooldown.IsOnCooldown) return null;
+            
+            ability.Cooldown.SetOnCooldown();
             ability.Activate(targetLocation);
 
             return ability;

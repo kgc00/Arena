@@ -10,12 +10,8 @@ namespace Abilities.AttackAbilities
     {
         public override void Activate(Vector3 targetLocation)
         {
-            if (Cooldown.IsOnCooldown) return;
-
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
-
-            Cooldown.SetOnCooldown();
         }
 
 

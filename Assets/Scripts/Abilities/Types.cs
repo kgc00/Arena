@@ -5,6 +5,7 @@
         BodySlam,
         IceBolt,
         Mark,
-        Prey
+        Prey,
+        Conceal
     }
 }

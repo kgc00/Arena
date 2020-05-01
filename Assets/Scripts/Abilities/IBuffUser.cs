@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public interface IDamageDealer
+    public interface IBuffUser
     {
-        [SerializeField]  float Damage { get; }
+        [SerializeField] float Duration { get; }
         [SerializeField] List<ControlType> AffectedFactions { get; }
     }
 }

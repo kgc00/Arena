@@ -29,7 +29,7 @@ namespace State.MeleeAiStates
         {
             // TODO: add some leashing mechanic or vision limiter
             
-            if (playerTransform == null) playerTransform = Locator.GetClosestPlayerUnit(Owner.transform.position);
+            if (playerTransform == null) playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
 
             if (playerTransform == null) return null;
             

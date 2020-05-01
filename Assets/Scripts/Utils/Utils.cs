@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Abilities;
 using Abilities.AttackAbilities;
+using Abilities.Buffs;
 using Abilities.Data;
 using Controls;
 using Enums;
@@ -57,6 +58,10 @@ namespace Utils
                         break;
                     case Types.Prey:
                         instance = owner.gameObject.AddComponent<Prey>().Initialize((AttackAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
+                    case Types.Conceal:
+                        instance = owner.gameObject.AddComponent<Conceal>().Initialize((BuffAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
                 }

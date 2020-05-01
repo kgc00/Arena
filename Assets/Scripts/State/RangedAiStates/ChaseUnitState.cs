@@ -1,5 +1,6 @@
 ﻿using Controls;
 using JetBrains.Annotations;
+using Stats;
 using Units;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace State.RangedAiStates
     public class ChaseUnitState : UnitState
     {
         readonly Transform targetPlayerTransform;
+        private readonly Unit targetUnit;
         private readonly float movementSpeed;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private readonly float attackRange;
@@ -15,6 +17,7 @@ namespace State.RangedAiStates
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
             targetPlayerTransform = playerTransform;
+            targetUnit = playerTransform.GetComponentInChildren<Unit>();
             movementSpeed = 4;
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
         }
@@ -35,16 +38,25 @@ namespace State.RangedAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (targetPlayerTransform == null) return new IdleUnitState(Owner);
-
-            // Debug.Log("chase update");
+            bool invalidTarget = targetPlayerTransform == null ||
+                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
             
-            UpdateUnitLocation();
-            UpdateUnitRotation();
+            if (invalidTarget) return new IdleUnitState(Owner);
             
             if (ShouldEnterAttack(out var unitState)) return unitState;
             
             return null;
+        }
+
+        public override void HandleFixedUpdate(InputValues input)
+        {
+            bool invalidTarget = targetPlayerTransform == null ||
+                              targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
+
+            if (invalidTarget) return;
+            
+            UpdateUnitLocation();
+            UpdateUnitRotation();
         }
 
         private void UpdateUnitRotation()

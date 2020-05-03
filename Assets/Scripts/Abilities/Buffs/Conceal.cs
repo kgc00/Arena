@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using Abilities.Modifiers;
 using Stats;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace Abilities.Buffs
 {
@@ -13,8 +15,17 @@ namespace Abilities.Buffs
 
         IEnumerator HandleActivation()
         {
+            Debug.Log("Concealed!");
+            var safety = 0f;
+            
             float timeLeft = Duration;
             Owner.StatusComponent.AddStatus(Status.Hidden);
+            
+            Owner.AbilityComponent.Modifiers.Add(new MarkOnHitModifier(null));
+            Owner.AbilityComponent.Modifiers.Add(new DoubleDamageModifier(null));
+            
+            // this.PostNotification(NotificationTypes.AbilityWillActivate, new AddValueModifier(1, 3));
+            
 
             while (timeLeft > 0f && Owner.StatusComponent.Status.HasFlag(Status.Hidden))
             {
@@ -22,7 +33,9 @@ namespace Abilities.Buffs
                     yield return null;
             }
             
-            Owner.StatusComponent.RemoveStatus(Status.Hidden);
+            if (Owner.StatusComponent.Status.HasFlag(Status.Hidden)) 
+                Owner.StatusComponent.RemoveStatus(Status.Hidden);
+            
             Debug.Log("Finished Concealment");
         }
     }

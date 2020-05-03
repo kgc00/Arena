@@ -10,6 +10,7 @@
         Ranged,
         BombThrowing,
         SuicideBomber,
-        Boss
+        Boss,
+        TrainingDummy
     }
 }

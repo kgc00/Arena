@@ -10,15 +10,20 @@ namespace State.PlayerStates
     {
         public float remainingDuration { get; private set; }
         public Ability Ability { get; private set; }
+        public Vector3 TargetLocation;
 
-        public ActingUnitState(Unit owner, Ability ability) : base(owner)
+        public ActingUnitState(Unit owner, Ability ability, Vector3 targetLocation) : base(owner)
         {
+            TargetLocation = targetLocation;
             Ability = ability;
             remainingDuration = ability.StartupTime;
+            
         }
 
         public override void Enter()
         {
+            Owner.AbilityComponent.Activate(Ability, TargetLocation);
+            
             Shader.SetGlobalFloat("_IndicatorType", Ability.IndicatorType);
         }
 

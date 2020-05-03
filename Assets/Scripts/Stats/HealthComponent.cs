@@ -11,6 +11,7 @@ namespace Stats
         public float MaxHp { get; private set; }
         public float CurrentHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
+        public bool Invulnerable = false;
         
         public HealthComponent Initialize (Unit owner, HealthData healthData) {
             this.Owner = owner;
@@ -24,7 +25,11 @@ namespace Stats
             var prevAmount = CurrentHp;
             CurrentHp = Mathf.Clamp (CurrentHp + amount, 0, MaxHp);
 
-            // Debug.Log($"current health {CurrentHp}");
+            Debug.Log($"Adjusting {Owner.name}'s current health: {prevAmount} to {CurrentHp}.");
+            
+            if (Invulnerable) return;
+            CurrentHp = MaxHp;
+            
             if (CurrentHp <= 0)
             {
                 Debug.Log($"{Owner} died");

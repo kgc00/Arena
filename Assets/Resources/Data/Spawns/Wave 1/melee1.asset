@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: melee1
   m_EditorClassIdentifier: Assembly-CSharp:Spawner.Data:UnitTable
-  Unit: 1
+  Unit: 7
   Amount: 1

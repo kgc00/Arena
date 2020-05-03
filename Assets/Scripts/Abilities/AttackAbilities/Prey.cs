@@ -1,14 +1,17 @@
-﻿using Enums;
+﻿using System;
+using System.Collections.Generic;
+using Abilities.Modifiers;
+using Enums;
 using Projectiles;
 using Stats;
 using Units;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities
 {
     public class Prey : AttackAbility
     {
-        
         public override void Activate(Vector3 targetLocation)
         {
             var projectile = SpawnProjectile();
@@ -44,6 +47,7 @@ namespace Abilities.AttackAbilities
             ) as GameObject;
         }
 
+        
         public override void OnAbilityConnected(GameObject other, GameObject projectile)
         {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
@@ -58,8 +62,11 @@ namespace Abilities.AttackAbilities
 
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
-            
-            unit.HealthComponent.AdjustHealth(unit.StatusComponent.Status.HasFlag(Status.Marked) ? -(Damage + 2) : -Damage);
+
+
+            var damageDealt = unit.StatusComponent.Status.HasFlag(Status.Marked) ? -(Damage + 2) : -Damage;
+            Debug.Log($"Amount: {damageDealt}");
+            unit.HealthComponent.AdjustHealth(damageDealt);
             Destroy(projectile);
         }
     }

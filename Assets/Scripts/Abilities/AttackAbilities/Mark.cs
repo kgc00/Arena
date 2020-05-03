@@ -1,14 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using Abilities.Modifiers;
 using Enums;
 using Projectiles;
 using Stats;
 using Units;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities
 {
     public class Mark : AttackAbility
     {
+       
+
         public override void Activate(Vector3 targetLocation)
         {
             StartCoroutine(HandleActivation(targetLocation));
@@ -17,6 +22,8 @@ namespace Abilities.AttackAbilities
         private IEnumerator HandleActivation(Vector3 targetLocation)
         {
             yield return new WaitForSeconds(StartupTime);
+            
+            // Owner.AbilityComponent.AddModifier(new AddValueModifier(1,2));
             
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);

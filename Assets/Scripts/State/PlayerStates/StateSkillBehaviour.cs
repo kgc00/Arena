@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace State.PlayerStates
 {
@@ -28,36 +29,33 @@ namespace State.PlayerStates
                 bool notFiring = buttonVal.PressValue < 0.4f || !buttonVal.HasStartedPress;
                 if (notFiring) continue;
 
-                Ability ability = null;
+                (Ability, Vector3) activationData = (null, Vector3.zero);
 
                 if (input.ActiveControl == ControllerType.Delta)
-                    ability = HandleSkillActivation(MouseHelper.GetWorldPosition(),
+                    activationData = HandleSkillActivation(MouseHelper.GetWorldPosition(),
                         type);
                 else if (input.ActiveControl == ControllerType.GamePad)
-                    ability = HandleSkillActivation(RotationHelper.GetUnitForward(Owner),
+                    activationData = HandleSkillActivation(RotationHelper.GetUnitForward(Owner),
                         type);
                 else
                     Debug.Log("updating for neither");
 
-                if (ability == null) return false;
+                if (activationData.Item1 == null) return false;
 
                 
-                unitState = new ActingUnitState(Owner, ability);
+                unitState = new ActingUnitState(Owner, activationData.Item1, activationData.Item2);
                 return true;
             }
 
             return false;
         }
-        private Ability HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType)
+        private (Ability, Vector3) HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType)
         {
             Owner.AbilityComponent.equippedAbilities.TryGetValue(buttonType, out var ability);
             
-            if (ability == null || ability.Cooldown.IsOnCooldown) return null;
-            
-            ability.Cooldown.SetOnCooldown();
-            ability.Activate(targetLocation);
+            if (ability == null || ability.Cooldown.IsOnCooldown) return (null, Vector3.zero);
 
-            return ability;
+            return (ability, targetLocation);
         }
     }
 }

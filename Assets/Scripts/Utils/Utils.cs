@@ -85,6 +85,9 @@ namespace Utils
                 case Units.Types.Ranged:
                     s = "Units/Enemies/Lich/Ranged AI";
                     break;
+                case Units.Types.TrainingDummy:
+                    s = "Units/Enemies/Training Dummy/Training Dummy";
+                    break;
 
                 // Playables
                 case Units.Types.Hunter:
@@ -108,6 +111,9 @@ namespace Utils
                     break;
                 case Units.Types.Ranged:
                     s = "Data/Beastiary/Ranged Ai Data";
+                    break;
+                case Units.Types.TrainingDummy:
+                    s = "Data/Beastiary/Training Dummy Data";
                     break;
 
                 // Playable
@@ -188,6 +194,8 @@ namespace Utils
                     return new State.PlayerStates.IdleUnitState(owner);
                 case UnitStateEnum.MeleeAi:
                     return new State.MeleeAiStates.IdleUnitState(owner);
+                case UnitStateEnum.TrainingDummy:
+                    return new State.TrainingDummy.Idle(owner);
                 case UnitStateEnum.RangedAi:
                     return new State.RangedAiStates.IdleUnitState(owner);
                 default:

@@ -8,6 +8,7 @@
         RangedAi,
         ChargingAi,
         SuicideAi,
-        BossAi
+        BossAi,
+        TrainingDummy
     }
 }

@@ -22,3 +22,4 @@ MonoBehaviour:
   startupTime: 0
   indicatorType: 0
   affectedFactions: 00000000
+  duration: 3

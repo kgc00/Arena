@@ -10,7 +10,11 @@ namespace Abilities
     public abstract class AttackAbility : Ability, IDamageDealer {
         public virtual void OnAbilityConnected (GameObject targetedUnit){}
         public virtual void OnAbilityConnected (GameObject targetedUnit, GameObject projectile){}
-        public float Damage { get; protected set;}
+        
+        // public List<Action> ActivateBase = new List<System.Action<GameObject other, GameObject projectile>(){Activate};
+        // public List<Action> OnAbilityConnectedBase = new List<System.Action<GameObject other, GameObject projectile>(){OnAbilityConnected};
+        
+        public float Damage { get; set;}
         public List<ControlType> AffectedFactions { get; protected set; }
 
         public virtual Ability Initialize(AttackAbilityData data, Unit owner)

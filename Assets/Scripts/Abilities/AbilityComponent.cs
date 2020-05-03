@@ -31,28 +31,28 @@ namespace Abilities
 
         public void Activate(Ability ability, Vector3 targetLocation)
         {
-            // list  prey
-            // uses:  1
+            ability.ResetInstanceValues();
+            
             var root = new AbilityModifier(ability);
             
-            for (int i = 0; i < Modifiers.Count; i++) // somehow creates an infinite loop when we go to handle the second time through
+            for (int i = 0; i < Modifiers.Count; i++) 
             {
-                if (Modifiers[i] == null) continue;
-                
-                // if (!Modifiers[i].ShouldConsume()) toSave.Add(Modifiers[i]);
                 root.Add(Modifiers[i].InitializeModifier(ability));
             }
+
+            Debug.Log($"Modifer list is {Modifiers.Count} items long");
             
-            // will modify original ability... need to make a copy and run this on the copy
+            // Modifies original ability reference...
+            // so we reset the values at the start of this method
             root.Handle();
             
-            // clear list
-            
-            ability.Activate(targetLocation);
-            
-            ability.Cooldown.SetOnCooldown();
+            // clear modifiers list for next call of this function
+            Modifiers.RemoveAll(m => m.ShouldConsume());
 
-            // Modifiers = toSave;
+            for (int i = 0; i < ability.OnActivation.Count; i++) 
+                ability.OnActivation[i](targetLocation);
+
+            ability.Cooldown.SetOnCooldown();
         }
     }
 }

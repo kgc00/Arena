@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Abilities.Data;
 using Enums;
 using Units;
@@ -8,11 +9,13 @@ namespace Abilities
 {
     public abstract class BuffAbility : Ability, IBuffUser
     {
+        public BuffAbilityData Model { get; private set; }
         public float Duration { get; protected set; }
         public List<ControlType> AffectedFactions { get; protected set; }
-        public virtual Ability Initialize(BuffAbilityData data, Unit owner)
+        public virtual BuffAbility Initialize(BuffAbilityData data, Unit owner)
         {
             Owner = owner;
+            Model = data;
             Range = data.range;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
@@ -20,8 +23,19 @@ namespace Abilities
             StartupTime = data.startupTime;
             IndicatorType = data.indicatorType;
             Duration = data.Duration;
+            OnActivation = new List<Action<Vector3>>() {AbilityActivated};
             return this;
         }
+        
+        public override void ResetInstanceValues()
+        {
+            if (Model == null || Owner == null)
+            {
+                Debug.Log("Model or Owner are not set and we cannot reset instance values");
+                return;
+            }
 
+            Initialize(Model, Owner);
+        }
     }
 }

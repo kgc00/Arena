@@ -16,24 +16,28 @@ namespace Stats
         public HealthComponent Initialize (Unit owner, HealthData healthData) {
             this.Owner = owner;
             this.MaxHp = healthData.maxHp;
-            CurrentHp = healthData.currentHp;
+            CurrentHp = MaxHp;
+
+            Invulnerable = healthData.Invulnerable;
+
+            Debug.Log($"Spawning: {Owner.name} with a max HP of {MaxHp}");
             return this;
         }
 
         public void AdjustHealth (float amount) {
             // Debug.Log("adjusting health");
             var prevAmount = CurrentHp;
-            CurrentHp = Mathf.Clamp (CurrentHp + amount, 0, MaxHp);
+            var newAmount = Mathf.Clamp (CurrentHp + amount, 0, MaxHp);
 
-            Debug.Log($"Adjusting {Owner.name}'s current health: {prevAmount} to {CurrentHp}.");
+            Debug.Log($"Adjusting {Owner.name}'s current health from: {prevAmount} to {newAmount}.");
             
             if (Invulnerable) return;
-            CurrentHp = MaxHp;
+            
+            CurrentHp = newAmount;
             
             if (CurrentHp <= 0)
             {
                 Debug.Log($"{Owner} died");
-                // unit has died
                 Owner.UnitDeath();
             }
 

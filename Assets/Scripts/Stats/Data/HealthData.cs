@@ -7,6 +7,7 @@ namespace Stats.Data
     public class HealthData
     {
         [SerializeField] public float maxHp;
+        [SerializeField] public bool Invulnerable;
         [HideInInspector] public float currentHp;
     }
 }

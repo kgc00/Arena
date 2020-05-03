@@ -8,7 +8,7 @@ namespace Abilities.AttackAbilities
 {
     public class ShootCrossbow : AttackAbility
     {
-        public override void Activate(Vector3 targetLocation)
+        public override void AbilityActivated(Vector3 targetLocation)
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
@@ -18,37 +18,37 @@ namespace Abilities.AttackAbilities
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile)
         {
             if (projectile == null) return;
-            
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnected, 10f);
+
+            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
         }
 
         private GameObject SpawnProjectile()
         {
             var position = gameObject.transform.position;
             var forward = gameObject.transform.forward;
-            
+
             // find offset
             var spawnPos = new Vector3(position.x, 1, position.z) + (forward * 2);
-            
+
             // find rotation
             var relativeOffset = spawnPos - position;
             var yEuler = Quaternion.LookRotation(relativeOffset, Vector3.up).eulerAngles.y;
-            var rotation = Quaternion.Euler(0, yEuler,0);
+            var rotation = Quaternion.Euler(0, yEuler, 0);
 
             // instantiation
-            return  Instantiate(
+            return Instantiate(
                 Resources.Load("Projectiles/Projectile", typeof(GameObject)),
-                spawnPos, 
+                spawnPos,
                 rotation
-                ) as GameObject;
+            ) as GameObject;
         }
 
-        public override void OnAbilityConnected(GameObject other, GameObject projectile)
+        public override void AbilityConnected(GameObject target, GameObject projectile = null)
         {
-            var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
-            var unit = other.transform.root.GetComponentInChildren<Unit>();
-            
-            
+            var hitGeometry = target.gameObject.CompareTag(Tags.Board.ToString());
+            var unit = target.transform.root.GetComponentInChildren<Unit>();
+
+
             if (hitGeometry)
             {
                 Destroy(projectile);
@@ -57,7 +57,7 @@ namespace Abilities.AttackAbilities
 
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
-            
+
             unit.HealthComponent.AdjustHealth(-Damage);
             Destroy(projectile);
         }

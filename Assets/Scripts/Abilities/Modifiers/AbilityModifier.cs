@@ -16,11 +16,15 @@ namespace Abilities.Modifiers
     {
         protected Ability Ability;
         protected AbilityModifier Next;
-        public virtual bool ShouldConsume() => true;
+        public virtual bool ShouldConsume()
+        {
+            Debug.Log($"Consuming: Some Modifier");
+            return true;
+        }
 
         public AbilityModifier(Ability ability)
         {
-            this.Ability = ability;
+            Ability = ability;
         }
 
         /// <summary>
@@ -29,7 +33,7 @@ namespace Abilities.Modifiers
         /// 2.) Assign the ability being modified 
         /// </summary>
         /// <param name="ability"></param>
-        /// <returns></returns>
+        /// <returns name="AbilityModifier"></returns>
         public virtual AbilityModifier InitializeModifier(Ability ability)
         {
             Next = null;

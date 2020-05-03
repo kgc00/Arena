@@ -45,7 +45,7 @@ namespace State.MeleeAiStates
             Owner.Animator.SetTrigger(Attacking);
             yield return new WaitForSeconds(0.45f);
             
-            Owner.AbilityComponent.longestRangeAbility.Activate(targetPlayerTransform.position);
+            Owner.AbilityComponent.longestRangeAbility.AbilityActivated(targetPlayerTransform.position);
             Debug.Log("Finishing attack execution");
             attackComplete = true;
         } 

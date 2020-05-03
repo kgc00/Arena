@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Abilities.Modifiers;
-using Enums;
+﻿using Enums;
 using Projectiles;
 using Stats;
 using Units;
 using UnityEngine;
-using Utils.NotificationCenter;
-
 namespace Abilities.AttackAbilities
 {
     public class Prey : AttackAbility
     {
-        public override void Activate(Vector3 targetLocation)
+        public override void AbilityActivated(Vector3 targetLocation)
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
@@ -23,7 +18,7 @@ namespace Abilities.AttackAbilities
         {
             if (projectile == null) return;
             
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnected, 10f);
+            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
         }
 
         private GameObject SpawnProjectile()
@@ -48,7 +43,7 @@ namespace Abilities.AttackAbilities
         }
 
         
-        public override void OnAbilityConnected(GameObject other, GameObject projectile)
+        public override void AbilityConnected(GameObject other, GameObject projectile)
         {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
@@ -63,10 +58,13 @@ namespace Abilities.AttackAbilities
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
-
-            var damageDealt = unit.StatusComponent.Status.HasFlag(Status.Marked) ? -(Damage + 2) : -Damage;
-            Debug.Log($"Amount: {damageDealt}");
-            unit.HealthComponent.AdjustHealth(damageDealt);
+            var isMarked = unit.StatusComponent.Status.HasFlag(Status.Marked);
+            var totalDamage = isMarked ? -(Damage + 2) : -Damage;
+            Debug.Log($"Prey has connected with a unit: {unit.name}.  " +
+                      $"The unit has a marked status of {isMarked}.\n" +
+                      $"Dealing {Damage} amount of base damage, " +
+                      $"plus 2 damage if marked, for a total of {totalDamage}");
+            unit.HealthComponent.AdjustHealth(totalDamage);
             Destroy(projectile);
         }
     }

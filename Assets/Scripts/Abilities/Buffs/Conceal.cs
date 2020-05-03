@@ -8,8 +8,9 @@ namespace Abilities.Buffs
 {
     public class Conceal : BuffAbility
     {
-        public override void Activate(Vector3 targetLocation)
+        public override void AbilityActivated(Vector3 targetLocation)
         {
+            Debug.Log("Handling activation of Conceal");
             StartCoroutine(HandleActivation());
         }
 

@@ -6,8 +6,7 @@ namespace Abilities.AttackAbilities
 {
     public class BodySlam : AttackAbility
     {
-        public override void Activate(Vector3 targetLocation) { }
-
-        public override void OnAbilityConnected(GameObject targetedUnit) { }
+        public override void AbilityActivated(Vector3 targetLocation) { }
+        public override void AbilityConnected(GameObject targetedUnit, GameObject projectile) { }
     }
 }

@@ -8,7 +8,7 @@ namespace Abilities.AttackAbilities
 {
     public class IceBolt : AttackAbility
     {
-        public override void Activate(Vector3 targetLocation)
+        public override void AbilityActivated(Vector3 targetLocation)
         {
             if (Cooldown.IsOnCooldown) return;
 
@@ -23,7 +23,7 @@ namespace Abilities.AttackAbilities
         {
             if (projectile == null) return;
             
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnected, 10f);
+            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
         }
 
         private GameObject SpawnProjectile()
@@ -47,7 +47,7 @@ namespace Abilities.AttackAbilities
                 ) as GameObject;
         }
 
-        public override void OnAbilityConnected(GameObject other, GameObject projectile)
+        public override void AbilityConnected(GameObject other, GameObject projectile)
         {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();

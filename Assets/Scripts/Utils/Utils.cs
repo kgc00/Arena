@@ -144,9 +144,9 @@ namespace Utils
 
     public static class PlayerHelper
     {
-        private static HashSet<Player> players = new HashSet<Player>();
+        private static HashSet<Player.Player> players = new HashSet<Player.Player>();
 
-        public static void AddPlayer(Player newPlayer)
+        public static void AddPlayer(Player.Player newPlayer)
         {
             if (players.Contains(newPlayer)) return;
             players.Add(newPlayer);

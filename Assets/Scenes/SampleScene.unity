@@ -231,12 +231,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!4 &128246639 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2637915664189274585, guid: e96461d2effa10d4b8cd07efa7d694bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 2637915663423856759}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &137451959
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974d339ab5a44743b916773a2c8a47ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 128246639}
+  playerTransform: {fileID: 0}
 --- !u!135 &562460135
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1024,8 +1018,8 @@ MonoBehaviour:
   zPos: 0
   xModifier: 0
   zModifier: 0
-  size: 18
-  interval: 1
+  size: 48
+  interval: 0
   table: {fileID: 11400000, guid: d9a51eb62276d4644b6ebbef93668afa, type: 2}
 --- !u!4 &1796953109
 Transform:
@@ -1400,6 +1394,5 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2637915664189274565, guid: e96461d2effa10d4b8cd07efa7d694bd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e96461d2effa10d4b8cd07efa7d694bd, type: 3}

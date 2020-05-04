@@ -144,6 +144,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 043fb318512a6cf4199871787181056a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8055475662568180049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637915664091164520}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7ef17c21ec457409514db055acb92a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  warrior: 0
 --- !u!1 &2637915664189274586
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +315,8 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: -0.00000047406718
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11418434, guid: 058e734f630eed143898d329346af59a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 058e734f630eed143898d329346af59a, type: 3}
 --- !u!1 &2637915664091164520 stripped
 GameObject:

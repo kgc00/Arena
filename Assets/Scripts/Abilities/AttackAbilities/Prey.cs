@@ -58,12 +58,17 @@ namespace Abilities.AttackAbilities
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
+            var totalDamage = Damage;
             var isMarked = unit.StatusComponent.Status.HasFlag(Status.Marked);
-            var totalDamage = isMarked ? -(Damage + 2) : -Damage;
-            Debug.Log($"Prey has connected with a unit: {unit.name}.  " +
-                      $"The unit has a marked status of {isMarked}.\n" +
-                      $"Dealing {Damage} amount of base damage, " +
-                      $"plus 2 damage if marked, for a total of {totalDamage}");
+            if (isMarked)
+            {
+                totalDamage += 2;
+                unit.StatusComponent.RemoveStatus(Status.Marked);
+            }
+
+            Debug.Log($"Prey has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
+                      $"Base damage is {Damage}. Total Damage: {totalDamage}");
+            
             unit.HealthComponent.AdjustHealth(totalDamage);
             Destroy(projectile);
         }

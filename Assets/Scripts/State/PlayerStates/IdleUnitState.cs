@@ -6,7 +6,6 @@ using Controls;
 using Enums;
 using Units;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 using Utils;
 
 namespace State.PlayerStates

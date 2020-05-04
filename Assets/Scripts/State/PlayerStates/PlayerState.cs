@@ -7,7 +7,6 @@ using Enums;
 using JetBrains.Annotations;
 using Units;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 using Utils;
 
 namespace State.PlayerStates
@@ -35,6 +34,7 @@ namespace State.PlayerStates
             return null;
         }
         
+        // need to look into handling input only in update and storing values onto a field for fixed update
         public override void HandleFixedUpdate(InputValues input)
         {
             var motion = GetMovementFromInput(input);

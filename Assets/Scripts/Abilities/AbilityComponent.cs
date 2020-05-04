@@ -15,19 +15,25 @@ namespace Abilities
         [SerializeField] public Dictionary<ButtonType, Ability> equippedAbilities;
         public Ability longestRangeAbility;
         
-        public List<AbilityModifier> Modifiers { get; private set; } = new List<AbilityModifier>();
-        // Modifiers.Add("MarkModifer");
-        // logicModifier
-        // public void AddModifier(Modifier m) => Modifiers.Add(m);
-        // public void RemoveModifier(Modifier m) => Modifiers.Remove(m);
+        public List<AbilityModifier> Modifiers { get; private set; } 
         public AbilityComponent Initialize(Unit owner, List<AbilityData> abilities)
         {
             Owner = owner;
+         
+            Modifiers = new List<AbilityModifier>();
+            
             equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, owner);
-            longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility).OrderByDescending(a => a.Value.Range).First().Value;
+            
+            longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility)
+                .OrderByDescending(a => a.Value.Range)
+                .First().Value;
             
             return this;
         }
+        
+        // public void AddModifier(Modifier m, int index = -1) => Modifiers.Add(m);
+        // public void RemoveModifier(Modifier m) => Modifiers.Remove(m);
+
 
         public void Activate(Ability ability, Vector3 targetLocation)
         {

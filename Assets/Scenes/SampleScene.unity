@@ -1018,7 +1018,7 @@ MonoBehaviour:
   zPos: 0
   xModifier: 0
   zModifier: 0
-  size: 48
+  size: 10
   interval: 0
   table: {fileID: 11400000, guid: d9a51eb62276d4644b6ebbef93668afa, type: 2}
 --- !u!4 &1796953109

@@ -25,6 +25,11 @@ namespace Tests
 
             Assert.AreSame(ddMod, Modifiers[0]);
             Assert.AreEqual(Modifiers.Count, 1);
+
+            Modifiers.RemoveAll(x => x.ShouldConsume());
+            
+            Debug.Log($"Count: {Modifiers.Count}");
+            Assert.AreEqual(0, Modifiers.Count);
         }
     }
 }

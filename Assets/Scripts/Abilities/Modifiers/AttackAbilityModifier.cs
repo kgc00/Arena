@@ -17,6 +17,6 @@
             return this;
         }
 
-        public override bool ShouldConsume() => Ability is AttackAbility ? true : false;
+        public override bool ShouldConsume() => true;
     }
 }

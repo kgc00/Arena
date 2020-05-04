@@ -6,6 +6,7 @@ using Abilities.Modifiers;
 using Controls;
 using Units;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace Abilities
 {
@@ -38,27 +39,36 @@ namespace Abilities
         public void Activate(Ability ability, Vector3 targetLocation)
         {
             ability.ResetInstanceValues();
+
+            var modifiers = new List<AbilityModifier>();
+            
+            if (ability is AttackAbility)
+                modifiers = Modifiers.Where(x => x is AttackAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+            else if (ability is BuffAbility)
+                modifiers = Modifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
             
             var root = new AbilityModifier(ability);
             
-            for (int i = 0; i < Modifiers.Count; i++) 
+            for (int i = 0; i < modifiers.Count; i++) 
             {
-                root.Add(Modifiers[i].InitializeModifier(ability));
+                root.Add(modifiers[i].InitializeModifier(ability));
             }
 
-            Debug.Log($"Modifer list is {Modifiers.Count} items long");
+            Debug.Log($"Modifer list is {modifiers.Count} items long");
             
             // Modifies original ability reference...
             // so we reset the values at the start of this method
             root.Handle();
             
             // clear modifiers list for next call of this function
-            Modifiers.RemoveAll(m => m.ShouldConsume());
+            Modifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
 
             for (int i = 0; i < ability.OnActivation.Count; i++) 
                 ability.OnActivation[i](targetLocation);
 
             ability.Cooldown.SetOnCooldown();
+            
+            this.PostNotification(NotificationTypes.AbilityDidActivate, ability);
         }
     }
 }

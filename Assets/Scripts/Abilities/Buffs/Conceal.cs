@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Abilities.Modifiers;
 using Stats;
 using UnityEngine;
@@ -14,27 +15,40 @@ namespace Abilities.Buffs
             StartCoroutine(HandleActivation());
         }
 
+        private bool brokenConcealment = false;
+        void BreakConcealment(object sender, object args)
+        {
+            if (args != this) brokenConcealment = true;
+        }
+
         IEnumerator HandleActivation()
         {
             Debug.Log("Concealed!");
-            
             float timeLeft = Duration;
+            brokenConcealment = false;
+            
+            this.AddObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
+
             Owner.StatusComponent.AddStatus(Status.Hidden);
 
+            var modifiers = Owner.AbilityComponent.Modifiers;
             var markModifier = new MarkOnHitModifier(null);
-            Owner.AbilityComponent.Modifiers.Add(markModifier);
-            Owner.AbilityComponent.Modifiers.Add(new DoubleDamageModifier(null));
+            modifiers.Add(markModifier);
+            modifiers.Add(new DoubleDamageModifier(null));
 
             while (timeLeft > 0f && Owner.StatusComponent.Status.HasFlag(Status.Hidden))
             {
-                    timeLeft -= Time.deltaTime;
-                    yield return null;
+                if (brokenConcealment) break;
+                
+                timeLeft -= Time.deltaTime;
+                yield return null;
             }
             
             if (Owner.StatusComponent.Status.HasFlag(Status.Hidden)) Owner.StatusComponent.RemoveStatus(Status.Hidden);
+
+            if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
             
-            // if (Owner.AbilityComponent.Modifiers.Contains(markModifier)) Owner.AbilityComponent.Modifiers.Remove()
-            // Debug.Log($"Mark modifier still in modifiers list: {answer}");
+            this.RemoveObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
             
             Debug.Log("Finished Concealment");
         }

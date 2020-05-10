@@ -11,6 +11,7 @@ namespace Abilities
     {
         public AbilityData Model { get; private set; }
         public float Range { get; protected set; }
+        public float ProjectileSpeed { get; protected set; }
         public int AreaOfEffectRadius { get; protected set; }
         public int IndicatorType { get; set; }
         public float StartupTime { get; protected set; }

@@ -11,6 +11,7 @@ using Spawner;
 using State;
 using State.MeleeAiStates;
 using State.RangedAiStates;
+using Stats;
 using Units;
 using Units.Data;
 using UnityEngine;
@@ -62,6 +63,10 @@ namespace Utils
                         break;
                     case Types.Conceal:
                         instance = owner.gameObject.AddComponent<Conceal>().Initialize((BuffAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
+                    case Types.PierceAndPush:
+                        instance = owner.gameObject.AddComponent<PierceAndPush>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
                 }
@@ -167,7 +172,9 @@ namespace Utils
 
                 if (plane.Raycast(ray, out float distanceToPlane))
                 {
-                    return ray.GetPoint(distanceToPlane);
+                    var mouseLocation = ray.GetPoint(distanceToPlane);
+                    mouseLocation.y = 0;
+                    return mouseLocation;
                 }
             }
 
@@ -201,6 +208,24 @@ namespace Utils
                 default:
                     return null;
             }
+        }
+    }
+    
+    public static class StatusHelper 
+    {
+        public static void AddMark(GameObject go)
+        {
+            var unit = go.transform.root.GetComponentInChildren<Unit>();
+            if (unit == null) return;
+            
+            unit.StatusComponent.AddStatus(Status.Marked);
+            Debug.Log(unit.StatusComponent.Status);
+        }
+        
+        public static void AddMark(Unit unit)
+        {
+            unit.StatusComponent.AddStatus(Status.Marked);
+            Debug.Log(unit.StatusComponent.Status);
         }
     }
 }

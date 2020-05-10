@@ -16,17 +16,18 @@ namespace Abilities
         public List<Action<GameObject, GameObject>> OnAbilityConnection { get; set; }
         public abstract void AbilityConnected(GameObject target, GameObject projectile = null);
 
-        public AttackAbility Initialize(AttackAbilityData model, Unit owner)
+        public AttackAbility Initialize(AttackAbilityData data, Unit owner)
         {
             Owner = owner;
-            Model = model;
-            Damage = model.Damage;
-            Range = model.range;
-            AreaOfEffectRadius = model.areaOfEffectRadius;
-            AffectedFactions = model.AffectedFactions;
-            Cooldown = new Cooldown(model.cooldown);
-            StartupTime = model.startupTime;
-            IndicatorType = model.indicatorType;
+            Model = data;
+            Damage = data.Damage;
+            Range = data.range;
+            AreaOfEffectRadius = data.areaOfEffectRadius;
+            AffectedFactions = data.AffectedFactions;
+            Cooldown = new Cooldown(data.cooldown);
+            StartupTime = data.startupTime;
+            ProjectileSpeed = data.projectileSpeed;
+            IndicatorType = data.indicatorType;
             OnActivation = new List<Action<Vector3>>() {AbilityActivated};
             OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
             return this;

@@ -9,7 +9,7 @@ namespace UI.Targeting
     public class ShaderHelper : MonoBehaviour
     {
         #region Vars
-        public Transform playerTransform;
+        [HideInInspector] public Transform playerTransform;
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int Border = Shader.PropertyToID("_Border");
         private static readonly int IndicatorType = Shader.PropertyToID("_IndicatorType");

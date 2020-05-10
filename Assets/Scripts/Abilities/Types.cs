@@ -4,8 +4,10 @@
         ShootCrossbow,
         BodySlam,
         IceBolt,
+        // Hunter
         Mark,
         Prey,
-        Conceal
+        Conceal,
+        PierceAndPush
     }
 }

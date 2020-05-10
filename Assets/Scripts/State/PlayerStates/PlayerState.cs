@@ -19,7 +19,7 @@ namespace State.PlayerStates
 
         public PlayerState(Unit owner) : base(owner)
         {
-            movementSpeed = 5f;
+            movementSpeed = 100f;
             skillBehaviour = new StateSkillBehaviour(owner);
         }
 
@@ -64,7 +64,7 @@ namespace State.PlayerStates
 
             // TODO: reduce input for diagonal movement
 
-            Owner.Rigidbody.AddForce( motion.normalized * 50f);
+            Owner.Rigidbody.AddForce( motion.normalized * movementSpeed);
         }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)

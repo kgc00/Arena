@@ -21,6 +21,7 @@ namespace Abilities
             AffectedFactions = data.AffectedFactions;
             Cooldown = new Cooldown(data.cooldown);
             StartupTime = data.startupTime;
+            ProjectileSpeed = data.projectileSpeed;
             IndicatorType = data.indicatorType;
             Duration = data.Duration;
             OnActivation = new List<Action<Vector3>>() {AbilityActivated};

@@ -12,11 +12,14 @@ namespace Abilities
 {
     public class AbilityComponent : MonoBehaviour
     {
-        public Unit Owner { get; private set; }
+        public Unit Owner { get ; private set; }
         [SerializeField] public Dictionary<ButtonType, Ability> equippedAbilities;
         public Ability longestRangeAbility;
         
-        public List<AbilityModifier> Modifiers { get; private set; } 
+        public List<AbilityModifier> Modifiers { get; private set; }
+        private List<AbilityModifier> BuffAbilityModifiers => Modifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+        private List<AbilityModifier> AttackAbilityModifiers => Modifiers.Where(x => x is AttackAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+
         public AbilityComponent Initialize(Unit owner, List<AbilityData> abilities)
         {
             Owner = owner;
@@ -31,10 +34,6 @@ namespace Abilities
             
             return this;
         }
-        
-        // public void AddModifier(Modifier m, int index = -1) => Modifiers.Add(m);
-        // public void RemoveModifier(Modifier m) => Modifiers.Remove(m);
-
 
         public void Activate(Ability ability, Vector3 targetLocation)
         {
@@ -43,9 +42,9 @@ namespace Abilities
             var modifiers = new List<AbilityModifier>();
             
             if (ability is AttackAbility)
-                modifiers = Modifiers.Where(x => x is AttackAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+                modifiers = AttackAbilityModifiers;
             else if (ability is BuffAbility)
-                modifiers = Modifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+                modifiers = BuffAbilityModifiers;
             
             var root = new AbilityModifier(ability);
             

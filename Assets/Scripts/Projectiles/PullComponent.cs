@@ -66,16 +66,13 @@ namespace Projectiles
             
             Vector3 left = transform.TransformDirection(Vector3.left);
             Vector3 difference = other.transform.position - transform.position;
+            // dot scales the value of force to make it stronger as the unit
+            // is further away. The unit will always end near center of bounds
             var dot = Vector3.Dot(left, difference.normalized);
-            
-            // dot scales the value of force to make it stronger
-            // when the unit is further away.
-            // Unit will always end near center of bounds.
-            var scaledForce = (Force * dot); 
-            
-            // positive left value will push, negative left value will pull
-            var appliedForce = -left * scaledForce;
-            // Debug.Log($"force: {appliedForce}");
+
+            // Force is required to be a negative value because we are pulling
+            var scaledForce = (-Math.Abs(Force) * dot); 
+            var appliedForce = left * scaledForce;
             
             // Apply force over several frames for a smoother acceleration
             var frames = 10;

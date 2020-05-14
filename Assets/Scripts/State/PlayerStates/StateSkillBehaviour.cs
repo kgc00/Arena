@@ -18,7 +18,7 @@ namespace State.PlayerStates
             Owner = owner;
         }
 
-        public bool ShouldActivateSkill([CanBeNull] InputValues input, out UnitState unitState)
+        public bool ShouldActivateSkill([CanBeNull] InputValues input, bool rotationDisabled, out UnitState unitState)
         {
             unitState = null;
             
@@ -42,8 +42,10 @@ namespace State.PlayerStates
 
                 if (activationData.Item1 == null) return false;
 
+                var ability = activationData.Item1;
+                var target = activationData.Item2;
                 
-                unitState = new ActingUnitState(Owner, activationData.Item1, activationData.Item2);
+                unitState = new ActingUnitState(Owner, ability, target, rotationDisabled);
                 return true;
             }
 

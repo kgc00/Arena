@@ -13,11 +13,12 @@ namespace Units
     {
         public static Action<Unit> OnDeath = delegate {  };
         public Player.Player Owner { get; private set; }
-        public Units.Types type;
+        public Types type;
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }
-        UnitState state;
-        Controller controller;
+        public UnitState state { get; private set; }
+        public Controller controller { get; private set; }
+        public InputModifierComponent InputModifierComponent { get; private set; }
         public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
         public ExperienceComponent ExperienceComponent { get; private set; }
@@ -31,7 +32,9 @@ namespace Units
             this.Owner = owner;
 
             //Controller
-            if (controller == null) controller = GetComponentInChildren<Controller>();
+            if (controller == null) controller = GetComponentInChildren<Controller>().Initialize(this);
+            if (InputModifierComponent == null)
+                InputModifierComponent = gameObject.AddComponent<InputModifierComponent>().Initialize(this);
             
             //RigidBody
             if (Rigidbody == null) Rigidbody = GetComponentInChildren<Rigidbody>();
@@ -61,9 +64,7 @@ namespace Units
             Initialized = true;
             return this;
         }
-
-        void Test() => Debug.Log("Called");
-
+        
         void Update () {
             if (!Initialized) return;
             

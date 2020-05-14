@@ -12,12 +12,11 @@ namespace State.PlayerStates
         public Ability Ability { get; private set; }
         public Vector3 TargetLocation;
 
-        public ActingUnitState(Unit owner, Ability ability, Vector3 targetLocation) : base(owner)
+        public ActingUnitState(Unit owner, Ability ability, Vector3 targetLocation, bool rotationDisabled) : base(owner, rotationDisabled)
         {
             TargetLocation = targetLocation;
             Ability = ability;
             remainingDuration = ability.StartupTime;
-            
         }
 
         public override void Enter()
@@ -38,7 +37,7 @@ namespace State.PlayerStates
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
 
-                return playerIsMoving ? (UnitState) new RunUnitState(Owner) : new IdleUnitState(Owner);
+                return playerIsMoving ? (UnitState) new RunUnitState(Owner, rotationDisabled) : new IdleUnitState(Owner, rotationDisabled);
             }
 
             base.HandleUpdate(input);

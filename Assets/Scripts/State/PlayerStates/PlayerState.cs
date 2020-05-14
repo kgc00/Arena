@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace State.PlayerStates
 {
@@ -17,20 +18,26 @@ namespace State.PlayerStates
         protected readonly float movementThreshold = 0.1f;
         protected StateSkillBehaviour skillBehaviour;
 
-        public PlayerState(Unit owner) : base(owner)
+        public PlayerState(Unit owner, bool rotationDisabled) : base(owner)
         {
             movementSpeed = 100f;
             skillBehaviour = new StateSkillBehaviour(owner);
+            this.rotationDisabled = rotationDisabled;
+            this.AddObserver( OnRotationEnabled, NotificationTypes.EnableRotation);
+            this.AddObserver( OnRotationDisabled, NotificationTypes.DisableRotation);
         }
+
+        ~PlayerState() {
+            this.RemoveObserver(OnRotationEnabled,NotificationTypes.EnableRotation);
+            this.RemoveObserver(OnRotationDisabled,NotificationTypes.DisableRotation);
+        }
+        
+        private void OnRotationEnabled(object sender, object args) => rotationDisabled = false;
+
+        private void OnRotationDisabled(object sender, object args) => rotationDisabled = true;
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (input.Look > 0 || input.Turn > 0)
-            {
-                var motion = GetMovementFromInput(input);
-                UpdatePlayerRotation(input, motion);
-            }
-
             return null;
         }
         
@@ -42,19 +49,7 @@ namespace State.PlayerStates
             UpdatePlayerRotation(input, motion);
             UpdatePlayerPositionForce(input, motion);
         }
-        
-        private void UpdatePlayerPositionTr(InputValues input, Vector3 motion)
-        {
-            // east = (1, 0)
-            // west = (-1, 0)
-            // north = (0, 1)
-            // south = (0, -1)
 
-            // TODO: reduce input for diagonal movement
-
-            Owner.transform.position += motion;
-        }
-        
         private void UpdatePlayerPositionForce(InputValues input, Vector3 motion)
         {
             // east = (1, 0)
@@ -64,11 +59,16 @@ namespace State.PlayerStates
 
             // TODO: reduce input for diagonal movement
 
+            
+            
             Owner.Rigidbody.AddForce( motion.normalized * movementSpeed);
         }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)
         {
+            if (rotationDisabled) return;
+            
+            
             if (input.ActiveControl == ControllerType.Delta)
                 UpdatePlayerRotationForKeyboard(input, motion);
             else if (input.ActiveControl == ControllerType.GamePad)

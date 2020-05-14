@@ -24,31 +24,47 @@ namespace Projectiles
         [Range(-25f, 25f), SerializeField] private float zModifier = 0f;
         
         public Vector3 Bounds { get; private set; }
-        private BoxCollider collider;
+        private Collider collider;
 
         private List<ControlType> AffectedFactions;
         public Vector3 LookTarget;
         #endregion
 
-        public GameObject Initialize(float force, Vector3 bounds, Vector3 center, Vector3 lookTarget,
+        public GameObject Initialize(float force, ColliderParams colliderParams, Vector3 center, Vector3 lookTarget,
             List<ControlType> affectedFactions) {
             Force = force;
-            Bounds = bounds;
             AffectedFactions = affectedFactions;
 
             transform.position = center;
             
-            // collider stuff
-            collider =  GetComponent<BoxCollider>();
-            if (collider == null) collider = gameObject.AddComponent<BoxCollider>();
-            collider.size = Bounds;
-            collider.isTrigger = true;
-            
+            InitializeCollider(colliderParams);
+
             // lock y to unit's current y
             LookTarget = new Vector3(lookTarget.x, gameObject.transform.position.y, lookTarget.z);
             
             gameObject.transform.LookAt(LookTarget);
             return gameObject;
+        }
+
+        private void InitializeCollider(ColliderParams colliderParams) {
+            if (collider != null) return;
+            
+            if (colliderParams is BoxParams) {
+                var p = (BoxParams) colliderParams;
+                var c = gameObject.AddComponent<BoxCollider>();
+                Bounds = p.Bounds;
+                c.size = Bounds;
+                collider = c;
+            }
+
+            if (colliderParams is SphereParams) {
+                var p = (SphereParams) colliderParams;
+                var c = gameObject.AddComponent<SphereCollider>();
+                c.radius = p.Radius;
+                collider = c;
+            }
+
+            collider.isTrigger = true;
         }
 
         // private void OnEnable() {
@@ -65,10 +81,12 @@ namespace Projectiles
             Debug.Log($"{other.gameObject.name} will be pulled!");
             
             Vector3 left = transform.TransformDirection(Vector3.left);
-            Vector3 difference = other.transform.position - transform.position;
+            Vector3 heading = other.transform.position - transform.position;
+            heading.y = 0f;
+            
             // dot scales the value of force to make it stronger as the unit
             // is further away. The unit will always end near center of bounds
-            var dot = Vector3.Dot(left, difference.normalized);
+            var dot = Vector3.Dot(left, heading.normalized);
 
             // Force is required to be a negative value because we are pulling
             var scaledForce = (-Math.Abs(Force) * dot); 

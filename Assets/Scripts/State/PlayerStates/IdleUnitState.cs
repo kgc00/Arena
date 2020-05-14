@@ -12,16 +12,16 @@ namespace State.PlayerStates
 {
     public class IdleUnitState : PlayerState
     {
-        public IdleUnitState(Unit owner) : base(owner) { }
+        public IdleUnitState(Unit owner, bool rotationDisabled) : base(owner, rotationDisabled) { }
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
+            if (skillBehaviour.ShouldActivateSkill(input, rotationDisabled, out var unitState)) 
                 return unitState;
             
             base.HandleUpdate(input);
             
             bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
-            if (playerIsMoving) return new RunUnitState(Owner);
+            if (playerIsMoving) return new RunUnitState(Owner, rotationDisabled);
             
             return null;
         }

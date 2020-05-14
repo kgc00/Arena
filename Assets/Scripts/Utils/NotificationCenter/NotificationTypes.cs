@@ -7,5 +7,16 @@
             AbilityWillActivate = "AbilityWillActivate",
             AbilityDidActivate = "AbilityDidActivate",
             AbilityDidConnect = "AbilityDidConnect";
+
+        // unit input
+        public const string
+            DisableRotation = "DisableRotation",
+            EnableRotation = "EnableRotation",
+            DisableMovement = "DisableMovement",
+            EnableMovement = "EnableMovement",
+            DisableMovementAndRotation = "DisableMovementAndRotation",
+            EnableMovementAndRotation = "EnableMovementAndRotation",
+            DisableInput = "DisableInput",
+            EnableInput = "EnableInput";
     }
 }

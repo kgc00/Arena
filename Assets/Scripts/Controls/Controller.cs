@@ -1,10 +1,11 @@
 ﻿using System;
+using Units;
 using UnityEngine;
 
 namespace Controls
 {
-    public abstract class Controller : MonoBehaviour
-    {
+    public abstract class Controller : MonoBehaviour {
+        public Unit Owner { get; protected set; }
         public virtual InputValues InputValues { get; protected set; } = new InputValues();
         
         public virtual void HandleUpdate(){}
@@ -14,6 +15,11 @@ namespace Controls
         private void LateUpdate()
         {
             InputValues.ResetValues();
+        }
+
+        public Controller Initialize(Unit unit) {
+            Owner = unit;
+            return this;
         }
     }
 }

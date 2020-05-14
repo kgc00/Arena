@@ -7,10 +7,12 @@ namespace State
 {
     public class UnitState {
         protected readonly Unit Owner;
+        public bool rotationDisabled { get; protected set; }
 
         public UnitState (Unit owner) {
-            this.Owner = owner;
+            Owner = owner;
         }
+        
         public virtual void Enter () { }
         public virtual void Exit () { }
         public virtual UnitState HandleUpdate (InputValues input) { return null; }

@@ -14,11 +14,11 @@ namespace State.PlayerStates
     {
         private static readonly int Moving = Animator.StringToHash("Moving");
 
-        public RunUnitState(Unit owner, bool rotationDisabled) : base(owner, rotationDisabled) { }
+        public RunUnitState(Unit owner) : base(owner) { }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (skillBehaviour.ShouldActivateSkill(input, rotationDisabled,out var unitState)) 
+            if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
                 return unitState;
 
             base.HandleUpdate(input);
@@ -26,7 +26,7 @@ namespace State.PlayerStates
             var playerIsStationary = Math.Abs(input.Forward) <= movementThreshold && 
                                            Math.Abs(input.Horizontal) <= movementThreshold;
             
-            if (playerIsStationary) return new IdleUnitState(Owner, rotationDisabled);
+            if (playerIsStationary) return new IdleUnitState(Owner);
         
             return null;
         }

@@ -2,7 +2,7 @@
 
 namespace Controls {
     [Flags] 
-    public enum InputModifiers : short {
+    public enum InputModifier : short {
         None = 0,
         CannotMove = 1,
         CannotRotate = 2,

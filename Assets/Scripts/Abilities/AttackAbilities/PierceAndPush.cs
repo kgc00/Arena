@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Controls;
 using Enums;
 using Projectiles;
 using State.PlayerStates;
@@ -22,14 +23,16 @@ namespace Abilities.AttackAbilities
         {
             yield return new WaitForSeconds(StartupTime);
             var pullGo = HandlePullEffect();
-            
-            this.PostNotification(NotificationTypes.DisableRotation, Owner);
+            Owner.inputModifierComponent
+                .AddModifier(InputModifier.CannotMove)
+                .AddModifier(InputModifier.CannotRotate);
     
             yield return new WaitForSeconds(preFireDelay);
             Destroy(pullGo);
             MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
-            
-            this.PostNotification(NotificationTypes.EnableRotation, Owner);
+            Owner.inputModifierComponent
+                .RemoveModifier(InputModifier.CannotMove)
+                .RemoveModifier(InputModifier.CannotRotate);
         }
 
         private GameObject HandlePullEffect() {

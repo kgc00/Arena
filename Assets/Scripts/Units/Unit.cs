@@ -18,7 +18,7 @@ namespace Units
         [SerializeField] public Animator Animator { get; private set; }
         public UnitState state { get; private set; }
         public Controller controller { get; private set; }
-        public InputModifierComponent InputModifierComponent { get; private set; }
+        public InputModifierComponent inputModifierComponent { get; private set; }
         public AbilityComponent AbilityComponent { get; private set; }
         public HealthComponent HealthComponent { get; private set; }
         public ExperienceComponent ExperienceComponent { get; private set; }
@@ -28,15 +28,17 @@ namespace Units
         public bool Initialized { get; private set; } = false;
 
         public Unit Initialize (Player.Player owner, UnitData data) {
-            //Owner
+            // Owner
             this.Owner = owner;
 
-            //Controller
+            // Controller
             if (controller == null) controller = GetComponentInChildren<Controller>().Initialize(this);
-            if (InputModifierComponent == null)
-                InputModifierComponent = gameObject.AddComponent<InputModifierComponent>().Initialize(this);
             
-            //RigidBody
+            // Input Modifiers
+            if (inputModifierComponent == null)
+                inputModifierComponent = gameObject.AddComponent<InputModifierComponent>().Initialize(this);
+            
+            // RigidBody
             if (Rigidbody == null) Rigidbody = GetComponentInChildren<Rigidbody>();
             
             // Animator
@@ -46,9 +48,9 @@ namespace Units
             if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>().Initialize(this, data.health);
 
             // Abilities
-            if (AbilityComponent == null)AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this, data.abilities);
+            if (AbilityComponent == null) AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this, data.abilities);
             
-            //Experience
+            // Experience
             if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>().Initialize(this, data.experience);
             
             // CoroutineHelper
@@ -57,7 +59,7 @@ namespace Units
             // Status 
             if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
             
-            //State
+            // State
             state = StateHelper.StateFromEnum(data.state, this);
             state.Enter ();
 

@@ -198,7 +198,7 @@ namespace Utils
             switch (stateEnum)
             {
                 case UnitStateEnum.Player:
-                    return new State.PlayerStates.IdleUnitState(owner, false);
+                    return new State.PlayerStates.IdleUnitState(owner);
                 case UnitStateEnum.MeleeAi:
                     return new State.MeleeAiStates.IdleUnitState(owner);
                 case UnitStateEnum.TrainingDummy:

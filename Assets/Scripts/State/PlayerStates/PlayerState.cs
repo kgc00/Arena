@@ -18,29 +18,14 @@ namespace State.PlayerStates
         protected readonly float movementThreshold = 0.1f;
         protected StateSkillBehaviour skillBehaviour;
 
-        public PlayerState(Unit owner, bool rotationDisabled) : base(owner)
+        public PlayerState(Unit owner) : base(owner)
         {
             movementSpeed = 100f;
             skillBehaviour = new StateSkillBehaviour(owner);
-            this.rotationDisabled = rotationDisabled;
-            this.AddObserver( OnRotationEnabled, NotificationTypes.EnableRotation);
-            this.AddObserver( OnRotationDisabled, NotificationTypes.DisableRotation);
         }
 
-        ~PlayerState() {
-            this.RemoveObserver(OnRotationEnabled,NotificationTypes.EnableRotation);
-            this.RemoveObserver(OnRotationDisabled,NotificationTypes.DisableRotation);
-        }
-        
-        private void OnRotationEnabled(object sender, object args) => rotationDisabled = false;
+        public override UnitState HandleUpdate(InputValues input) => null;
 
-        private void OnRotationDisabled(object sender, object args) => rotationDisabled = true;
-
-        public override UnitState HandleUpdate(InputValues input)
-        {
-            return null;
-        }
-        
         // need to look into handling input only in update and storing values onto a field for fixed update
         public override void HandleFixedUpdate(InputValues input)
         {
@@ -52,21 +37,21 @@ namespace State.PlayerStates
 
         private void UpdatePlayerPositionForce(InputValues input, Vector3 motion)
         {
+            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) return;
+
             // east = (1, 0)
             // west = (-1, 0)
             // north = (0, 1)
             // south = (0, -1)
 
             // TODO: reduce input for diagonal movement
-
             
-            
-            Owner.Rigidbody.AddForce( motion.normalized * movementSpeed);
+            Owner.Rigidbody.AddForce(motion.normalized * movementSpeed);
         }
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion)
         {
-            if (rotationDisabled) return;
+            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotRotate)) return;
             
             
             if (input.ActiveControl == ControllerType.Delta)

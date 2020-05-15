@@ -18,10 +18,12 @@ namespace State.PlayerStates
             Owner = owner;
         }
 
-        public bool ShouldActivateSkill([CanBeNull] InputValues input, bool rotationDisabled, out UnitState unitState)
+        public bool ShouldActivateSkill([CanBeNull] InputValues input, out UnitState unitState)
         {
             unitState = null;
             
+            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotACt)) return false;
+
             foreach (var kvp in input.ButtonValues)
             {
                 var buttonVal = kvp.Value;
@@ -45,7 +47,7 @@ namespace State.PlayerStates
                 var ability = activationData.Item1;
                 var target = activationData.Item2;
                 
-                unitState = new ActingUnitState(Owner, ability, target, rotationDisabled);
+                unitState = new ActingUnitState(Owner, ability, target);
                 return true;
             }
 

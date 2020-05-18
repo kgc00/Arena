@@ -1,4 +1,6 @@
-﻿using Abilities.Data;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Abilities.Data;
 using Enums;
 using Projectiles;
 using Units;
@@ -8,10 +10,11 @@ namespace Abilities.AttackAbilities
 {
     public class ShootCrossbow : AttackAbility
     {
-        public override void AbilityActivated(Vector3 targetLocation)
+        public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
+            yield return null;
         }
 
 

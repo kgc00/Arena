@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Abilities.Modifiers;
 using Stats;
 using UnityEngine;
@@ -9,20 +10,9 @@ namespace Abilities.Buffs
 {
     public class Conceal : BuffAbility
     {
-        public override void AbilityActivated(Vector3 targetLocation)
+        public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
             Debug.Log("Handling activation of Conceal");
-            StartCoroutine(HandleActivation());
-        }
-
-        private bool brokenConcealment = false;
-        void BreakConcealment(object sender, object args)
-        {
-            if (args != this) brokenConcealment = true;
-        }
-
-        IEnumerator HandleActivation()
-        {
             Debug.Log("Concealed!");
             float timeLeft = Duration;
             brokenConcealment = false;
@@ -51,6 +41,12 @@ namespace Abilities.Buffs
             this.RemoveObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
             
             Debug.Log("Finished Concealment");
+        }
+
+        private bool brokenConcealment = false;
+        void BreakConcealment(object sender, object args)
+        {
+            if (args != this) brokenConcealment = true;
         }
     }
 }

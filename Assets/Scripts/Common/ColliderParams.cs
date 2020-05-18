@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Projectiles {
+namespace Common {
     public abstract class ColliderParams { }
     
     public class BoxParams : ColliderParams {
@@ -13,7 +13,7 @@ namespace Projectiles {
     
     public class SphereParams : ColliderParams {
         public float Radius { get; private set; }
-        SphereParams(float radius) : base() {
+        public SphereParams(float radius) : base() {
             Radius = radius;
         }
     }

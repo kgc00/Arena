@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
-  m_Name: PierceAndPush
+  m_Name: PierceAndPull
   m_EditorClassIdentifier: 
-  displayName: Pierce And Push
+  displayName: Pierce And Pull
   description: 
   energyCost: 0
   cooldown: 0

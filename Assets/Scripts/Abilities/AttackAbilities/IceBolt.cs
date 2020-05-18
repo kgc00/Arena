@@ -1,4 +1,6 @@
-﻿using Abilities.Data;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Abilities.Data;
 using Enums;
 using Projectiles;
 using Units;
@@ -8,14 +10,16 @@ namespace Abilities.AttackAbilities
 {
     public class IceBolt : AttackAbility
     {
-        public override void AbilityActivated(Vector3 targetLocation)
+        public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
-            if (Cooldown.IsOnCooldown) return;
+            if (Cooldown.IsOnCooldown) 
+                yield break;
 
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
 
             Cooldown.SetOnCooldown();
+            yield return null;
         }
 
 

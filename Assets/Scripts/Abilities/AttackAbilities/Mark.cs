@@ -14,17 +14,12 @@ namespace Abilities.AttackAbilities
 {
     public class Mark : AttackAbility
     {
-        public override void AbilityActivated(Vector3 targetLocation)
-        {
-            StartCoroutine(HandleActivation(targetLocation));
-        }
-
-        private IEnumerator HandleActivation(Vector3 targetLocation)
+        public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
             yield return new WaitForSeconds(StartupTime);
             MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection);
         }
-
+        
         public override void AbilityConnected(GameObject other, GameObject projectile)
         {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());

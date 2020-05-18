@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Abilities.Data;
 using Enums;
@@ -17,6 +18,7 @@ namespace Abilities
             Owner = owner;
             Model = data;
             Range = data.range;
+            Force = data.force;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
             Cooldown = new Cooldown(data.cooldown);
@@ -24,7 +26,7 @@ namespace Abilities
             ProjectileSpeed = data.projectileSpeed;
             IndicatorType = data.indicatorType;
             Duration = data.Duration;
-            OnActivation = new List<Action<Vector3>>() {AbilityActivated};
+            OnActivation = new List<Func<Vector3, IEnumerator>>() {targetLocation => AbilityActivated(targetLocation)};
             return this;
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.AttackAbilities;
@@ -28,6 +29,71 @@ namespace Utils
             else return val;
         }
     }
+
+    public static class ForceStrategies {
+        public enum Type {
+            ForceAlongLocalX,
+            ForceAlongHeading
+        }
+
+        public static Dictionary<Type, Func<Collider, Rigidbody, float, Transform, IEnumerator>> Strategies { get; } =
+            new Dictionary<Type, Func<Collider, Rigidbody,float, Transform, IEnumerator>>() {
+                {Type.ForceAlongLocalX, ForceAlongLocalX},
+                {Type.ForceAlongHeading, ForceAlongHeading}
+            };
+
+        private static IEnumerator ForceAlongLocalX(Collider other, Rigidbody rigidBody, float Force,
+            Transform forceComponentTransform) {
+            Vector3 left = forceComponentTransform.TransformDirection(Vector3.left);
+            Vector3 heading = other.transform.position - forceComponentTransform.position;
+            heading.y = 0f;
+
+            // dot scales the value of force to make it stronger as the unit
+            // is further away. The unit will always end near center of bounds
+            var dot = Vector3.Dot(left, heading.normalized);
+
+            // Force is required to be a negative value because we are pulling
+            var scaledForce = Force * dot;
+            var appliedForce = left * scaledForce;
+
+            // Apply force over several frames for a smoother acceleration
+            var frames = 10;
+            for (int j = 0; j < frames; j++) {
+                rigidBody.AddForce(appliedForce);
+                yield return null;
+            }
+        }
+
+        private static IEnumerator ForceAlongHeading(Collider other, Rigidbody rigidBody, float Force,
+            Transform forceComponentTransform) {
+            
+            Debug.Log("LOGGING forceComponentTransform");
+            Debug.Log(forceComponentTransform.position);
+            
+            Vector3 heading = other.transform.position - forceComponentTransform.position;
+            heading.y = 0f;
+            heading = heading.normalized;
+            heading = heading == Vector3.zero ? forceComponentTransform.forward : heading;
+            var appliedForce = heading * Force;
+
+            // dot scales the value of force to make it stronger as the unit
+            // is further away. The unit will always end near center of bounds
+            // var dot = Vector3.Dot(left, heading.normalized);
+
+            // Force is required to be a negative value because we are pulling
+            // var scaledForce = Force * dot;
+            // var appliedForce = left * scaledForce;
+
+            // Apply force over several frames for a smoother acceleration
+            var frames = 10;
+            for (int j = 0; j < frames; j++) {
+                Debug.Log($"Applying {appliedForce} force");
+                rigidBody.AddForce(appliedForce);
+                yield return null;
+            }
+        }
+    }
+    
     public static class AbilityFactory
     {
         public static Dictionary<ButtonType, Ability> CreateAbilitiesFromData(List<AbilityData> data, Unit owner)
@@ -65,8 +131,12 @@ namespace Utils
                         instance = owner.gameObject.AddComponent<Conceal>().Initialize((BuffAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.PierceAndPush:
-                        instance = owner.gameObject.AddComponent<PierceAndPush>().Initialize((AttackAbilityData)data[i], owner);
+                    case Types.PierceAndPull:
+                        instance = owner.gameObject.AddComponent<PierceAndPull>().Initialize((AttackAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
+                    case Types.Burst:
+                        instance = owner.gameObject.AddComponent<Burst>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
                 }

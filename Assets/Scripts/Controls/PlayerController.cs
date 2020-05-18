@@ -114,6 +114,41 @@ namespace Controls
             InputValues.ButtonValues[ButtonType.Skill4].PressPhase = context.phase;
             InputValues.ButtonValues[ButtonType.Skill4].PressInteraction = context.interaction;
         }
+        
+        public void OnNormal1(InputAction.CallbackContext context)
+        {
+            // Must use this if statement- it sets HasStartedFire to true for this frame and
+            //  is not overwritten by subsequent input calls on the same frame.  If we modify this if statement
+            //  to also set false in certain conditions, the 'true' state will never make it to consumers.
+            
+            
+            // HasStartedFire must be reset in late update to keep an accurate picture of user input.
+            if(context.phase == InputActionPhase.Started && context.interaction is UnityEngine.InputSystem.Interactions.PressInteraction)
+            {
+                InputValues.ButtonValues[ButtonType.Normal1].HasStartedPress = true;
+            }
+            
+            InputValues.ButtonValues[ButtonType.Normal1].PressValue = context.ReadValue<Single>();
+            InputValues.ButtonValues[ButtonType.Normal1].PressPhase = context.phase;
+            InputValues.ButtonValues[ButtonType.Normal1].PressInteraction = context.interaction;
+        }
+
+        public void OnNormal2(InputAction.CallbackContext context) {
+            // Must use this if statement- it sets HasStartedFire to true for this frame and
+            //  is not overwritten by subsequent input calls on the same frame.  If we modify this if statement
+            //  to also set false in certain conditions, the 'true' state will never make it to consumers.
+            
+            
+            // HasStartedFire must be reset in late update to keep an accurate picture of user input.
+            if(context.phase == InputActionPhase.Started && context.interaction is UnityEngine.InputSystem.Interactions.PressInteraction)
+            {
+                InputValues.ButtonValues[ButtonType.Normal2].HasStartedPress = true;
+            }
+            
+            InputValues.ButtonValues[ButtonType.Normal2].PressValue = context.ReadValue<Single>();
+            InputValues.ButtonValues[ButtonType.Normal2].PressPhase = context.phase;
+            InputValues.ButtonValues[ButtonType.Normal2].PressInteraction = context.interaction;
+        }
 
         // #endregion
     }

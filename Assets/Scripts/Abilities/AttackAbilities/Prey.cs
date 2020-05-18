@@ -1,4 +1,6 @@
-﻿using Enums;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Enums;
 using Projectiles;
 using Stats;
 using Units;
@@ -7,10 +9,11 @@ namespace Abilities.AttackAbilities
 {
     public class Prey : AttackAbility
     {
-        public override void AbilityActivated(Vector3 targetLocation)
+        public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
+            yield return null;
         }
 
 

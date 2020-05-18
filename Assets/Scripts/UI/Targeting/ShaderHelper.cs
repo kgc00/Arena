@@ -21,6 +21,7 @@ namespace UI.Targeting
 
         public static int IndicatorTypeVal = 0;
 
+        public static bool isCenterPosPlayerPos = true;
         #endregion
         
         private void Start()
@@ -51,7 +52,9 @@ namespace UI.Targeting
         {
             if (playerTransform == null) return;
             
-            Shader.SetGlobalVector(Center, playerTransform.position);
+            // circle targeting
+            Shader.SetGlobalVector(Center, isCenterPosPlayerPos ? playerTransform.position : MouseHelper.GetWorldPosition());
+            // line targeting
             Shader.SetGlobalVector(StartPos, playerTransform.position);
             Shader.SetGlobalVector(EndPos,MouseHelper.GetWorldPosition());
         }

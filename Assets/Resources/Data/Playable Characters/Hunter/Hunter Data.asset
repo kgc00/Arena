@@ -17,6 +17,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed75c5b1d3af50d4c837283e531b1169, type: 2}
   - {fileID: 11400000, guid: 610c748d7886c474cb2cb3a450af9101, type: 2}
   - {fileID: 11400000, guid: a15500704de91a04d87aa3a3c0848185, type: 2}
+  - {fileID: 11400000, guid: 2f2e2f74dcb63684d88e42d87daeed95, type: 2}
+  - {fileID: 11400000, guid: 2f2e2f74dcb63684d88e42d87daeed95, type: 2}
   health:
     maxHp: 3
     Invulnerable: 0

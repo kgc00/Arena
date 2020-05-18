@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 using Enums;
 using JetBrains.Annotations;
 using Units;
@@ -9,10 +10,9 @@ using UnityEngine;
 
 namespace Projectiles
 {
-    public class PullComponent : MonoBehaviour
+    public class AoEComponent : MonoBehaviour
     {
         #region Vars
-
         public float Force = 250f;
 
         [Header("Center")] 
@@ -24,16 +24,23 @@ namespace Projectiles
         [Range(-25f, 25f), SerializeField] private float zModifier = 0f;
         
         public Vector3 Bounds { get; private set; }
+        public float Radius { get; private set; }
         private Collider collider;
 
         private List<ControlType> AffectedFactions;
         public Vector3 LookTarget;
+        public Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy;
         #endregion
 
-        public GameObject Initialize(float force, ColliderParams colliderParams, Vector3 center, Vector3 lookTarget,
-            List<ControlType> affectedFactions) {
+        public AoEComponent Initialize(ColliderParams colliderParams, 
+            Vector3 center, 
+            Vector3 lookTarget,
+            Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy,
+            List<ControlType> affectedFactions,
+            float force = default) {
             Force = force;
             AffectedFactions = affectedFactions;
+            this.Strategy = Strategy;
 
             transform.position = center;
             
@@ -41,9 +48,9 @@ namespace Projectiles
 
             // lock y to unit's current y
             LookTarget = new Vector3(lookTarget.x, gameObject.transform.position.y, lookTarget.z);
-            
             gameObject.transform.LookAt(LookTarget);
-            return gameObject;
+            
+            return this;
         }
 
         private void InitializeCollider(ColliderParams colliderParams) {
@@ -60,6 +67,7 @@ namespace Projectiles
             if (colliderParams is SphereParams) {
                 var p = (SphereParams) colliderParams;
                 var c = gameObject.AddComponent<SphereCollider>();
+                Radius = p.Radius;
                 c.radius = p.Radius;
                 collider = c;
             }
@@ -67,37 +75,11 @@ namespace Projectiles
             collider.isTrigger = true;
         }
 
-        // private void OnEnable() {
-        //     Initialize(250f, 20, Vector3.zero);
-        // }
-
         private void OnTriggerEnter(Collider other) {
             if (!ShouldActivate(other, out var rigidBody)) return;
 
-            StartCoroutine(ApplyForce(other, rigidBody));
-        }
-        
-        private IEnumerator ApplyForce(Collider other, Rigidbody rigidBody) {
-            Debug.Log($"{other.gameObject.name} will be pulled!");
-            
-            Vector3 left = transform.TransformDirection(Vector3.left);
-            Vector3 heading = other.transform.position - transform.position;
-            heading.y = 0f;
-            
-            // dot scales the value of force to make it stronger as the unit
-            // is further away. The unit will always end near center of bounds
-            var dot = Vector3.Dot(left, heading.normalized);
-
-            // Force is required to be a negative value because we are pulling
-            var scaledForce = (-Math.Abs(Force) * dot); 
-            var appliedForce = left * scaledForce;
-            
-            // Apply force over several frames for a smoother acceleration
-            var frames = 10;
-            for (int j = 0; j < frames; j++) {
-                rigidBody.AddForce(appliedForce);
-                yield return null;
-            }
+            Debug.Log($"{other.gameObject.name} will be {(Force < 0 ? "pushed" : "pulled")}!");
+            StartCoroutine(Strategy(other, rigidBody, Force, transform));
         }
 
         private bool ShouldActivate(Collider other, [CanBeNull] out Rigidbody rigidBody) {
@@ -106,7 +88,7 @@ namespace Projectiles
             if (unit == null) return false;
 
             if (AffectedFactions.All(x => x != unit.Owner.ControlType)) {
-                Debug.Log($"Unable to affect {unit.name} because thier faction is {unit.Owner.ControlType}");
+                Debug.Log($"Unable to affect {unit.name} because their faction is {unit.Owner.ControlType}");
                 return false;
             }
 
@@ -130,6 +112,9 @@ namespace Projectiles
                 Vector3.zero, 
                 Bounds
             );
+            
+            Gizmos.DrawWireSphere(Vector3.zero, Radius);
+            
             Gizmos.color = Color.green;
             Gizmos.matrix = Matrix4x4.identity;
             Gizmos.DrawSphere(

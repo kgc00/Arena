@@ -40,22 +40,5 @@ namespace Utils
             ) as GameObject;
         }
         #endregion
-
-        #region Collider
-        
-        public static GameObject AddBoxCollider(GameObject go, Vector3 size) {
-            var collider = go.AddComponent<BoxCollider>();
-            size.y = 1f;
-            Debug.Log($"Size: {size}");
-            collider.size = size;
-            collider.isTrigger = true;
-            return go;
-        }
-        // public static SphereCollider SpawnSphereCollider(GameObject go) {
-        //     go.AddComponent<SphereCollider>();
-        // }
-        
-
-        #endregion
     }
 }

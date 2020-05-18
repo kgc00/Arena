@@ -21,13 +21,15 @@ namespace Controls
             Horizontal = 0;
             Look = 0;
             Turn = 0;
-            ActiveControl = ControllerType.None;
+            ActiveControl = ControllerType.Delta;
             ButtonValues = new Dictionary<ButtonType, ButtonValues>()
             {
                 [ButtonType.Skill1] = new ButtonValues(ButtonType.Skill1),
                 [ButtonType.Skill2] = new ButtonValues(ButtonType.Skill2),
                 [ButtonType.Skill3] = new ButtonValues(ButtonType.Skill3),
-                [ButtonType.Skill4] = new ButtonValues(ButtonType.Skill4)
+                [ButtonType.Skill4] = new ButtonValues(ButtonType.Skill4),
+                [ButtonType.Normal1] = new ButtonValues(ButtonType.Normal1),
+                [ButtonType.Normal2] = new ButtonValues(ButtonType.Normal2),
             };
         }
         

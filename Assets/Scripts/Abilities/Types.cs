@@ -8,6 +8,7 @@
         Mark,
         Prey,
         Conceal,
-        PierceAndPush
+        PierceAndPull,
+        Burst
     }
 }

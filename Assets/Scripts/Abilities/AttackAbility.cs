@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Abilities.AttackAbilities;
 using Abilities.Data;
@@ -22,13 +23,14 @@ namespace Abilities
             Model = data;
             Damage = data.Damage;
             Range = data.range;
+            Force = data.force;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
             Cooldown = new Cooldown(data.cooldown);
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;
             IndicatorType = data.indicatorType;
-            OnActivation = new List<Action<Vector3>>() {AbilityActivated};
+            OnActivation = new List<Func<Vector3, IEnumerator>>() {AbilityActivated};
             OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
             return this;
         }

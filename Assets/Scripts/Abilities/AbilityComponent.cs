@@ -63,7 +63,7 @@ namespace Abilities
             Modifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
 
             for (int i = 0; i < ability.OnActivation.Count; i++) 
-                ability.OnActivation[i](targetLocation);
+                StartCoroutine(ability.OnActivation[i](targetLocation));
 
             ability.Cooldown.SetOnCooldown();
             

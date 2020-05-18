@@ -37,7 +37,10 @@ namespace State.PlayerStates
 
         private void UpdatePlayerPositionForce(InputValues input, Vector3 motion)
         {
-            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) return;
+            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) {
+                Owner.Rigidbody.velocity = Vector3.zero;
+                return;
+            }
 
             // east = (1, 0)
             // west = (-1, 0)

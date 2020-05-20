@@ -94,7 +94,7 @@ namespace Units
         {
             OnDeath(this);
             Owner.RemoveUnit(this);
-            Destroy(gameObject, 0.1f);
+            Destroy(gameObject);
         }
 
         private void OnDrawGizmos()

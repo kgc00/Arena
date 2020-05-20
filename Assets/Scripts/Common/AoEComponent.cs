@@ -30,17 +30,20 @@ namespace Projectiles
         private List<ControlType> AffectedFactions;
         public Vector3 LookTarget;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy;
+        public Func<Collider, Rigidbody, float, Transform, IEnumerator> StayStrategy;
         #endregion
 
         public AoEComponent Initialize(ColliderParams colliderParams, 
             Vector3 center, 
             Vector3 lookTarget,
             Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy,
+            Func<Collider, Rigidbody, float, Transform, IEnumerator> stayStrategy,
             List<ControlType> affectedFactions,
             float force = default) {
             Force = force;
             AffectedFactions = affectedFactions;
             this.Strategy = Strategy;
+            StayStrategy = stayStrategy;
 
             transform.position = center;
             
@@ -75,7 +78,18 @@ namespace Projectiles
             collider.isTrigger = true;
         }
 
+        private void OnTriggerStay(Collider other) {
+            if (StayStrategy == null) return;
+            
+            if (!ShouldActivate(other, out var rigidBody)) return;
+            
+            Debug.Log($"Activating stay logic for {other.transform.root.name}!");
+            StartCoroutine(StayStrategy(other, rigidBody, Force, transform));
+        }
+
         private void OnTriggerEnter(Collider other) {
+            if (Strategy == null) return;
+
             if (!ShouldActivate(other, out var rigidBody)) return;
 
             Debug.Log($"{other.gameObject.name} will be {(Force < 0 ? "pushed" : "pulled")}!");

@@ -18,8 +18,10 @@ namespace Abilities.Buffs
             brokenConcealment = false;
             
             this.AddObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
-
+            
             Owner.StatusComponent.AddStatus(Status.Hidden);
+
+            onAbilityActivationFinished(Owner, this);
 
             var modifiers = Owner.AbilityComponent.Modifiers;
             var markModifier = new MarkOnHitModifier(null);
@@ -39,7 +41,6 @@ namespace Abilities.Buffs
             if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
             
             this.RemoveObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
-            
             Debug.Log("Finished Concealment");
         }
 

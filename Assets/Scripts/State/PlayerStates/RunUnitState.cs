@@ -21,26 +21,26 @@ namespace State.PlayerStates
             if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
                 return unitState;
 
-            base.HandleUpdate(input);
-            
             var playerIsStationary = Math.Abs(input.Forward) <= movementThreshold && 
-                                           Math.Abs(input.Horizontal) <= movementThreshold;
+                                     Math.Abs(input.Horizontal) <= movementThreshold;
             
             if (playerIsStationary) return new IdleUnitState(Owner);
         
-            return null;
+            return base.HandleUpdate(input);
         }
 
         public override void Enter()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Moving, true);
+            Debug.Log("Entered Run state");
         }
 
         public override void Exit()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Moving, false);
+            Debug.Log("Exited Run state");
         }
     }
 }

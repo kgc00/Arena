@@ -18,8 +18,7 @@ namespace Abilities.AttackAbilities
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
 
-            Cooldown.SetOnCooldown();
-            yield return null;
+            onAbilityActivationFinished(Owner, this);
         }
 
 
@@ -66,7 +65,7 @@ namespace Abilities.AttackAbilities
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
             
-            unit.HealthComponent.AdjustHealth(-Damage);
+            unit.HealthComponent.TakeDamage(-Damage);
             Destroy(projectile);
         }
     }

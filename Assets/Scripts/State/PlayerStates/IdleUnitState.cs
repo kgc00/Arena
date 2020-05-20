@@ -17,13 +17,19 @@ namespace State.PlayerStates
         {
             if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
                 return unitState;
-            
-            base.HandleUpdate(input);
-            
+
             bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
             if (playerIsMoving) return new RunUnitState(Owner);
             
-            return null;
+            return base.HandleUpdate(input);
+        }
+
+        public override void Enter() {
+            Debug.Log($"Entered Idle state, {Owner.inputModifierComponent.InputModifier}");
+        }
+
+        public override void Exit() {
+            Debug.Log("Exited Idle state");
         }
     }
 }

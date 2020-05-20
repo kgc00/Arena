@@ -18,6 +18,8 @@ namespace Abilities.AttackAbilities
         {
             yield return new WaitForSeconds(StartupTime);
             MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection);
+            
+            onAbilityActivationFinished(Owner, this);
         }
         
         public override void AbilityConnected(GameObject other, GameObject projectile)

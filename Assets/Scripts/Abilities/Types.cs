@@ -9,6 +9,7 @@
         Prey,
         Conceal,
         PierceAndPull,
-        Burst
+        Burst,
+        Rain
     }
 }

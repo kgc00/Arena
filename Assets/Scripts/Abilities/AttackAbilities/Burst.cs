@@ -6,6 +6,7 @@ using UI.Targeting;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Burst : AttackAbility {
@@ -14,6 +15,7 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             var grenade = SpawnGrenade(updatedTargetLocation);
+            onAbilityActivationFinished(Owner, this);
             ShaderHelper.isCenterPosPlayerPos = true;
         }
         
@@ -40,6 +42,7 @@ namespace Abilities.AttackAbilities {
                     centerLocation,
                     targetLocation,
                     ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongHeading],
+                    null,
                     AffectedFactions,
                     185)
                 .gameObject
@@ -48,6 +51,7 @@ namespace Abilities.AttackAbilities {
                     centerLocation,
                     targetLocation,
                     AoEAddMark,
+                    null,
                     AffectedFactions)
                 .gameObject;
             

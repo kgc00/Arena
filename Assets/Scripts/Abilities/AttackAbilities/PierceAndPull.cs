@@ -23,6 +23,8 @@ namespace Abilities.AttackAbilities {
             MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
             Owner.inputModifierComponent.RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate);
+            
+            onAbilityActivationFinished(Owner, this);
         }
 
         private GameObject HandlePullEffect() {
@@ -46,12 +48,13 @@ namespace Abilities.AttackAbilities {
                                                                 always points away from player */
 
             var colliderParams = new BoxParams(bounds);
-
+            
             return new GameObject("Pull Force").AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     centerLocation,
                     targetLocation,
                     ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongLocalX],
+                    null,
                     AffectedFactions, 
                     -185f)
                 .gameObject;
@@ -79,7 +82,7 @@ namespace Abilities.AttackAbilities {
             Debug.Log($"Pierce has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
                       $"Base damage is {Damage}. Total Damage is {totalDamage}");
 
-            unit.HealthComponent.AdjustHealth(totalDamage);
+            unit.HealthComponent.TakeDamage(totalDamage);
         }
     }
 }

@@ -6,7 +6,8 @@
         public const string 
             AbilityWillActivate = "AbilityWillActivate",
             AbilityDidActivate = "AbilityDidActivate",
-            AbilityDidConnect = "AbilityDidConnect";
+            AbilityDidConnect = "AbilityDidConnect",
+            AbilityCompleted = "AbilityCompleted";
 
         // unit input
         public const string

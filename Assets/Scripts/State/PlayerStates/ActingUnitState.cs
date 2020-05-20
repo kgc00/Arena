@@ -8,7 +8,6 @@ namespace State.PlayerStates
 {
     public class ActingUnitState : PlayerState
     {
-        public float remainingDuration { get; private set; }
         public Ability Ability { get; private set; }
         public Vector3 TargetLocation;
 
@@ -16,7 +15,6 @@ namespace State.PlayerStates
         {
             TargetLocation = targetLocation;
             Ability = ability;
-            remainingDuration = ability.StartupTime;
         }
 
         public override void Enter()
@@ -24,16 +22,18 @@ namespace State.PlayerStates
             Owner.AbilityComponent.Activate(Ability, TargetLocation);
             
             Shader.SetGlobalFloat("_IndicatorType", Ability.IndicatorType);
+            Debug.Log("Entering acting state");
         }
 
         public override void Exit()
         {
             Shader.SetGlobalFloat("_IndicatorType", 0);
+            Debug.Log("Exiting acting state");
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (remainingDuration <= 0f)
+            if (Owner.AbilityComponent.State == AbilityComponentState.Idle)
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
 
@@ -41,8 +41,6 @@ namespace State.PlayerStates
             }
 
             base.HandleUpdate(input);
-            
-            remainingDuration -= Time.deltaTime;
             
             return null;
         }

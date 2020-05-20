@@ -5,6 +5,7 @@ using Enums;
 using Projectiles;
 using Units;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities
 {
@@ -14,7 +15,8 @@ namespace Abilities.AttackAbilities
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
-            yield return null;
+            onAbilityActivationFinished(Owner, this);
+            yield break;
         }
 
 
@@ -61,7 +63,7 @@ namespace Abilities.AttackAbilities
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
-            unit.HealthComponent.AdjustHealth(-Damage);
+            unit.HealthComponent.TakeDamage(-Damage);
             Destroy(projectile);
         }
     }

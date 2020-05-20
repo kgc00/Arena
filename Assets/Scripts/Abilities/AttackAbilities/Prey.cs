@@ -13,7 +13,8 @@ namespace Abilities.AttackAbilities
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
-            yield return null;
+            onAbilityActivationFinished(Owner, this);
+            yield break;
         }
 
 
@@ -72,7 +73,7 @@ namespace Abilities.AttackAbilities
             Debug.Log($"Prey has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
                       $"Base damage is {Damage}. Total Damage: {totalDamage}");
             
-            unit.HealthComponent.AdjustHealth(totalDamage);
+            unit.HealthComponent.TakeDamage(totalDamage);
             Destroy(projectile);
         }
     }

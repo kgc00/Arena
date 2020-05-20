@@ -87,6 +87,7 @@ namespace Utils
             // Apply force over several frames for a smoother acceleration
             var frames = 10;
             for (int j = 0; j < frames; j++) {
+                if (rigidBody == null) break;
                 Debug.Log($"Applying {appliedForce} force");
                 rigidBody.AddForce(appliedForce);
                 yield return null;
@@ -137,6 +138,10 @@ namespace Utils
                         break;
                     case Types.Burst:
                         instance = owner.gameObject.AddComponent<Burst>().Initialize((AttackAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
+                    case Types.Rain:
+                        instance = owner.gameObject.AddComponent<Rain>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
                 }

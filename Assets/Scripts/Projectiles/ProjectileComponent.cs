@@ -22,8 +22,8 @@ namespace Projectiles {
         private void MoveGameObject() => transform.position += Direction * (speed * Time.deltaTime);
 
         private void OnTriggerEnter(Collider other) {
-            Debug.Log("LOGGING PROJECTILE LOCATION");
-            Debug.Log(transform.position);
+            // Debug.Log("LOGGING PROJECTILE LOCATION");
+            // Debug.Log(transform.position);
             // Apply all callbacks in order from lowest to highest
             for (int i = 0; i < onConnected.Count; i++)
                 onConnected[i](other.gameObject, gameObject);

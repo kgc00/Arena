@@ -41,13 +41,13 @@ namespace Stats
 
             CurrentHp = newAmount;
 
+            OnHealthChanged(Owner, prevAmount);
+            
             if (CurrentHp <= 0) {
                 Debug.Log($"{Owner} died");
                 Owner.UnitDeath();
                 
             }
-
-            OnHealthChanged(Owner, prevAmount);
         }
 
         internal void Refill () {

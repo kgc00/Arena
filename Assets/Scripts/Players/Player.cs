@@ -6,7 +6,7 @@ using Units.Data;
 using UnityEngine;
 using Utils;
 
-namespace Player
+namespace Players
 {
     public class Player : MonoBehaviour
     {

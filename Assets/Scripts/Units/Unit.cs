@@ -6,14 +6,16 @@ using Stats;
 using Units.Data;
 using UnityEngine;
 using Utils;
+using Players;
 
 namespace Units
 {
     public class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser
     {
         public static Action<Unit> OnDeath = delegate {  };
-        public Player.Player Owner { get; private set; }
+        public Player Owner { get; private set; }
         public Types type;
+        public Sprite portrait { get; protected set; }
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }
         public UnitState state { get; private set; }
@@ -27,9 +29,10 @@ namespace Units
         public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
-        public Unit Initialize (Player.Player owner, UnitData data) {
-            // Owner
-            this.Owner = owner;
+        public Unit Initialize (Player owner, UnitData data) {
+            // properties & fields
+            Owner = owner;
+            portrait = data.visualAssets.portrait;
 
             // Controller
             if (controller == null) controller = GetComponentInChildren<Controller>().Initialize(this);

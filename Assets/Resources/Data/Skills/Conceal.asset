@@ -21,5 +21,8 @@ MonoBehaviour:
   type: 5
   startupTime: 0
   indicatorType: 0
+  projectileSpeed: 0
+  force: 0
+  icon: {fileID: 21300000, guid: b9326a8e8184d324f886cc9a12c25e2a, type: 3}
   affectedFactions: 00000000
   duration: 3

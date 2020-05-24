@@ -19,6 +19,7 @@ namespace Abilities
         public float StartupTime { get; protected set; }
         public Cooldown Cooldown{ get; protected set; } 
         public Unit Owner;
+        public Sprite Icon { get; protected set; }
         public static Action<Unit, Ability> onAbilityActivationFinished { get; set; } = delegate { };
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);

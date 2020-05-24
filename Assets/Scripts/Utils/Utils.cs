@@ -16,6 +16,7 @@ using Stats;
 using Units;
 using Units.Data;
 using UnityEngine;
+using Players;
 using Types = Abilities.Types;
 
 namespace Utils
@@ -224,9 +225,9 @@ namespace Utils
 
     public static class PlayerHelper
     {
-        private static HashSet<Player.Player> players = new HashSet<Player.Player>();
+        private static HashSet<Player> players = new HashSet<Player>();
 
-        public static void AddPlayer(Player.Player newPlayer)
+        public static void AddPlayer(Player newPlayer)
         {
             if (players.Contains(newPlayer)) return;
             players.Add(newPlayer);
@@ -263,6 +264,23 @@ namespace Utils
         {
             var transform = owner.transform;
             return transform.position + transform.forward * 25;
+        }
+    }
+
+    public static class TransformExtensions {
+        //Breadth-first search
+        public static Transform FindDeepChild(this Transform aParent, string aName) {
+            Queue<Transform> queue = new Queue<Transform>();
+            queue.Enqueue(aParent);
+            while (queue.Count > 0) {
+                var c = queue.Dequeue();
+                if (c.name == aName)
+                    return c;
+                foreach (Transform t in c)
+                    queue.Enqueue(t);
+            }
+
+            return null;
         }
     }
 

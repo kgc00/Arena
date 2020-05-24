@@ -2,6 +2,7 @@
     public enum AbilityComponentState {
        Idle,
        Executing,
-       Cooldown
+       Cooldown,
+       NotInitialized
     }
 }

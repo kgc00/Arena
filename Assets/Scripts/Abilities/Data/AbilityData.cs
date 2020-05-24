@@ -16,5 +16,6 @@ namespace Abilities.Data
         [SerializeField] public int indicatorType; // Used by shader/ 0=none, 1=circular, 2=linear
         [SerializeField] public float projectileSpeed; // projectile speed 10f is average
         [SerializeField] public float force;
+        [SerializeField] public Sprite icon;
     }
 }

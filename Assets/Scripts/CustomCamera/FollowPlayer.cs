@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Enums;
 using Units;
 using UnityEngine;
@@ -13,17 +14,22 @@ namespace CustomCamera
     
         void Start()
         {
-            AssignUnitTransform();
+            StartCoroutine(AssignUnitTransform());
         }
 
-        private void AssignUnitTransform()
+        private IEnumerator AssignUnitTransform()
         {
+            yield return new WaitUntil(() => {
+                return FindObjectsOfType<Unit>()
+                    ?.FirstOrDefault(element => element.Owner?.ControlType == ControlType.Local)
+                    ?.transform != null;
+            });
+            
             unitTransform = FindObjectsOfType<Unit>()
-                .FirstOrDefault(element => element.Owner.ControlType == ControlType.Local)
+                ?.FirstOrDefault(element => element.Owner?.ControlType == ControlType.Local)
                 ?.transform;
         }
 
-        // Update is called once per frame
         void LateUpdate()
         {
             if (unitTransform == null) return;

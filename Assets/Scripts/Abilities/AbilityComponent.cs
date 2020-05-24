@@ -12,7 +12,7 @@ using Utils.NotificationCenter;
 namespace Abilities
 {
     public class AbilityComponent : MonoBehaviour {
-        public AbilityComponentState State { get; set; }
+        public AbilityComponentState State { get; set; } = AbilityComponentState.NotInitialized;
         public Unit Owner { get ; private set; }
         [SerializeField] public Dictionary<ButtonType, Ability> equippedAbilities;
         public Ability longestRangeAbility;
@@ -41,6 +41,7 @@ namespace Abilities
                 .OrderByDescending(a => a.Value.Range)
                 .First().Value;
             
+            State = AbilityComponentState.Idle;
             return this;
         }
 

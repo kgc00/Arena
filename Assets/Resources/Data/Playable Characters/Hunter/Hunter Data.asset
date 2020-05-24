@@ -27,3 +27,5 @@ MonoBehaviour:
     currentExp: 0
     bounty: 3
   state: 1
+  visualAssets:
+    portrait: {fileID: 21300000, guid: 58279e19b3667c644aa295b296c1c6fb, type: 3}

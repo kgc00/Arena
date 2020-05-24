@@ -18,7 +18,8 @@ namespace Abilities
             Owner = owner;
             Model = data;
             Range = data.range;
-            Force = data.force;
+            Force = data.force;            
+            Icon = data.icon;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
             Cooldown = new Cooldown(data.cooldown);

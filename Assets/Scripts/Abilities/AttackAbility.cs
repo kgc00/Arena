@@ -24,6 +24,7 @@ namespace Abilities
             Damage = data.Damage;
             Range = data.range;
             Force = data.force;
+            Icon = data.icon;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
             Cooldown = new Cooldown(data.cooldown);

@@ -8,6 +8,7 @@ using Enums;
 using Spawner.Data;
 using Units.Data;
 using Random = UnityEngine.Random;
+using Players;
 
 namespace Spawner
 {
@@ -173,7 +174,7 @@ namespace Spawner
         public Vector3 Bounds { get; private set; }
         [SerializeField] public Interval Interval {get; private set;}
         [SerializeField] public WaveHandler Handler {get; private set;}
-        public Player.Player OwningPlayer { get; private set; }
+        public Player OwningPlayer { get; private set; }
         #endregion
 
         private void OnEnable()
@@ -181,7 +182,7 @@ namespace Spawner
             transform.position = new Vector3(xPos, 0, zPos);
             Bounds = new Vector3(size+ xModifier, 1f, size + zModifier);
             // WILL BREAK IF WE ADD MORE THAN ONE AI PLAYER
-            OwningPlayer = FindObjectsOfType<Player.Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
+            OwningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
             if (Handler == null) Handler = new WaveHandler(table, this);
             if (Interval == null) Interval = SpawnHelper.IntervalFromType(interval, gameObject).Initialize(Handler.Spawn, this);
             

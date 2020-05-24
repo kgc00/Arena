@@ -23,5 +23,6 @@ MonoBehaviour:
   indicatorType: 1
   projectileSpeed: 0
   force: 0
+  icon: {fileID: 21300000, guid: 589c08213b79484439e2dd7ecfaba896, type: 3}
   damage: 1
   affectedFactions: 02000000

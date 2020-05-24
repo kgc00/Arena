@@ -1,4 +1,5 @@
-﻿using Units;
+﻿using System.Collections;
+using Units;
 using UnityEngine;
 using Utils;
 using System.Linq;
@@ -24,17 +25,28 @@ namespace UI.Targeting
         public static bool isCenterPosPlayerPos = true;
         #endregion
         
-        private void Start()
-        {
-            playerTransform = FindObjectsOfType<Unit>()
-                .FirstOrDefault(u => u.Owner.ControlType == ControlType.Local)
-                ?.transform;
+        private void Start() {
+            StartCoroutine(AssignUnitTransform());
             Shader.SetGlobalFloat(Radius, 10f);
             Shader.SetGlobalFloat(Border, 1f);
             Shader.SetGlobalFloat(IndicatorType, 0);
 
             Shader.SetGlobalColor(BaseColor, new Color(0.772549f, 0.772549f, 0.772549f));
             Shader.SetGlobalColor(AreaColor, new Color(0.3176471f, 0.6352941f, 0.7372549f));
+        }
+        
+        private IEnumerator AssignUnitTransform()
+        {
+            yield return new WaitUntil(() => {
+                return FindObjectsOfType<Unit>()
+                    ?.FirstOrDefault(element => element.Owner?.ControlType == ControlType.Local)
+                    ?.transform != null;
+            });
+            
+            
+            playerTransform = FindObjectsOfType<Unit>()
+                ?.FirstOrDefault(element => element.Owner?.ControlType == ControlType.Local)
+                ?.transform;
         }
 
         private void OnDisable()

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Board
+  - Ability Timer
+  - Ability Text
+  - Ability Icon
   layers:
   - Default
   - TransparentFX

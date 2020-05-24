@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Burst
   description: 
   energyCost: 0
-  cooldown: 0
+  cooldown: 4
   range: 8
   areaOfEffectRadius: 5
   type: 7

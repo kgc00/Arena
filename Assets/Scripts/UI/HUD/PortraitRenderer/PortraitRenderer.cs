@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace UI.HUD {
     public class PortraitRenderer : MonoBehaviour {
         private Unit unit;
+        private State state;
         [SerializeField]private GameObject nameGo;
         [SerializeField]private GameObject portraitGo;
         private Image portrait;
@@ -18,5 +19,7 @@ namespace UI.HUD {
             portrait.sprite = unit.portrait;
             return this;
         }
+
+
     }
 }

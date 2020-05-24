@@ -15,7 +15,7 @@ MonoBehaviour:
   displayName: Pierce And Pull
   description: 
   energyCost: 0
-  cooldown: 0
+  cooldown: 4
   range: 20
   areaOfEffectRadius: 5
   type: 6

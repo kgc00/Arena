@@ -8,21 +8,30 @@ using UnityEngine.UI;
 
 namespace UI.HUD {
     public class AbilityRenderer : MonoBehaviour {
-       [SerializeField] private GameObject timerGo;
-       [SerializeField] private GameObject keyGo;
-       [SerializeField] private GameObject iconGo;
-       private TextMeshProUGUI key;
-       private TextMeshProUGUI timer;
-       private Image icon;
-       private Ability ability;
+       [SerializeField] public GameObject timerGo;
+       [SerializeField] public GameObject keyGo;
+       [SerializeField] public GameObject iconGo;
+       [SerializeField] public GameObject iconRadialFillGo;
+       [HideInInspector]public VerticalLayoutGroup VerticalLayoutGroup;
+       public TextMeshProUGUI key {get; set; }
+       public TextMeshProUGUI timer {get; set; }
+       public Image icon { get; set; }
+       public Image iconRadialFill { get; set; }
+       public Ability ability { get; private set; }
+       private State state;
         public AbilityRenderer Initialize(KeyValuePair<ButtonType, Ability> kvp) {
+            VerticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
             key = keyGo.GetComponent<TextMeshProUGUI>();
             timer = timerGo.GetComponent<TextMeshProUGUI>();
             icon = iconGo.GetComponent<Image>();
+            iconRadialFill = iconRadialFillGo.GetComponent<Image>();
             ability = kvp.Value;
             
             key.SetText(NameMap(kvp.Key.ToString()));
             icon.sprite = kvp.Value.Icon;
+            
+            state = new IdleState(this);
+            
             return this;
         }
 
@@ -37,11 +46,11 @@ namespace UI.HUD {
         }
 
         private void Update() {
-            
-            
-            if (ability?.Cooldown?.IsOnCooldown == true) {
-                Debug.Log("cd");
-            }
+            var newState = state?.HandleUpdate ();
+            if (newState == null) return;
+            state.Exit();
+            state = newState;
+            state.Enter();
         }
     }
 }

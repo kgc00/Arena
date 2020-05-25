@@ -29,6 +29,7 @@ namespace UI.HUD {
             
             key.SetText(NameMap(kvp.Key.ToString()));
             icon.sprite = kvp.Value.Icon;
+            iconRadialFill.sprite = kvp.Value.Icon;
             
             state = new IdleState(this);
             

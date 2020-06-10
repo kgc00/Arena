@@ -48,7 +48,7 @@ namespace Abilities.AttackAbilities
             ) as GameObject;
         }
 
-        public override void AbilityConnected(GameObject target, GameObject projectile = null)
+        protected override void AbilityConnected(GameObject target, GameObject projectile = null)
         {
             var hitGeometry = target.gameObject.CompareTag(Tags.Board.ToString());
             var unit = target.transform.root.GetComponentInChildren<Unit>();

@@ -22,13 +22,11 @@ namespace State.PlayerStates
             Owner.AbilityComponent.Activate(Ability, TargetLocation);
             
             Shader.SetGlobalFloat("_IndicatorType", Ability.IndicatorType);
-            Debug.Log("Entering acting state");
         }
 
         public override void Exit()
         {
             Shader.SetGlobalFloat("_IndicatorType", 0);
-            Debug.Log("Exiting acting state");
         }
 
         public override UnitState HandleUpdate(InputValues input)

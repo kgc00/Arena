@@ -11,27 +11,17 @@ namespace Abilities
 {
     public abstract class AttackAbility : Ability, IDamageDealer
     {
-        public new AttackAbilityData Model { get; private set; }
+        private new AttackAbilityData Model { get; set; }
         public float Damage { get; set;}
         public List<ControlType> AffectedFactions { get; private set; }
         public List<Action<GameObject, GameObject>> OnAbilityConnection { get; set; }
-        public abstract void AbilityConnected(GameObject target, GameObject projectile = null);
+        protected abstract void AbilityConnected(GameObject target, GameObject projectile = null);
 
-        public AttackAbility Initialize(AttackAbilityData data, Unit owner)
-        {
-            Owner = owner;
+        public virtual AttackAbility Initialize(AttackAbilityData data, Unit owner) {
+            base.Initialize(data, owner);
             Model = data;
             Damage = data.Damage;
-            Range = data.range;
-            Force = data.force;
-            Icon = data.icon;
-            AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
-            Cooldown = new Cooldown(data.cooldown);
-            StartupTime = data.startupTime;
-            ProjectileSpeed = data.projectileSpeed;
-            IndicatorType = data.indicatorType;
-            OnActivation = new List<Func<Vector3, IEnumerator>>() {AbilityActivated};
             OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
             return this;
         }

@@ -23,13 +23,5 @@ namespace State.PlayerStates
             
             return base.HandleUpdate(input);
         }
-
-        public override void Enter() {
-            Debug.Log($"Entered Idle state, {Owner.inputModifierComponent.InputModifier}");
-        }
-
-        public override void Exit() {
-            Debug.Log("Exited Idle state");
-        }
     }
 }

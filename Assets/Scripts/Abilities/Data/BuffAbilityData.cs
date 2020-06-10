@@ -11,8 +11,6 @@ namespace Abilities.Data
     public class BuffAbilityData : AbilityData
     {
         [SerializeField] private List<ControlType> affectedFactions;
-        [SerializeField] private float duration;
-
         public List<ControlType> AffectedFactions
         {
             get => affectedFactions;

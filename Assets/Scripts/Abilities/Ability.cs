@@ -10,10 +10,11 @@ namespace Abilities
 {
     public abstract class Ability : MonoBehaviour
     {
-        // public AbilityData Model { get; private set; }
+        public AbilityData Model { get; private set; }
         public float Range { get; protected set; }
         public float Force { get; protected set; }
         public float ProjectileSpeed { get; protected set; }
+        public float Duration { get; protected set; }
         public int AreaOfEffectRadius { get; protected set; }
         public int IndicatorType { get; set; }
         public float StartupTime { get; protected set; }
@@ -29,7 +30,22 @@ namespace Abilities
         
         protected virtual void LateUpdate() => Cooldown.UpdateCooldown(Time.deltaTime);
 
-        // public virtual Ability Initialize(AbilityData model, Unit owner) => this;
+        protected virtual Ability Initialize(AbilityData data, Unit owner) {
+            Owner = owner;
+            Model = data;
+            Range = data.range;
+            Force = data.force;
+            Icon = data.icon;
+            Duration = data.duration;
+            AreaOfEffectRadius = data.areaOfEffectRadius;
+            Cooldown = new Cooldown(data.cooldown);
+            StartupTime = data.startupTime;
+            ProjectileSpeed = data.projectileSpeed;
+            IndicatorType = data.indicatorType;
+            OnActivation = new List<Func<Vector3, IEnumerator>>() {AbilityActivated};
+            return this;
+        }
+
         public abstract void ResetInstanceValues();
     }
 }

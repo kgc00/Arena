@@ -29,8 +29,9 @@ namespace Projectiles
 
         private List<ControlType> AffectedFactions;
         public Vector3 LookTarget;
-        public Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy;
+        public Func<Collider, Rigidbody, float, Transform, IEnumerator> EnterStrategy;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> StayStrategy;
+        public float Duration { get; private set; }
         #endregion
 
         public AoEComponent Initialize(ColliderParams colliderParams, 
@@ -39,10 +40,12 @@ namespace Projectiles
             Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy,
             Func<Collider, Rigidbody, float, Transform, IEnumerator> stayStrategy,
             List<ControlType> affectedFactions,
-            float force = default) {
+            float force = default,
+            float duration = -1) {
+            Duration = duration;
             Force = force;
             AffectedFactions = affectedFactions;
-            this.Strategy = Strategy;
+            EnterStrategy = Strategy;
             StayStrategy = stayStrategy;
 
             transform.position = center;
@@ -88,12 +91,12 @@ namespace Projectiles
         }
 
         private void OnTriggerEnter(Collider other) {
-            if (Strategy == null) return;
+            if (EnterStrategy == null) return;
 
             if (!ShouldActivate(other, out var rigidBody)) return;
 
             Debug.Log($"{other.gameObject.name} will be {(Force < 0 ? "pushed" : "pulled")}!");
-            StartCoroutine(Strategy(other, rigidBody, Force, transform));
+            StartCoroutine(EnterStrategy(other, rigidBody, Force, transform));
         }
 
         private bool ShouldActivate(Collider other, [CanBeNull] out Rigidbody rigidBody) {
@@ -114,7 +117,15 @@ namespace Projectiles
 
             return true;
         }
-        
+
+        private void Update() {
+            // -1 means we aren't using the duration value
+            if (Duration == -1) return;
+            
+            if (Duration <= 0) Destroy(this);
+            else Duration -= Time.deltaTime;
+        }
+
         #region Debug
 
 #if UNITY_EDITOR

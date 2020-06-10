@@ -11,6 +11,6 @@ namespace Abilities.AttackAbilities {
             yield break;
         }
 
-        public override void AbilityConnected(GameObject targetedUnit, GameObject projectile) { }
+        protected override void AbilityConnected(GameObject targetedUnit, GameObject projectile) { }
     }
 }

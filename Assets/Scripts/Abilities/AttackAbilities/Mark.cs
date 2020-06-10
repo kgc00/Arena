@@ -21,8 +21,8 @@ namespace Abilities.AttackAbilities
             
             onAbilityActivationFinished(Owner, this);
         }
-        
-        public override void AbilityConnected(GameObject other, GameObject projectile)
+
+        protected override void AbilityConnected(GameObject other, GameObject projectile)
         {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();

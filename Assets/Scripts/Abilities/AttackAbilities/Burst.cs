@@ -23,7 +23,7 @@ namespace Abilities.AttackAbilities {
             return MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
         }
 
-        public override void AbilityConnected(GameObject other, GameObject projectile) {
+        protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var colliderParams = new SphereParams(5f);
             var centerLocation = other.GetComponent<Collider>().ClosestPoint(projectile.transform.position);
             var offset = centerLocation - projectile.transform.position;
@@ -44,7 +44,8 @@ namespace Abilities.AttackAbilities {
                     ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongHeading],
                     null,
                     AffectedFactions,
-                    185)
+                    185,
+                    Duration)
                 .gameObject
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
@@ -52,7 +53,9 @@ namespace Abilities.AttackAbilities {
                     targetLocation,
                     AoEAddMark,
                     null,
-                    AffectedFactions)
+                    AffectedFactions,
+                    default,
+                    Duration)
                 .gameObject;
             
             Destroy(projectile);

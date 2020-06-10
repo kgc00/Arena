@@ -1,6 +1,7 @@
 using System;
 using Abilities;
 using Controls;
+using Enums;
 using State;
 using Stats;
 using Units.Data;
@@ -103,6 +104,13 @@ namespace Units
         private void OnDrawGizmos()
         {
             state?.HandleDrawGizmos();
+        }
+
+        private void OnGUI() {
+            if(!Initialized) return;
+            
+            if(Owner.ControlType == ControlType.Local)
+                GUILayout.Box($"State: {state.ToString()}");
         }
     }
 }

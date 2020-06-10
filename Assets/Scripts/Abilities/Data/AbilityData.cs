@@ -9,6 +9,7 @@ namespace Abilities.Data
         [SerializeField] public string description; // shown to player via UI
         [SerializeField] public float energyCost; // energy/mana cost per use
         [SerializeField] public float cooldown; // time between uses
+        [SerializeField] public float duration;
         [SerializeField] public int range; // maximum targeting or travel range
         [SerializeField] public int areaOfEffectRadius; // 0 (none), 100f, 200f
         [SerializeField] public Types type; // used by factory to create ability

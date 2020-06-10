@@ -28,7 +28,8 @@ namespace Abilities.AttackAbilities {
                     null,
                     ApplyDamageOverTime,
                     AffectedFactions,
-                    185)
+                    185,
+                    Duration)
                 .gameObject;
         }
 
@@ -53,6 +54,6 @@ namespace Abilities.AttackAbilities {
         }
         
         // empty... =(
-        public override void AbilityConnected(GameObject target, GameObject projectile = null) { }
+        protected override void AbilityConnected(GameObject target, GameObject projectile = null) { }
     }
 }

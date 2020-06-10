@@ -10,24 +10,13 @@ namespace Abilities
 {
     public abstract class BuffAbility : Ability, IBuffUser
     {
-        public BuffAbilityData Model { get; private set; }
-        public float Duration { get; protected set; }
+        private new BuffAbilityData Model { get; set; }
         public List<ControlType> AffectedFactions { get; protected set; }
-        public virtual BuffAbility Initialize(BuffAbilityData data, Unit owner)
-        {
-            Owner = owner;
+        public virtual BuffAbility Initialize(BuffAbilityData data, Unit owner) {
+            base.Initialize(data, owner);
             Model = data;
-            Range = data.range;
-            Force = data.force;            
-            Icon = data.icon;
-            AreaOfEffectRadius = data.areaOfEffectRadius;
             AffectedFactions = data.AffectedFactions;
-            Cooldown = new Cooldown(data.cooldown);
-            StartupTime = data.startupTime;
-            ProjectileSpeed = data.projectileSpeed;
-            IndicatorType = data.indicatorType;
-            Duration = data.Duration;
-            OnActivation = new List<Func<Vector3, IEnumerator>>() {targetLocation => AbilityActivated(targetLocation)};
+            OnActivation = new List<Func<Vector3, IEnumerator>> {targetLocation => AbilityActivated(targetLocation)};
             return this;
         }
         

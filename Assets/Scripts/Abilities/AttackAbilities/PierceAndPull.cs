@@ -60,7 +60,7 @@ namespace Abilities.AttackAbilities {
                 .gameObject;
         }
 
-        public override void AbilityConnected(GameObject other, GameObject projectile = null) {
+        protected override void AbilityConnected(GameObject other, GameObject projectile = null) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
 

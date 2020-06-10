@@ -33,14 +33,12 @@ namespace State.PlayerStates
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Moving, true);
-            Debug.Log("Entered Run state");
         }
 
         public override void Exit()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetBool(Moving, false);
-            Debug.Log("Exited Run state");
         }
     }
 }

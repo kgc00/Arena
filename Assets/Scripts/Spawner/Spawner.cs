@@ -9,6 +9,9 @@ using Spawner.Data;
 using Units.Data;
 using Random = UnityEngine.Random;
 using Players;
+using State;
+using Units.Modifiers;
+using UnityEditor;
 
 namespace Spawner
 {
@@ -134,18 +137,21 @@ namespace Spawner
             Vector3 spawnerPos = owner.transform.position;
             Vector3 extentNegative = spawnerPos - owner.Bounds/2;
             Vector3 extentPositive = spawnerPos + owner.Bounds/2;
-            foreach (UnitTable unitTable in currentWave.Wave)
+
+            var wave = ModifyWaveData(currentWave.CreateInstance());
+            
+            foreach (UnitTable table in wave.Wave)
             {
-                Debug.Log($"Spawning {unitTable.Amount} {unitTable.Unit}");
-                for (int i = 0; i < unitTable.Amount; i++)
+                Debug.Log($"Spawning {table.Amount} {table.Unit}");
+                for (int i = 0; i < table.Amount; i++)
                 {
                     var x = Random.Range(extentNegative.x, extentPositive.x);
                     var y = 1.0f;
                     var z = Random.Range(extentNegative.z, extentPositive.z);
                     var spawnPos = new Vector3(x,y,z);
                     owner.OwningPlayer.InstantiateUnit(
-                        SpawnHelper.PrefabFromUnitType(unitTable.Unit),
-                        unitData: SpawnHelper.DataFromUnitType(unitTable.Unit),
+                        SpawnHelper.PrefabFromUnitType(table.Unit),
+                        ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit).CreateInstance()),
                         pos: spawnPos
                     );
                 }
@@ -154,6 +160,40 @@ namespace Spawner
             if (spawnTable.Waves.Count - 1 <= currentIndex) return;
             currentIndex++;
             currentWave = spawnTable.Waves[currentIndex];
+        }
+
+        UnitData ModifyUnitData(UnitData instance) {
+            var root = new UnitDataModifier().InitializeModifier(instance);
+
+            var modifiers = new List<UnitDataModifier> {new UnitHealthModifier()};
+            
+            for (int i = 0; i < modifiers.Count; i++) 
+            {
+                root.Add(modifiers[i].InitializeModifier(instance));
+            }
+
+            Debug.Log($"Modifer list is {modifiers.Count} items long");
+            
+            root.Handle();
+            
+            return instance;
+        }
+        
+        WaveTable ModifyWaveData(WaveTable instance) {
+            var root = new WaveTableModifier().InitializeModifier(instance);
+
+            var modifiers = new List<WaveTableModifier> {new AddTrainingDummyModifier()};
+            
+            for (int i = 0; i < modifiers.Count; i++) 
+            {
+                root.Add(modifiers[i].InitializeModifier(instance));
+            }
+
+            Debug.Log($"Modifer list is {modifiers.Count} items long");
+            
+            root.Handle();
+            
+            return instance;
         }
     }
 

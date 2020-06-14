@@ -37,9 +37,10 @@ namespace Abilities
             
             equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, owner);
             
-            longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility)
-                .OrderByDescending(a => a.Value.Range)
-                .First().Value;
+            if (equippedAbilities.Count > 0)
+                longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility)
+                    .OrderByDescending(a => a.Value.Range)
+                    .First().Value;
             
             State = AbilityComponentState.Idle;
             return this;

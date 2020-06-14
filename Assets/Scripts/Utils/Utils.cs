@@ -68,8 +68,8 @@ namespace Utils
         private static IEnumerator ForceAlongHeading(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             
-            Debug.Log("LOGGING forceComponentTransform");
-            Debug.Log(forceComponentTransform.position);
+            // Debug.Log("LOGGING forceComponentTransform");
+            // Debug.Log(forceComponentTransform.position);
             
             Vector3 heading = other.transform.position - forceComponentTransform.position;
             heading.y = 0f;

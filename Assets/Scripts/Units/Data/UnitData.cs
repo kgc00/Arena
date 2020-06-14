@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Abilities.Data;
 using State;
 using Stats;
@@ -21,5 +22,7 @@ namespace Units.Data
         [SerializeField] public UnitStateEnum state;
         // Visuals
         [SerializeField] public VisualAssets visualAssets;
+        
+       
     }
 }

@@ -107,10 +107,17 @@ namespace Units
         }
 
         private void OnGUI() {
-            if(!Initialized) return;
+            if (!Initialized) return;
             
-            if(Owner.ControlType == ControlType.Local)
-                GUILayout.Box($"State: {state.ToString()}");
+            if (Owner.ControlType == ControlType.Local) {
+                GUILayout.Box($"State: {state}");
+            }
+
+            if (Owner.ControlType == ControlType.Ai) {
+                GUILayout.BeginArea(new Rect(Screen.width - 100, 0, 100, 60));
+                GUILayout.Box($"Health: {HealthComponent.MaxHp.ToString()}");
+                GUILayout.EndArea();
+            }
         }
     }
 }

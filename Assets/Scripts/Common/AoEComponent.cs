@@ -122,7 +122,7 @@ namespace Projectiles
             // -1 means we aren't using the duration value
             if (Duration == -1) return;
             
-            if (Duration <= 0) Destroy(this);
+            if (Duration <= 0) Destroy(gameObject);
             else Duration -= Time.deltaTime;
         }
 

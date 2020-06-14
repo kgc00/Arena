@@ -15,15 +15,17 @@ namespace Abilities.AttackAbilities {
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            
             var pullGo = HandlePullEffect();
             Owner.inputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
-
+            Shader.SetGlobalFloat("_IndicatorType", 0);
             yield return new WaitForSeconds(preFireDelay);
+            
             Destroy(pullGo);
             MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
-            Owner.inputModifierComponent.RemoveModifier(InputModifier.CannotMove)
+            Owner.inputModifierComponent
+                .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate);
-            
             onAbilityActivationFinished(Owner, this);
         }
 

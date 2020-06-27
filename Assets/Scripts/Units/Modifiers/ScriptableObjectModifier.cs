@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
 namespace Units.Modifiers {
-    public class ScrObjModifier<T> where T : ScriptableObject {
+    public class ScriptableObjectModifier<T> where T : ScriptableObject {
         protected T Model;
-        protected ScrObjModifier<T> Next;
+        protected ScriptableObjectModifier<T> Next;
 
-        public ScrObjModifier() { }
+        public ScriptableObjectModifier() { }
         
-        public virtual ScrObjModifier<T> InitializeModifier(T data) {
+        public virtual ScriptableObjectModifier<T> InitializeModifier(T data) {
             Next = null;
             Model = null;
             return this;
         }
 
-        public void Add(ScrObjModifier<T> am) {
+        public void Add(ScriptableObjectModifier<T> am) {
             if (Next != null) Next.Add(am);
             else Next = am;
         }

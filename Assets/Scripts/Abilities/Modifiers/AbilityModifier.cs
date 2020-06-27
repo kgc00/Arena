@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Abilities.Modifiers
 {
@@ -12,8 +11,7 @@ namespace Abilities.Modifiers
     /// Chain of Responsibility: a class with a linked list and a reference to another class.
     /// Each node on the linked list is called sequentially, modifying the referenced class.
     /// </summary>
-    public class AbilityModifier
-    {
+    public class AbilityModifier  {
         protected Ability Ability;
         protected AbilityModifier Next;
         public virtual bool ShouldConsume()

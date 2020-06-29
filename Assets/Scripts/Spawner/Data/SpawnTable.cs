@@ -9,4 +9,4 @@ namespace Spawner.Data
     {
         [SerializeField] public List<WaveTable> Waves;
     }
-}    
+}   

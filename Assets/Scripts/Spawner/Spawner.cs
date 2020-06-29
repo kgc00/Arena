@@ -151,7 +151,7 @@ namespace Spawner
                     var spawnPos = new Vector3(x,y,z);
                     owner.OwningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(table.Unit),
-                        ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit).CreateInstance()),
+                        SpawnHelper.DataFromUnitType(table.Unit).CreateInstance(),
                         pos: spawnPos
                     );
                 }
@@ -182,7 +182,7 @@ namespace Spawner
         WaveTable ModifyWaveData(WaveTable instance) {
             var root = new WaveTableModifier().InitializeModifier(instance);
 
-            var modifiers = new List<WaveTableModifier> {new AddTrainingDummyModifier()};
+            var modifiers = new List<WaveTableModifier> ();
             
             for (int i = 0; i < modifiers.Count; i++) 
             {

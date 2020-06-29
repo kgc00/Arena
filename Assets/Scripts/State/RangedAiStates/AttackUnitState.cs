@@ -42,7 +42,8 @@ namespace State.RangedAiStates
             Owner.Animator.SetTrigger(Attacking);
             
             yield return new WaitForSeconds(0.45f);
-            Owner.AbilityComponent.longestRangeAbility.AbilityActivated(targetPlayerTransform.position);
+            Owner.AbilityComponent.Activate(Owner.AbilityComponent.longestRangeAbility, 
+                                            targetPlayerTransform.position);
             Debug.Log("Finishing attack execution");
             attackComplete = true;
         } 

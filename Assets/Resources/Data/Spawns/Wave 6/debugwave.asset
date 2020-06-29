@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
-  m_Name: lichwave
+  m_Name: debugwave
   m_EditorClassIdentifier: 
   Wave:
   - {fileID: 11400000, guid: 8c2199e8bc737b144b5da6ce11733c3c, type: 2}
-  WaveNumber: 3
+  WaveNumber: 99

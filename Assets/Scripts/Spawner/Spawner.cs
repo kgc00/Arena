@@ -151,7 +151,7 @@ namespace Spawner
                     var spawnPos = new Vector3(x,y,z);
                     owner.OwningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(table.Unit),
-                        SpawnHelper.DataFromUnitType(table.Unit).CreateInstance(),
+                        ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit).CreateInstance()),
                         pos: spawnPos
                     );
                 }
@@ -165,7 +165,7 @@ namespace Spawner
         UnitData ModifyUnitData(UnitData instance) {
             var root = new UnitDataModifier().InitializeModifier(instance);
 
-            var modifiers = new List<UnitDataModifier> {new UnitHealthModifier()};
+            var modifiers = new List<UnitDataModifier>();
             
             for (int i = 0; i < modifiers.Count; i++) 
             {

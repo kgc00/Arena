@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 197cc9a3fcb24cb39899456fe9eb7090, type: 3}
-  m_Name: lich
+  m_Name: debug
   m_EditorClassIdentifier: 
-  Unit: 3
+  Unit: 2
   Amount: 1

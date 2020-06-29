@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e299bbfc1057413ca68d6bd1b6d2649b, type: 3}
+  m_Name: Charging Ai Data
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: e37c9188fce8bfd4c88b25e2453c92ed, type: 2}
+  health:
+    maxHp: 5
+    Invulnerable: 0
+    currentHp: 0
+  experience:
+    currentExp: 0
+    bounty: 6
+  state: 4
+  visualAssets:
+    portrait: {fileID: 0}

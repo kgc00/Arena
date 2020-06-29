@@ -169,6 +169,12 @@ namespace Utils
                 case Units.Types.TrainingDummy:
                     s = "Units/Enemies/Training Dummy/Training Dummy";
                     break;
+                case Units.Types.Charging:
+                    s = "Units/Enemies/Grunt/Charging AI";
+                    break;
+                case Units.Types.Boss:
+                    s = "Units/Enemies/Dragon/Boss AI";
+                    break;
 
                 // Playables
                 case Units.Types.Hunter:
@@ -196,6 +202,14 @@ namespace Utils
                 case Units.Types.TrainingDummy:
                     s = "Data/Beastiary/Training Dummy Data";
                     break;
+                case Units.Types.Charging:
+                    s = "Data/Beastiary/Charging Ai Data";
+                    break;
+                case Units.Types.Boss:
+                    s = "Data/Beastiary/Boss Ai Data";
+                    break;
+
+                
 
                 // Playable
                 case Units.Types.Hunter:
@@ -298,6 +312,10 @@ namespace Utils
                     return new State.TrainingDummy.Idle(owner);
                 case UnitStateEnum.RangedAi:
                     return new State.RangedAiStates.IdleUnitState(owner);
+                case UnitStateEnum.ChargingAi:
+                    return new State.ChargingAiStates.IdleUnitState(owner);
+                case UnitStateEnum.BossAi:
+                    return new State.BossAiStates.IdleUnitState(owner);
                 default:
                     return null;
             }

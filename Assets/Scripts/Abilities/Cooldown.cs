@@ -19,7 +19,8 @@ namespace Abilities
             CooldownTime = cooldownTime;
         }
         
-        // Must be called from ability component's update loop
+        ///<summary> Processes and returns time left on cooldown</summary>
+        /// Must be called from ability component's update loop
         public float UpdateCooldown(float deltaTime)
         {
             if (CooldownTime == null) throw new Exception("CooldownTime was never assigned");

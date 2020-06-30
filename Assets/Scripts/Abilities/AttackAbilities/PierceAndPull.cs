@@ -17,7 +17,9 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             
             var pullGo = HandlePullEffect();
-            Owner.inputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
+            Owner.inputModifierComponent
+                .AddModifier(InputModifier.CannotMove)
+                .AddModifier(InputModifier.CannotRotate);
             Shader.SetGlobalFloat("_IndicatorType", 0);
             yield return new WaitForSeconds(preFireDelay);
             

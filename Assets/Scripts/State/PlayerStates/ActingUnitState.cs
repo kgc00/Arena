@@ -1,5 +1,6 @@
 using System;
 using Abilities;
+using Abilities.States;
 using Controls;
 using Units;
 using UnityEngine;
@@ -24,14 +25,13 @@ namespace State.PlayerStates
             Shader.SetGlobalFloat("_IndicatorType", Ability.IndicatorType);
         }
 
-        public override void Exit()
-        {
+        public override void Exit() {
             Shader.SetGlobalFloat("_IndicatorType", 0);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (Owner.AbilityComponent.State == AbilityComponentState.Idle)
+            if (Ability.State == AbilityState.Idle)
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
 

@@ -37,20 +37,20 @@ namespace Abilities
             Initialize(Model, Owner);
         }
 
-        public override string ToString()
-        {
-            return string.Format($"Attack ability has values: Owner: {Owner}" +
-            "Model: {Model}"+
-            "Damage: {Damage}"+
-            "Range: {Range}"+
-            "AreaOfEffectRadius: {AreaOfEffectRadius}"+
-            "AffectedFactions: {AffectedFactions}"+
-            "Cooldown: {Cooldown}"+
-            "StartupTime: {StartupTime}"+
-            "IndicatorType: {IndicatorType}"+
-            "OnActivation: {OnActivation}"+
-            "OnAbilityConnected: {OnAbilityConnected}"
-            );
-        }
+        // public override string ToString()
+        // {
+        //     return string.Format($"Attack ability has values: Owner: {Owner}" +
+        //     "Model: {Model}"+
+        //     "Damage: {Damage}"+
+        //     "Range: {Range}"+
+        //     "AreaOfEffectRadius: {AreaOfEffectRadius}"+
+        //     "AffectedFactions: {AffectedFactions}"+
+        //     "Cooldown: {Cooldown}"+
+        //     "StartupTime: {StartupTime}"+
+        //     "IndicatorType: {IndicatorType}"+
+        //     "OnActivation: {OnActivation}"+
+        //     "OnAbilityConnected: {OnAbilityConnected}"
+        //     );
+        // }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.Data;
+using Abilities.States;
 using Controls;
 using Units;
 using UnityEngine;
@@ -24,11 +25,18 @@ namespace Abilities
         public static Action<Unit, Ability> onAbilityActivationFinished { get; set; } = delegate { };
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);
+        public AbilityState State { get; set; } = AbilityState.NotInitialized;
         
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);
         
-        protected virtual void LateUpdate() => Cooldown.UpdateCooldown(Time.deltaTime);
+        protected virtual void LateUpdate() {
+            var tl = Cooldown.UpdateCooldown(Time.deltaTime);
+
+            if (tl == 0 || !Cooldown.IsOnCooldown) {
+                State = AbilityState.Idle;
+            }
+        }
 
         protected virtual Ability Initialize(AbilityData data, Unit owner) {
             Owner = owner;
@@ -43,9 +51,22 @@ namespace Abilities
             ProjectileSpeed = data.projectileSpeed;
             IndicatorType = data.indicatorType;
             OnActivation = new List<Func<Vector3, IEnumerator>>() {AbilityActivated};
+            State = AbilityState.Idle;
             return this;
         }
 
         public abstract void ResetInstanceValues();
+
+        private void OnEnable() {
+            onAbilityActivationFinished += ResetAbilityState;
+        }
+
+        private void ResetAbilityState(Unit unit, Ability ability) {
+            if (unit == Owner && this == ability) {
+                Debug.Log($"{ability} was reset and is not {this}");
+                State = AbilityState.Cooldown;
+                Cooldown.SetOnCooldown();
+            }
+        }
     }
 }

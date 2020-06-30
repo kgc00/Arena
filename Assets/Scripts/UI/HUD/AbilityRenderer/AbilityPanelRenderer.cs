@@ -18,7 +18,7 @@ namespace UI.HUD {
         IEnumerator Initialize() {
             localPlayer = FindObjectsOfType<Player>()?.Where(x => x.ControlType == ControlType.Local).FirstOrDefault();
             
-            yield return new WaitUntil(() => localPlayer?.Units[0]?.AbilityComponent?.State == AbilityComponentState.Idle);
+            yield return new WaitUntil(() => localPlayer?.Units[0]?.AbilityComponent?.initialized == true);
             
             var abilityComponent = localPlayer.Units[0].AbilityComponent;
             var equippedAbilities = abilityComponent.equippedAbilities;

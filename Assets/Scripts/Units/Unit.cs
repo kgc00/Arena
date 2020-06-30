@@ -111,6 +111,7 @@ namespace Units
             
             if (Owner.ControlType == ControlType.Local) {
                 GUILayout.Box($"State: {state}");
+                GUILayout.Box($"Input: {controller.InputValues.ButtonValues}");
             }
 
             if (Owner.ControlType == ControlType.Ai) {

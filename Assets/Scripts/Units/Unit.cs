@@ -27,6 +27,7 @@ namespace Units
         public ExperienceComponent ExperienceComponent { get; private set; }
         public StatusComponent StatusComponent { get; private set; }
         public CoroutineHelper CoroutineHelper { get; private set; }
+        public StatsComponent statsComponent { get; private set; }
         public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
@@ -62,6 +63,8 @@ namespace Units
             
             // Status 
             if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
+
+            if (statsComponent == null) statsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
             
             // State
             state = StateHelper.StateFromEnum(data.state, this);

@@ -17,7 +17,7 @@ namespace Abilities.AttackAbilities
         public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
             yield return new WaitForSeconds(StartupTime);
-            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection);
+            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, onAbilityConnection);
             
             onAbilityActivationFinished(Owner, this);
         }

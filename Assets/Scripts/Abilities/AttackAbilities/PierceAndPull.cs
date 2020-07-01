@@ -22,7 +22,7 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(preFireDelay);
             
             Destroy(pullGo);
-            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, onAbilityConnection, ProjectileSpeed);
             Owner.inputModifierComponent
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate);

@@ -109,6 +109,7 @@ namespace Utils
                 ButtonType type = (ButtonType)Enum.ToObject(typeof(ButtonType) , i);
                 switch (data[i].type)
                 {
+                    // enemies
                     case Types.ShootCrossbow:
                         instance = owner.gameObject.AddComponent<ShootCrossbow>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
@@ -121,6 +122,11 @@ namespace Utils
                         instance = owner.gameObject.AddComponent<BodySlam>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
+                    case Types.Charge:
+                        instance = owner.gameObject.AddComponent<Charge>().Initialize((AttackAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
+                    // hunter
                     case Types.Mark:
                         instance = owner.gameObject.AddComponent<Mark>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
@@ -144,6 +150,9 @@ namespace Utils
                     case Types.Rain:
                         instance = owner.gameObject.AddComponent<Rain>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
+                        break;
+                    default:
+                        Debug.LogWarning("Skill Instance was not assigned");
                         break;
                 }
             }

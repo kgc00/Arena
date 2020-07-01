@@ -16,9 +16,10 @@ MonoBehaviour:
   description: 
   energyCost: 0
   cooldown: 1
+  duration: 0
   range: 0
   areaOfEffectRadius: 0
-  type: 4
+  type: 5
   startupTime: 0
   indicatorType: 0
   projectileSpeed: 0

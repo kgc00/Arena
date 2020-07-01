@@ -14,13 +14,11 @@ namespace State.PlayerStates
 {
     public class PlayerState : UnitState
     {
-        protected readonly float movementSpeed;
         protected readonly float movementThreshold = 0.1f;
         protected StateSkillBehaviour skillBehaviour;
 
         public PlayerState(Unit owner) : base(owner)
         {
-            movementSpeed = 100f;
             skillBehaviour = new StateSkillBehaviour(owner);
         }
 
@@ -29,13 +27,15 @@ namespace State.PlayerStates
         // need to look into handling input only in update and storing values onto a field for fixed update
         public override void HandleFixedUpdate(InputValues input)
         {
-            var motion = GetMovementFromInput(input);
+            
+            var movementSpeed = Owner.statsComponent.Stats.MovementSpeed;
+            var motion = GetMovementFromInput(input, movementSpeed.Value);
 
-            UpdatePlayerRotation(input, motion);
-            UpdatePlayerPositionForce(input, motion);
+            UpdatePlayerRotation(input, motion, movementSpeed.Value);
+            UpdatePlayerPositionForce(input, motion, movementSpeed.Value);
         }
 
-        private void UpdatePlayerPositionForce(InputValues input, Vector3 motion)
+        private void UpdatePlayerPositionForce(InputValues input, Vector3 motion, float movementSpeed)
         {
             if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) {
                 Owner.Rigidbody.velocity = Vector3.zero;
@@ -52,7 +52,7 @@ namespace State.PlayerStates
             Owner.Rigidbody.AddForce(motion.normalized * movementSpeed);
         }
 
-        private void UpdatePlayerRotation(InputValues input, Vector3 motion)
+        private void UpdatePlayerRotation(InputValues input, Vector3 motion, float movementSpeed)
         {
             if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotRotate)) return;
             
@@ -60,7 +60,7 @@ namespace State.PlayerStates
             if (input.ActiveControl == ControllerType.Delta)
                 UpdatePlayerRotationForKeyboard(input, motion);
             else if (input.ActiveControl == ControllerType.GamePad)
-                UpdatePlayerRotationForGamepad(input, motion);
+                UpdatePlayerRotationForGamepad(input, motion, movementSpeed);
         }
 
 
@@ -75,7 +75,7 @@ namespace State.PlayerStates
             Owner.transform.LookAt(lookTarget);
         }
 
-        private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion)
+        private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion, float movementSpeed)
         {
             // Debug.Log("updating for gamepad");
 
@@ -89,7 +89,7 @@ namespace State.PlayerStates
                                                         Time.deltaTime * 10f);
         }
 
-        private Vector3 GetMovementFromInput(InputValues input)
+        private Vector3 GetMovementFromInput(InputValues input, float movementSpeed)
         {
             var posX = input.Horizontal * movementSpeed * Time.deltaTime;
             var posY = 0;

@@ -4,12 +4,13 @@
         ShootCrossbow,
         BodySlam,
         IceBolt,
+        Charge,
         // Hunter
         Mark,
         Prey,
         Conceal,
         PierceAndPull,
         Burst,
-        Rain
+        Rain,
     }
 }

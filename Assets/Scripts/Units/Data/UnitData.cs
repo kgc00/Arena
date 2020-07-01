@@ -22,7 +22,9 @@ namespace Units.Data
         [SerializeField] public UnitStateEnum state;
         // Visuals
         [SerializeField] public VisualAssets visualAssets;
-        
-       
+        // Stats
+        [SerializeField] public StatsData statsData;
+
+
     }
 }

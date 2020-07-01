@@ -20,7 +20,7 @@ namespace Abilities.AttackAbilities {
         }
         
         private GameObject SpawnGrenade(Vector3 targetLocation) {
-            return MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            return MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, onAbilityConnection, ProjectileSpeed);
         }
 
         protected override void AbilityConnected(GameObject other, GameObject projectile) {

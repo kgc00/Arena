@@ -24,6 +24,7 @@ namespace Abilities
         public static Action<Unit, Ability> onAbilityActivationFinished { get; set; } = delegate { };
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);
+        public static Action<Unit, Ability> onAbilityFinished { get; set; } = delegate { };
         
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);

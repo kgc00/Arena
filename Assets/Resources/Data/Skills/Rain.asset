@@ -19,7 +19,7 @@ MonoBehaviour:
   duration: 2
   range: 8
   areaOfEffectRadius: 5
-  type: 8
+  type: 9
   startupTime: 0.5
   indicatorType: 1
   projectileSpeed: 0

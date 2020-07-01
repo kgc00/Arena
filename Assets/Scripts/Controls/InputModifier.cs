@@ -6,6 +6,6 @@ namespace Controls {
         None = 0,
         CannotMove = 1,
         CannotRotate = 2,
-        CannotACt = 4,
+        CannotAct = 4,
     }
 }

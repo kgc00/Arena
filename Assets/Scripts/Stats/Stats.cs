@@ -9,7 +9,7 @@
         public Statistic MovementSpeed { get; private set; } // 100
 
         public Statistic StatFromEnum(StatType type) {
-            return (Statistic) this.GetType().GetProperty(type.ToString()).GetValue(this, null);
+            return (Statistic) GetType().GetProperty(type.ToString())?.GetValue(this, null);
         }
         
         

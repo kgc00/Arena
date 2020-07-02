@@ -71,7 +71,7 @@ namespace State.ChargingAiStates
             var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
             if (distanceToUnit > attackRange) return false;
             
-            unitState = new MeleeAiStates.AttackUnitState(Owner, targetPlayerTransform);
+            unitState = new AttackUnitState(Owner, targetPlayerTransform);
             return true;
         }
 

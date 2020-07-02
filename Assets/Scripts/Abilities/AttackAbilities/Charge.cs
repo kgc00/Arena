@@ -6,6 +6,7 @@ using Controls;
 using Stats;
 using Units;
 using UnityEngine;
+using static Utils.MathHelpers;
 
 namespace Abilities.AttackAbilities {
     public class Charge : AttackAbility {
@@ -14,7 +15,8 @@ namespace Abilities.AttackAbilities {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             Debug.Log("starting");
             this.targetLocation = targetLocation;
-            onAbilityActivationFinished(Owner, this);
+            onAbilityActivationFinished(Owner, this); 
+            
             Owner.statsComponent.IncrementStat(StatType.MovementSpeed, 450);
             Owner.inputModifierComponent
                 .AddModifier(InputModifier.CannotMove)
@@ -22,7 +24,11 @@ namespace Abilities.AttackAbilities {
                 .AddModifier(InputModifier.CannotAct);
 
             charging = true;
-            yield return new WaitUntil(() => Vector3.Distance(Owner.transform.position, targetLocation) < 1f);
+            var timeLeft = Duration;
+            while (timeLeft > 0 && Vector3.Distance(Owner.transform.position, targetLocation) > 1f) {
+                timeLeft = Clamp(timeLeft -= Time.deltaTime, 0, Duration);
+                yield return null;
+            }
             charging = false;
             
             Owner.statsComponent.DecrementStat(StatType.MovementSpeed, 450);            
@@ -42,7 +48,6 @@ namespace Abilities.AttackAbilities {
             Vector3 heading = targetLocation - Owner.transform.position;
             heading.y = 0f;
             heading = Owner.statsComponent.Stats.MovementSpeed.Value * heading.normalized;
-            Debug.Log("MOVEMENT SPEED: " + Owner.statsComponent.Stats.MovementSpeed.Value);
             Owner.GetComponent<Rigidbody>().AddForce(heading);
         }
 

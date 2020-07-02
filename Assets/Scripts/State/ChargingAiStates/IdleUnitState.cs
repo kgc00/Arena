@@ -33,7 +33,7 @@ namespace State.ChargingAiStates
 
             if (playerTransform == null) return null;
             
-            return new MeleeAiStates.ChaseUnitState(Owner, playerTransform);
+            return new ChaseUnitState(Owner, playerTransform);
         }
     }
 }

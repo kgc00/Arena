@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities.AttackAbilities;
 using Abilities.Data;
 using Abilities.Modifiers;
 using Controls;
@@ -43,6 +44,7 @@ namespace Abilities
                     .First().Value;
             
             State = AbilityComponentState.Idle;
+
             return this;
         }
 

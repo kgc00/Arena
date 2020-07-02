@@ -11,6 +11,11 @@ namespace Abilities
     public abstract class Ability : MonoBehaviour
     {
         public AbilityData Model { get; private set; }
+        public float EnergyCost { get; protected set; }
+
+        public string Description { get; protected set; }
+
+        public string DisplayName { get; protected set; }
         public float Range { get; protected set; }
         public float Force { get; protected set; }
         public float ProjectileSpeed { get; protected set; }
@@ -44,6 +49,9 @@ namespace Abilities
             ProjectileSpeed = data.projectileSpeed;
             IndicatorType = data.indicatorType;
             OnActivation = new List<Func<Vector3, IEnumerator>>() {AbilityActivated};
+            DisplayName = data.displayName;
+            Description = data.description;
+            EnergyCost = data.energyCost;
             return this;
         }
 

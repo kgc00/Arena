@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Linq;
+using Abilities.AttackAbilities;
 using Controls;
 using Enums;
 using JetBrains.Annotations;
@@ -92,8 +94,28 @@ namespace State.ChargingAiStates
             var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
             if (distanceToUnit <= attackRange + padding) return false;
             
-            Owner.Animator.SetTrigger(Attacking);
             unitState = new ChaseUnitState(Owner, targetPlayerTransform);
+            return true;
+        }
+        
+        private bool ShouldReturnToCharge([CanBeNull] out UnitState unitState)
+        {
+            unitState = null;
+
+            // find charge ability
+            var charge = Owner.AbilityComponent.equippedAbilities.Values.FirstOrDefault(a => a is Charge);
+
+            if (charge == null) return false;
+
+            // is charge ready to use?
+            if (charge.Cooldown.IsOnCooldown) return false;
+            
+            // TODO: ADD REAL LOGIC
+            // are we close to the unit?
+            var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
+            if (distanceToUnit <= attackRange + padding) return false;
+            
+            unitState = new ChargeUnitState(Owner, targetPlayerTransform);
             return true;
         }
         

@@ -9,16 +9,16 @@ using UnityEngine;
 using static Utils.MathHelpers;
 
 namespace Abilities.AttackAbilities {
-    public class Charge : AttackAbility {
+    public class Charge : MovementAttackAbility {
         private Vector3 targetLocation = new Vector3(-999,-999,-999);
         private bool charging = false;
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             Debug.Log("starting");
             this.targetLocation = targetLocation;
-            onAbilityActivationFinished(Owner, this); 
+            OnAbilityActivationFinished(Owner, this); 
             
-            Owner.statsComponent.IncrementStat(StatType.MovementSpeed, 450);
-            Owner.inputModifierComponent
+            Owner.StatsComponent.IncrementStat(StatType.MovementSpeed, 450);
+            Owner.InputModifierComponent
                 .AddModifier(InputModifier.CannotMove)
                 .AddModifier(InputModifier.CannotRotate)
                 .AddModifier(InputModifier.CannotAct);
@@ -31,15 +31,15 @@ namespace Abilities.AttackAbilities {
             }
             charging = false;
             
-            Owner.statsComponent.DecrementStat(StatType.MovementSpeed, 450);            
+            Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, 450);            
 
-            Owner.inputModifierComponent
+            Owner.InputModifierComponent
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate)
                 .RemoveModifier(InputModifier.CannotAct);
             
             Debug.Log("ending");
-            onAbilityFinished(Owner, this);
+            OnAbilityFinished(Owner, this);
         }
 
         private void FixedUpdate() {
@@ -47,7 +47,7 @@ namespace Abilities.AttackAbilities {
             
             Vector3 heading = targetLocation - Owner.transform.position;
             heading.y = 0f;
-            heading = Owner.statsComponent.Stats.MovementSpeed.Value * heading.normalized;
+            heading = Owner.StatsComponent.Stats.MovementSpeed.Value * heading.normalized;
             Owner.GetComponent<Rigidbody>().AddForce(heading);
         }
 

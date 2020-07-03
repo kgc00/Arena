@@ -12,45 +12,42 @@ namespace State.ChargingAiStates
 {
     public class AttackUnitState : UnitState
     {
-        private readonly Transform targetPlayerTransform;
+        private readonly Transform playerTransform;
         private static readonly int Attacking = Animator.StringToHash("Attacking");
         private readonly float attackRange;
         private float padding = 1.0f;
         private static readonly int Idle = Animator.StringToHash("Idle");
         private bool attackComplete;
 
-        public AttackUnitState(Unit owner, Transform targetPlayerTransform) : base(owner)
+        public AttackUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
-            this.targetPlayerTransform = targetPlayerTransform;
+            this.playerTransform = playerTransform;
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
             attackComplete = false;
         }
 
-        public override void Enter()
-        {
-            if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetTrigger(Attacking);  
-        }
+        public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleAttack());
 
         private IEnumerator HandleAttack()
         {
             
             if (Owner.Animator == null || !Owner.Animator) yield break;
-            Owner.Animator.SetTrigger(Idle);
-            
-            while (Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            
-            Owner.Animator.ResetTrigger(Idle);
+            // Owner.Animator.SetTrigger(Idle);
+            //
+            // while (Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown)
+            // {
+            //     yield return new WaitForSeconds(Time.deltaTime);
+            // }
+            //
+            // Owner.Animator.ResetTrigger(Idle);
             Owner.Animator.SetTrigger(Attacking);
             yield return new WaitForSeconds(0.45f);
             
             Owner.AbilityComponent.Activate(Owner.AbilityComponent.longestRangeAbility, 
-                                            targetPlayerTransform.position);
+                                            playerTransform.position);
             
             Debug.Log("Finishing attack execution");
+            Owner.Animator.ResetTrigger(Attacking);
             attackComplete = true;
         } 
         
@@ -62,14 +59,15 @@ namespace State.ChargingAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (targetPlayerTransform == null) return new IdleUnitState(Owner);
-            
-            if (ShouldReturnToIdle(out var unitState)) return unitState;
-            if (ShouldReturnToChase(out unitState)) return unitState;
-
-            UpdateUnitRotation();
+            if (ShouldEnterToIdle(out var unitState)) return unitState;
+            if (ShouldEnterChase(out unitState)) return unitState;
             if (ShouldAttack(out unitState)) return unitState;
+            
             return unitState;
+        }
+
+        public override void HandleFixedUpdate(InputValues input) {
+            UpdateUnitRotation();
         }
 
         private bool ShouldAttack(out UnitState unitState)
@@ -77,54 +75,35 @@ namespace State.ChargingAiStates
             unitState = null;
             if (!attackComplete || Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown) return false;
 
-            unitState = new AttackUnitState(Owner, targetPlayerTransform);
+            unitState = new AttackUnitState(Owner, playerTransform);
             return true;
         }
 
-        private bool ShouldReturnToIdle([CanBeNull] out UnitState unitState)
+        private bool ShouldEnterToIdle([CanBeNull] out UnitState unitState)
         {
             unitState = null;
-            return false;
+            
+            if (playerTransform != null) return false;
+            
+            unitState = new IdleUnitState(Owner);
+            return true;
         }
 
-        private bool ShouldReturnToChase([CanBeNull] out UnitState unitState)
+        private bool ShouldEnterChase([CanBeNull] out UnitState unitState)
         {
             unitState = null;
 
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
+            var distanceToUnit = Vector3.Distance(Owner.transform.position, playerTransform.position);
             if (distanceToUnit <= attackRange + padding) return false;
             
-            unitState = new ChaseUnitState(Owner, targetPlayerTransform);
+            unitState = new ChaseUnitState(Owner, playerTransform);
             return true;
         }
-        
-        private bool ShouldReturnToCharge([CanBeNull] out UnitState unitState)
-        {
-            unitState = null;
 
-            // find charge ability
-            var charge = Owner.AbilityComponent.equippedAbilities.Values.FirstOrDefault(a => a is Charge);
-
-            if (charge == null) return false;
-
-            // is charge ready to use?
-            if (charge.Cooldown.IsOnCooldown) return false;
-            
-            // TODO: ADD REAL LOGIC
-            // are we close to the unit?
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
-            if (distanceToUnit <= attackRange + padding) return false;
-            
-            unitState = new ChargeUnitState(Owner, targetPlayerTransform);
-            return true;
-        }
-        
         private void UpdateUnitRotation()
         {
-            var difference = targetPlayerTransform.position - Owner.transform.position;
-            Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
-                Quaternion.LookRotation(difference),
-                Time.deltaTime * 10f);
+            var difference = playerTransform.position - Owner.transform.position;
+            Owner.Rigidbody.MoveRotation(Quaternion.LookRotation(difference));
         }
 
         public override void HandleCollisionEnter(Collision other)

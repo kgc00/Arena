@@ -4,9 +4,6 @@ namespace Units.Modifiers {
     public class ScriptableObjectModifier<T> where T : ScriptableObject {
         protected T Model;
         protected ScriptableObjectModifier<T> Next;
-
-        public ScriptableObjectModifier() { }
-        
         public virtual ScriptableObjectModifier<T> InitializeModifier(T data) {
             Next = null;
             Model = null;

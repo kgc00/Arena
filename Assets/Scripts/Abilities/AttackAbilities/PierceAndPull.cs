@@ -17,16 +17,16 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             
             var pullGo = HandlePullEffect();
-            Owner.inputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
+            Owner.InputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
             Shader.SetGlobalFloat("_IndicatorType", 0);
             yield return new WaitForSeconds(preFireDelay);
             
             Destroy(pullGo);
-            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, onAbilityConnection, ProjectileSpeed);
-            Owner.inputModifierComponent
+            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            Owner.InputModifierComponent
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate);
-            onAbilityActivationFinished(Owner, this);
+            OnAbilityActivationFinished(Owner, this);
         }
 
         private GameObject HandlePullEffect() {

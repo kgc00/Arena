@@ -25,7 +25,7 @@ namespace UI.HUD {
             healthText = healthTextGo.GetComponent<TextMeshProUGUI>();
             
             name.SetText(unit.name);
-            portrait.sprite = unit.portrait;
+            portrait.sprite = unit.Portrait;
             healthFill.fillAmount = 1;
             healthText.SetText(unit.HealthComponent.CurrentHp.ToString(CultureInfo.InvariantCulture));
             return this;

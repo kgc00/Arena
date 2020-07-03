@@ -17,6 +17,7 @@ namespace Units.Data {
             instance.health = new HealthData(data.health);
             instance.state = data.state;
             instance.visualAssets = new VisualAssets(data.visualAssets);
+            instance.statsData = new StatsData(data.statsData);
             return instance;
         }
     }

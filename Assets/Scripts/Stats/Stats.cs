@@ -1,4 +1,6 @@
-﻿namespace Stats {
+﻿using Stats.Data;
+
+namespace Stats {
     public class Stats { 
         
                     /// average stats ///
@@ -30,11 +32,11 @@
             MovementSpeed = movementSpeed;
         }
         public Stats(StatsData data) {
-            Agility = new Statistic(data.Agility);
-            Strength = new Statistic(data.Strength);
-            Intelligence = new Statistic(data.Intelligence);
-            Endurance = new Statistic(data.Endurance);
-            MovementSpeed = new Statistic(data.MovementSpeed);
+            Agility = new Statistic(data.agility);
+            Strength = new Statistic(data.strength);
+            Intelligence = new Statistic(data.intelligence);
+            Endurance = new Statistic(data.endurance);
+            MovementSpeed = new Statistic(data.movementSpeed);
         }
     }
 }

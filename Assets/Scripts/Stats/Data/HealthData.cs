@@ -7,12 +7,12 @@ namespace Stats.Data
     public class HealthData
     {
         [SerializeField] public float maxHp;
-        [SerializeField] public bool Invulnerable;
+        [SerializeField] public bool invulnerable;
         [HideInInspector] public float currentHp;
         public HealthData(HealthData data) {
-            this.maxHp = data.maxHp;
-            Invulnerable = data.Invulnerable;
-            this.currentHp = data.currentHp;
+            maxHp = data.maxHp;
+            invulnerable = data.invulnerable;
+            currentHp = data.currentHp;
         }
     }
 }

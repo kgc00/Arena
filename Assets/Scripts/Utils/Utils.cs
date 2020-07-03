@@ -123,7 +123,7 @@ namespace Utils
                         retVal.Add(type,instance);
                         break;
                     case Types.Charge:
-                        instance = owner.gameObject.AddComponent<Charge>().Initialize((AttackAbilityData)data[i], owner);
+                        instance = owner.gameObject.AddComponent<Charge>().Initialize((MovementAttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
                     // hunter
@@ -228,7 +228,7 @@ namespace Utils
 
             if (s == "") throw new Exception("Unable to locate Data");
 
-            return Resources.Load<UnitData>(s);
+            return Resources.Load<UnitData>(s).CreateInstance();
         }
 
         public static Interval IntervalFromType(Intervals interval, GameObject go)

@@ -32,7 +32,7 @@ namespace Abilities
         {
             Owner = owner;
             
-            Ability.onAbilityActivationFinished += UpdateState;
+            Ability.OnAbilityActivationFinished += UpdateState;
 
             Modifiers = new List<AbilityModifier>();
             
@@ -49,7 +49,7 @@ namespace Abilities
         }
 
         private void OnDisable() {
-            Ability.onAbilityActivationFinished -= UpdateState;
+            Ability.OnAbilityActivationFinished -= UpdateState;
         }
 
         public void Activate(Ability ability, Vector3 targetLocation) {

@@ -28,7 +28,7 @@ namespace State.PlayerStates
         public override void HandleFixedUpdate(InputValues input)
         {
             
-            var movementSpeed = Owner.statsComponent.Stats.MovementSpeed;
+            var movementSpeed = Owner.StatsComponent.Stats.MovementSpeed;
             var motion = GetMovementFromInput(input, movementSpeed.Value);
 
             UpdatePlayerRotation(input, motion, movementSpeed.Value);
@@ -37,7 +37,7 @@ namespace State.PlayerStates
 
         private void UpdatePlayerPositionForce(InputValues input, Vector3 motion, float movementSpeed)
         {
-            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) {
+            if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) {
                 Owner.Rigidbody.velocity = Vector3.zero;
                 return;
             }
@@ -54,7 +54,7 @@ namespace State.PlayerStates
 
         private void UpdatePlayerRotation(InputValues input, Vector3 motion, float movementSpeed)
         {
-            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotRotate)) return;
+            if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotRotate)) return;
             
             
             if (input.ActiveControl == ControllerType.Delta)

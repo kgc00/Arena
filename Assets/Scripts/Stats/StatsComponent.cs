@@ -1,11 +1,14 @@
-﻿using Units;
-using Units.Data;
+﻿using Stats.Data;
+using Units;
 using UnityEngine;
 
 namespace Stats {
     public class StatsComponent : MonoBehaviour {
+        public Unit Owner { get; private set; }
         public Stats Stats { get; private set; }
         public StatsComponent Initialize(Unit unit, StatsData data) {
+            Debug.Log(data);
+            Owner = unit;
             Stats = new Stats(data);
             return this;
         }

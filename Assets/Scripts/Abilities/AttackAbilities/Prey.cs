@@ -13,7 +13,7 @@ namespace Abilities.AttackAbilities
         {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
-            onAbilityActivationFinished(Owner, this);
+            OnAbilityActivationFinished(Owner, this);
             yield break;
         }
 
@@ -22,7 +22,7 @@ namespace Abilities.AttackAbilities
         {
             if (projectile == null) return;
             
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, onAbilityConnection, 10f);
+            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
         }
 
         private GameObject SpawnProjectile()

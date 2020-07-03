@@ -12,24 +12,22 @@ namespace Abilities
     {
         public AbilityData Model { get; private set; }
         public float EnergyCost { get; protected set; }
-
         public string Description { get; protected set; }
-
         public string DisplayName { get; protected set; }
         public float Range { get; protected set; }
         public float Force { get; protected set; }
         public float ProjectileSpeed { get; protected set; }
         public float Duration { get; protected set; }
         public int AreaOfEffectRadius { get; protected set; }
-        public int IndicatorType { get; set; }
+        public int IndicatorType { get; protected set; }
         public float StartupTime { get; protected set; }
-        public Cooldown Cooldown{ get; protected set; } 
-        public Unit Owner;
+        public Cooldown Cooldown{ get; protected set; }
+        public Unit Owner { get; protected set; }
         public Sprite Icon { get; protected set; }
-        public static Action<Unit, Ability> onAbilityActivationFinished { get; set; } = delegate { };
+        public static Action<Unit, Ability> OnAbilityActivationFinished { get; set; } = delegate { };
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);
-        public static Action<Unit, Ability> onAbilityFinished { get; set; } = delegate { };
+        public static Action<Unit, Ability> OnAbilityFinished { get; set; } = delegate { };
         
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);

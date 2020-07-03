@@ -15,12 +15,12 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             var grenade = SpawnGrenade(updatedTargetLocation);
-            onAbilityActivationFinished(Owner, this);
+            OnAbilityActivationFinished(Owner, this);
             ShaderHelper.isCenterPosPlayerPos = true;
         }
         
         private GameObject SpawnGrenade(Vector3 targetLocation) {
-            return MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, onAbilityConnection, ProjectileSpeed);
+            return MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
         }
 
         protected override void AbilityConnected(GameObject other, GameObject projectile) {

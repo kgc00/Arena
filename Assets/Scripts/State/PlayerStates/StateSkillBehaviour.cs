@@ -22,7 +22,7 @@ namespace State.PlayerStates
         {
             unitState = null;
             
-            if (Owner.inputModifierComponent.InputModifier.HasFlag(InputModifier.CannotAct)) return false;
+            if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotAct)) return false;
 
             foreach (var kvp in input.ButtonValues)
             {

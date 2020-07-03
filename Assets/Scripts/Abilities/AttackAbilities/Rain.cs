@@ -14,7 +14,7 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             SpawnAoEEffect(updatedTargetLocation);
-            onAbilityActivationFinished(Owner, this);
+            OnAbilityActivationFinished(Owner, this);
             ShaderHelper.isCenterPosPlayerPos = true;
         }
 

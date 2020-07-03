@@ -21,7 +21,7 @@ namespace Abilities.Buffs
             
             Owner.StatusComponent.AddStatus(Status.Hidden);
 
-            onAbilityActivationFinished(Owner, this);
+            OnAbilityActivationFinished(Owner, this);
 
             var modifiers = Owner.AbilityComponent.Modifiers;
             var markModifier = new MarkOnHitModifier(null);

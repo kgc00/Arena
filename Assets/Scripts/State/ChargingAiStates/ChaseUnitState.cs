@@ -1,23 +1,23 @@
-﻿using Controls;
+﻿using System.Linq;
+using Abilities.AttackAbilities;
+using Controls;
 using JetBrains.Annotations;
 using Stats;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace State.ChargingAiStates
 {
     public class ChaseUnitState : UnitState
     {
-        readonly Transform targetPlayerTransform;
-        private readonly Unit targetUnit;
-        private readonly float movementSpeed = 2f;
+        readonly Transform playerTransform;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private readonly float attackRange;
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
-            targetPlayerTransform = playerTransform;
-            targetUnit = playerTransform.GetComponentInChildren<Unit>();
+            this.playerTransform = playerTransform;
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
         }
 
@@ -33,55 +33,55 @@ namespace State.ChargingAiStates
             Owner.Animator.ResetTrigger(Moving);
         }
 
-        public override UnitState HandleUpdate(InputValues input)
-        {
-            bool invalidTarget = targetPlayerTransform == null ||
-                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
-            
-            if (invalidTarget) return new IdleUnitState(Owner);
-            
-            if (ShouldEnterAttack(out var unitState)) return unitState;
-            
-            return null;
+        public override UnitState HandleUpdate(InputValues input) {
+            // TODO: add some leashing mechanic or vision limiter
+
+            if (playerTransform == null) return new IdleUnitState(Owner);
+
+            var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
+
+            if (ShouldEnterCharge(out var unitState, dist)) return unitState;
+            if (ShouldEnterAttack(out unitState, dist)) return unitState;
+
+            return unitState;
         }
 
-        public override void HandleFixedUpdate(InputValues input)
-        {
-            bool invalidTarget = targetPlayerTransform == null ||
-                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
-
-            if (invalidTarget) return;
-                
+        public override void HandleFixedUpdate(InputValues input) {
             UpdateUnitLocation();
-            UpdateUnitRotation();
         }
 
-        private void UpdateUnitRotation()
-        {
-            var difference = targetPlayerTransform.position - Owner.transform.position;
-            Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
-                Quaternion.LookRotation(difference),
-                Time.deltaTime * 10f);
-        }
-
-        private bool ShouldEnterAttack([CanBeNull] out UnitState unitState)
-        {
+        private bool ShouldEnterAttack(out UnitState unitState, float dist) {
             unitState = null;
 
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
-            if (distanceToUnit > attackRange) return false;
-            
-            unitState = new AttackUnitState(Owner, targetPlayerTransform);
+            // are we close enough away to use attack and is an attack ready?
+            if (dist > attackRange && !Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown) 
+                return false;
+
+            unitState = new AttackUnitState(Owner, playerTransform);
+            return true;
+        }
+
+        private bool ShouldEnterCharge([CanBeNull] out UnitState unitState, float dist) {
+            unitState = null;
+
+            // find charge ability
+            var charge = Owner.AbilityComponent.equippedAbilities.Values.FirstOrDefault(a => a is Charge);
+            if (charge == null) return false;
+
+            // is charge ready to use?
+            if (charge.Cooldown.IsOnCooldown) return false;
+
+            // are we too close to use charge?
+            if (dist <= attackRange) return false;
+
+            unitState = new ChargeUnitState(Owner, playerTransform);
             return true;
         }
 
         private void UpdateUnitLocation()
         {
-            var moveDirection = targetPlayerTransform.position - Owner.transform.position;
-            Owner.Rigidbody.AddForce( moveDirection.normalized * 50f);
-            // Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
-            //                                                 targetPlayerTransform.position,
-            //                                                 movementSpeed * Time.deltaTime);
+            var moveDirection = playerTransform.position - Owner.transform.position;
+            Owner.Rigidbody.AddForce( moveDirection.normalized * Owner.StatsComponent.Stats.MovementSpeed.Value);
         }
     }
 }

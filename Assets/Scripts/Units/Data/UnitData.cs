@@ -24,7 +24,5 @@ namespace Units.Data
         [SerializeField] public VisualAssets visualAssets;
         // Stats
         [SerializeField] public StatsData statsData;
-
-
     }
 }

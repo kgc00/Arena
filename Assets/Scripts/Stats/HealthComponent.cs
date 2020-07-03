@@ -19,7 +19,7 @@ namespace Stats
             this.MaxHp = healthData.maxHp;
             CurrentHp = MaxHp;
 
-            Invulnerable = healthData.Invulnerable;
+            Invulnerable = healthData.invulnerable;
 
             Debug.Log($"Spawning: {Owner.name} with a max HP of {MaxHp}");
             return this;

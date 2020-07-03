@@ -151,7 +151,7 @@ namespace Spawner
                     var spawnPos = new Vector3(x,y,z);
                     owner.OwningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(table.Unit),
-                        ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit).CreateInstance()),
+                        ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit)),
                         pos: spawnPos
                     );
                 }
@@ -172,7 +172,7 @@ namespace Spawner
                 root.Add(modifiers[i].InitializeModifier(instance));
             }
 
-            Debug.Log($"Modifer list is {modifiers.Count} items long");
+            // Debug.Log($"Modifer list is {modifiers.Count} items long");
             
             root.Handle();
             
@@ -189,7 +189,7 @@ namespace Spawner
                 root.Add(modifiers[i].InitializeModifier(instance));
             }
 
-            Debug.Log($"Modifer list is {modifiers.Count} items long");
+            // Debug.Log($"Modifer list is {modifiers.Count} items long");
             
             root.Handle();
             

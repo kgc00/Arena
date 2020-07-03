@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 11400000, guid: e37c9188fce8bfd4c88b25e2453c92ed, type: 2}
+  - {fileID: 11400000, guid: 9440a169bf7738d4a81ad861775c520a, type: 2}
   health:
     maxHp: 5
-    Invulnerable: 0
+    invulnerable: 0
     currentHp: 0
   experience:
     currentExp: 0
@@ -24,3 +25,9 @@ MonoBehaviour:
   state: 4
   visualAssets:
     portrait: {fileID: 0}
+  statsData:
+    agility: 1
+    strength: 1
+    intelligence: 1
+    endurance: 1
+    movementSpeed: 40

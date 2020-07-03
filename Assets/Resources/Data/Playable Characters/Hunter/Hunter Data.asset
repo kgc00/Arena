@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hunter Data
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 11400000, guid: 610c748d7886c474cb2cb3a450af9101, type: 2}
+  - {fileID: 11400000, guid: 9440a169bf7738d4a81ad861775c520a, type: 2}
   - {fileID: 11400000, guid: 2f2e2f74dcb63684d88e42d87daeed95, type: 2}
   - {fileID: 11400000, guid: ac5c78e2ba94a6c42ac127dc70a60173, type: 2}
   - {fileID: 11400000, guid: a15500704de91a04d87aa3a3c0848185, type: 2}
@@ -21,7 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed75c5b1d3af50d4c837283e531b1169, type: 2}
   health:
     maxHp: 3
-    Invulnerable: 0
+    invulnerable: 0
     currentHp: 3
   experience:
     currentExp: 0
@@ -30,8 +30,8 @@ MonoBehaviour:
   visualAssets:
     portrait: {fileID: 21300000, guid: 58279e19b3667c644aa295b296c1c6fb, type: 3}
   statsData:
-    Agility: 1
-    Strength: 1
-    Intelligence: 1
-    Endurance: 1
-    MovementSpeed: 100
+    agility: 1
+    strength: 1
+    intelligence: 1
+    endurance: 1
+    movementSpeed: 50

@@ -14,7 +14,7 @@ namespace Abilities
         private new AttackAbilityData Model { get; set; }
         public float Damage { get; set;}
         public List<ControlType> AffectedFactions { get; private set; }
-        public List<Action<GameObject, GameObject>> onAbilityConnection { get; set; }
+        public List<Action<GameObject, GameObject>> OnAbilityConnection { get; set; }
         protected abstract void AbilityConnected(GameObject target, GameObject projectile = null);
 
         public virtual AttackAbility Initialize(AttackAbilityData data, Unit owner) {
@@ -22,7 +22,7 @@ namespace Abilities
             Model = data;
             Damage = data.Damage;
             AffectedFactions = data.AffectedFactions;
-            onAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
+            OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
             return this;
         }
 

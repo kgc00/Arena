@@ -9,8 +9,8 @@ namespace Stats.Data
         [HideInInspector] public int currentExp;
         [SerializeField] public int bounty;
         public ExperienceData(ExperienceData data) {
-            this.currentExp = data.currentExp;
-            this.bounty = data.bounty;
+            currentExp = data.currentExp;
+            bounty = data.bounty;
         }
     }
 }

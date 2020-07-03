@@ -7,7 +7,6 @@ namespace State
 {
     public class UnitState {
         protected readonly Unit Owner;
-        public bool rotationDisabled { get; protected set; }
 
         public UnitState (Unit owner) {
             Owner = owner;

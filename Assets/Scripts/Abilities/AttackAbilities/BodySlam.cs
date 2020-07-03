@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Abilities.AttackAbilities {
     public class BodySlam : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            onAbilityActivationFinished(Owner, this);
+            OnAbilityActivationFinished(Owner, this);
             yield break;
         }
 

@@ -15,13 +15,13 @@ namespace State.TrainingDummy
         public override void Enter()
         {
             Owner.HealthComponent.Invulnerable = true;
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(IdleAnimation);
         }
 
         public override void Exit()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(IdleAnimation);
         }
 

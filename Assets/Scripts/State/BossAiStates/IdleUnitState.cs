@@ -15,13 +15,13 @@ namespace State.BossAiStates
 
         public override void Enter()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(Idle);
         }
 
         public override void Exit()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(Idle);
         }
 

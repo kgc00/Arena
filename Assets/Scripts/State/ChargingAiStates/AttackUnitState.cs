@@ -30,18 +30,10 @@ namespace State.ChargingAiStates
 
         private IEnumerator HandleAttack()
         {
-            
-            if (Owner.Animator == null || !Owner.Animator) yield break;
-            // Owner.Animator.SetTrigger(Idle);
-            //
-            // while (Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown)
-            // {
-            //     yield return new WaitForSeconds(Time.deltaTime);
-            // }
-            //
-            // Owner.Animator.ResetTrigger(Idle);
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) yield break;
             Owner.Animator.SetTrigger(Attacking);
             yield return new WaitForSeconds(0.45f);
+            if (playerTransform == null) yield break;
             
             Owner.AbilityComponent.Activate(Owner.AbilityComponent.longestRangeAbility, 
                                             playerTransform.position);
@@ -53,13 +45,13 @@ namespace State.ChargingAiStates
         
         public override void Exit()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(Attacking);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (ShouldEnterToIdle(out var unitState)) return unitState;
+            if (ShouldEnterIdle(out var unitState)) return unitState;
             if (ShouldEnterChase(out unitState)) return unitState;
             if (ShouldAttack(out unitState)) return unitState;
             
@@ -79,11 +71,12 @@ namespace State.ChargingAiStates
             return true;
         }
 
-        private bool ShouldEnterToIdle([CanBeNull] out UnitState unitState)
+        private bool ShouldEnterIdle([CanBeNull] out UnitState unitState)
         {
             unitState = null;
             
-            if (playerTransform != null) return false;
+            if (playerTransform != null ||
+                playerTransform.GetComponentInChildren<Unit>().StatusComponent.IsVisible()) return false;
             
             unitState = new IdleUnitState(Owner);
             return true;

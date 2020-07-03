@@ -15,6 +15,7 @@ namespace Stats
         
         public void AddStatus(Status status) => Status |= status;
         public void RemoveStatus(Status status) => Status &= ~status;
+        public bool IsVisible() => !Status.HasFlag(Status.Hidden);
     }
  
 }

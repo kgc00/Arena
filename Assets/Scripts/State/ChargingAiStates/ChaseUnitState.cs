@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Abilities.AttackAbilities;
 using Controls;
 using JetBrains.Annotations;
@@ -23,27 +24,37 @@ namespace State.ChargingAiStates
 
         public override void Enter()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(Moving);
         }
 
         public override void Exit()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(Moving);
         }
 
         public override UnitState HandleUpdate(InputValues input) {
             // TODO: add some leashing mechanic or vision limiter
 
-            if (playerTransform == null) return new IdleUnitState(Owner);
+            if (ShouldEnterIdle(out var unitState)) return unitState;
 
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
 
-            if (ShouldEnterCharge(out var unitState, dist)) return unitState;
+            if (ShouldEnterCharge(out unitState, dist)) return unitState;
             if (ShouldEnterAttack(out unitState, dist)) return unitState;
 
             return unitState;
+        }
+
+        private bool ShouldEnterIdle(out UnitState unitState) {
+            unitState = null;
+
+            if (playerTransform != null ||
+                playerTransform.GetComponentInChildren<Unit>().StatusComponent.IsVisible()) return false;
+
+            unitState = new IdleUnitState(Owner);
+            return true;
         }
 
         public override void HandleFixedUpdate(InputValues input) {
@@ -65,7 +76,9 @@ namespace State.ChargingAiStates
             unitState = null;
 
             // find charge ability
-            var charge = Owner.AbilityComponent.equippedAbilities.Values.FirstOrDefault(a => a is Charge);
+            var charge = Owner.AbilityComponent.GetEquippedAbility<Charge>() 
+                         ?? throw new Exception($"Charge ability was not assigned in {this}");
+            
             if (charge == null) return false;
 
             // is charge ready to use?

@@ -6,9 +6,11 @@ using Abilities.AttackAbilities;
 using Abilities.Data;
 using Abilities.Modifiers;
 using Controls;
+using JetBrains.Annotations;
 using Units;
 using UnityEngine;
 using Utils.NotificationCenter;
+using Object = System.Object;
 
 namespace Abilities
 {
@@ -83,10 +85,15 @@ namespace Abilities
         }
 
         private IEnumerator ExecuteAndSetComponentState(Ability ability, Vector3 targetLocation) {
-            for (int i = 0; i < ability.OnActivation.Count; i++) 
-                StartCoroutine(ability.OnActivation[i](targetLocation));
+            foreach (var effect in ability.OnActivation)
+                StartCoroutine(effect(targetLocation));
 
             yield return new WaitUntil(() => State == AbilityComponentState.Idle);
         }
+
+        [CanBeNull]
+        public TAbility GetEquippedAbility<TAbility>() where TAbility : Ability =>
+            (TAbility) equippedAbilities.Values.FirstOrDefault(a => a.GetType() == typeof(TAbility)) 
+                            ?? throw new Exception($"{typeof(TAbility)} ability was not found by {Owner}'s {this}");
     }
 }

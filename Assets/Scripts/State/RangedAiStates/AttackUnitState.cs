@@ -10,7 +10,7 @@ namespace State.RangedAiStates
 {
     public class AttackUnitState : UnitState
     {
-        private readonly Transform targetPlayerTransform;
+        private readonly Transform playerTransform;
         private static readonly int Attacking = Animator.StringToHash("Attacking");
         private readonly float attackRange;
         private float padding = 1.0f;
@@ -18,9 +18,9 @@ namespace State.RangedAiStates
         private bool attackComplete;
         private static readonly int Idle = Animator.StringToHash("Idle");
 
-        public AttackUnitState(Unit owner, Transform targetPlayerTransform) : base(owner)
+        public AttackUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
-            this.targetPlayerTransform = targetPlayerTransform;
+            this.playerTransform = playerTransform;
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
             attackComplete = false;
         }
@@ -30,7 +30,7 @@ namespace State.RangedAiStates
         private IEnumerator HandleAttack()
         {
             
-            if (Owner.Animator == null || !Owner.Animator) yield break;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) yield break;
             Owner.Animator.SetTrigger(Idle);
             
             while (Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown)
@@ -43,7 +43,7 @@ namespace State.RangedAiStates
             
             yield return new WaitForSeconds(0.45f);
             Owner.AbilityComponent.Activate(Owner.AbilityComponent.longestRangeAbility, 
-                                            targetPlayerTransform.position);
+                                            playerTransform.position);
             Debug.Log("Finishing attack execution");
             attackComplete = true;
         } 
@@ -52,13 +52,13 @@ namespace State.RangedAiStates
         {
             if (routine != null) Owner.CoroutineHelper.Stop(routine);
             
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(Attacking);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (targetPlayerTransform == null) return new IdleUnitState(Owner);
+            if (playerTransform == null) return new IdleUnitState(Owner);
 
             if (ShouldReturnToIdle(out var unitState)) return unitState;
             if (ShouldReturnToChase(out unitState)) return unitState;
@@ -73,7 +73,7 @@ namespace State.RangedAiStates
             unitState = null;
             if (!attackComplete || Owner.AbilityComponent.longestRangeAbility.Cooldown.IsOnCooldown) return false;
 
-            unitState = new AttackUnitState(Owner, targetPlayerTransform);
+            unitState = new AttackUnitState(Owner, playerTransform);
             return true;
         }
 
@@ -87,17 +87,17 @@ namespace State.RangedAiStates
         {
             unitState = null;
 
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
+            var distanceToUnit = Vector3.Distance(Owner.transform.position, playerTransform.position);
             if (distanceToUnit <= attackRange + padding) return false;
             
             Owner.Animator.SetBool(Attacking, false);
-            unitState = new ChaseUnitState(Owner, targetPlayerTransform);
+            unitState = new ChaseUnitState(Owner, playerTransform);
             return true;
         }
         
         private void UpdateUnitRotation()
         {
-            var difference = targetPlayerTransform.position - Owner.transform.position;
+            var difference = playerTransform.position - Owner.transform.position;
             Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
                 Quaternion.LookRotation(difference),
                 Time.deltaTime * 10f);

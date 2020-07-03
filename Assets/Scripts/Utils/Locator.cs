@@ -22,7 +22,7 @@ namespace Utils
         public static Transform GetClosestVisiblePlayerUnit(Vector3 currentLocation)
         {
             var sortedPlayers = FindObjectsOfType<Unit>()
-                .Where(unit => unit.Owner.ControlType != ControlType.Ai && !unit.StatusComponent.Status.HasFlag(Status.Hidden))
+                .Where(unit => unit.Owner.ControlType != ControlType.Ai && unit.StatusComponent.IsVisible())
                 ?.OrderBy(playerUnit => Vector3.Distance(currentLocation, playerUnit.transform.position))
                 ?.ToList();
             

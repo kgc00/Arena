@@ -8,7 +8,7 @@ namespace State.MeleeAiStates
 {
     public class ChaseUnitState : UnitState
     {
-        readonly Transform targetPlayerTransform;
+        readonly Transform playerTransform;
         private readonly Unit targetUnit;
         private readonly float movementSpeed = 2f;
         private static readonly int Moving = Animator.StringToHash("Moving");
@@ -16,26 +16,26 @@ namespace State.MeleeAiStates
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
-            targetPlayerTransform = playerTransform;
+            this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
         }
 
         public override void Enter()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(Moving);
         }
 
         public override void Exit()
         {
-            if (Owner.Animator == null || !Owner.Animator) return;
+            if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(Moving);
         }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            bool invalidTarget = targetPlayerTransform == null ||
+            bool invalidTarget = playerTransform == null ||
                                  targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
             
             if (invalidTarget) return new IdleUnitState(Owner);
@@ -47,7 +47,7 @@ namespace State.MeleeAiStates
 
         public override void HandleFixedUpdate(InputValues input)
         {
-            bool invalidTarget = targetPlayerTransform == null ||
+            bool invalidTarget = playerTransform == null ||
                                  targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
 
             if (invalidTarget) return;
@@ -58,7 +58,7 @@ namespace State.MeleeAiStates
 
         private void UpdateUnitRotation()
         {
-            var difference = targetPlayerTransform.position - Owner.transform.position;
+            var difference = playerTransform.position - Owner.transform.position;
             Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
                 Quaternion.LookRotation(difference),
                 Time.deltaTime * 10f);
@@ -68,19 +68,19 @@ namespace State.MeleeAiStates
         {
             unitState = null;
 
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, targetPlayerTransform.position);
+            var distanceToUnit = Vector3.Distance(Owner.transform.position, playerTransform.position);
             if (distanceToUnit > attackRange) return false;
             
-            unitState = new AttackUnitState(Owner, targetPlayerTransform);
+            unitState = new AttackUnitState(Owner, playerTransform);
             return true;
         }
 
         private void UpdateUnitLocation()
         {
-            var moveDirection = targetPlayerTransform.position - Owner.transform.position;
+            var moveDirection = playerTransform.position - Owner.transform.position;
             Owner.Rigidbody.AddForce( moveDirection.normalized * 50f);
             // Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
-            //                                                 targetPlayerTransform.position,
+            //                                                 playerTransform.position,
             //                                                 movementSpeed * Time.deltaTime);
         }
     }

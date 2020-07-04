@@ -12,9 +12,7 @@ namespace State.TrainingDummy
 
         public Idle(Unit owner) : base(owner) { }
 
-        public override void Enter()
-        {
-            Owner.HealthComponent.Invulnerable = true;
+        public override void Enter() {
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(IdleAnimation);
         }

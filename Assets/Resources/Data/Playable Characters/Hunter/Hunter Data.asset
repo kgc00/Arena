@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hunter Data
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 11400000, guid: 9440a169bf7738d4a81ad861775c520a, type: 2}
+  - {fileID: 11400000, guid: 610c748d7886c474cb2cb3a450af9101, type: 2}
   - {fileID: 11400000, guid: 2f2e2f74dcb63684d88e42d87daeed95, type: 2}
   - {fileID: 11400000, guid: ac5c78e2ba94a6c42ac127dc70a60173, type: 2}
   - {fileID: 11400000, guid: a15500704de91a04d87aa3a3c0848185, type: 2}

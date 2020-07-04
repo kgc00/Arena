@@ -7,13 +7,13 @@ namespace Stats
 {
     public class HealthComponent : MonoBehaviour
     {
-        public static System.Action<Unit, float> OnHealthChanged = delegate { };
+        public static Action<Unit, float> OnHealthChanged = delegate { };
         public Unit Owner { get; private set; }
         public float MaxHp { get; private set; }
         public float CurrentHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
-        public bool Invulnerable = false;
-        
+        public bool Invulnerable { get; private set; }  = false;
+
         public HealthComponent Initialize (Unit owner, HealthData healthData) {
             this.Owner = owner;
             this.MaxHp = healthData.maxHp;
@@ -21,13 +21,13 @@ namespace Stats
 
             Invulnerable = healthData.invulnerable;
 
-            Debug.Log($"Spawning: {Owner.name} with a max HP of {MaxHp}");
+            // Debug.Log($"Spawning: {Owner.name} with a max HP of {MaxHp}");
             return this;
         }
         
 
         public void TakeDamage (float amount) {
-            Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
+            // Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
             
             if (Invulnerable) return;
             AdjustHealth(-Math.Abs(amount));
@@ -37,7 +37,7 @@ namespace Stats
             var prevAmount = CurrentHp;
             var newAmount = Mathf.Clamp(CurrentHp + amount, 0, MaxHp);
 
-            Debug.Log($"Adjusting {Owner.name}'s current health from {prevAmount} to {newAmount}.");
+            // Debug.Log($"Adjusting {Owner.name}'s current health from {prevAmount} to {newAmount}.");
 
             CurrentHp = newAmount;
 

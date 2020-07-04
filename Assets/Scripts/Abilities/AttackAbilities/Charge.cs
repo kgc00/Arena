@@ -12,6 +12,7 @@ namespace Abilities.AttackAbilities {
     public class Charge : MovementAttackAbility {
         private Vector3 targetLocation = new Vector3(-999,-999,-999);
         private bool charging = false;
+        private bool impactedWall = false;
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             Debug.Log("starting");
             this.targetLocation = targetLocation;
@@ -24,15 +25,21 @@ namespace Abilities.AttackAbilities {
                 .AddModifier(InputModifier.CannotAct);
 
             charging = true;
+            impactedWall = false;
             var timeLeft = Duration;
-            while (timeLeft > 0 && Vector3.Distance(Owner.transform.position, targetLocation) > 1f) {
-                timeLeft = Clamp(timeLeft -= Time.deltaTime, 0, Duration);
+            while (timeLeft > 0 
+                    && Vector3.Distance(Owner.transform.position, targetLocation) > 1f
+                    && !impactedWall) {
+                timeLeft = Clamp(timeLeft - Time.deltaTime, 0, Duration);
                 yield return null;
             }
             charging = false;
             
             Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, 450);            
 
+            // set a "stun" state for 1 second if we hit a wall during the charge
+            if(impactedWall) yield return new WaitForSeconds(1);
+            
             Owner.InputModifierComponent
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate)
@@ -59,6 +66,10 @@ namespace Abilities.AttackAbilities {
             if (!charging) return;
             
             Gizmos.DrawSphere(targetLocation, 1);
+        }
+
+        private void OnCollisionEnter(Collision other) {
+            if (charging && other.gameObject.CompareTag("Board")) impactedWall = true;
         }
     }
 }

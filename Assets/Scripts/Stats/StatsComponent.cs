@@ -7,7 +7,6 @@ namespace Stats {
         public Unit Owner { get; private set; }
         public Stats Stats { get; private set; }
         public StatsComponent Initialize(Unit unit, StatsData data) {
-            Debug.Log(data);
             Owner = unit;
             Stats = new Stats(data);
             return this;

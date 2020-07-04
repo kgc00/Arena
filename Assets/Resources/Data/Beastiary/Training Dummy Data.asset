@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e37c9188fce8bfd4c88b25e2453c92ed, type: 2}
   health:
     maxHp: 999
-    Invulnerable: 1
+    invulnerable: 1
     currentHp: 3
   experience:
     currentExp: 0
@@ -24,3 +24,9 @@ MonoBehaviour:
   state: 7
   visualAssets:
     portrait: {fileID: 0}
+  statsData:
+    agility: 0
+    strength: 0
+    intelligence: 0
+    endurance: 0
+    movementSpeed: 0

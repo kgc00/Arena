@@ -17,14 +17,12 @@ namespace State.TrainingDummy
             Owner.Animator.SetTrigger(IdleAnimation);
         }
 
-        public override void Exit()
-        {
+        public override void Exit() {
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(IdleAnimation);
         }
 
-        public override UnitState HandleUpdate(InputValues input)
-        {
+        public override UnitState HandleUpdate(InputValues input) {
             return null;
         }
     }

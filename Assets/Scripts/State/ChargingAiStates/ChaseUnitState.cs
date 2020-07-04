@@ -93,8 +93,8 @@ namespace State.ChargingAiStates
 
         private void UpdateUnitLocation()
         {
-            var moveDirection = playerTransform.position - Owner.transform.position;
-            Owner.Rigidbody.AddForce( moveDirection.normalized * Owner.StatsComponent.Stats.MovementSpeed.Value);
+            var heading = playerTransform.position - Owner.transform.position;
+            Owner.Rigidbody.AddForce( heading.normalized * Owner.StatsComponent.Stats.MovementSpeed.Value);
         }
     }
 }

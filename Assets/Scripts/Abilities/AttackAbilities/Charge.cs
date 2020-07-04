@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Controls;
 using Stats;
+using Units;
 using UnityEngine;
 using static Utils.MathHelpers;
 
@@ -64,8 +65,13 @@ namespace Abilities.AttackAbilities {
         // rather than have multiple abilities all checking on collision enter.
         private void OnCollisionEnter(Collision other) {
             if (charging && other.gameObject.CompareTag("Board")) ImpactedWall = true;
+            if (charging && other.gameObject.GetComponentInChildren<Unit>() != null) AbilityConnected(other.gameObject);
         }
 
-        protected override void AbilityConnected(GameObject target, GameObject projectile = null) { }
+        protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
+            // checking for null is done in the collision enter method
+            var unit = target.GetComponent<Unit>();
+            if(AffectedFactions.Contains(unit.Owner.ControlType)) unit.HealthComponent.TakeDamage(Damage);
+        }
     }
 }

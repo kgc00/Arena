@@ -20,6 +20,8 @@ namespace State.ChargingAiStates {
             charging = true;
         }
 
+        ~ChargeUnitState() => Ability.OnAbilityFinished -= HandleChargeFinished;
+
         void HandleChargeFinished(Unit u, Ability a) {
             if (u != Owner || a != charge) return;
             

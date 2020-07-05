@@ -38,18 +38,14 @@ namespace Abilities.AttackAbilities {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) yield break;
             
-            var totalDamage = Damage;
-            var isMarked = unit.StatusComponent.Types.HasFlag(Status.Types.Marked);
-            if (isMarked)
-            {
-                totalDamage += 2;
-                unit.StatusComponent.RemoveStatus(Status.Types.Marked);
-            }
+            unit.StatusComponent.AddStatus(Status.Types.Marked);
             
+            // scale damage applied to match time passed
+            var damage = Damage * Time.deltaTime;
             
-            Debug.Log($"Rain has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
-                      $"Base damage is {Damage}. Total Damage: {totalDamage}");
-            unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            Debug.Log($"Rain has connected with a unit: {unit.name}.  The unit has a marked status of {unit.StatusComponent.Types.HasFlag(Status.Types.Marked)}.\n" +
+                      $"Base damage is {damage}.");
+            unit.HealthComponent.DamageOwner(damage, this, Owner);
         }
         
         // empty... =(

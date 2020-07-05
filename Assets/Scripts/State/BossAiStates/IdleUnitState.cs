@@ -30,6 +30,8 @@ namespace State.BossAiStates
 
             if (playerTransform == null) return null;
 
+            return new MagicShieldUnitState(Owner);
+            
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
 
             if (ShouldEnterLongRangeState(out var unitState, dist)) return unitState;

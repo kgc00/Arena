@@ -27,8 +27,8 @@ namespace Projectiles
         public float Radius { get; private set; }
         private Collider collider;
 
-        private List<ControlType> AffectedFactions;
-        public Vector3 LookTarget;
+        private List<ControlType> affectedFactions;
+        public Vector3 lookTarget;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> EnterStrategy;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> StayStrategy;
         public float Duration { get; private set; }
@@ -44,7 +44,7 @@ namespace Projectiles
             float duration = -1) {
             Duration = duration;
             Force = force;
-            AffectedFactions = affectedFactions;
+            this.affectedFactions = affectedFactions;
             EnterStrategy = Strategy;
             StayStrategy = stayStrategy;
 
@@ -53,8 +53,8 @@ namespace Projectiles
             InitializeCollider(colliderParams);
 
             // lock y to unit's current y
-            LookTarget = new Vector3(lookTarget.x, gameObject.transform.position.y, lookTarget.z);
-            gameObject.transform.LookAt(LookTarget);
+            this.lookTarget = new Vector3(lookTarget.x, gameObject.transform.position.y, lookTarget.z);
+            gameObject.transform.LookAt(this.lookTarget);
             
             return this;
         }
@@ -104,7 +104,7 @@ namespace Projectiles
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) return false;
 
-            if (AffectedFactions.All(x => x != unit.Owner.ControlType)) {
+            if (affectedFactions.All(x => x != unit.Owner.ControlType)) {
                 Debug.Log($"Unable to affect {unit.name} because their faction is {unit.Owner.ControlType}");
                 return false;
             }
@@ -143,7 +143,7 @@ namespace Projectiles
             Gizmos.color = Color.green;
             Gizmos.matrix = Matrix4x4.identity;
             Gizmos.DrawSphere(
-                LookTarget, 1f
+                lookTarget, 1f
             );
         }
 #endif

@@ -29,7 +29,7 @@ namespace Abilities.Buffs {
             var timeLeft = InitializeState();
             Owner.HealthComponent.SetInvulnerable();
 
-            while (timeLeft > 0 && damageRemembered > 3) {
+            while (timeLeft > 0 && damageRemembered < 3) {
                 timeLeft = Clamp(timeLeft - Time.deltaTime, 0, Duration);
                 yield return null;
             }
@@ -39,6 +39,7 @@ namespace Abilities.Buffs {
 
             ResetState();
             Owner.HealthComponent.SetVulnerable();
+            OnAbilityFinished(Owner, this);
         }
 
         void RememberPain(Unit unit, Unit damageDealer, float amount) {

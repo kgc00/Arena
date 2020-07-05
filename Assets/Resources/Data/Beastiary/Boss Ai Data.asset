@@ -15,6 +15,7 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: 2fb3d0dd48bcb0b48b5d01f18b5873ed, type: 2}
   - {fileID: 11400000, guid: d1eb69c85119e8f438b10f380b5bffea, type: 2}
+  - {fileID: 11400000, guid: 8d6de1d16d78f974a945afa17fbf19eb, type: 2}
   health:
     maxHp: 12
     invulnerable: 0

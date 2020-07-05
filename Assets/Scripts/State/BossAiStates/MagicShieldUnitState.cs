@@ -26,10 +26,6 @@ namespace State.BossAiStates {
         }
 
         private IEnumerator HandleShield() {
-            Owner.transform.LookAt(
-            Locator.GetClosestPlayerUnit(Owner.transform.position).position - Owner.transform.position
-            );
-            
             if (Owner.Animator == null || !Owner.Animator) yield break;
             Owner.Animator.SetTrigger(Guarding);
 
@@ -54,7 +50,7 @@ namespace State.BossAiStates {
         
         public override UnitState HandleUpdate(InputValues input) {
             if (shieldActive) return null;
-            return new IdleUnitState(Owner);
+            return new RoarUnitState(Owner);
         }
     }
 }

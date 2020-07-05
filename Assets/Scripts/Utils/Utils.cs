@@ -130,6 +130,10 @@ namespace Utils
                         instance = owner.gameObject.AddComponent<MagicShield>().Initialize((BuffAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
+                    case Types.Roar:
+                        instance = owner.gameObject.AddComponent<Roar>().Initialize((AttackAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
                     case Types.ChainFlame:
                         instance = owner.gameObject.AddComponent<ChainFlame>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);

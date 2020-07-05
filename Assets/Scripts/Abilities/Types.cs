@@ -16,6 +16,7 @@
         MagicShield,
         BreatheFire,
         ChainFlame,
-        TailSwipe
+        TailSwipe,
+        Roar
     }
 }

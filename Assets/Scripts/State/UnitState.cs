@@ -8,7 +8,7 @@ namespace State
     public class UnitState {
         protected readonly Unit Owner;
 
-        public UnitState (Unit owner) {
+        protected UnitState (Unit owner) {
             Owner = owner;
         }
         

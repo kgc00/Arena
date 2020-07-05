@@ -1,3 +1,4 @@
+using Abilities.AttackAbilities;
 using Controls;
 using Units;
 using UnityEngine;
@@ -9,8 +10,11 @@ namespace State.BossAiStates
     {
         private Transform playerTransform;
         private static readonly int Idle = Animator.StringToHash("Idle");
+        private Roar roar;
 
-        public IdleUnitState(Unit owner) : base(owner) { }
+        public IdleUnitState(Unit owner) : base(owner) {
+            roar = Owner.AbilityComponent.GetEquippedAbility<Roar>();
+        }
 
         public override void Enter()
         {
@@ -29,35 +33,33 @@ namespace State.BossAiStates
             if (playerTransform == null) playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
 
             if (playerTransform == null) return null;
-
-            return new MagicShieldUnitState(Owner);
             
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
 
-            if (ShouldEnterLongRangeState(out var unitState, dist)) return unitState;
-            if (ShouldEnterCloseRangeState(out unitState, dist)) return unitState;
+            if (ShouldEnterRelocateState(out var unitState, dist)) return unitState;
+            if (ShouldEnterShield(out unitState, dist)) return unitState;
             return null;
         }
 
-        private bool ShouldEnterCloseRangeState(out UnitState unitState, float dist) {
+        private bool ShouldEnterShield(out UnitState unitState, float dist) {
             unitState = null;
 
             if (!playerTransform.GetComponent<Unit>().StatusComponent.IsVisible()) return false;
 
-            if (dist >= 4) return false;
+            if (dist >= roar.Range) return false;
             
-            unitState = new CloseRangeUnitState(Owner);
+            unitState = new MagicShieldUnitState(Owner);
             return true;
         }
 
-        private bool ShouldEnterLongRangeState(out UnitState unitState, float dist) {
+        private bool ShouldEnterRelocateState(out UnitState unitState, float dist) {
             unitState = null;
 
             if (!playerTransform.GetComponent<Unit>().StatusComponent.IsVisible()) return false;
 
-            if (dist < 4) return false;
+            if (dist < roar.Range) return false;
             
-            unitState = new LongRangeUnitState(Owner);
+            unitState = new RelocateUnitState(Owner, playerTransform);
             return true;
         }
     }

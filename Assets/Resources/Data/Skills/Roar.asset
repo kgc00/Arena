@@ -17,7 +17,7 @@ MonoBehaviour:
   energyCost: 0
   cooldown: 5.5
   duration: 2.5
-  range: 100
+  range: 4
   areaOfEffectRadius: 0
   type: 14
   startupTime: 0.5

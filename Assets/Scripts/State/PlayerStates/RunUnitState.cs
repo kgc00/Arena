@@ -25,8 +25,8 @@ namespace State.PlayerStates
                                      Math.Abs(input.Horizontal) <= movementThreshold;
             
             if (playerIsStationary) return new IdleUnitState(Owner);
-        
-            return base.HandleUpdate(input);
+
+            return null;
         }
 
         public override void Enter()

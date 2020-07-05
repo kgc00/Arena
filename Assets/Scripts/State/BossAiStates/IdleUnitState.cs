@@ -7,7 +7,6 @@ namespace State.BossAiStates
 {
     public class IdleUnitState : UnitState
     {
-        private readonly float movementSpeed = 2f;
         private Transform playerTransform;
         private static readonly int Idle = Animator.StringToHash("Idle");
 
@@ -26,14 +25,38 @@ namespace State.BossAiStates
         }
 
         public override UnitState HandleUpdate(InputValues input) {
-            return null;
             // TODO: add some leashing mechanic or vision limiter
-            
             if (playerTransform == null) playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
 
             if (playerTransform == null) return null;
+
+            var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
+
+            if (ShouldEnterLongRangeState(out var unitState, dist)) return unitState;
+            if (ShouldEnterCloseRangeState(out unitState, dist)) return unitState;
+            return null;
+        }
+
+        private bool ShouldEnterCloseRangeState(out UnitState unitState, float dist) {
+            unitState = null;
+
+            if (!playerTransform.GetComponent<Unit>().StatusComponent.IsVisible()) return false;
+
+            if (dist >= 4) return false;
             
-            return new MeleeAiStates.ChaseUnitState(Owner, playerTransform);
+            unitState = new CloseRangeUnitState(Owner);
+            return true;
+        }
+
+        private bool ShouldEnterLongRangeState(out UnitState unitState, float dist) {
+            unitState = null;
+
+            if (!playerTransform.GetComponent<Unit>().StatusComponent.IsVisible()) return false;
+
+            if (dist < 4) return false;
+            
+            unitState = new LongRangeUnitState(Owner);
+            return true;
         }
     }
 }

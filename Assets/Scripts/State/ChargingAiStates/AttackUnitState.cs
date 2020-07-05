@@ -114,7 +114,7 @@ namespace State.ChargingAiStates
         private void DamageUnit(Collision other)
         {
             // Apply damage
-            other.gameObject.GetComponent<HealthComponent>().TakeDamage(-1f);
+            other.gameObject.GetComponent<HealthComponent>().DamageOwner(-1f, null, Owner);
             Debug.Log("hit player");
         }
     }

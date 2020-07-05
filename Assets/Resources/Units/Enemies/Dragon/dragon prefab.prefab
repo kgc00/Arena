@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 1484058393081176210}
   - component: {fileID: 7439186059543906664}
   m_Layer: 0
-  m_Name: DragonSoulEaterRedHP
+  m_Name: dragon prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

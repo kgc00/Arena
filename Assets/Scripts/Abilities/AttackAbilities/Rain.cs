@@ -39,18 +39,17 @@ namespace Abilities.AttackAbilities {
             if (unit == null) yield break;
             
             var totalDamage = Damage;
-            var isMarked = unit.StatusComponent.Status.HasFlag(Status.Marked);
+            var isMarked = unit.StatusComponent.Types.HasFlag(Status.Types.Marked);
             if (isMarked)
             {
                 totalDamage += 2;
-                unit.StatusComponent.RemoveStatus(Status.Marked);
+                unit.StatusComponent.RemoveStatus(Status.Types.Marked);
             }
             
             
             Debug.Log($"Rain has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
                       $"Base damage is {Damage}. Total Damage: {totalDamage}");
-            
-            unit.HealthComponent.TakeDamage(totalDamage * Time.deltaTime);
+            unit.HealthComponent.DamageOwner(Damage, this, Owner);
         }
         
         // empty... =(

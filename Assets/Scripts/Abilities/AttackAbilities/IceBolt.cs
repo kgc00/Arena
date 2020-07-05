@@ -64,8 +64,7 @@ namespace Abilities.AttackAbilities
 
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
-            
-            unit.HealthComponent.TakeDamage(-Damage);
+            unit.HealthComponent.DamageOwner(Damage, this, Owner);
             Destroy(projectile);
         }
     }

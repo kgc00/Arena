@@ -126,6 +126,14 @@ namespace Utils
                         instance = owner.gameObject.AddComponent<Charge>().Initialize((MovementAttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
+                    case Types.MagicShield:
+                        instance = owner.gameObject.AddComponent<MagicShield>().Initialize((BuffAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
+                    case Types.ChainFlame:
+                        instance = owner.gameObject.AddComponent<ChainFlame>().Initialize((AttackAbilityData)data[i], owner);
+                        retVal.Add(type,instance);
+                        break;
                     // hunter
                     case Types.Mark:
                         instance = owner.gameObject.AddComponent<Mark>().Initialize((AttackAbilityData)data[i], owner);
@@ -338,14 +346,14 @@ namespace Utils
             var unit = go.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) return;
             
-            unit.StatusComponent.AddStatus(Status.Marked);
-            Debug.Log(unit.StatusComponent.Status);
+            unit.StatusComponent.AddStatus(Status.Types.Marked);
+            Debug.Log(unit.StatusComponent.Types);
         }
         
         public static void AddMark(Unit unit)
         {
-            unit.StatusComponent.AddStatus(Status.Marked);
-            Debug.Log(unit.StatusComponent.Status);
+            unit.StatusComponent.AddStatus(Status.Types.Marked);
+            Debug.Log(unit.StatusComponent.Types);
         }
     }
 }

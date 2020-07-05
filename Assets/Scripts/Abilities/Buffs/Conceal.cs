@@ -19,7 +19,7 @@ namespace Abilities.Buffs
             
             this.AddObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
             
-            Owner.StatusComponent.AddStatus(Status.Hidden);
+            Owner.StatusComponent.AddStatus(Status.Types.Hidden);
 
             OnAbilityActivationFinished(Owner, this);
 
@@ -28,7 +28,7 @@ namespace Abilities.Buffs
             modifiers.Add(markModifier);
             modifiers.Add(new DoubleDamageModifier(null));
 
-            while (timeLeft > 0f && Owner.StatusComponent.Status.HasFlag(Status.Hidden))
+            while (timeLeft > 0f && Owner.StatusComponent.Types.HasFlag(Status.Types.Hidden))
             {
                 if (brokenConcealment) break;
                 
@@ -36,7 +36,7 @@ namespace Abilities.Buffs
                 yield return null;
             }
             
-            if (Owner.StatusComponent.Status.HasFlag(Status.Hidden)) Owner.StatusComponent.RemoveStatus(Status.Hidden);
+            if (Owner.StatusComponent.Types.HasFlag(Status.Types.Hidden)) Owner.StatusComponent.RemoveStatus(Status.Types.Hidden);
 
             if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
             

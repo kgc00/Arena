@@ -1,4 +1,5 @@
 ﻿using System;
+using Abilities;
 using Stats.Data;
 using Units;
 using UnityEngine;
@@ -8,15 +9,16 @@ namespace Stats
     public class HealthComponent : MonoBehaviour
     {
         public static Action<Unit, float> OnHealthChanged = delegate { };
+        public static Action<Unit, Unit, float> OnDamageStarted = delegate { };
         public Unit Owner { get; private set; }
         public float MaxHp { get; private set; }
         public float CurrentHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
-        public bool Invulnerable { get; private set; }  = false;
+        public bool Invulnerable { get; private set; }
 
         public HealthComponent Initialize (Unit owner, HealthData healthData) {
-            this.Owner = owner;
-            this.MaxHp = healthData.maxHp;
+            Owner = owner;
+            MaxHp = healthData.maxHp;
             CurrentHp = MaxHp;
 
             Invulnerable = healthData.invulnerable;
@@ -24,15 +26,30 @@ namespace Stats
             // Debug.Log($"Spawning: {Owner.name} with a max HP of {MaxHp}");
             return this;
         }
-        
 
-        public void TakeDamage (float amount) {
+        public void SetInvulnerable() => Invulnerable = true;
+        public void SetVulnerable() => Invulnerable = false;
+
+        public void DamageOwner(float amount, Ability damageSource, Unit damageDealer) {
             // Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
-            
+
+            OnDamageStarted(Owner, damageDealer, amount);
             if (Invulnerable) return;
             AdjustHealth(-Math.Abs(amount));
         }
 
+        public void HealOwner (float amount) {
+            // Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
+
+            AdjustHealth(Math.Abs(amount));
+        }
+        
+        /// <summary>
+        /// Adjust unit's health:
+        /// negative values => damage
+        /// positive values => heal
+        /// </summary>
+        /// <param name="amount"></param>
         private void AdjustHealth(float amount) {
             var prevAmount = CurrentHp;
             var newAmount = Mathf.Clamp(CurrentHp + amount, 0, MaxHp);

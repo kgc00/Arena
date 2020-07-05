@@ -36,7 +36,7 @@ namespace State.MeleeAiStates
         public override UnitState HandleUpdate(InputValues input)
         {
             bool invalidTarget = playerTransform == null ||
-                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
+                                 !targetUnit.StatusComponent.IsVisible();
             
             if (invalidTarget) return new IdleUnitState(Owner);
             
@@ -48,7 +48,7 @@ namespace State.MeleeAiStates
         public override void HandleFixedUpdate(InputValues input)
         {
             bool invalidTarget = playerTransform == null ||
-                                 targetUnit.StatusComponent.Status.HasFlag(Status.Hidden);
+                                 !targetUnit.StatusComponent.IsVisible();
 
             if (invalidTarget) return;
                 

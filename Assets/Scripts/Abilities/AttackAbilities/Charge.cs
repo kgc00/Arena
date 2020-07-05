@@ -71,7 +71,7 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
             // checking for null is done in the collision enter method
             var unit = target.GetComponent<Unit>();
-            if(AffectedFactions.Contains(unit.Owner.ControlType)) unit.HealthComponent.TakeDamage(Damage);
+            if(AffectedFactions.Contains(unit.Owner.ControlType)) unit.HealthComponent.DamageOwner(Damage, this, Owner);
         }
     }
 }

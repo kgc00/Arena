@@ -12,5 +12,10 @@
         PierceAndPull,
         Burst,
         Rain,
+        // Boss
+        MagicShield,
+        BreatheFire,
+        ChainFlame,
+        TailSwipe
     }
 }

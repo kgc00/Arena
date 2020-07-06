@@ -16,14 +16,14 @@ MonoBehaviour:
   description: 
   energyCost: 0
   cooldown: 4
-  duration: 0
+  duration: 1
   range: 0
-  areaOfEffectRadius: 0
+  areaOfEffectRadius: 5
   type: 12
   startupTime: 0.5
   indicatorType: 0
-  projectileSpeed: 0
-  force: 0
+  projectileSpeed: 10
+  force: 120
   icon: {fileID: 0}
   damage: 1
   affectedFactions: 0000000001000000

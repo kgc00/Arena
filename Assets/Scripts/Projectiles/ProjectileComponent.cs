@@ -7,26 +7,26 @@ using UnityEngine;
 namespace Projectiles {
     public class ProjectileComponent : MonoBehaviour {
         List<Action<GameObject, GameObject>> onConnected;
-        float speed = 1.5f;
+        private float speed;
         private Vector3 Direction { get; set; }
+        // private Rigidbody rigidbody;
 
         //optional param for setting projectile speed
-        public void Initialize(Vector3 dir, List<Action<GameObject, GameObject>> callbacks, float speed = 1.5f) {
+        public void Initialize(Vector3 dir, List<Action<GameObject, GameObject>> callbacks, float projectileSpeed = default) {
             var forward = gameObject.transform.forward;
             Direction = new Vector3(forward.x, 0, forward.z);
             onConnected = callbacks;
-            this.speed = speed;
+            speed = projectileSpeed;
+            // rigidbody = GetComponent<Rigidbody>() ?? throw new Exception($"No rigidbody found on {name}");
         }
 
         void FixedUpdate() => MoveGameObject();
-        private void MoveGameObject() => transform.position += Direction * (speed * Time.deltaTime);
+        private void MoveGameObject() =>  transform.position += Direction * (speed * Time.deltaTime);
 
         private void OnTriggerEnter(Collider other) {
-            // Debug.Log("LOGGING PROJECTILE LOCATION");
-            // Debug.Log(transform.position);
             // Apply all callbacks in order from lowest to highest
-            for (int i = 0; i < onConnected.Count; i++)
-                onConnected[i](other.gameObject, gameObject);
+            foreach (var cb in onConnected)
+                cb(other.gameObject, gameObject);
         }
     }
 }

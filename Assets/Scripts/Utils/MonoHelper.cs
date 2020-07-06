@@ -9,7 +9,7 @@ namespace Utils
     {
         #region Projectile
         public static GameObject SpawnProjectile(GameObject owner, Vector3 targetLocation, List<Action<GameObject, 
-                                                GameObject>> onAbilityConnection, float projectileSpeed = 10f)
+                                                GameObject>> onAbilityConnection, float projectileSpeed = default)
         {
             var projectile = SpawnProjectile(owner);
             

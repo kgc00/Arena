@@ -30,5 +30,16 @@ namespace State.BossAiStates {
             if (!abilityFinished) return null;
             return new IdleUnitState(Owner);
         }
+        
+        public override void HandleFixedUpdate(InputValues input) {
+            if (playerTransform == null) return;
+            UpdateUnitRotation();
+        }
+
+        private void UpdateUnitRotation()
+        {
+            var difference = playerTransform.position - Owner.transform.position;
+            Owner.Rigidbody.MoveRotation(Quaternion.LookRotation(difference));
+        }
     }
 }

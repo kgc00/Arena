@@ -89,7 +89,7 @@ namespace Utils
             var frames = 10;
             for (int j = 0; j < frames; j++) {
                 if (rigidBody == null) break;
-                Debug.Log($"Applying {appliedForce} force");
+                // Debug.Log($"Applying {appliedForce} force");
                 rigidBody.AddForce(appliedForce);
                 yield return null;
             }

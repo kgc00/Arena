@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Common;
 using Enums;
 using Projectiles;
@@ -9,29 +11,57 @@ using Utils;
 namespace Abilities.AttackAbilities {
     public class ChainFlame : AttackAbility {
         private int iterations = 3;
-        private float delayBetweenProjectiles = 0.15f;
+        private float delayBetweenProjectiles = 0.5f;
         public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
             yield return new WaitForSeconds(StartupTime);
             OnAbilityActivationFinished(Owner, this);
+            //
+            // for (int i = 0; i < iterations; i++) {
+            //     var projectile = SpawnProjectile();
+            //     InitializeProjectile(targetLocation, projectile);
+            //     yield return new WaitForSeconds(delayBetweenProjectiles);
+            // }
 
-            for (int i = 0; i < iterations; i++) {
-                var projectile = SpawnProjectile();
-                InitializeProjectile(targetLocation, projectile);
-                yield return new WaitForSeconds(delayBetweenProjectiles);
-            }
-
-            SpawnAoEEffect(targetLocation);
+            var aoeProjectile = SpawnProjectile();
+            InitializeAoEProjectile(targetLocation, aoeProjectile);
             
             yield return new WaitForSeconds(delayBetweenProjectiles);
             
             OnAbilityFinished(Owner, this);
         }
 
-        
+        /// <summary>
+        /// Initialize the final projectile for this skill.  it has different requirements from other projectiles.
+        /// Mainly, we want it to explode when it reaches it's destination.
+        /// </summary>
+        /// <param name="targetLocation"></param>
+        /// <param name="aoeProjectile"></param>
+        private void InitializeAoEProjectile(Vector3 targetLocation, GameObject aoeProjectile) {
+            void OnConnected (GameObject other, GameObject projectile) {
+                if (AffectedFactions.Contains(other.GetComponent<Unit>().Owner.ControlType)) {
+                    var proximityComponent = projectile.transform.root.GetComponent<ProximityComponent>() ??
+                                             throw new Exception($"No Proximity component found on {name}");
+                    if (proximityComponent.IsLive) {
+                        SpawnAoEEffect(projectile.transform.position);
+                        proximityComponent.SetInactive();
+                    }
+                }
+            }
+
+            var onConnectedCallback = new List<Action<GameObject, GameObject>> { OnConnected };
+            var aoeCallback = new List<Action<Vector3>> { SpawnAoEEffect };
+
+            aoeProjectile.GetComponent<ProjectileComponent>()
+                .Initialize(targetLocation, onConnectedCallback, 10f);
+            
+            aoeProjectile.AddComponent<ProximityComponent>().Initialize(targetLocation, aoeCallback);
+        }
+
+
         private void SpawnAoEEffect(Vector3 updatedTargetLocation) {
-            var colliderParams = new SphereParams(3f);
-            var pGo = new GameObject("Rain AoE Effect")
+            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var pGo = new GameObject("ChainFlame AoE Effect")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     updatedTargetLocation,
@@ -39,7 +69,7 @@ namespace Abilities.AttackAbilities {
                     ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongHeading],
                     null,
                     AffectedFactions,
-                    185,
+                    Force,
                     Duration)
                 .gameObject
                 .AddComponent<AoEComponent>()
@@ -49,9 +79,11 @@ namespace Abilities.AttackAbilities {
                     ApplyDamage,
                     null,
                     AffectedFactions,
-                    185,
+                    0,
                     Duration)
                 .gameObject;
+
+            Debug.Log("spawned AoE for Chain Flame");
         }
 
 
@@ -64,12 +96,8 @@ namespace Abilities.AttackAbilities {
             unit.HealthComponent.DamageOwner(Damage, this, Owner);
         }
 
-        private void InitializeProjectile(Vector3 targetLocation, GameObject projectile)
-        {
-            if (projectile == null) return;
-            
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
-        }
+        private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) => projectile
+            .GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
 
         private GameObject SpawnProjectile()
         {

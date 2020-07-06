@@ -26,7 +26,7 @@ namespace State.BossAiStates {
 
         private void DefineDestination() {
             // hardcoded.  should replace with a pathfinding system at some point
-            var arenaBounds = 25f;
+            var arenaBounds = 20f;
             var position = Owner.transform.position;
             var x = Clamp(position.x + Random.Range(-8, 8), -arenaBounds, arenaBounds);
             var y = position.y;
@@ -49,12 +49,15 @@ namespace State.BossAiStates {
             var distToPlayer = Vector3.Distance(playerTransform.position, Owner.transform.position);
 
             return distToPlayer > roar.Range
-                ?(UnitState) new ChainFlameUnitState(Owner, playerTransform)
+                ? (UnitState) new ChainFlameUnitState(Owner, playerTransform)
                 : new RoarUnitState(Owner);
         }
 
         public override void HandleFixedUpdate(InputValues input) {
+            if (playerTransform == null) return;
+
             UpdateUnitLocation();
+            UpdateUnitRotation();
         }
         
         
@@ -62,6 +65,11 @@ namespace State.BossAiStates {
         {
             var heading = destination - Owner.transform.position;
             Owner.Rigidbody.AddForce( heading.normalized * Owner.StatsComponent.Stats.MovementSpeed.Value);
+        }
+        private void UpdateUnitRotation()
+        {
+            var difference = destination - Owner.transform.position;
+            Owner.Rigidbody.MoveRotation(Quaternion.LookRotation(difference));
         }
     }
 }

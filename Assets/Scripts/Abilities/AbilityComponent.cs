@@ -72,7 +72,7 @@ namespace Abilities
                 root.Add(modifiers[i].InitializeModifier(ability));
             }
 
-            Debug.Log($"Modifer list is {modifiers.Count} items long");
+            // Debug.Log($"Modifer list is {modifiers.Count} items long");
             
             // Modifies original ability reference...
             // so we reset the values at the start of this method

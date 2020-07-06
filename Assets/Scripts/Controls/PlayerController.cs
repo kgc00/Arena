@@ -32,7 +32,7 @@ namespace Controls
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            Debug.Log("context = " + context);
+            // Debug.Log("context = " + context);
             InputValues.Horizontal = context.ReadValue<Vector2> ().x;
             InputValues.Forward = context.ReadValue<Vector2> ().y;
         }

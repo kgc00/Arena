@@ -95,7 +95,7 @@ namespace Projectiles
 
             if (!ShouldActivate(other, out var rigidBody)) return;
 
-            Debug.Log($"{other.gameObject.name} will be {(Force < 0 ? "pushed" : "pulled")}!");
+            Debug.Log($"{other.gameObject.name} will be {(Force < 0 ? "pushed" : Force > 0 ? "pulled" : "not moved")}!");
             StartCoroutine(EnterStrategy(other, rigidBody, Force, transform));
         }
 

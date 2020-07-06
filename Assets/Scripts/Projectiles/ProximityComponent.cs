@@ -10,8 +10,7 @@ namespace Projectiles {
         private List<Action<Vector3>> onDestinationReached;
 
         public ProximityComponent Initialize(Vector3 destinationPos, List<Action<Vector3>> callbacks) {
-            destination = destinationPos;
-            destination.y = 0;
+            destination = new Vector3(destinationPos.x, 0,destinationPos.z);
             onDestinationReached = callbacks;
             IsLive = true;
             return this;
@@ -24,7 +23,6 @@ namespace Projectiles {
             pos2d.y = 0;
             
             var dist = Vector3.Distance(destination, pos2d);
-            
             if (dist > threshold) return;
 
             HandleDestinationReached();

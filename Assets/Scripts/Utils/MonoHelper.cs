@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using Projectiles;
+using UI;
 using UnityEngine;
 
 namespace Utils
 {
-    public class MonoHelper : MonoBehaviour
-    {
+    public class MonoHelper : MonoBehaviour {
+
+        #region Indicator
+        public static GameObject SpawnEnemyIndicator(Vector3 pos, float radius, float lifetime) =>
+            Instantiate(Resources.Load<GameObject>("VFX/EnemyIndicator"))
+                .GetComponent<EnemyIndicator>()
+                .Initialize(pos, radius, lifetime)
+                .gameObject;
+        
+        
+        public static GameObject SpawnEnemyIndicator(Vector3 pos, float radius, GameObject projectile) =>
+            Instantiate(Resources.Load<GameObject>("VFX/EnemyIndicator"))
+                .GetComponent<EnemyIndicator>()
+                .Initialize(pos, radius, projectile)
+                .gameObject;
+        #endregion
+        
         #region Projectile
         public static GameObject SpawnProjectile(GameObject owner, Vector3 targetLocation, List<Action<GameObject, 
                                                 GameObject>> onAbilityConnection, float projectileSpeed = default)

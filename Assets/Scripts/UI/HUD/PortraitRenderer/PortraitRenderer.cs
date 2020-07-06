@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Stats;
 using TMPro;
 using Units;
 using UnityEngine;
@@ -26,11 +27,21 @@ namespace UI.HUD {
             
             name.SetText(unit.name);
             portrait.sprite = unit.Portrait;
-            healthFill.fillAmount = 1;
-            healthText.SetText(unit.HealthComponent.CurrentHp.ToString(CultureInfo.InvariantCulture));
+            UpdateHealthValue();
+
+            HealthComponent.OnHealthChanged += UpdateHealthValue;
+            
             return this;
         }
 
+        private void UpdateHealthValue(Unit u, float arg2) {
+            if (u == unit)
+                UpdateHealthValue();
+        }
 
+        void UpdateHealthValue() {
+            healthFill.fillAmount =  unit.HealthComponent.MaxHp / unit.HealthComponent.CurrentHp;
+            healthText.SetText(unit.HealthComponent.CurrentHp.ToString(CultureInfo.InvariantCulture));
+        }
     }
 }

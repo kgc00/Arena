@@ -16,9 +16,9 @@ MonoBehaviour:
   description: 
   energyCost: 0
   cooldown: 4
-  duration: 1
+  duration: 0.25
   range: 0
-  areaOfEffectRadius: 5
+  areaOfEffectRadius: 3
   type: 12
   startupTime: 0.5
   indicatorType: 0

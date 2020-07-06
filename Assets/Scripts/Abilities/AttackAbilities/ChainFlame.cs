@@ -16,15 +16,21 @@ namespace Abilities.AttackAbilities {
         {
             yield return new WaitForSeconds(StartupTime);
             OnAbilityActivationFinished(Owner, this);
-            //
-            // for (int i = 0; i < iterations; i++) {
-            //     var projectile = SpawnProjectile();
-            //     InitializeProjectile(targetLocation, projectile);
-            //     yield return new WaitForSeconds(delayBetweenProjectiles);
-            // }
 
+            var updatedTargetLocation = targetLocation;
+            
+            for (int i = 0; i < iterations; i++) {
+                updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation).position;
+                var projectile = SpawnProjectile();
+                InitializeProjectile(updatedTargetLocation, projectile);
+                yield return new WaitForSeconds(delayBetweenProjectiles);
+            }
+            
+            updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation).position;
             var aoeProjectile = SpawnProjectile();
-            InitializeAoEProjectile(targetLocation, aoeProjectile);
+            InitializeAoEProjectile(updatedTargetLocation, aoeProjectile);
+            
+            MonoHelper.SpawnEnemyIndicator(updatedTargetLocation, AreaOfEffectRadius, aoeProjectile);
             
             yield return new WaitForSeconds(delayBetweenProjectiles);
             
@@ -39,7 +45,13 @@ namespace Abilities.AttackAbilities {
         /// <param name="aoeProjectile"></param>
         private void InitializeAoEProjectile(Vector3 targetLocation, GameObject aoeProjectile) {
             void OnConnected (GameObject other, GameObject projectile) {
-                if (AffectedFactions.Contains(other.GetComponent<Unit>().Owner.ControlType)) {
+                var unit = other.GetUnitComponent();
+                if (!unit) {
+                    Destroy(projectile.gameObject);
+                    return;
+                }
+                
+                if (AffectedFactions.Contains(unit.Owner.ControlType)) {
                     var proximityComponent = projectile.transform.root.GetComponent<ProximityComponent>() ??
                                              throw new Exception($"No Proximity component found on {name}");
                     if (proximityComponent.IsLive) {

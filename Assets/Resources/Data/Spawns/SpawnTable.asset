@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: SpawnTable
   m_EditorClassIdentifier: 
   Waves:
-  - {fileID: 11400000, guid: 0d688561bf59d114aad6acae266d7f9f, type: 2}
+  - {fileID: 11400000, guid: d9f2638c24a71e34db2e18fbaecf464b, type: 2}
+  - {fileID: 11400000, guid: 8c5426b76377d83469823c0cb8e13bbf, type: 2}
+  - {fileID: 11400000, guid: 376ee725e3f19054a9a91b19633331ef, type: 2}
+  - {fileID: 11400000, guid: 27f6c74ab27fdbd43a7122177fd43085, type: 2}
+  - {fileID: 11400000, guid: d6c9e91cbba286742bec436dc074d8bf, type: 2}
+  - {fileID: 11400000, guid: 4a8a3dab27fae1443afac3debff36134, type: 2}
+  - {fileID: 11400000, guid: 7317dc2976bfa084bbec155644dba4bd, type: 2}
+  - {fileID: 11400000, guid: 3319a2db9900e004985d5c355d79c396, type: 2}
+  - {fileID: 11400000, guid: 0d8c1286a44048144ba5a6b5292ab1a9, type: 2}
+  - {fileID: 11400000, guid: 337783f39fe209b418530a023d2d121e, type: 2}

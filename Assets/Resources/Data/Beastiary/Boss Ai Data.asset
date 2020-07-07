@@ -23,7 +23,7 @@ MonoBehaviour:
   experience:
     currentExp: 0
     bounty: 24
-  state: 6
+  state: 5
   visualAssets:
     portrait: {fileID: 0}
   statsData:

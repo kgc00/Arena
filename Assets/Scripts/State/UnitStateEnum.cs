@@ -7,7 +7,7 @@
         MeleeAi,    
         RangedAi,
         ChargingAi,
-        SuicideAi,
+        // SuicideAi,
         BossAi,
         TrainingDummy
     }

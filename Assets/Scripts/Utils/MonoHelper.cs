@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Projectiles;
 using UI;
+using Units;
 using UnityEngine;
 
 namespace Utils
@@ -21,6 +23,11 @@ namespace Utils
                 .GetComponent<EnemyIndicator>()
                 .Initialize(pos, radius, projectile)
                 .gameObject;
+        #endregion
+
+        #region VFX
+        public static GameObject SpawnEnemySpawnVfx(Vector3 pos) =>
+            Instantiate(Resources.Load<GameObject>("VFX/EnemySpawn"), pos, Quaternion.Euler(-90,0,0));
         #endregion
         
         #region Projectile
@@ -55,6 +62,9 @@ namespace Utils
                 rotation
             ) as GameObject;
         }
+        #endregion
+
+        #region Coroutine
         #endregion
     }
 }

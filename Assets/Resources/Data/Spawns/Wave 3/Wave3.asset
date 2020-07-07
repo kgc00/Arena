@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
   m_Name: Wave3
-  m_EditorClassIdentifier: Assembly-CSharp:Spawner:WaveTable
+  m_EditorClassIdentifier: 
   Wave:
-  - {fileID: 11400000, guid: 056a7540e092bf14a8bdac5482cf894c, type: 2}
-  - {fileID: 11400000, guid: 9e3e2e54657359849b3b49ef45dd64f1, type: 2}
-  - {fileID: 11400000, guid: a2026590c935d5749866cf3fded85272, type: 2}
-  WaveNumber: 3
+  - {fileID: 11400000, guid: 68debfea4a107314dbdb51a7b1aab7fe, type: 2}
+  - {fileID: 11400000, guid: aeac80fb37540304b81b577e4c7ca0d5, type: 2}
+  WaveNumber: 0

@@ -9,13 +9,13 @@ using Types = VFX.Types;
 
 namespace Spawner {
     public class WaveHandler {
-        private SpawnTable spawnTable;
-        private WaveTable currentWave;
+        private HordeSpawnData hordeSpawnData;
+        private WaveSpawnData currentWave;
         private int currentIndex;
         private Spawner owner;
 
-        public WaveHandler(SpawnTable table, Spawner owner) {
-            spawnTable = table;
+        public WaveHandler(HordeSpawnData table, Spawner owner) {
+            hordeSpawnData = table;
             currentIndex = 0;
             currentWave = table.Waves[currentIndex];
             this.owner = owner;
@@ -28,7 +28,7 @@ namespace Spawner {
 
             var wave = ModifyWaveData(currentWave.CreateInstance());
 
-            foreach (UnitTable table in wave.Wave) {
+            foreach (UnitSpawnData table in wave.Wave) {
                 Debug.Log($"Spawning {table.Amount} {table.Unit}");
                 for (int i = 0; i < table.Amount; i++) {
                     var spawnPos = GetRandomSpawnPos(extentNegative, extentPositive);
@@ -46,10 +46,10 @@ namespace Spawner {
             }
 
             // no waves left ? break
-            if (spawnTable.Waves.Count - 1 <= currentIndex) yield break;
+            if (hordeSpawnData.Waves.Count - 1 <= currentIndex) yield break;
 
             currentIndex++;
-            currentWave = spawnTable.Waves[currentIndex];
+            currentWave = hordeSpawnData.Waves[currentIndex];
         }
 
         private static Vector3 GetRandomSpawnPos(Vector3 extentNegative, Vector3 extentPositive) {
@@ -76,7 +76,7 @@ namespace Spawner {
             return instance;
         }
 
-        WaveTable ModifyWaveData(WaveTable instance) {
+        WaveSpawnData ModifyWaveData(WaveSpawnData instance) {
             var root = new WaveTableModifier().InitializeModifier(instance);
 
             var modifiers = new List<WaveTableModifier>();

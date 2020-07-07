@@ -30,7 +30,7 @@ namespace Spawner {
         [Range(1f, 50f), SerializeField] private float size = 48f;
 
         [Header("Data")] [SerializeField] public Intervals interval;
-        [SerializeField] public SpawnTable table;
+        [SerializeField] public HordeSpawnData table;
         public Vector3 Bounds { get; private set; }
         [SerializeField] public Interval Interval { get; private set; }
         [SerializeField] public WaveHandler Handler { get; private set; }

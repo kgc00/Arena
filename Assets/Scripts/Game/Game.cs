@@ -9,10 +9,10 @@ public class Game : MonoBehaviour {
     private void Awake()
     {
         if (instance != null && instance != this)
-        {
             Destroy(gameObject);
-        } else {
+        else
             instance = this;
-        }
+        
+        DontDestroyOnLoad(gameObject);
     }
 }

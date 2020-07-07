@@ -28,7 +28,7 @@ namespace Spawner {
 
             var wave = ModifyWaveData(currentWave.CreateInstance());
 
-            foreach (UnitSpawnData table in wave.Wave) {
+            foreach (UnitSpawnData table in wave.wave) {
                 Debug.Log($"Spawning {table.Amount} {table.Unit}");
                 for (int i = 0; i < table.Amount; i++) {
                     var spawnPos = GetRandomSpawnPos(extentNegative, extentPositive);

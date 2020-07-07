@@ -7,7 +7,7 @@ namespace Units.Modifiers {
             var instance = ScriptableObject.CreateInstance<UnitSpawnData>();
             instance.Amount = 1;
             instance.Unit = Types.TrainingDummy;
-            Model.Wave.Add(instance);
+            Model.wave.Add(instance);
             base.Handle();
         }
         

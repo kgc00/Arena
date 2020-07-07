@@ -4,7 +4,7 @@ using Spawner.Data;
 using UnityEngine;
 
 namespace UI.Drafting {
-    public abstract class ModeledListElement<TListModel, TObjModel, TObj> : MonoBehaviour
+    public abstract class ModeledList<TListModel, TObjModel, TObj> : MonoBehaviour
         where TListModel : ScriptableObject
         where TObj : MonoBehaviour, IInitializable<TObjModel, TObj>
         where TObjModel : ScriptableObject {

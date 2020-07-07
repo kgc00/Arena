@@ -1,10 +1,11 @@
 ﻿using System;
+using Common;
 using Spawner.Data;
 using TMPro;
 using UnityEngine;
 
 namespace UI.Drafting {
-    public class VisualizerListItem : MonoBehaviour {
+    public class VisualizerListItem : MonoBehaviour, IInitializable<UnitSpawnData, VisualizerListItem> {
         public TextMeshProUGUI TypeUgui {get; set; }
         private string typeText;
         private string amountText;

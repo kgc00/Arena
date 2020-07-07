@@ -1630,6 +1630,7 @@ MonoBehaviour:
   size: 48
   interval: 1
   table: {fileID: 11400000, guid: d9a51eb62276d4644b6ebbef93668afa, type: 2}
+  model: {fileID: 11400000, guid: b86570bbe00fd6b46b13ce80cce32177, type: 2}
 --- !u!4 &1796953109
 Transform:
   m_ObjectHideFlags: 0

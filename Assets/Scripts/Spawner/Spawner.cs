@@ -36,6 +36,8 @@ namespace Spawner {
         [SerializeField] public WaveHandler Handler { get; private set; }
         public Player OwningPlayer { get; private set; }
 
+        [SerializeField] private SpawnerData model;
+
         #endregion
 
         private void OnEnable() {
@@ -44,22 +46,25 @@ namespace Spawner {
             // WILL BREAK IF WE ADD MORE THAN ONE AI PLAYER
             OwningPlayer = FindObjectsOfType<Player>().FirstOrDefault(player => player.ControlType == ControlType.Ai);
             if (Handler == null) Handler = new WaveHandler(table, this);
-            if (Interval == null)
+            if (Interval == null) {
+                Func<IEnumerator> wrappedSpawn = () => Handler.Spawn(model.spawnStartupTime, model.delayBetweenSpawns);
                 Interval = SpawnHelper.IntervalFromType(interval, gameObject)
-                    .Initialize(() => Handler.Spawn(2f, 0), this, 10f, 0f, 2f);
+                    .Initialize(wrappedSpawn, this, model.delayBetweenWaves, model.delayBetweenSpawns, model.spawnStartupTime);
+            }
 
             StartCoroutine(Handler.Spawn(2f, 0));
         }
 
-        public Coroutine StartSpawnCoroutine(float delay, GameObject spawnVfx, Func<Unit> spawnUnit) => StartCoroutine(SpawnCr(delay, spawnVfx, spawnUnit));
+        public void StartSpawnCoroutine(float delay, GameObject spawnVfx, Func<Unit> spawnUnit) =>
+            StartCoroutine(EnemySpawnCoroutine(delay, spawnVfx, spawnUnit));
 
-        private IEnumerator SpawnCr(float delay, GameObject spawnVfx, Func<Unit> spawnUnit) {
+        private IEnumerator EnemySpawnCoroutine(float delay, GameObject spawnVfx, Func<Unit> spawnUnit) {
             yield return new WaitForSeconds(delay);
             Destroy(spawnVfx);
 
             spawnUnit();
         }
-        
+
 #if UNITY_EDITOR
         private void OnDrawGizmos() {
             Gizmos.color = Color.red;

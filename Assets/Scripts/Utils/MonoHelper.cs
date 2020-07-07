@@ -5,6 +5,7 @@ using Projectiles;
 using UI;
 using Units;
 using UnityEngine;
+using Types = VFX.Types;
 
 namespace Utils
 {
@@ -26,8 +27,33 @@ namespace Utils
         #endregion
 
         #region VFX
-        public static GameObject SpawnEnemySpawnVfx(Vector3 pos) =>
-            Instantiate(Resources.Load<GameObject>("VFX/EnemySpawn"), pos, Quaternion.Euler(-90,0,0));
+        public static GameObject SpawnVfx(Types type, Vector3 pos) => 
+            Instantiate(TypeToVfx(type), pos, Quaternion.Euler(-90,0,0));
+        
+        private static GameObject TypeToVfx(Types type) {
+            var path = ResourcePathFromType(type) ??
+                       throw new Exception($"Unable to location {type} in ResourcePathFromType");
+
+            return Resources.Load<GameObject>(path);
+        }
+
+        private static string ResourcePathFromType(Types type) {
+            string s = "";
+            switch (type) {
+                case Types.EnemySpawnIndicator:
+                    s = "VFX/EnemySpawn";
+                    break;
+                case Types.EnemyAoEIndicator:
+                    s = "VFX/EnemyAoEIndicator";
+                    break;
+                case Types.ExplosionRed:
+                    s = "VFX/ExplosionRed";
+                    break;
+            }
+
+            return s;
+        }
+
         #endregion
         
         #region Projectile

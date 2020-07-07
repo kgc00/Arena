@@ -5,6 +5,7 @@ using Units.Data;
 using Units.Modifiers;
 using UnityEngine;
 using Utils;
+using Types = VFX.Types;
 
 namespace Spawner {
     public class WaveHandler {
@@ -32,7 +33,7 @@ namespace Spawner {
                 for (int i = 0; i < table.Amount; i++) {
                     var spawnPos = GetRandomSpawnPos(extentNegative, extentPositive);
 
-                    var spawnVfx = MonoHelper.SpawnEnemySpawnVfx(spawnPos);
+                    var spawnVfx = MonoHelper.SpawnVfx(Types.EnemySpawnIndicator, spawnPos);
 
                     owner.StartSpawnCoroutine(spawnStartupTime, spawnVfx, () => owner.OwningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(table.Unit),

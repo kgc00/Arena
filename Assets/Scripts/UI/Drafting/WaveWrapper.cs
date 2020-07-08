@@ -5,9 +5,6 @@ using UnityEngine;
 
 namespace UI.Drafting {
     public class WaveWrapper : ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem> {
-        protected override void CreateList() {
-            ListItems = new List<VisualizerListItem>();
-            Model.wave.ForEach(AddListItem);
-        }
+        protected override List<UnitSpawnData> Map(WaveSpawnData model) => model.wave;
     }
 }

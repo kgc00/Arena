@@ -19,10 +19,10 @@ namespace UI.Drafting {
                      throw new Exception("Unable to find type UI element");
         }
 
-        public VisualizerListItem Initialize(UnitSpawnData ut) {
-            Model = ut;
-            typeText = ut.Unit.ToString();
-            amountText = ut.Amount.ToString();
+        public VisualizerListItem Initialize(UnitSpawnData usd) {
+            Model = usd;
+            typeText = usd.Unit.ToString();
+            amountText = usd.Amount.ToString();
             TypeUgui.SetText(typeText);
             AmountUgui.SetText(amountText);
             return this;

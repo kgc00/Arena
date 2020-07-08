@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Common;
 using Spawner.Data;
 using UnityEngine;
@@ -27,7 +28,10 @@ namespace UI.Drafting {
             CreateList();
         }
 
-        protected abstract void CreateList();
+        protected virtual void CreateList() {
+            ListItems = new List<TObj>();
+            Map(Model).ForEach(AddListItem);
+        }
 
         protected virtual void ClearList() {
             ListItems.ForEach(RemoveItem);
@@ -38,5 +42,7 @@ namespace UI.Drafting {
 
         protected virtual void AddListItem(TObjModel data) =>
             ListItems.Add(Instantiate(listItem, gameObject.transform).GetComponent<TObj>().Initialize(data));
+
+        protected abstract List<TObjModel> Map(TListModel model);
     }
 }

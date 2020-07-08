@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
   m_Name: Wave5
   m_EditorClassIdentifier: 
-  Wave:
+  wave:
   - {fileID: 11400000, guid: cd1169e7d0cfa8a4a90ae34428520007, type: 2}
   - {fileID: 11400000, guid: f4d7e7bdc0346d5409959fbd573213ed, type: 2}
   - {fileID: 11400000, guid: f9a202bbaaaafca488a34edacd698a3c, type: 2}
-  WaveNumber: 0
+  number: 0

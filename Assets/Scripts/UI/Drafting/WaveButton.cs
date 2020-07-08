@@ -9,6 +9,8 @@ namespace UI.Drafting {
         public TextMeshProUGUI WaveUgui {get; set; }
         private string waveText;
         public WaveSpawnData Model { get; private set; }
+        public bool Initialized { get; private set; }
+
 
         private void Awake() {
             WaveUgui = transform.Find("Wave Text").GetComponent<TextMeshProUGUI>() ??
@@ -20,7 +22,9 @@ namespace UI.Drafting {
             Model = modelWave;
             waveText = Model.number.ToString();
             WaveUgui.SetText(waveText);
+            Initialized = true;
             return this;
         }
+
     }
 }

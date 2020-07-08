@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
   m_Name: Wave7
   m_EditorClassIdentifier: 
-  Wave:
+  wave:
   - {fileID: 11400000, guid: ec4a0d581bc560f4da3878fa86d29fc3, type: 2}
   - {fileID: 11400000, guid: e485a1aaf5c6a6d40a8ac4a9d7825c54, type: 2}
-  WaveNumber: 0
+  number: 0

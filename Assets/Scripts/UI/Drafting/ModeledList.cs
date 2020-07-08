@@ -5,7 +5,8 @@ using Spawner.Data;
 using UnityEngine;
 
 namespace UI.Drafting {
-    public abstract class ModeledList<TListModel, TObjModel, TObj> : MonoBehaviour
+    public abstract class ModeledList<TListModel, TObjModel, TObj> : MonoBehaviour,
+        IInitializable<TListModel, ModeledList<TListModel, TObjModel, TObj>>
         where TListModel : ScriptableObject
         where TObj : MonoBehaviour, IInitializable<TObjModel, TObj>
         where TObjModel : ScriptableObject {
@@ -13,27 +14,40 @@ namespace UI.Drafting {
 
         public TListModel Model {
             get => model;
-            private set => model = value;
+            protected set => model = value;
         }
 
+        public virtual ModeledList<TListModel, TObjModel, TObj> Initialize(TListModel model) {
+            Model = model;
+            Initialized = true;
+            return this;
+        }
+
+        public bool Initialized { get; protected set; }
+
         [SerializeField] protected GameObject listItem;
+        private TObjModel model1;
         public List<TObj> ListItems { get; protected set; }
 
         protected virtual void OnEnable() => CreateList();
 
         protected virtual void OnDisable() => ClearList();
 
-        protected virtual void UpdateList() {
+        public virtual void UpdateList() {
             ClearList();
             CreateList();
         }
 
         protected virtual void CreateList() {
+            if (!Initialized) return;
+            
             ListItems = new List<TObj>();
             Map(Model).ForEach(AddListItem);
         }
 
         protected virtual void ClearList() {
+            if (!Initialized || ListItems == null) return;
+
             ListItems.ForEach(RemoveItem);
             ListItems.Clear();
         }

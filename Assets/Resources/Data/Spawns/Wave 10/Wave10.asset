@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
   m_Name: Wave10
   m_EditorClassIdentifier: 
-  Wave:
-  - {fileID: 11400000, guid: cd1169e7d0cfa8a4a90ae34428520007, type: 2}
-  - {fileID: 11400000, guid: f4d7e7bdc0346d5409959fbd573213ed, type: 2}
-  - {fileID: 11400000, guid: f9a202bbaaaafca488a34edacd698a3c, type: 2}
+  wave:
   - {fileID: 11400000, guid: c4035e2a0cc979c44936011bdba74f12, type: 2}
-  WaveNumber: 0
+  - {fileID: 11400000, guid: 4c11e476ea8c55a47be1077eeef1ff5d, type: 2}
+  - {fileID: 11400000, guid: 187778cfce37da140a1c27451e7a8ff1, type: 2}
+  - {fileID: 11400000, guid: 1173dee4f2199e542b228a6e62f8a043, type: 2}
+  number: 0

@@ -11,6 +11,8 @@ namespace UI.Drafting {
         private string amountText;
         public TextMeshProUGUI AmountUgui { get; set; }
         public UnitSpawnData Model { get; set; }
+        public bool Initialized { get; private set; }
+
         private void Awake() {
             TypeUgui = transform.Find("Type").GetComponent<TextMeshProUGUI>() ??
                    throw new Exception("Unable to find type UI element");
@@ -25,6 +27,7 @@ namespace UI.Drafting {
             amountText = usd.Amount.ToString();
             TypeUgui.SetText(typeText);
             AmountUgui.SetText(amountText);
+            Initialized = true;
             return this;
         }
     }

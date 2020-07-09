@@ -26,8 +26,11 @@ namespace UI.Drafting {
             Initialize(Model);
         }
 
+        
+        
         public Visualizer Initialize(HordeSpawnData st) {
             Model = st.CreateInstance();
+            Model.AssignWaveNumbers();
             visualizerHeader.Initialize(Model);
             waveWrapper.Initialize(Model.Waves[0]);
             visualizerHeader.UpdateList();

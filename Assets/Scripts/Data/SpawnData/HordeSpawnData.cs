@@ -10,7 +10,7 @@ namespace Data.SpawnData
         [SerializeField] public List<WaveSpawnData> Waves;
 
         public void AssignWaveNumbers() {
-            for (int i = 0; i < Waves.Count; i++) Waves[i].number = i + 1;
+            for (int i = 0; i < Waves.Count; i++) Waves[i].number = i;
         }
     }
 }   

@@ -23,7 +23,7 @@ namespace UI.Drafting {
             ModeledList<HordeSpawnData, WaveSpawnData, WaveButton> o) {
             Owner = o;
             Model = m;
-            waveText = (Model.number - 1).ToString();
+            waveText = (Model.number + 1).ToString();
             WaveUgui.SetText(waveText);
             Initialized = true;
             return this;

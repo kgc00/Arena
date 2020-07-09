@@ -1,4 +1,4 @@
-﻿using Spawner.Data;
+﻿using Data.SpawnData;
 
 namespace Units.Modifiers {
     public class WaveTableModifier : ScriptableObjectModifier<WaveSpawnData> {

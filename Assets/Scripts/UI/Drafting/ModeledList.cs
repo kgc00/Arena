@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Common;
-using Spawner.Data;
 using UnityEngine;
 
 namespace UI.Drafting {
-    public abstract class ModeledList<TListModel, TObjModel, TObj> : MonoBehaviour,
-        IInitializable<TListModel, ModeledList<TListModel, TObjModel, TObj>>
+    // Owner of child must be this- ergo we use the Modeled List definition in place of the Owner field
+    // in the IInitializable type definion of the child.
+    public abstract class ModeledList<TListModel, TItemModel, TItem> : MonoBehaviour
         where TListModel : ScriptableObject
-        where TObj : MonoBehaviour, IInitializable<TObjModel, TObj>
-        where TObjModel : ScriptableObject {
+        where TItemModel : ScriptableObject
+        where TItem : MonoBehaviour,
+        IInitializable<TItemModel, ModeledList<TListModel, TItemModel, TItem>, TItem> {
         public TListModel model;
 
         public TListModel Model {
@@ -17,22 +17,20 @@ namespace UI.Drafting {
             protected set => model = value;
         }
 
-        public virtual ModeledList<TListModel, TObjModel, TObj> Initialize(TListModel model) {
-            Model = model;
-            Initialized = true;
-            return this;
-        }
-
         public bool Initialized { get; protected set; }
 
         [SerializeField] protected GameObject listItem;
-        private TObjModel model1;
-        public List<TObj> ListItems { get; protected set; }
+        private TItemModel model1;
+        public List<TItem> ListItems { get; protected set; }
 
         protected virtual void OnEnable() => CreateList();
 
         protected virtual void OnDisable() => ClearList();
 
+        public virtual void UpdateModel(TListModel m) {
+            Model = m;
+            UpdateList();
+        }
         public virtual void UpdateList() {
             ClearList();
             CreateList();
@@ -40,8 +38,8 @@ namespace UI.Drafting {
 
         protected virtual void CreateList() {
             if (!Initialized) return;
-            
-            ListItems = new List<TObj>();
+
+            ListItems = new List<TItem>();
             Map(Model).ForEach(AddListItem);
         }
 
@@ -52,11 +50,11 @@ namespace UI.Drafting {
             ListItems.Clear();
         }
 
-        protected virtual void RemoveItem(TObj item) => Destroy(item.gameObject);
+        protected virtual void RemoveItem(TItem item) => Destroy(item.gameObject);
 
-        protected virtual void AddListItem(TObjModel data) =>
-            ListItems.Add(Instantiate(listItem, gameObject.transform).GetComponent<TObj>().Initialize(data));
+        protected virtual void AddListItem(TItemModel data) =>
+            ListItems.Add(Instantiate(listItem, gameObject.transform).GetComponent<TItem>().Initialize(data, this));
 
-        protected abstract List<TObjModel> Map(TListModel model);
+        protected abstract List<TItemModel> Map(TListModel model);
     }
 }

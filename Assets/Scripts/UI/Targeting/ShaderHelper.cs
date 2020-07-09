@@ -3,7 +3,7 @@ using Units;
 using UnityEngine;
 using Utils;
 using System.Linq;
-using Enums;
+using Data.Types;
 
 namespace UI.Targeting
 {

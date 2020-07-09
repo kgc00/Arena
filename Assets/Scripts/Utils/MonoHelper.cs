@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
+using Data.Types;
 using Projectiles;
 using UI;
 using Units;
 using UnityEngine;
-using Types = VFX.Types;
 
 namespace Utils
 {
@@ -27,26 +28,26 @@ namespace Utils
         #endregion
 
         #region VFX
-        public static GameObject SpawnVfx(Types type, Vector3 pos) => 
-            Instantiate(TypeToVfx(type), pos, Quaternion.Euler(-90,0,0));
+        public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos) => 
+            Instantiate(TypeToVfx(vfxType), pos, Quaternion.Euler(-90,0,0));
         
-        private static GameObject TypeToVfx(Types type) {
-            var path = ResourcePathFromType(type) ??
-                       throw new Exception($"Unable to location {type} in ResourcePathFromType");
+        private static GameObject TypeToVfx(VfxType vfxType) {
+            var path = ResourcePathFromType(vfxType) ??
+                       throw new Exception($"Unable to location {vfxType} in ResourcePathFromType");
 
             return Resources.Load<GameObject>(path);
         }
 
-        private static string ResourcePathFromType(Types type) {
+        private static string ResourcePathFromType(VfxType vfxType) {
             string s = "";
-            switch (type) {
-                case Types.EnemySpawnIndicator:
+            switch (vfxType) {
+                case VfxType.EnemySpawnIndicator:
                     s = "VFX/EnemySpawn";
                     break;
-                case Types.EnemyAoEIndicator:
+                case VfxType.EnemyAoEIndicator:
                     s = "VFX/EnemyAoEIndicator";
                     break;
-                case Types.ExplosionRed:
+                case VfxType.ExplosionRed:
                     s = "VFX/ExplosionRed";
                     break;
             }

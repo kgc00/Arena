@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using Common;
+using Data.Types;
 using Projectiles;
 using UI.Targeting;
 using Units;
 using UnityEngine;
 using Utils;
-using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Burst : AttackAbility {
@@ -41,7 +41,7 @@ namespace Abilities.AttackAbilities {
                 .Initialize(colliderParams,
                     centerLocation,
                     targetLocation,
-                    ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongHeading],
+                    ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
                     null,
                     AffectedFactions,
                     185,

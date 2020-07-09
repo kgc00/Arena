@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
-using Enums;
+using Data.Types;
 using Units;
 using UnityEngine;
 

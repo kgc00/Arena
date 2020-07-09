@@ -1,18 +1,20 @@
 ﻿using System;
 using Common;
-using Spawner.Data;
+using Data.SpawnData;
 using UnityEngine;
 
 namespace UI.Drafting {
-    public class Visualizer : MonoBehaviour, IInitializable<HordeSpawnData, Visualizer> {
+    public class Visualizer : MonoBehaviour, IInitializable<HordeSpawnData, Visualizer, Visualizer> {
         public HordeSpawnData model;
+        public Visualizer Owner { get; private set; }
+
         public HordeSpawnData Model {
             get => model;
             set => model = value;
         }
 
         private VisualizerHeader visualizerHeader;
-        private WaveWrapper waveWrapper;
+        private WaveVisualizerWrapper waveVisualizerWrapper;
         public bool Initialized { get; private set; }
 
         
@@ -20,23 +22,25 @@ namespace UI.Drafting {
             visualizerHeader = GetComponentInChildren<VisualizerHeader>() ??
                                throw new Exception($"Unable to get VisualizerHeader component in {name}");
             
-            waveWrapper = GetComponentInChildren<WaveWrapper>() ??
+            waveVisualizerWrapper = GetComponentInChildren<WaveVisualizerWrapper>() ??
                                throw new Exception($"Unable to get WaveWrapper component in {name}");
 
-            Initialize(Model);
+            Initialize(Model, this);
         }
 
-        
-        
-        public Visualizer Initialize(HordeSpawnData st) {
-            Model = st.CreateInstance();
+        public Visualizer Initialize(HordeSpawnData m, Visualizer o) {
+            Owner = o;
+            Model = m.CreateInstance();
             Model.AssignWaveNumbers();
-            visualizerHeader.Initialize(Model);
-            waveWrapper.Initialize(Model.Waves[0]);
+            visualizerHeader.Initialize(Model, this);
+            waveVisualizerWrapper.Initialize(Model.Waves[0], this);
             visualizerHeader.UpdateList();
-            waveWrapper.UpdateList();
+            waveVisualizerWrapper.UpdateList();
+            WaveButton.OnWaveButtonClick += UpdateVisualizerList;
             Initialized = true;
             return this;
         }
+
+        public void UpdateVisualizerList(int i) => waveVisualizerWrapper.UpdateModel(Model.Waves[i]);
     }
 }

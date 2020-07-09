@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Abilities.Modifiers;
+﻿using Data.Types;
 using NUnit.Framework;
 using UnityEngine;
-using Stats;
 
 namespace Tests
 {

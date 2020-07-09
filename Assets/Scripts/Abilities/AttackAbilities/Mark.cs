@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.Modifiers;
-using Enums;
+using Data.Types;
 using Projectiles;
 using Stats;
 using Units;

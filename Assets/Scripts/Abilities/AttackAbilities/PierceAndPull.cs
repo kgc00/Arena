@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common;
 using Controls;
-using Enums;
+using Data.Types;
 using Projectiles;
 using Stats;
 using Units;
@@ -55,7 +55,7 @@ namespace Abilities.AttackAbilities {
                 .Initialize(colliderParams,
                     centerLocation,
                     targetLocation,
-                    ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongLocalX],
+                    ForceStrategies.Strategies[ForceStrategyType.ForceAlongLocalX],
                     null,
                     AffectedFactions, 
                     -185f)
@@ -75,10 +75,10 @@ namespace Abilities.AttackAbilities {
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
             var totalDamage = Damage;
-            var isMarked = unit.StatusComponent.Types.HasFlag(Status.Types.Marked);
+            var isMarked = unit.StatusComponent.StatusType.HasFlag(StatusType.Marked);
             if (isMarked) {
                 totalDamage += 2;
-                unit.StatusComponent.RemoveStatus(Status.Types.Marked);
+                unit.StatusComponent.RemoveStatus(StatusType.Marked);
             }
 
             Debug.Log($"Pierce has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +

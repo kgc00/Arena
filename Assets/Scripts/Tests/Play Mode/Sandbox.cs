@@ -4,7 +4,6 @@ using Projectiles;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Utils;
-using Types = Units.Types;
 
 namespace Tests.Play_Mode {
     public class Sandbox : MonoBehaviour, IMonoBehaviourTest {

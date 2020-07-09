@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Enums;
+using Data.Types;
+using Data.UnitData;
 using Units;
-using Units.Data;
 using UnityEngine;
 using Utils;
 
@@ -29,7 +29,7 @@ namespace Players
             foreach (var unit in units)
             {
                 unit.Initialize(this,
-                    data: SpawnHelper.DataFromUnitType(unit.type)
+                    data: SpawnHelper.DataFromUnitType(unit.unitType)
                 );
             }
         }

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
 namespace Common {
-    public interface IInitializable<TModel, out TObj> where TModel : ScriptableObject {
+    public interface IInitializable<TModel, TOwner, out TSelf> where TModel : ScriptableObject {
+        TOwner Owner { get; }
         TModel Model { get; }
-        TObj Initialize(TModel model);
+        TSelf Initialize(TModel m, TOwner o);
         bool Initialized { get; }
     }
 }

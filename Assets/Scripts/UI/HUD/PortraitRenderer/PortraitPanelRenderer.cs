@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
-using Abilities;
-using Enums;
+using Data.Types;
 using Players;
 using UnityEngine;
 

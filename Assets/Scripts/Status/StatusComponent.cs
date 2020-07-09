@@ -1,4 +1,5 @@
-﻿using Units;
+﻿using Data.Types;
+using Units;
 using UnityEngine;
 
 namespace Status
@@ -6,15 +7,15 @@ namespace Status
     public class StatusComponent : MonoBehaviour
     { 
         public Unit Owner { get; private set; }
-        public Types Types { get; private set; } = (Types) 0;
+        public StatusType StatusType { get; private set; } = (StatusType) 0;
         public StatusComponent Initialize (Unit owner) {
             Owner = owner;
             return this;
         }
         
-        public void AddStatus(Types types) => Types |= types;
-        public void RemoveStatus(Types types) => Types &= ~types;
-        public bool IsVisible() => !Types.HasFlag(Types.Hidden);
+        public void AddStatus(StatusType statusType) => StatusType |= statusType;
+        public void RemoveStatus(StatusType statusType) => StatusType &= ~statusType;
+        public bool IsVisible() => !StatusType.HasFlag(StatusType.Hidden);
     }
  
 }

@@ -1,10 +1,10 @@
 ﻿using Controls;
-using Enums;
 using JetBrains.Annotations;
 using Stats;
 using Units;
 using UnityEngine;
 using System.Collections;
+using Data.Types;
 
 namespace State.MeleeAiStates
 {

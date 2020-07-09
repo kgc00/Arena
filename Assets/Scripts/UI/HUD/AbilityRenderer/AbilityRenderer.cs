@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Abilities;
 using Controls;
+using Data.Types;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;

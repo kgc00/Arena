@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Abilities.Data;
 using Controls;
+using Data.AbilityData;
 using Units;
 using UnityEngine;
 

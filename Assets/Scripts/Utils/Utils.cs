@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using Abilities;
 using Abilities.AttackAbilities;
 using Abilities.Buffs;
-using Abilities.Data;
 using Controls;
-using Enums;
+using Data.AbilityData;
+using Data.Types;
+using Data.UnitData;
 using JetBrains.Annotations;
 using Spawner;
 using State;
@@ -14,11 +15,9 @@ using State.MeleeAiStates;
 using State.RangedAiStates;
 using Stats;
 using Units;
-using Units.Data;
 using UnityEngine;
 using Players;
 using UI;
-using Types = Abilities.Types;
 
 namespace Utils
 {
@@ -31,17 +30,14 @@ namespace Utils
             else return val;
         }
     }
-
+    
     public static class ForceStrategies {
-        public enum Type {
-            ForceAlongLocalX,
-            ForceAlongHeading
-        }
+        
 
-        public static Dictionary<Type, Func<Collider, Rigidbody, float, Transform, IEnumerator>> Strategies { get; } =
-            new Dictionary<Type, Func<Collider, Rigidbody,float, Transform, IEnumerator>>() {
-                {Type.ForceAlongLocalX, ForceAlongLocalX},
-                {Type.ForceAlongHeading, ForceAlongHeading}
+        public static Dictionary<ForceStrategyType, Func<Collider, Rigidbody, float, Transform, IEnumerator>> Strategies { get; } =
+            new Dictionary<ForceStrategyType, Func<Collider, Rigidbody,float, Transform, IEnumerator>>() {
+                {ForceStrategyType.ForceAlongLocalX, ForceAlongLocalX},
+                {ForceStrategyType.ForceAlongHeading, ForceAlongHeading}
             };
 
         private static IEnumerator ForceAlongLocalX(Collider other, Rigidbody rigidBody, float Force,
@@ -111,56 +107,56 @@ namespace Utils
                 switch (data[i].type)
                 {
                     // enemies
-                    case Types.ShootCrossbow:
+                    case AbilityType.ShootCrossbow:
                         instance = owner.gameObject.AddComponent<ShootCrossbow>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.IceBolt:
+                    case AbilityType.IceBolt:
                         instance = owner.gameObject.AddComponent<IceBolt>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.BodySlam:
+                    case AbilityType.BodySlam:
                         instance = owner.gameObject.AddComponent<BodySlam>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.Charge:
+                    case AbilityType.Charge:
                         instance = owner.gameObject.AddComponent<Charge>().Initialize((MovementAttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.MagicShield:
+                    case AbilityType.MagicShield:
                         instance = owner.gameObject.AddComponent<MagicShield>().Initialize((BuffAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.Roar:
+                    case AbilityType.Roar:
                         instance = owner.gameObject.AddComponent<Roar>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.ChainFlame:
+                    case AbilityType.ChainFlame:
                         instance = owner.gameObject.AddComponent<ChainFlame>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
                     // hunter
-                    case Types.Mark:
+                    case AbilityType.Mark:
                         instance = owner.gameObject.AddComponent<Mark>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.Prey:
+                    case AbilityType.Prey:
                         instance = owner.gameObject.AddComponent<Prey>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.Conceal:
+                    case AbilityType.Conceal:
                         instance = owner.gameObject.AddComponent<Conceal>().Initialize((BuffAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.PierceAndPull:
+                    case AbilityType.PierceAndPull:
                         instance = owner.gameObject.AddComponent<PierceAndPull>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.Burst:
+                    case AbilityType.Burst:
                         instance = owner.gameObject.AddComponent<Burst>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
-                    case Types.Rain:
+                    case AbilityType.Rain:
                         instance = owner.gameObject.AddComponent<Rain>().Initialize((AttackAbilityData)data[i], owner);
                         retVal.Add(type,instance);
                         break;
@@ -176,30 +172,30 @@ namespace Utils
 
     public static class SpawnHelper
     {
-        public static GameObject PrefabFromUnitType(Units.Types unit)
+        public static GameObject PrefabFromUnitType(UnitType unit)
         {
             string s = "";
             switch (unit)
             {
                 // Enemies
-                case Units.Types.Melee:
+                case UnitType.Melee:
                     s = "Units/Enemies/Slime/Melee AI";
                     break;
-                case Units.Types.Ranged:
+                case UnitType.Ranged:
                     s = "Units/Enemies/Lich/Ranged AI";
                     break;
-                case Units.Types.TrainingDummy:
+                case UnitType.TrainingDummy:
                     s = "Units/Enemies/Training Dummy/Training Dummy";
                     break;
-                case Units.Types.Charging:
+                case UnitType.Charging:
                     s = "Units/Enemies/Grunt/Charging AI";
                     break;
-                case Units.Types.Boss:
+                case UnitType.Boss:
                     s = "Units/Enemies/Dragon/Boss AI";
                     break;
 
                 // Playables
-                case Units.Types.Hunter:
+                case UnitType.Hunter:
                     s = "Units/Playable Characters/Hunter/Hunter";
                     break;
             }
@@ -209,32 +205,32 @@ namespace Utils
             return Resources.Load<GameObject>(s);
         }
 
-        public static UnitData DataFromUnitType(Units.Types unit)
+        public static UnitData DataFromUnitType(UnitType unit)
         {
             var s = "";
             switch (unit)
             {
                 // Enemies
-                case Units.Types.Melee:
+                case UnitType.Melee:
                     s = "Data/Beastiary/Melee Ai Data";
                     break;
-                case Units.Types.Ranged:
+                case UnitType.Ranged:
                     s = "Data/Beastiary/Ranged Ai Data";
                     break;
-                case Units.Types.TrainingDummy:
+                case UnitType.TrainingDummy:
                     s = "Data/Beastiary/Training Dummy Data";
                     break;
-                case Units.Types.Charging:
+                case UnitType.Charging:
                     s = "Data/Beastiary/Charging Ai Data";
                     break;
-                case Units.Types.Boss:
+                case UnitType.Boss:
                     s = "Data/Beastiary/Boss Ai Data";
                     break;
 
                 
 
                 // Playable
-                case Units.Types.Hunter:
+                case UnitType.Hunter:
                     s = "Data/Playable Characters/Hunter/Hunter Data";
                     break;
             }
@@ -322,21 +318,21 @@ namespace Utils
 
     public static class StateHelper
     {
-        public static UnitState StateFromEnum(UnitStateEnum stateEnum, Unit owner)
+        public static UnitState StateFromEnum(UnitStateType stateType, Unit owner)
         {
-            switch (stateEnum)
+            switch (stateType)
             {
-                case UnitStateEnum.Player:
+                case UnitStateType.Player:
                     return new State.PlayerStates.IdleUnitState(owner);
-                case UnitStateEnum.MeleeAi:
+                case UnitStateType.MeleeAi:
                     return new State.MeleeAiStates.IdleUnitState(owner);
-                case UnitStateEnum.TrainingDummy:
+                case UnitStateType.TrainingDummy:
                     return new State.TrainingDummy.Idle(owner);
-                case UnitStateEnum.RangedAi:
+                case UnitStateType.RangedAi:
                     return new State.RangedAiStates.IdleUnitState(owner);
-                case UnitStateEnum.ChargingAi:
+                case UnitStateType.ChargingAi:
                     return new State.ChargingAiStates.IdleUnitState(owner);
-                case UnitStateEnum.BossAi:
+                case UnitStateType.BossAi:
                     return new State.BossAiStates.IdleUnitState(owner);
                 default:
                     return null;
@@ -351,14 +347,14 @@ namespace Utils
             var unit = go.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) return;
             
-            unit.StatusComponent.AddStatus(Status.Types.Marked);
-            Debug.Log(unit.StatusComponent.Types);
+            unit.StatusComponent.AddStatus(StatusType.Marked);
+            Debug.Log(unit.StatusComponent.StatusType);
         }
         
         public static void AddMark(Unit unit)
         {
-            unit.StatusComponent.AddStatus(Status.Types.Marked);
-            Debug.Log(unit.StatusComponent.Types);
+            unit.StatusComponent.AddStatus(StatusType.Marked);
+            Debug.Log(unit.StatusComponent.StatusType);
         }
     }
 }

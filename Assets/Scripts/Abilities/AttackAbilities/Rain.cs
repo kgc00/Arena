@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Common;
+using Data.Types;
 using Projectiles;
 using Stats;
 using UI.Targeting;
@@ -38,12 +39,12 @@ namespace Abilities.AttackAbilities {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) yield break;
             
-            unit.StatusComponent.AddStatus(Status.Types.Marked);
+            unit.StatusComponent.AddStatus(StatusType.Marked);
             
             // scale damage applied to match time passed
             var damage = Damage * Time.deltaTime;
             
-            Debug.Log($"Rain has connected with a unit: {unit.name}.  The unit has a marked status of {unit.StatusComponent.Types.HasFlag(Status.Types.Marked)}.\n" +
+            Debug.Log($"Rain has connected with a unit: {unit.name}.  The unit has a marked status of {unit.StatusComponent.StatusType.HasFlag(StatusType.Marked)}.\n" +
                       $"Base damage is {damage}.");
             unit.HealthComponent.DamageOwner(damage, this, Owner);
         }

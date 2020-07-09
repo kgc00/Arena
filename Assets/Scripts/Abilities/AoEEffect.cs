@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Common;
-using Enums;
+using Data.Types;
 using JetBrains.Annotations;
 using Projectiles;
 using UnityEngine;

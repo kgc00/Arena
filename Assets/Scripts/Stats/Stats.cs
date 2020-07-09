@@ -1,4 +1,5 @@
-﻿using Stats.Data;
+﻿using Data.StatData;
+using Data.Types;
 
 namespace Stats {
     public class Stats { 

@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.AttackAbilities;
-using Abilities.Data;
-using Enums;
+using Data.AbilityData;
+using Data.Types;
 using Units;
 using UnityEngine;
 

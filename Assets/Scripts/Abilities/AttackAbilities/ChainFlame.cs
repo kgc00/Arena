@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Common;
-using Enums;
+using Data.Types;
 using Projectiles;
 using Units;
 using UnityEngine;
@@ -78,7 +78,7 @@ namespace Abilities.AttackAbilities {
                 .Initialize(colliderParams,
                     updatedTargetLocation,
                     updatedTargetLocation,
-                    ForceStrategies.Strategies[ForceStrategies.Type.ForceAlongHeading],
+                    ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
                     null,
                     AffectedFactions,
                     Force,

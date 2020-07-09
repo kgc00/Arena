@@ -1,6 +1,6 @@
 ﻿using Abilities;
 using Controls;
-using Enums;
+using Data.Types;
 using JetBrains.Annotations;
 using Units;
 using UnityEngine;

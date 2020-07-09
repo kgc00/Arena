@@ -1,6 +1,6 @@
 ﻿using System;
 using Abilities;
-using Stats.Data;
+using Data.StatData;
 using Units;
 using UnityEngine;
 

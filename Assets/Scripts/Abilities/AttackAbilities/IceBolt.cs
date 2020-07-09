@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Abilities.Data;
-using Enums;
+using Common;
+using Data.Types;
 using Projectiles;
 using Units;
 using UnityEngine;

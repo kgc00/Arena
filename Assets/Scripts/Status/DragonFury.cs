@@ -1,4 +1,5 @@
-﻿using Stats;
+﻿using Data.Types;
+using Stats;
 
 namespace Status {
     public class DragonFury : MonoStatus {

@@ -1,4 +1,5 @@
-﻿using UnityEngine.InputSystem;
+﻿using Data.Types;
+using UnityEngine.InputSystem;
 
 namespace Controls
 {

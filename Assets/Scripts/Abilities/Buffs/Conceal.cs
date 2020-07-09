@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.Modifiers;
+using Data.Types;
 using Stats;
 using UnityEngine;
 using Utils.NotificationCenter;
@@ -17,9 +18,9 @@ namespace Abilities.Buffs
             float timeLeft = Duration;
             brokenConcealment = false;
             
-            this.AddObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
+            this.AddObserver(BreakConcealment, NotificationType.AbilityDidActivate);
             
-            Owner.StatusComponent.AddStatus(Status.Types.Hidden);
+            Owner.StatusComponent.AddStatus(StatusType.Hidden);
 
             OnAbilityActivationFinished(Owner, this);
 
@@ -28,7 +29,7 @@ namespace Abilities.Buffs
             modifiers.Add(markModifier);
             modifiers.Add(new DoubleDamageModifier(null));
 
-            while (timeLeft > 0f && Owner.StatusComponent.Types.HasFlag(Status.Types.Hidden))
+            while (timeLeft > 0f && Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden))
             {
                 if (brokenConcealment) break;
                 
@@ -36,11 +37,11 @@ namespace Abilities.Buffs
                 yield return null;
             }
             
-            if (Owner.StatusComponent.Types.HasFlag(Status.Types.Hidden)) Owner.StatusComponent.RemoveStatus(Status.Types.Hidden);
+            if (Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden)) Owner.StatusComponent.RemoveStatus(StatusType.Hidden);
 
             if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
             
-            this.RemoveObserver(BreakConcealment, NotificationTypes.AbilityDidActivate);
+            this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate);
             Debug.Log("Finished Concealment");
         }
 

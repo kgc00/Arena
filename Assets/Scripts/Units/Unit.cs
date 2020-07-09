@@ -1,14 +1,15 @@
 using System;
 using Abilities;
 using Controls;
-using Enums;
+using Data.Types;
+using Data.UnitData;
 using State;
 using Stats;
-using Units.Data;
 using UnityEngine;
 using Utils;
 using Players;
 using Status;
+using UnityEngine.Serialization;
 
 namespace Units
 {
@@ -16,7 +17,7 @@ namespace Units
     {
         public static Action<Unit> OnDeath = delegate {  };
         public Player Owner { get; private set; }
-        public Types type;
+        [FormerlySerializedAs("type")] public UnitType unitType;
         public Sprite Portrait { get; protected set; }
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }

@@ -3,7 +3,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Arena"
+        "Arena",
+        "AbilityData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

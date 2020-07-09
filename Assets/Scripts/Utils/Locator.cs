@@ -1,7 +1,7 @@
 ﻿using Units;
 using UnityEngine;
 using  System.Linq;
-using Enums;
+using Data.Types;
 using Stats;
 
 namespace Utils

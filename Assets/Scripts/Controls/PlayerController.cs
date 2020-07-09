@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Types;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

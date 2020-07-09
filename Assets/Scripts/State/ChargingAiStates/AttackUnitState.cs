@@ -2,7 +2,7 @@
 using System.Linq;
 using Abilities.AttackAbilities;
 using Controls;
-using Enums;
+using Data.Types;
 using JetBrains.Annotations;
 using Stats;
 using Units;

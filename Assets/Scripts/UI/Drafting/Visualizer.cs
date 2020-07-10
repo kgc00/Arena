@@ -28,6 +28,18 @@ namespace UI.Drafting {
             Initialize(Model, this);
         }
 
+        private void OnEnable() {
+            WaveButton.OnWaveButtonClick += UpdateVisualizerList;
+            waveVisualizerWrapper.UpdateModel(Model.Waves[0]);
+            visualizerHeader.UpdateList();
+            waveVisualizerWrapper.UpdateList();
+        }
+
+        private void OnDisable() {
+            WaveButton.OnWaveButtonClick -= UpdateVisualizerList;
+            Initialized = false;
+        }
+
         public Visualizer Initialize(HordeSpawnData m, Visualizer o) {
             Owner = o;
             Model = m.CreateInstance();
@@ -36,7 +48,6 @@ namespace UI.Drafting {
             waveVisualizerWrapper.Initialize(Model.Waves[0], this);
             visualizerHeader.UpdateList();
             waveVisualizerWrapper.UpdateList();
-            WaveButton.OnWaveButtonClick += UpdateVisualizerList;
             Initialized = true;
             return this;
         }

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using Data.SpawnData;
 using Data.Types;
-using Data.UnitData;
-using Units.Modifiers;
+using Modifiers.SpawnModifiers;
 using UnityEngine;
 using Utils;
 
@@ -13,11 +12,15 @@ namespace Spawner {
         private WaveSpawnData currentWave;
         private int currentIndex;
         private Spawner owner;
+        public List<WaveModifier> waveModifications;
+        public List<UnitModifier> unitModifications;
 
         public WaveHandler(HordeSpawnData table, Spawner owner) {
             hordeSpawnData = table;
             currentIndex = 0;
             currentWave = table.Waves[currentIndex];
+            waveModifications = new List<WaveModifier>();
+            unitModifications = new List<UnitModifier>();
             this.owner = owner;
         }
 
@@ -26,7 +29,7 @@ namespace Spawner {
             Vector3 extentNegative = spawnerPos - owner.Bounds / 2;
             Vector3 extentPositive = spawnerPos + owner.Bounds / 2;
 
-            var wave = ModifyWaveData(currentWave.CreateInstance());
+            var wave = SpawnDataSmith.ModifyWaveData(currentWave.CreateInstance(), waveModifications);
 
             foreach (UnitSpawnData table in wave.wave) {
                 Debug.Log($"Spawning {table.Amount} {table.Unit}");
@@ -37,7 +40,7 @@ namespace Spawner {
 
                     owner.StartSpawnCoroutine(spawnStartupTime, spawnVfx, () => owner.OwningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(table.Unit),
-                        ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit)),
+                        SpawnDataSmith.ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit), unitModifications),
                         pos: spawnPos
                     ));
 
@@ -58,38 +61,6 @@ namespace Spawner {
             var z = Random.Range(extentNegative.z, extentPositive.z);
             var spawnPos = new Vector3(x, y, z);
             return spawnPos;
-        }
-
-        UnitData ModifyUnitData(UnitData instance) {
-            var root = new UnitDataModifier().InitializeModifier(instance);
-
-            var modifiers = new List<UnitDataModifier>();
-
-            for (int i = 0; i < modifiers.Count; i++) {
-                root.Add(modifiers[i].InitializeModifier(instance));
-            }
-
-            // Debug.Log($"Modifer list is {modifiers.Count} items long");
-
-            root.Handle();
-
-            return instance;
-        }
-
-        WaveSpawnData ModifyWaveData(WaveSpawnData instance) {
-            var root = new WaveTableModifier().InitializeModifier(instance);
-
-            var modifiers = new List<WaveTableModifier>();
-
-            for (int i = 0; i < modifiers.Count; i++) {
-                root.Add(modifiers[i].InitializeModifier(instance));
-            }
-
-            // Debug.Log($"Modifer list is {modifiers.Count} items long");
-
-            root.Handle();
-
-            return instance;
         }
     }
 }

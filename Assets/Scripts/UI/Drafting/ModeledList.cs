@@ -23,7 +23,7 @@ namespace UI.Drafting {
         private TItemModel model1;
         public List<TItem> ListItems { get; protected set; }
 
-        protected virtual void OnEnable() => CreateList();
+        protected virtual void OnEnable() => UpdateList();
 
         protected virtual void OnDisable() => ClearList();
 
@@ -31,6 +31,7 @@ namespace UI.Drafting {
             Model = m;
             UpdateList();
         }
+        
         public virtual void UpdateList() {
             ClearList();
             CreateList();
@@ -46,14 +47,13 @@ namespace UI.Drafting {
         protected virtual void ClearList() {
             if (!Initialized || ListItems == null) return;
 
-            ListItems.ForEach(RemoveItem);
+            ListItems.ForEach(DestroyGameObject);
             ListItems.Clear();
         }
 
-        protected virtual void RemoveItem(TItem item) => Destroy(item.gameObject);
+        protected virtual void DestroyGameObject(TItem item) => Destroy(item.gameObject);
 
-        protected virtual void AddListItem(TItemModel data) =>
-            ListItems.Add(Instantiate(listItem, gameObject.transform).GetComponent<TItem>().Initialize(data, this));
+        protected virtual void AddListItem(TItemModel data) => ListItems.Add(Instantiate(listItem, gameObject.transform).GetComponent<TItem>().Initialize(data, this));
 
         protected abstract List<TItemModel> Map(TListModel model);
     }

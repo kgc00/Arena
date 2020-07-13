@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Data.Modifiers;
 using Data.SpawnData;
 using Data.Types;
 using Modifiers.SpawnModifiers;
@@ -40,7 +42,7 @@ namespace Spawner {
 
                     owner.StartSpawnCoroutine(spawnStartupTime, spawnVfx, () => owner.OwningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(table.Unit),
-                        SpawnDataSmith.ModifyUnitData(SpawnHelper.DataFromUnitType(table.Unit), unitModifications),
+                        SpawnDataSmith.ModifyUnitData(DataHelper.DataFromUnitType(table.Unit), unitModifications),
                         pos: spawnPos
                     ));
 

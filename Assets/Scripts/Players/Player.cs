@@ -29,7 +29,7 @@ namespace Players
             foreach (var unit in units)
             {
                 unit.Initialize(this,
-                    data: SpawnHelper.DataFromUnitType(unit.unitType)
+                    data: Data.DataHelper.DataFromUnitType(unit.unitType)
                 );
             }
         }

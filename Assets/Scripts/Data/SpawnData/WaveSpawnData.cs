@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data.Modifiers;
 using UnityEngine;
 
 namespace Data.SpawnData
@@ -9,5 +10,6 @@ namespace Data.SpawnData
     {
         [SerializeField] public List<UnitSpawnData> wave;
         [HideInInspector] public int number;
+        [SerializeField] public List<WaveModifier> modifiers;
     }
 }

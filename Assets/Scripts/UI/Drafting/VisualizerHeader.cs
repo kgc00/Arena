@@ -10,6 +10,8 @@ namespace UI.Drafting {
         protected override List<WaveSpawnData> Map(HordeSpawnData model) => model.Waves;
         [FormerlySerializedAs("ScrollContent"),SerializeField] private GameObject scrollContent;
         public Visualizer Owner { get; private set; }
+        [SerializeField] private GameObject preferredParent;
+
         public VisualizerHeader Initialize(HordeSpawnData m, Visualizer o) {
             Model = m;
             Owner = o;
@@ -17,7 +19,6 @@ namespace UI.Drafting {
             return this;
         }
 
-        protected override void AddListItem(WaveSpawnData data) =>
-            ListItems.Add(Instantiate(listItem, scrollContent.transform).GetComponent<WaveButton>().Initialize(data, this));
+        protected override void CreateList(GameObject p = null) => base.CreateList(preferredParent);
     }
 }

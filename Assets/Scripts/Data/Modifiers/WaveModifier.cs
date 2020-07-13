@@ -1,7 +1,7 @@
 ﻿using Common;
 using Data.SpawnData;
 
-namespace Modifiers.SpawnModifiers {
+namespace Data.Modifiers {
     public class WaveModifier : ScriptableObjectModifier<WaveSpawnData> {
         public override ScriptableObjectModifier<WaveSpawnData> InitializeModifier(WaveSpawnData data)
         {

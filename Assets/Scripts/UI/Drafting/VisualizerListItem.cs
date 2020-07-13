@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common;
+using Data.Modifiers;
 using Data.SpawnData;
+using Modifiers.SpawnModifiers;
 using TMPro;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace UI.Drafting {
     public class VisualizerListItem : MonoBehaviour,
@@ -14,6 +16,11 @@ namespace UI.Drafting {
         public TextMeshProUGUI AmountUgui { get; set; }
         public ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem> Owner { get; private set; }
         public UnitSpawnData Model { get; set; }
+        [SerializeField] private GameObject buttonPrefab;
+        [SerializeField] private GameObject buttonParent;
+        private GameObject buttonInstance;
+        
+        private List<UnitModifier> modifiers;
 
         public VisualizerListItem Initialize(UnitSpawnData m,
             ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem> o) {
@@ -23,6 +30,12 @@ namespace UI.Drafting {
             amountText = m.Amount.ToString();
             TypeUgui.SetText(typeText);
             AmountUgui.SetText(amountText);
+            
+            
+            modifiers = new List<UnitModifier>{new DoubleUnitHealthModifier()};
+            buttonInstance = Instantiate(buttonPrefab, buttonParent.transform);
+            buttonInstance.GetComponent<UnitModifierButton>().Initialize(Model, modifiers[0], Owner as WaveVisualizerWrapper);
+
             Initialized = true;
             return this;
         }
@@ -30,10 +43,10 @@ namespace UI.Drafting {
         public bool Initialized { get; private set; }
 
         private void Awake() {
-            TypeUgui = transform.Find("Type").GetComponent<TextMeshProUGUI>() ??
+            TypeUgui = transform.FindDeepChild("Type").GetComponent<TextMeshProUGUI>() ??
                        throw new Exception("Unable to find type UI element");
 
-            AmountUgui = transform.Find("Amount").GetComponent<TextMeshProUGUI>() ??
+            AmountUgui = transform.FindDeepChild("Amount").GetComponent<TextMeshProUGUI>() ??
                          throw new Exception("Unable to find type UI element");
         }
     }

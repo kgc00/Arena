@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Common {
+    [Serializable]
     public class ScriptableObjectModifier<T> : IIconAssetPath where T : ScriptableObject {
         protected T Model;
         protected ScriptableObjectModifier<T> Next;
-        public string IconAssetPath => "";
+        public virtual string IconAssetPath() => "base";
 
         public virtual ScriptableObjectModifier<T> InitializeModifier(T data) {
             Next = null;

@@ -31,17 +31,17 @@ namespace UI.Drafting {
             Model = m;
             UpdateList();
         }
-        
+
         public virtual void UpdateList() {
             ClearList();
             CreateList();
         }
 
-        protected virtual void CreateList() {
+        protected virtual void CreateList(GameObject preferredParent = null) {
             if (!Initialized) return;
 
             ListItems = new List<TItem>();
-            Map(Model).ForEach(AddListItem);
+            Map(Model).ForEach(item => AddListItem(item, preferredParent));
         }
 
         protected virtual void ClearList() {
@@ -53,7 +53,9 @@ namespace UI.Drafting {
 
         protected virtual void DestroyGameObject(TItem item) => Destroy(item.gameObject);
 
-        protected virtual void AddListItem(TItemModel data) => ListItems.Add(Instantiate(listItem, gameObject.transform).GetComponent<TItem>().Initialize(data, this));
+        protected virtual void AddListItem(TItemModel data, GameObject preferredParent = null) => ListItems.Add(
+            Instantiate(listItem, preferredParent ? preferredParent.transform : gameObject.transform)
+                .GetComponent<TItem>().Initialize(data, this));
 
         protected abstract List<TItemModel> Map(TListModel model);
     }

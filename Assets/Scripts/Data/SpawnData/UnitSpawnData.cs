@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Data.Modifiers;
 using Data.Types;
 using UnityEngine;
 
@@ -9,5 +11,6 @@ namespace Data.SpawnData
     {
         [SerializeField] public UnitType Unit;
         [SerializeField] public int Amount;
+        [SerializeField] public List<UnitModifier> modifiers;
     }
 }

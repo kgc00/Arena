@@ -1,3 +1,15 @@
-﻿{
-	"name": "AbilityData"
+{
+    "name": "AbilityData",
+    "references": [
+        "GUID:669a81b7d2594bd4ab007cc9bb475337"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

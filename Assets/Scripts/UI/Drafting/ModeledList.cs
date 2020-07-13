@@ -44,16 +44,16 @@ namespace UI.Drafting {
             Map(Model).ForEach(item => AddListItem(item, preferredParent));
         }
 
-        protected virtual void ClearList() {
+        protected void ClearList() {
             if (!Initialized || ListItems == null) return;
 
             ListItems.ForEach(DestroyGameObject);
             ListItems.Clear();
         }
 
-        protected virtual void DestroyGameObject(TItem item) => Destroy(item.gameObject);
+        protected void DestroyGameObject(TItem item) => Destroy(item.gameObject);
 
-        protected virtual void AddListItem(TItemModel data, GameObject preferredParent = null) => ListItems.Add(
+        protected void AddListItem(TItemModel data, GameObject preferredParent = null) => ListItems.Add(
             Instantiate(listItem, preferredParent ? preferredParent.transform : gameObject.transform)
                 .GetComponent<TItem>().Initialize(data, this));
 

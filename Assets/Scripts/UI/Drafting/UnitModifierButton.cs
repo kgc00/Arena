@@ -47,7 +47,16 @@ namespace UI.Drafting {
             UnitModel = DataHelper.DataFromUnitType(model.Unit).CreateInstance();
             iconImage.sprite = Resources.Load<Sprite>(Modifier.IconAssetPath());
             Initialized = true;
+            SetInitialToggleState();
             return this;
+        }
+
+        private void SetInitialToggleState() {
+            if (SpawnModel.modifiers.Count == 0) return;
+            
+            SpawnModel.modifiers.ForEach(m => {
+                if (m.GetType() == Modifier.GetType()) toggle.isOn = true;
+            });
         }
     }
 }

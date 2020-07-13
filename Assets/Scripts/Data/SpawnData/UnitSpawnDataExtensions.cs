@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Data.SpawnData {
     public static class UnitSpawnDataExtensions {
@@ -6,8 +7,8 @@ namespace Data.SpawnData {
             var instance = ScriptableObject.CreateInstance<UnitSpawnData>();
             instance.Amount = data.Amount;
             instance.Unit = data.Unit;
+            instance.modifiers = data.modifiers.ConvertAll(x => x).ToList();
             return instance;
         }
-
     }
 }

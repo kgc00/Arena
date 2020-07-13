@@ -25,7 +25,7 @@ namespace UI.Drafting {
         public VisualizerListItem Initialize(UnitSpawnData m,
             ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem> o) {
             Owner = o;
-            Model = m;
+            Model = m.CreateInstance();
             typeText = m.Unit.ToString();
             amountText = m.Amount.ToString();
             TypeUgui.SetText(typeText);

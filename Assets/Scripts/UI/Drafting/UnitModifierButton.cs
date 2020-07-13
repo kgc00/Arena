@@ -44,7 +44,7 @@ namespace UI.Drafting {
             Owner = o;
             Modifier = mod;
             SpawnModel = model;
-            UnitModel = DataHelper.DataFromUnitType(model.Unit);
+            UnitModel = DataHelper.DataFromUnitType(model.Unit).CreateInstance();
             iconImage.sprite = Resources.Load<Sprite>(Modifier.IconAssetPath());
             Initialized = true;
             return this;

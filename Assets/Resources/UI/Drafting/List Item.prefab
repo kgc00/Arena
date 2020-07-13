@@ -577,6 +577,6 @@ MonoBehaviour:
   m_ChildAlignment: 4
   rows: 1
   columns: 2
-  cellSize: {x: 137.5, y: 50}
-  spacing: {x: 50, y: 0}
+  cellSize: {x: 112.5, y: 50}
+  spacing: {x: 100, y: 0}
   fitType: 1

@@ -25,7 +25,7 @@ namespace UI.Drafting {
 
         public WaveVisualizerWrapper Initialize(WaveSpawnData m, Visualizer o) {
             Owner = o;
-            Model = m;
+            Model = m.CreateInstance();
             Initialized = true;
             return this;
         }

@@ -8,5 +8,12 @@ namespace Data.SpawnData {
             instance.Waves = data.Waves.ConvertAll(x => x.CreateInstance()).ToList();
             return instance;
         }
+        
+        public static void Update(this HordeSpawnData current, HordeSpawnData newModel) {
+            current.Waves.Clear();
+            foreach (var waveSpawnData in newModel.Waves) {
+                current.Waves.Add(waveSpawnData.CreateInstance());
+            }
+        }
     }
 }

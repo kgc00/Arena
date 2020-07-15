@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Common;
+using Common.Levels;
+using Data;
 using Data.Modifiers;
 using Data.SpawnData;
 using UnityEngine;
+using TypeReferences;
 
 namespace UI.Drafting {
     public class Visualizer : MonoBehaviour, IInitializable<HordeSpawnData, Visualizer, Visualizer> {
@@ -57,18 +60,9 @@ namespace UI.Drafting {
         public void UpdateVisualizerList(int i) => waveVisualizerWrapper.UpdateModel(Model.Waves[i]);
 
         public void AddUnitModifier(UnitSpawnData unitSpawnData, WaveSpawnData waveSpawnData, UnitModifier mod) {
-            print("incoming request");
             if (!FindDataStructure(unitSpawnData, waveSpawnData, mod, out var selectedUnit)) return;
 
-            // TODO: Store typeof Modifier, use an activator when loading later to create the instances
-            selectedUnit.modifiers.ForEach(m => print($"Type: {m.GetType()}.  AssetPath: {m.IconAssetPath()}"));
-
-            if (DoesExist(mod, selectedUnit)) {
-                print($"Modifier already exists.  List length: {selectedUnit.modifiers.Count}");
-            } else {
-                selectedUnit.modifiers.Add(mod);
-                print($"Selected unit's modifier count: {selectedUnit.modifiers.Count}");
-            }
+            if (!DoesExist(mod, selectedUnit)) selectedUnit.modifiers.Add(mod.GetType());
         }
 
 
@@ -79,8 +73,6 @@ namespace UI.Drafting {
             // and new instance of same type is being supplied by input
             var m = GetModifier(mod, selectedUnit);
             if (m != null) selectedUnit.modifiers.Remove(m);
-            
-            print($"Selected unit's modifier count: {selectedUnit.modifiers.Count}");
         }
 
 
@@ -98,10 +90,14 @@ namespace UI.Drafting {
         }
 
         private bool DoesExist(UnitModifier mod, UnitSpawnData selectedUnit) =>
-            selectedUnit.modifiers.Exists(m => m.GetType() == mod.GetType());
+            selectedUnit.modifiers.Exists(m => m.Type == mod.GetType());
         
-        private UnitModifier GetModifier(UnitModifier mod, UnitSpawnData selectedUnit) =>
-            selectedUnit.modifiers.FirstOrDefault(m => m.GetType() == mod.GetType());
+        private ClassTypeReference GetModifier(UnitModifier mod, UnitSpawnData selectedUnit) =>
+            selectedUnit.modifiers.FirstOrDefault(m => m.Type == mod.GetType());
 
+        public void HandleContinue() {
+            PersistentData.Instance.UpdateHordeModel(Model);
+            LevelDirector.Instance.LoadArena();
+        }
     }
 }

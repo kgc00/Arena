@@ -14,15 +14,11 @@ namespace Spawner {
         private WaveSpawnData currentWave;
         private int currentIndex;
         private Spawner owner;
-        public List<WaveModifier> waveModifications;
-        public List<UnitModifier> unitModifications;
 
         public WaveHandler(HordeSpawnData table, Spawner owner) {
             hordeSpawnData = table;
             currentIndex = 0;
             currentWave = table.Waves[currentIndex];
-            waveModifications = new List<WaveModifier>();
-            unitModifications = new List<UnitModifier>();
             this.owner = owner;
         }
 
@@ -31,18 +27,19 @@ namespace Spawner {
             Vector3 extentNegative = spawnerPos - owner.Bounds / 2;
             Vector3 extentPositive = spawnerPos + owner.Bounds / 2;
 
-            var wave = SpawnDataSmith.ModifyWaveData(currentWave.CreateInstance(), waveModifications);
+            var wave = SpawnDataSmith.ModifyWaveData(currentWave);
 
-            foreach (UnitSpawnData table in wave.wave) {
-                Debug.Log($"Spawning {table.Amount} {table.Unit}");
-                for (int i = 0; i < table.Amount; i++) {
+            foreach (UnitSpawnData spawnData in wave.wave) {
+                Debug.Log($"Spawning {spawnData.Amount} {spawnData.Unit}");
+                for (int i = 0; i < spawnData.Amount; i++) {
                     var spawnPos = GetRandomSpawnPos(extentNegative, extentPositive);
 
                     var spawnVfx = MonoHelper.SpawnVfx(VfxType.EnemySpawnIndicator, spawnPos);
+                    var unitData = DataHelper.DataFromUnitType(spawnData.Unit);
 
                     owner.StartSpawnCoroutine(spawnStartupTime, spawnVfx, () => owner.OwningPlayer.InstantiateUnit(
-                        SpawnHelper.PrefabFromUnitType(table.Unit),
-                        SpawnDataSmith.ModifyUnitData(DataHelper.DataFromUnitType(table.Unit), unitModifications),
+                        SpawnHelper.PrefabFromUnitType(spawnData.Unit),
+                         SpawnDataSmith.ModifyUnitData(unitData, spawnData.modifiers),
                         pos: spawnPos
                     ));
 

@@ -1,7 +1,8 @@
 {
     "name": "AbilityData",
     "references": [
-        "GUID:669a81b7d2594bd4ab007cc9bb475337"
+        "GUID:669a81b7d2594bd4ab007cc9bb475337",
+        "GUID:ea6a6314f279f814facc8c48a7d3c9f1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,6 +7,7 @@ namespace Common {
         protected T Model;
         protected ScriptableObjectModifier<T> Next;
         public virtual string IconAssetPath() => "base";
+        public virtual string DisplayText() => "null";
 
         public virtual ScriptableObjectModifier<T> InitializeModifier(T data) {
             Next = null;

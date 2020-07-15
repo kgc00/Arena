@@ -4,6 +4,7 @@ using Data.Modifiers;
 namespace Modifiers.SpawnModifiers {
     public class DoubleUnitHealthModifier : UnitModifier {
         public override string IconAssetPath() => AssetPaths.Icons.Health;
+        public override string DisplayText() => "2x Health";
 
         public override void Handle() {
             Model.health.maxHp *= 2;

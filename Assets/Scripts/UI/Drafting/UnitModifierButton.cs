@@ -2,13 +2,14 @@
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.UnitData;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = System.Diagnostics.Debug;
+using TypeReferences;
 
 namespace UI.Drafting {
     [RequireComponent(typeof(Toggle))]
-    public class UnitModifierButton : MonoBehaviour {
+    public sealed class UnitModifierButton : MonoBehaviour {
         public WaveVisualizerWrapper Owner { get; protected set; }
         public UnitSpawnData SpawnModel { get; protected set; }
         public UnitData UnitModel { get; protected set; }
@@ -18,6 +19,8 @@ namespace UI.Drafting {
         [SerializeField] public Image buttonImage;
         private Toggle toggle;
         private Color[] buttonColors;
+        
+        [SerializeField] private TextMeshProUGUI textUgui;
 
         private void Awake() {
             Debug.Assert(iconImage != null, nameof(iconImage) + " != null");
@@ -39,15 +42,15 @@ namespace UI.Drafting {
             }
         }
 
-        // TODO: Map from UnitSpawnData to UnitData
         public UnitModifierButton Initialize(UnitSpawnData model, UnitModifier mod, WaveVisualizerWrapper o) {
             Owner = o;
             Modifier = mod;
             SpawnModel = model;
-            UnitModel = DataHelper.DataFromUnitType(model.Unit).CreateInstance();
+            UnitModel = DataHelper.DataFromUnitType(model.Unit);
             iconImage.sprite = Resources.Load<Sprite>(Modifier.IconAssetPath());
-            Initialized = true;
+            textUgui.SetText(Modifier.DisplayText());
             SetInitialToggleState();
+            Initialized = true;
             return this;
         }
 
@@ -55,7 +58,7 @@ namespace UI.Drafting {
             if (SpawnModel.modifiers.Count == 0) return;
             
             SpawnModel.modifiers.ForEach(m => {
-                if (m.GetType() == Modifier.GetType()) toggle.isOn = true;
+                if (m == Modifier.GetType()) toggle.isOn = true;
             });
         }
     }

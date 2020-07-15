@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace UI.Drafting {
     public class VisualizerListItem : MonoBehaviour,
-        IInitializable<UnitSpawnData, ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem>, VisualizerListItem> {
+        IInitializable<UnitSpawnData, ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem>, VisualizerListItem
+        > {
         public TextMeshProUGUI TypeUgui { get; set; }
         private string typeText;
         private string amountText;
@@ -18,8 +19,8 @@ namespace UI.Drafting {
         public UnitSpawnData Model { get; set; }
         [SerializeField] private GameObject buttonPrefab;
         [SerializeField] private GameObject buttonParent;
-        private GameObject buttonInstance;
-        
+        private List<GameObject> buttonInstances;
+
         private List<UnitModifier> modifiers;
 
         public VisualizerListItem Initialize(UnitSpawnData m,
@@ -30,14 +31,25 @@ namespace UI.Drafting {
             amountText = m.Amount.ToString();
             TypeUgui.SetText(typeText);
             AmountUgui.SetText(amountText);
-            
-            
-            modifiers = new List<UnitModifier>{new DoubleUnitHealthModifier()};
-            buttonInstance = Instantiate(buttonPrefab, buttonParent.transform);
-            buttonInstance.GetComponent<UnitModifierButton>().Initialize(Model, modifiers[0], Owner as WaveVisualizerWrapper);
+
+            // TODO: do not hard code modifiers
+            modifiers = new List<UnitModifier> {new DoubleUnitHealthModifier(), new DoubleUnitAttackModifier()};
+            InitializeModifierButtons();
 
             Initialized = true;
             return this;
+        }
+
+        private void InitializeModifierButtons() {
+            buttonInstances = new List<GameObject> {
+                Instantiate(buttonPrefab, buttonParent.transform),
+                Instantiate(buttonPrefab, buttonParent.transform)
+            };
+
+            buttonInstances[0].GetComponent<UnitModifierButton>()
+                .Initialize(Model, modifiers[0], Owner as WaveVisualizerWrapper);
+            buttonInstances[1].GetComponent<UnitModifierButton>()
+                .Initialize(Model, modifiers[1], Owner as WaveVisualizerWrapper);
         }
 
         public bool Initialized { get; private set; }

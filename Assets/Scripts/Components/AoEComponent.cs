@@ -86,7 +86,6 @@ namespace Common
             
             if (!ShouldActivate(other, out var rigidBody)) return;
             
-            Debug.Log($"Activating stay logic for {other.transform.root.name}!");
             StartCoroutine(StayStrategy(other, rigidBody, Force, transform));
         }
 
@@ -94,8 +93,7 @@ namespace Common
             if (EnterStrategy == null) return;
 
             if (!ShouldActivate(other, out var rigidBody)) return;
-
-            Debug.Log($"{other.gameObject.name} will be {(Force < 0 ? "pushed" : Force > 0 ? "pulled" : "not moved")}!");
+            
             StartCoroutine(EnterStrategy(other, rigidBody, Force, transform));
         }
 
@@ -104,10 +102,8 @@ namespace Common
             var unit = other.gameObject.GetUnitComponent();
             if (unit == null) return false;
 
-            if (affectedFactions.All(x => x != unit.Owner.ControlType)) {
-                Debug.Log($"Unable to affect {unit.name} because their faction is {unit.Owner.ControlType}");
+            if (affectedFactions.All(x => x != unit.Owner.ControlType))
                 return false;
-            }
 
             rigidBody = other.transform.root.GetComponent<Rigidbody>();
             if (rigidBody == null) {

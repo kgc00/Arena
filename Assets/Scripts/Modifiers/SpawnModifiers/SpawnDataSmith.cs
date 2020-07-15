@@ -1,33 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.UnitData;
+using TypeReferences;
 
 namespace Modifiers.SpawnModifiers {
     public static class SpawnDataSmith {
-        public static WaveSpawnData ModifyWaveData(WaveSpawnData instance, List<WaveModifier> modifications) {
-            var root = new WaveModifier().InitializeModifier(instance);
+        public static WaveSpawnData ModifyWaveData(WaveSpawnData model) {
+            var root = new WaveModifier().InitializeModifier(model);
 
-            foreach (var m in modifications)
-                root.Add(m.InitializeModifier(instance));
+            foreach (var typeRef in model.modifiers)
+                if (Activator.CreateInstance(typeRef) is WaveModifier mod)
+                    root.Add(mod.InitializeModifier(model));
 
             // Debug.Log($"Modifer list is {modifiers.Count} items long");
 
             root.Handle();
 
-            return instance;
+            return model;
         }
 
-        public static UnitData ModifyUnitData(UnitData instance, List<UnitModifier> modifications) {
-            var root = new UnitModifier().InitializeModifier(instance);
-
-            foreach (var m in modifications) root.Add(m.InitializeModifier(instance));
+        public static UnitData ModifyUnitData(UnitData model, List<ClassTypeReference> modifications) {
+            var root = new UnitModifier().InitializeModifier(model);
+            
+            foreach (var typeRef in modifications)
+                if (Activator.CreateInstance(typeRef) is UnitModifier mod)
+                    root.Add(mod.InitializeModifier(model));
 
             // Debug.Log($"Modifer list is {modifiers.Count} items long");
 
             root.Handle();
 
-            return instance;
+            return model;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Stats
         public void SetVulnerable() => Invulnerable = false;
 
         public void DamageOwner(float amount, Ability damageSource, Unit damageDealer) {
-            Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
+            // Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
 
             OnDamageStarted(Owner, damageDealer, amount);
             if (Invulnerable) return;
@@ -54,14 +54,14 @@ namespace Stats
             var prevAmount = CurrentHp;
             var newAmount = Mathf.Clamp(CurrentHp + amount, 0, MaxHp);
 
-            Debug.Log($"Adjusting {Owner.name}'s current health from {prevAmount} to {newAmount}.");
+            // Debug.Log($"Adjusting {Owner.name}'s current health from {prevAmount} to {newAmount}.");
 
             CurrentHp = newAmount;
 
             OnHealthChanged(Owner, prevAmount);
             
             if (CurrentHp <= 0) {
-                Debug.Log($"{Owner} died");
+                // Debug.Log($"{Owner} died");
                 Owner.UnitDeath();
                 
             }

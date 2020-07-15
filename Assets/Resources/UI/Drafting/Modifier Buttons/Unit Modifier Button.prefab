@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 6391754912338383086}
   buttonImage: {fileID: 7801893610615788514}
+  textUgui: {fileID: 1139824494171335652}
 --- !u!114 &4020232551186251330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2x Health
+  m_text: Undefined
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -396,8 +397,8 @@ MonoBehaviour:
     textComponent: {fileID: 1139824494171335652}
     characterCount: 9
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1

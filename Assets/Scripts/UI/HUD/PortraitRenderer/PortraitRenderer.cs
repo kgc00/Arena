@@ -40,7 +40,7 @@ namespace UI.HUD {
         }
 
         void UpdateHealthValue() {
-            healthFill.fillAmount =  unit.HealthComponent.MaxHp / unit.HealthComponent.CurrentHp;
+            healthFill.fillAmount = unit.HealthComponent.CurrentHp / unit.HealthComponent.MaxHp;
             healthText.SetText(unit.HealthComponent.CurrentHp.ToString(CultureInfo.InvariantCulture));
         }
     }

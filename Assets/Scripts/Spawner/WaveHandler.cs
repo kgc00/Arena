@@ -37,7 +37,7 @@ namespace Spawner {
                     var spawnVfx = MonoHelper.SpawnVfx(VfxType.EnemySpawnIndicator, spawnPos);
                     var unitData = DataHelper.DataFromUnitType(spawnData.Unit);
 
-                    owner.StartSpawnCoroutine(spawnStartupTime, spawnVfx, () => owner.OwningPlayer.InstantiateUnit(
+                    owner.StartSpawnCoroutine(spawnStartupTime, spawnVfx, () => owner.owningPlayer.InstantiateUnit(
                         SpawnHelper.PrefabFromUnitType(spawnData.Unit),
                          SpawnDataSmith.ModifyUnitData(unitData, spawnData.modifiers),
                         pos: spawnPos

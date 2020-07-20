@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Levels;
 using Data;
 using Data.Modifiers;
 using Data.SpawnData;
+using Data.Types;
 using UnityEngine;
 using TypeReferences;
 
@@ -96,7 +98,8 @@ namespace UI.Drafting {
             selectedUnit.modifiers.FirstOrDefault(m => m.Type == mod.GetType());
 
         public void HandleContinue() {
-            PersistentData.Instance.UpdateHordeModel(Model);
+            var dict = new Dictionary<ControlType, HordeSpawnData> {{ControlType.Ai, Model}};
+            PersistentData.Instance.UpdateHordeModel(dict);
             LevelDirector.Instance.LoadArena();
         }
     }

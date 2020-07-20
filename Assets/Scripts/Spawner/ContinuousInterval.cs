@@ -19,7 +19,7 @@ namespace Spawner {
         public List<Unit> CurrentWave { get; private set;} = new List<Unit>();
         public override Interval Initialize(Func<IEnumerator> spawn, Spawner owner, float delayBetweenWaves, float delayBetweenSpawns, float spawnStartupTime)
         {
-            CurrentWave = owner.OwningPlayer.Units;
+            CurrentWave = owner.owningPlayer.Units;
             return base.Initialize(spawn, owner, delayBetweenWaves, delayBetweenSpawns, spawnStartupTime);
         }
         private void OnEnable() => Enabled = true;

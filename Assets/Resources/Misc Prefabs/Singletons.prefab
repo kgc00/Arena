@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa15dc9d15040ad87a17cb3aed74bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
+  playerspawndata: {fileID: 11400000, guid: cd615296ba708c242a4b783c6dfccfc9, type: 2}
+  emptyspawndata: {fileID: 11400000, guid: 6b79ce7985cc3a34bacf410e8dc6d89d, type: 2}
 --- !u!114 &6496318964286935798
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ using Data.UnitData;
 using UnityEngine;
 
 namespace UI.Drafting.Player_Upgrades {
-    public class StatsUpgradesList :
+    public sealed class StatsUpgradesList :
         MonoBehaviour,
         IInitializable<UnitSpawnData, IModifierHandler<UnitSpawnData, UnitModifier>, StatsUpgradesList>,
         IModifierHandler<UnitSpawnData, UnitModifier> {
@@ -18,7 +18,7 @@ namespace UI.Drafting.Player_Upgrades {
         public UnitSpawnData Model { get; private set; }
         public List<StatsListItem> ListItems { get; protected set; }
 
-        [SerializeField] protected GameObject listItem;
+        [SerializeField] private GameObject listItem;
         [SerializeField] private GameObject preferredParent;
 
         public StatsUpgradesList Initialize(UnitSpawnData m, IModifierHandler<UnitSpawnData, UnitModifier> o) {
@@ -28,9 +28,9 @@ namespace UI.Drafting.Player_Upgrades {
             return this;
         }
 
-        protected virtual void OnEnable() => UpdateList();
+        private void OnEnable() => UpdateList();
 
-        protected virtual void OnDisable() => ClearList();
+        private void OnDisable() => ClearList();
 
         public void AddModifier(UnitSpawnData model, UnitModifier modifier) {
             Owner.AddModifier(model, modifier);
@@ -40,17 +40,17 @@ namespace UI.Drafting.Player_Upgrades {
             Owner.RemoveModifier(model, modifier);
         }
 
-        public virtual void UpdateModel(UnitSpawnData m) {
+        public void UpdateModel(UnitSpawnData m) {
             Model = m;
             UpdateList();
         }
 
-        public virtual void UpdateList() {
+        public void UpdateList() {
             ClearList();
             CreateList();
         }
 
-        protected virtual void CreateList(GameObject preferredParent = null) {
+        private void CreateList(GameObject preferredParent = null) {
             if (!Initialized) return;
 
             ListItems = new List<StatsListItem>();
@@ -63,16 +63,16 @@ namespace UI.Drafting.Player_Upgrades {
             AddListItem(Model, stats.MovementSpeed, preferredParent);
         }
 
-        protected void ClearList() {
+        private void ClearList() {
             if (!Initialized || ListItems == null) return;
 
             ListItems.ForEach(DestroyGameObject);
             ListItems.Clear();
         }
 
-        protected void DestroyGameObject(StatsListItem item) => Destroy(item.gameObject);
+        private void DestroyGameObject(StatsListItem item) => Destroy(item.gameObject);
 
-        protected void AddListItem(UnitSpawnData data, Statistic stat, GameObject preferredParent = null) =>
+        private void AddListItem(UnitSpawnData data, Statistic stat, GameObject preferredParent = null) =>
             ListItems.Add(
                 Instantiate(listItem, preferredParent ? preferredParent.transform : gameObject.transform)
                     .GetComponent<StatsListItem>().Initialize(data, stat, this));

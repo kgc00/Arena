@@ -16,8 +16,8 @@ namespace Data {
         protected override void Awake() {
             base.Awake();
             HordeModel = new Dictionary<ControlType, HordeSpawnData> {
-                {ControlType.Local, playerspawndata},
-                {ControlType.Ai, emptyspawndata}
+                {ControlType.Local, playerspawndata.CreateInstance()},
+                {ControlType.Ai, emptyspawndata.CreateInstance()}
             };
         }
 

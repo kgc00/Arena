@@ -10,7 +10,7 @@ using TypeReferences;
 namespace UI.Drafting {
     [RequireComponent(typeof(Toggle))]
     public sealed class UnitModifierButton : MonoBehaviour {
-        public WaveVisualizerWrapper Owner { get; protected set; }
+        public IModifierHandler<UnitSpawnData, UnitModifier> Owner { get; protected set; }
         public UnitSpawnData SpawnModel { get; protected set; }
         public UnitData UnitModel { get; protected set; }
         public UnitModifier Modifier { get; protected set; }
@@ -42,7 +42,7 @@ namespace UI.Drafting {
             }
         }
 
-        public UnitModifierButton Initialize(UnitSpawnData model, UnitModifier mod, WaveVisualizerWrapper o) {
+        public UnitModifierButton Initialize(UnitSpawnData model, UnitModifier mod, IModifierHandler<UnitSpawnData, UnitModifier> o) {
             Owner = o;
             Modifier = mod;
             SpawnModel = model;

@@ -1,4 +1,5 @@
-﻿using Data.StatData;
+﻿using System.Collections;
+using Data.StatData;
 using Data.Types;
 
 namespace Data.Stats {
@@ -18,11 +19,11 @@ namespace Data.Stats {
         
         // for debugging
         public Stats() {
-            Agility = new Statistic(1);
-            Strength = new Statistic(1);
-            Intelligence = new Statistic(1);
-            Endurance = new Statistic(1);
-            MovementSpeed = new Statistic(1);
+            Agility = new Statistic(1, StatType.Agility);
+            Strength = new Statistic(1, StatType.Strength);
+            Intelligence = new Statistic(1, StatType.Intelligence);
+            Endurance = new Statistic(1, StatType.Endurance);
+            MovementSpeed = new Statistic(1, StatType.MovementSpeed);
         }
 
         public Stats(Statistic agility, Statistic strength, Statistic intelligence, Statistic endurance, Statistic movementSpeed) {
@@ -33,11 +34,11 @@ namespace Data.Stats {
             MovementSpeed = movementSpeed;
         }
         public Stats(StatsData data) {
-            Agility = new Statistic(data.agility);
-            Strength = new Statistic(data.strength);
-            Intelligence = new Statistic(data.intelligence);
-            Endurance = new Statistic(data.endurance);
-            MovementSpeed = new Statistic(data.movementSpeed);
+            Agility = new Statistic(data.agility, StatType.Agility);
+            Strength = new Statistic(data.strength, StatType.Strength);
+            Intelligence = new Statistic(data.intelligence, StatType.Intelligence);
+            Endurance = new Statistic(data.endurance, StatType.Endurance);
+            MovementSpeed = new Statistic(data.movementSpeed, StatType.MovementSpeed);
         }
     }
 }

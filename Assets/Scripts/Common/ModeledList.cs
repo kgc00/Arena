@@ -20,7 +20,6 @@ namespace UI.Drafting {
         public bool Initialized { get; protected set; }
 
         [SerializeField] protected GameObject listItem;
-        private TItemModel model1;
         public List<TItem> ListItems { get; protected set; }
 
         protected virtual void OnEnable() => UpdateList();

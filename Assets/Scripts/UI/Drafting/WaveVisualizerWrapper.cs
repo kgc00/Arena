@@ -10,7 +10,8 @@ using UnityEngine;
 
 namespace UI.Drafting {
     public class WaveVisualizerWrapper : ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem>,
-        IInitializable<WaveSpawnData, Visualizer, WaveVisualizerWrapper> {
+        IInitializable<WaveSpawnData, Visualizer, WaveVisualizerWrapper>,
+        IModifierHandler<UnitSpawnData, UnitModifier> {
         protected override List<UnitSpawnData> Map(WaveSpawnData model) => model.wave;
         public Visualizer Owner { get; private set; }
 

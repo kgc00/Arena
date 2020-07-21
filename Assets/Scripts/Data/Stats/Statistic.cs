@@ -1,4 +1,4 @@
-namespace Stats {
+namespace Data.Stats {
     public class Statistic {
         public Statistic (float initialValue) {
             Value = initialValue;

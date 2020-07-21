@@ -5,11 +5,11 @@ using Data.UnitData;
 using UnityEngine;
 
 namespace UI.Drafting.Player_Upgrades {
-    public class PlayerUpgradeManager : MonoBehaviour, IInitializable<UnitData, PlayerUpgradeManager, PlayerUpgradeManager> {
+    public class PlayerUpgradeManager : MonoBehaviour, IInitializable<UnitSpawnData, PlayerUpgradeManager, PlayerUpgradeManager> {
         public PlayerUpgradeManager Owner { get; private set; }
-        private UnitData model;
+        private UnitSpawnData model;
 
-        public UnitData  Model {
+        public UnitSpawnData  Model {
             get => model;
             set => model = value;
         }
@@ -19,8 +19,7 @@ namespace UI.Drafting.Player_Upgrades {
 
         private void Awake() => Initialize(Model, this);
 
-        public PlayerUpgradeManager Initialize(UnitData m, PlayerUpgradeManager o) {
-            
+        public PlayerUpgradeManager Initialize(UnitSpawnData m, PlayerUpgradeManager o) {
             Owner = o;
             Model = m.CreateInstance();
             statsUpgradesList.Initialize(Model, this);
@@ -28,7 +27,6 @@ namespace UI.Drafting.Player_Upgrades {
             Initialized = true;
             return this;
         }
-
         public bool Initialized { get; private set; }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities.Modifiers;
 using Data.Types;
-using Stats;
 using UnityEngine;
 using Utils.NotificationCenter;
 

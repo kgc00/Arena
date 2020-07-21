@@ -1,6 +1,5 @@
 ﻿using System;
 using Data.Types;
-using Stats;
 
 namespace Status {
     public class Slowed : MonoStatus {

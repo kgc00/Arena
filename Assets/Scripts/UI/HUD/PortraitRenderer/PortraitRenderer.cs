@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using Stats;
+using Components;
 using TMPro;
 using Units;
 using UnityEngine;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Stats;
+using Components;
 using Status;
 using Units;
 using UnityEngine;

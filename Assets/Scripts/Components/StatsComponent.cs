@@ -1,9 +1,10 @@
 ﻿using Data.StatData;
+using Data.Stats;
 using Data.Types;
 using Units;
 using UnityEngine;
 
-namespace Stats {
+namespace Components {
     public class StatsComponent : MonoBehaviour {
         public Unit Owner { get; private set; }
         public Stats Stats { get; private set; }

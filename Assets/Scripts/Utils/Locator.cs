@@ -2,7 +2,6 @@
 using UnityEngine;
 using  System.Linq;
 using Data.Types;
-using Stats;
 
 namespace Utils
 {

@@ -1,5 +1,4 @@
-﻿using Stats;
-using Units;
+﻿using Units;
 using UnityEngine;
 using Utils;
 

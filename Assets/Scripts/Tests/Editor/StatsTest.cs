@@ -1,4 +1,6 @@
-﻿using Data.Types;
+﻿using Components;
+using Data.Stats;
+using Data.Types;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -9,7 +11,7 @@ namespace Tests
         [Test]
         public void Test()
         {
-            var Stats = new Stats.Stats();
+            var Stats = new Stats();
             var agi = Stats.StatFromEnum(StatType.Agility);
 
             Debug.Log("agi = " + agi);

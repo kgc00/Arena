@@ -2,7 +2,6 @@
 using Common;
 using Data.Types;
 using Projectiles;
-using Stats;
 using UI.Targeting;
 using Units;
 using UnityEngine;

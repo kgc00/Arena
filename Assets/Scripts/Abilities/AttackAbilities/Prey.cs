@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Common;
 using Data.Types;
 using Projectiles;
-using Stats;
 using Units;
 using UnityEngine;
 namespace Abilities.AttackAbilities

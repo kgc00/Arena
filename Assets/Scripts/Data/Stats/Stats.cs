@@ -1,7 +1,7 @@
 ﻿using Data.StatData;
 using Data.Types;
 
-namespace Stats {
+namespace Data.Stats {
     public class Stats { 
         
                     /// average stats ///

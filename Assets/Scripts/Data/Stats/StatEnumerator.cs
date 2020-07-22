@@ -9,9 +9,7 @@ namespace Data.Stats {
 
         public StatEnumerator(Stats stats) {
             collection = new List<Statistic>();
-            collection.Add(stats.Agility);
             collection.Add(stats.Endurance);
-            collection.Add(stats.Intelligence);
             collection.Add(stats.Strength);
             collection.Add(stats.MovementSpeed);
             curIndex = -1;

@@ -24,7 +24,6 @@ namespace UI.Drafting.Player_Upgrades {
 
         [SerializeField] private StatsUpgradesList statsUpgradesList;
         // [SerializeField] private AbilitiesUpgradesList abilitiesUpgradesList;
-
         private void Start() => Initialize(Model, this);
 
         public PlayerUpgradeManager Initialize(UnitSpawnData m, PlayerUpgradeManager o) {
@@ -32,23 +31,26 @@ namespace UI.Drafting.Player_Upgrades {
             Model = m ? m.CreateInstance() : PersistentData.Instance.HordeModel[ControlType.Local].Waves[0].wave[0].CreateInstance();
             statsUpgradesList.Initialize(Model, this);
             // abilitiesUpgradesList.Initialize(Model, this);
-            Initialized = true;
             statsUpgradesList.UpdateList();
+            Initialized = true;
             return this;
         }
 
         public bool Initialized { get; private set; }
 
         public void AddModifier(UnitSpawnData model, UnitModifier modifier) {
-            if (!DoesExist(modifier, Model)) Model.modifiers.Add(modifier.GetType());
+            if(DoesExist(modifier, Model)) return;
+            Model.modifiers.Add(modifier.GetType());
         }
 
         public void RemoveModifier(UnitSpawnData model, UnitModifier modifier) {
+    
             // Handles case where modifier was already added
             // and new instance of same type is being supplied by input
             var m = GetModifier(modifier, Model);
             if (m != null) Model.modifiers.Remove(m);
         }
+        
         
         private bool DoesExist(UnitModifier mod, UnitSpawnData selectedUnit) =>
             selectedUnit.modifiers.Exists(m => m.Type == mod.GetType());

@@ -12,10 +12,10 @@ namespace Tests
         public void Test()
         {
             var Stats = new Stats();
-            var agi = Stats.StatFromEnum(StatType.Agility);
+            var ms = Stats.StatFromEnum(StatType.MovementSpeed);
 
-            Debug.Log("agi = " + agi);
-            Assert.AreSame(agi, Stats.Agility);
+            Debug.Log("ms = " + ms);
+            Assert.AreSame(ms, Stats.MovementSpeed);
         }
     }
 }

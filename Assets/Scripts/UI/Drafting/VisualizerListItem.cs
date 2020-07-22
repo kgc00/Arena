@@ -33,7 +33,7 @@ namespace UI.Drafting {
             AmountUgui.SetText(amountText);
 
             // TODO: do not hard code modifiers
-            modifiers = new List<UnitModifier> {new DoubleUnitHealthModifier(), new DoubleUnitAttackModifier()};
+            modifiers = new List<UnitModifier> {new DoubleUnitEnduranceModifier(), new DoubleUnitStrengthModifier()};
             InitializeModifierButtons();
 
             Initialized = true;

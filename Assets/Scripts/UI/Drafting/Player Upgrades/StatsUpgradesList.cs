@@ -40,14 +40,9 @@ namespace UI.Drafting.Player_Upgrades {
             Owner.RemoveModifier(model, modifier);
         }
 
-        public void UpdateModel(UnitSpawnData m) {
-            Model = m;
-            UpdateList();
-        }
-
         public void UpdateList() {
             ClearList();
-            CreateList();
+            CreateList(preferredParent);
         }
 
         private void CreateList(GameObject preferredParent = null) {
@@ -56,10 +51,8 @@ namespace UI.Drafting.Player_Upgrades {
             ListItems = new List<StatsListItem>();
             var stats = new Stats();
 
-            AddListItem(Model, stats.Agility, preferredParent);
             AddListItem(Model, stats.Strength, preferredParent);
             AddListItem(Model, stats.Endurance, preferredParent);
-            AddListItem(Model, stats.Intelligence, preferredParent);
             AddListItem(Model, stats.MovementSpeed, preferredParent);
         }
 

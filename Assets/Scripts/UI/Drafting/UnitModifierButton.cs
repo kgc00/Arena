@@ -58,7 +58,10 @@ namespace UI.Drafting {
             if (SpawnModel.modifiers.Count == 0) return;
             
             SpawnModel.modifiers.ForEach(m => {
-                if (m == Modifier.GetType()) toggle.isOn = true;
+                if (m == Modifier.GetType()) {
+                    toggle.isOn = true;
+                    toggle.enabled = false;
+                }
             });
         }
     }

@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Common;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.Stats;
 using Data.Types;
-using Data.UnitData;
 using Modifiers.SpawnModifiers;
 using TMPro;
 using UnityEngine;
@@ -23,6 +21,7 @@ namespace UI.Drafting.Player_Upgrades {
 
         private List<GameObject> buttonInstances;
         [SerializeField] private TextMeshProUGUI textUgui;
+
         public StatsListItem Initialize(UnitSpawnData m, Statistic s, IModifierHandler<UnitSpawnData, UnitModifier> o) {
             Owner = o;
             Model = m.CreateInstance();
@@ -38,8 +37,21 @@ namespace UI.Drafting.Player_Upgrades {
             switch (s.Type) {
                 case StatType.MovementSpeed:
                     return new List<UnitModifier> {
-                        new UnitMovementSpeedIncreaseSmallModifier(), new UnitMovementSpeedIncreaseMediumModifier(),
+                        new UnitMovementSpeedIncreaseSmallModifier(),
+                        new UnitMovementSpeedIncreaseMediumModifier(),
                         new DoubleUnitMovementSpeedModifier()
+                    };
+                case StatType.Strength:
+                    return new List<UnitModifier> {
+                        new UnitStrengthIncreaseSmallModifier(),
+                        new UnitStrengthIncreaseMediumModifier(),
+                        new DoubleUnitStrengthModifier()
+                    };
+                case StatType.Endurance:
+                    return new List<UnitModifier> {
+                        new UnitEnduranceIncreaseSmallModifier(),
+                        new UnitEnduranceIncreaseMediumModifier(),
+                        new DoubleUnitEnduranceModifier()
                     };
                 default:
                     return new List<UnitModifier>();
@@ -56,6 +68,5 @@ namespace UI.Drafting.Player_Upgrades {
                     .Initialize(Model, mod, Owner);
             }
         }
-
     }
 }

@@ -9,6 +9,7 @@ using UnityEngine;
 namespace Data {
     public class PersistentData : Singleton<PersistentData> {
         public Dictionary<ControlType, HordeSpawnData> HordeModel { get; private set; }
+        public float currency = 0f;
 
         [SerializeField] private HordeSpawnData playerspawndata;
         [SerializeField] private HordeSpawnData emptyspawndata;

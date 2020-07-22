@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WaveSpawnData
   m_EditorClassIdentifier: 
   wave:
-  - {fileID: 11400000, guid: 4e26e7349818f224fbbb308c3e8eda30, type: 2}
+  - {fileID: 11400000, guid: 0fcfb2bac0bbf584e9f0e74f26bdf4dd, type: 2}
   number: 0
   modifiers: []

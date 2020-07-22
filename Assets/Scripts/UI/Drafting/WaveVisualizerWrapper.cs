@@ -39,12 +39,12 @@ namespace UI.Drafting {
         
         protected override void CreateList(GameObject p = null) => base.CreateList(preferredParent);
 
-        public void AddModifier(UnitSpawnData spawnModel, UnitModifier modifier) {
-            Owner.AddUnitModifier(spawnModel, Model, modifier);
+        public void AddModifier(UnitSpawnData spawnModel, UnitModifier modifier, int cost) {
+            Owner.AddUnitModifier(spawnModel, Model, modifier, cost);
         }
 
-        public void RemoveModifier(UnitSpawnData spawnModel, UnitModifier modifier) {
-            Owner.RemoveUnitModifier(spawnModel, Model, modifier);
+        public void RemoveModifier(UnitSpawnData spawnModel, UnitModifier modifier, int cost) {
+            Owner.RemoveUnitModifier(spawnModel, Model, modifier, cost);
         }
     }
 }

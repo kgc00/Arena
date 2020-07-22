@@ -38,17 +38,21 @@ namespace UI.Drafting.Player_Upgrades {
 
         public bool Initialized { get; private set; }
 
-        public void AddModifier(UnitSpawnData model, UnitModifier modifier) {
+        public void AddModifier(UnitSpawnData model, UnitModifier modifier, int cost) {
             if(DoesExist(modifier, Model)) return;
             Model.modifiers.Add(modifier.GetType());
+            PersistentData.Instance.currency -= cost;
         }
 
-        public void RemoveModifier(UnitSpawnData model, UnitModifier modifier) {
+        public void RemoveModifier(UnitSpawnData model, UnitModifier modifier, int cost) {
     
             // Handles case where modifier was already added
             // and new instance of same type is being supplied by input
             var m = GetModifier(modifier, Model);
-            if (m != null) Model.modifiers.Remove(m);
+            if (m != null) {
+                Model.modifiers.Remove(m);
+                PersistentData.Instance.currency += cost;
+            }
         }
         
         

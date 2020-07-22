@@ -61,20 +61,27 @@ namespace UI.Drafting {
 
         public void UpdateVisualizerList(int i) => waveVisualizerWrapper.UpdateModel(Model.Waves[i]);
 
-        public void AddUnitModifier(UnitSpawnData unitSpawnData, WaveSpawnData waveSpawnData, UnitModifier mod) {
+        public void AddUnitModifier(UnitSpawnData unitSpawnData, WaveSpawnData waveSpawnData, UnitModifier mod, int cost) {
             if (!FindDataStructure(unitSpawnData, waveSpawnData, mod, out var selectedUnit)) return;
 
-            if (!DoesExist(mod, selectedUnit)) selectedUnit.modifiers.Add(mod.GetType());
+            if (!DoesExist(mod, selectedUnit)) {
+                selectedUnit.modifiers.Add(mod.GetType());
+                PersistentData.Instance.currency += cost;
+            }
         }
 
 
-        public void RemoveUnitModifier(UnitSpawnData unitSpawnData, WaveSpawnData waveSpawnData, UnitModifier mod) {
+        public void RemoveUnitModifier(UnitSpawnData unitSpawnData, WaveSpawnData waveSpawnData, UnitModifier mod, int cost) {
             if (!FindDataStructure(unitSpawnData, waveSpawnData, mod, out var selectedUnit)) return;
 
             // Handles case where modifier was already added
             // and new instance of same type is being supplied by input
             var m = GetModifier(mod, selectedUnit);
-            if (m != null) selectedUnit.modifiers.Remove(m);
+            if (m != null) {
+                selectedUnit.modifiers.Remove(m);
+                PersistentData.Instance.currency -= cost;
+            }
+            
         }
 
 

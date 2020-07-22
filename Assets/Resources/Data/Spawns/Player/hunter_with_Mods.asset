@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 197cc9a3fcb24cb39899456fe9eb7090, type: 3}
-  m_Name: UnitSpawnData
+  m_Name: hunter_with_Mods
   m_EditorClassIdentifier: 
   Unit: 0
   Amount: 1

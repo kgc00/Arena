@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using TypeReferences;
+using UI.Drafting.Player_Upgrades;
 
 namespace UI.Drafting {
     [RequireComponent(typeof(Toggle))]
@@ -19,6 +20,8 @@ namespace UI.Drafting {
         [SerializeField] public Image buttonImage;
         private Toggle toggle;
         private Color[] buttonColors;
+        public int cost;
+        private bool isPlayerUpgrade;
         
         [SerializeField] private TextMeshProUGUI textUgui;
 
@@ -33,11 +36,13 @@ namespace UI.Drafting {
 
         private void ToggleValueChanged(Toggle change) {
             if (change.isOn) {
-                Owner.AddModifier(SpawnModel, Modifier);
+                if (isPlayerUpgrade && cost > PersistentData.Instance.currency) return;
+                Owner.AddModifier(SpawnModel, Modifier, cost);
                 buttonImage.color = buttonColors[1];
             }
             else {
-                Owner.RemoveModifier(SpawnModel, Modifier);
+                // if (isPlayerUpgrade && cost > PersistentData.Instance.currency) return;
+                Owner.RemoveModifier(SpawnModel, Modifier, cost);
                 buttonImage.color = buttonColors[0];
             }
         }
@@ -50,8 +55,17 @@ namespace UI.Drafting {
             iconImage.sprite = Resources.Load<Sprite>(Modifier.IconAssetPath());
             textUgui.SetText(Modifier.DisplayText());
             SetInitialToggleState();
+            SetCost();
             Initialized = true;
             return this;
+        }
+
+        private void SetCost() {
+            if (Owner is StatsUpgradesList o) {
+                cost = 2;
+                isPlayerUpgrade = true;
+            }
+            else cost = 1;
         }
 
         private void SetInitialToggleState() {
@@ -64,5 +78,7 @@ namespace UI.Drafting {
                 }
             });
         }
+        
+        
     }
 }

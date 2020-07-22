@@ -32,12 +32,12 @@ namespace UI.Drafting.Player_Upgrades {
 
         private void OnDisable() => ClearList();
 
-        public void AddModifier(UnitSpawnData model, UnitModifier modifier) {
-            Owner.AddModifier(model, modifier);
+        public void AddModifier(UnitSpawnData model, UnitModifier modifier, int cost) {
+            Owner.AddModifier(model, modifier, cost);
         }
 
-        public void RemoveModifier(UnitSpawnData model, UnitModifier modifier) {
-            Owner.RemoveModifier(model, modifier);
+        public void RemoveModifier(UnitSpawnData model, UnitModifier modifier, int cost) {
+            Owner.RemoveModifier(model, modifier, cost);
         }
 
         public void UpdateList() {

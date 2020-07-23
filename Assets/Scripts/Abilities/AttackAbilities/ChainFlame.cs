@@ -17,20 +17,21 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             OnAbilityActivationFinished(Owner, this);
 
-            var updatedTargetLocation = targetLocation;
+            Vector3? updatedTargetLocation = targetLocation;
             
             for (int i = 0; i < iterations; i++) {
-                updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation).position;
+                updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation.Value)?.position;
+                if (updatedTargetLocation == null) yield break;
                 var projectile = SpawnProjectile();
-                InitializeProjectile(updatedTargetLocation, projectile);
+                InitializeProjectile(updatedTargetLocation.Value, projectile);
                 yield return new WaitForSeconds(delayBetweenProjectiles);
             }
             
-            updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation).position;
+            updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation.Value).position;
             var aoeProjectile = SpawnProjectile();
-            InitializeAoEProjectile(updatedTargetLocation, aoeProjectile);
+            InitializeAoEProjectile(updatedTargetLocation.Value, aoeProjectile);
             
-            MonoHelper.SpawnEnemyIndicator(updatedTargetLocation, AreaOfEffectRadius, aoeProjectile);
+            MonoHelper.SpawnEnemyIndicator(updatedTargetLocation.Value, AreaOfEffectRadius, aoeProjectile);
             
             yield return new WaitForSeconds(delayBetweenProjectiles);
             

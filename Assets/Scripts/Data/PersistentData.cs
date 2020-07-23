@@ -8,27 +8,52 @@ using UnityEngine;
 
 namespace Data {
     public class PersistentData : Singleton<PersistentData> {
-        public Dictionary<ControlType, HordeSpawnData> HordeModel { get; private set; }
-        public float currency = 0f;
+        public Dictionary<ControlType, HordeSpawnData> CurrentHordeModel { get; private set; }
+        public float currency;
 
         [SerializeField] private HordeSpawnData playerspawndata;
-        [SerializeField] private HordeSpawnData emptyspawndata;
+        // [SerializeField] private HordeSpawnData emptyspawndata; // debugging
+        [SerializeField] private List<HordeSpawnData> enemyHordes;
+        [SerializeField] private int curIndex;
+
+        public List<HordeSpawnData> EnemyHordes {
+            get => enemyHordes;
+            private set => enemyHordes = value;
+        }
+
+        public int CurIndex {
+            get => curIndex;
+            private set => curIndex = value;
+        }
 
         protected override void Awake() {
             base.Awake();
-            HordeModel = new Dictionary<ControlType, HordeSpawnData> {
+            CurrentHordeModel = new Dictionary<ControlType, HordeSpawnData> {
                 {ControlType.Local, playerspawndata.CreateInstance()},
-                {ControlType.Ai, emptyspawndata.CreateInstance()}
+                {ControlType.Ai, enemyHordes[curIndex].CreateInstance()}
             };
         }
 
-        public void UpdateHordeModel(Dictionary<ControlType, HordeSpawnData> update) {
-            foreach (var kvp in update) {
-                if (HordeModel.ContainsKey(kvp.Key))
-                    HordeModel[kvp.Key] = update[kvp.Key];
-                else
-                    HordeModel.Add(kvp.Key, update[kvp.Key]);
+        public void UpdateHordeModel(ControlType ctrlType, HordeSpawnData horde) {
+            foreach (var spawnData in CurrentHordeModel[ctrlType].Waves[0].wave) {
+                print(spawnData.Unit);
             }
+            
+            foreach (var spawnData in horde.Waves[0].wave) {
+                print(spawnData.Unit);
+            }
+            
+            CurrentHordeModel[ctrlType] = horde;
+            
+            foreach (var spawnData in CurrentHordeModel[ctrlType].Waves[0].wave) {
+                print(spawnData.Unit);
+            }
+        }
+
+        public void IncrementHordeModel() {
+            print("increment called");
+            CurIndex++;
+            CurrentHordeModel[ControlType.Ai] = EnemyHordes[CurIndex];
         }
     }
 }

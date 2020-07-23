@@ -28,7 +28,7 @@ namespace UI.Drafting.Player_Upgrades {
 
         public PlayerUpgradeManager Initialize(UnitSpawnData m, PlayerUpgradeManager o) {
             Owner = o;
-            Model = m ? m.CreateInstance() : PersistentData.Instance.HordeModel[ControlType.Local].Waves[0].wave[0].CreateInstance();
+            Model = m ? m.CreateInstance() : PersistentData.Instance.CurrentHordeModel[ControlType.Local].Waves[0].wave[0].CreateInstance();
             statsUpgradesList.Initialize(Model, this);
             // abilitiesUpgradesList.Initialize(Model, this);
             statsUpgradesList.UpdateList();
@@ -63,11 +63,10 @@ namespace UI.Drafting.Player_Upgrades {
             selectedUnit.modifiers.FirstOrDefault(m => m.Type == mod.GetType());
 
         public void HandleContinueClick() {
-            var hsd = PersistentData.Instance.HordeModel[ControlType.Local];
+            var hsd = PersistentData.Instance.CurrentHordeModel[ControlType.Local];
             hsd.Waves[0].wave[0] = Model;
-            var dict = new Dictionary<ControlType, HordeSpawnData> {{ControlType.Local, hsd}};
-            PersistentData.Instance.UpdateHordeModel(dict);
-            LevelDirector.Instance.LoadArena();
+            PersistentData.Instance.UpdateHordeModel(ControlType.Local, hsd);
+            LevelDirector.Instance.LoadDrafting();
         }
     }
 }

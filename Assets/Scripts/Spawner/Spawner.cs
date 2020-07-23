@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Arena;
 using Data;
 using Data.SpawnData;
 using Data.Types;
@@ -35,11 +36,9 @@ namespace Spawner {
 
         #endregion
 
-        private void OnEnable() {
+        private void Start() {
             if (hordeSpawnData == null) {
-                if (PersistentData.Instance.HordeModel.TryGetValue(owningPlayer.ControlType, out var hsd))
-                    hordeSpawnData = hsd;
-                else return;
+                hordeSpawnData = PersistentData.Instance.CurrentHordeModel[owningPlayer.ControlType];
             }
 
             transform.position = new Vector3(xPos, 0, zPos);
@@ -65,6 +64,13 @@ namespace Spawner {
             Destroy(spawnVfx);
 
             spawnUnit();
+        }
+
+        public void HandleWavesCleared() {
+            print("HANDLE WAVES CLEARED");
+            if (owningPlayer.ControlType == ControlType.Ai) {
+                FindObjectOfType<ArenaManager>().WavesCleared();
+            }
         }
 
 #if UNITY_EDITOR

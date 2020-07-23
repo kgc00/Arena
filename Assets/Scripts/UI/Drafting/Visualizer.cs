@@ -49,7 +49,7 @@ namespace UI.Drafting {
 
         public Visualizer Initialize(HordeSpawnData m, Visualizer o) {
             Owner = o;
-            Model = m.CreateInstance();
+            Model = m ? m.CreateInstance() : PersistentData.Instance.CurrentHordeModel[ControlType.Ai].CreateInstance();
             Model.AssignWaveNumbers();
             visualizerHeader.Initialize(Model, this);
             waveVisualizerWrapper.Initialize(Model.Waves[0], this);
@@ -105,8 +105,7 @@ namespace UI.Drafting {
             selectedUnit.modifiers.FirstOrDefault(m => m.Type == mod.GetType());
 
         public void HandleContinue() {
-            var dict = new Dictionary<ControlType, HordeSpawnData> {{ControlType.Ai, Model}};
-            PersistentData.Instance.UpdateHordeModel(dict);
+            PersistentData.Instance.UpdateHordeModel(ControlType.Ai, Model);
             LevelDirector.Instance.LoadArena();
         }
     }

@@ -6,5 +6,6 @@ namespace Common.Levels {
         public void LoadArena() => SceneManager.LoadScene((int) LevelIndex.Arena);
 
         public void LoadDrafting() => SceneManager.LoadScene((int) LevelIndex.Drafting);
+        public void LoadUpgrades() => SceneManager.LoadScene((int) LevelIndex.Upgrades);
     }
 }

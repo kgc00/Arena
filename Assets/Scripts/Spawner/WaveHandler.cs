@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Arena;
 using Data;
 using Data.Modifiers;
 using Data.SpawnData;
@@ -10,9 +11,9 @@ using Utils;
 
 namespace Spawner {
     public class WaveHandler {
-        private HordeSpawnData hordeSpawnData;
+        public HordeSpawnData hordeSpawnData { get; private set; }
         private WaveSpawnData currentWave;
-        private int currentIndex;
+        public int currentIndex { get; private set; }
         private Spawner owner;
 
         public WaveHandler(HordeSpawnData table, Spawner owner) {
@@ -46,12 +47,13 @@ namespace Spawner {
                     yield return new WaitForSeconds(delayBetweenUnits);
                 }
             }
+        }
 
-            // no waves left ? break
-            if (hordeSpawnData.Waves.Count - 1 <= currentIndex) yield break;
-
+        public void IncrementIndex() {
             currentIndex++;
-            currentWave = hordeSpawnData.Waves[currentIndex];
+            if (currentIndex <= hordeSpawnData.Waves.Count -1) {
+                currentWave = hordeSpawnData.Waves[currentIndex];
+            }
         }
 
         private static Vector3 GetRandomSpawnPos(Vector3 extentNegative, Vector3 extentPositive) {

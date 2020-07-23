@@ -73,7 +73,6 @@ namespace Units
             
             Initialized = true;
             state.Enter ();
-            print(StatsComponent.Stats.MovementSpeed.Value);
             return this;
         }
         

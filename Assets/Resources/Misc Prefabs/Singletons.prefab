@@ -44,8 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa15dc9d15040ad87a17cb3aed74bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currency: 0
   playerspawndata: {fileID: 11400000, guid: cd615296ba708c242a4b783c6dfccfc9, type: 2}
-  emptyspawndata: {fileID: 11400000, guid: 6b79ce7985cc3a34bacf410e8dc6d89d, type: 2}
+  enemyHordes:
+  - {fileID: 11400000, guid: 6b79ce7985cc3a34bacf410e8dc6d89d, type: 2}
+  - {fileID: 11400000, guid: de60e7854ba749b45965b20da4643144, type: 2}
+  - {fileID: 11400000, guid: d9a51eb62276d4644b6ebbef93668afa, type: 2}
+  curIndex: 0
 --- !u!114 &6496318964286935798
 MonoBehaviour:
   m_ObjectHideFlags: 0

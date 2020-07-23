@@ -188,6 +188,8 @@ namespace Utils
 
         public static Vector3 GetWorldPosition()
         {
+            if (cam == null) cam = Camera.main;
+            
             if (cam != null)
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -200,6 +202,7 @@ namespace Utils
                 }
             }
 
+            Debug.Log("Camera was NULL");
             return Vector3.zero;
         }
     }

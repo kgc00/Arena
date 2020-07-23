@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d180c0f3989f49f5a459b8dcfbaa8711, type: 3}
-  m_Name: Spawner Data
+  m_Name: AI Spawner Data
   m_EditorClassIdentifier: 
   spawnStartupTime: 2
-  delayBetweenSpawns: 0
-  delayBetweenWaves: 10
+  delayBetweenSpawns: 1
+  delayBetweenWaves: 6

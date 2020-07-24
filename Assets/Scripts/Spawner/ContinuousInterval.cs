@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace Spawner {
     public class ContinuousInterval : Interval, IUnitInterval {
-        public float SpawnStartupTime { get; private set; }
-        public float DelayBetweenSpawns { get; private set; }
-        public bool Enabled { get; private set; }
-        public void Enable() => Enabled = true;
-        public void Disable() => Enabled = false;
-        public float DelayBetweenWaves { get; private set; } = 10f;
+        public override float SpawnStartupTime { get; protected set; }
+        public override float DelayBetweenSpawns { get; protected set; }
+        public override bool Enabled { get; protected set; }
+        public override void Enable() => Enabled = true;
+        public override void Disable() => Enabled = false;
+        public override float DelayBetweenWaves { get; protected set; } = 10f;
         public float CurrentDelay { get; private set; } = 0f;
         public List<Unit> CurrentWave { get; private set; } = new List<Unit>();
 
@@ -33,7 +33,7 @@ namespace Spawner {
         private void CheckForPlayerDeath(Unit obj) {
             if(obj.Owner.ControlType == ControlType.Local) Disable();
         }
-        public void HandleUpdate() {
+        public override void HandleUpdate() {
             if (!Enabled) return;
 
             // return if wave is alive

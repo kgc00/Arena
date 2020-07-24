@@ -32,14 +32,24 @@ namespace UI.Drafting {
             waveVisualizerWrapper = GetComponentInChildren<WaveVisualizerWrapper>() ??
                                     throw new Exception($"Unable to get WaveWrapper component in {name}");
 
+        }
+
+        private void Start() {
             Initialize(Model, this);
+            UpdateUI();
+        }
+
+        private void UpdateUI() {
+            waveVisualizerWrapper.UpdateModel(Model.Waves[0]);
+            visualizerHeader.UpdateList();
+            waveVisualizerWrapper.UpdateList();
         }
 
         private void OnEnable() {
             WaveButton.OnWaveButtonClick += UpdateVisualizerList;
-            waveVisualizerWrapper.UpdateModel(Model.Waves[0]);
-            visualizerHeader.UpdateList();
-            waveVisualizerWrapper.UpdateList();
+            if (Initialized) {
+                UpdateUI();
+            }
         }
 
         private void OnDisable() {

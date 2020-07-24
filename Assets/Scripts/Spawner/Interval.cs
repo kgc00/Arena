@@ -6,13 +6,13 @@ namespace Spawner {
     
     public abstract class Interval : MonoBehaviour, IInterval
     {
-        public IInterval IntervalType { get; protected set; }
-        public Spawner Owner { get; private set; }
-        public Func<IEnumerator> Spawn { get; private set; }
-        public bool Enabled { get; protected set; }
-        public float SpawnStartupTime { get; protected set; }
-        public float DelayBetweenSpawns { get; protected set; }
-        public float DelayBetweenWaves { get; protected set; }
+        public virtual IInterval IntervalType { get; protected set; }
+        protected Spawner Owner { get; private set; }
+        protected Func<IEnumerator> Spawn { get; private set; }
+        public virtual bool Enabled { get; protected set; }
+        public virtual float SpawnStartupTime { get; protected set; }
+        public virtual float DelayBetweenSpawns { get; protected set; }
+        public virtual float DelayBetweenWaves { get; protected set; }
 
         public virtual Interval Initialize(Func<IEnumerator> spawn, Spawner owner, float delayBetweenWaves, float delayBetweenSpawns, float spawnStartupTime)
         {
@@ -24,11 +24,11 @@ namespace Spawner {
             return this;
         }
 
-        public void Enable() { }
+        public virtual void Enable() { }
 
-        public void Disable() { }
+        public virtual void Disable() { }
 
-        public void HandleUpdate() { }
+        public virtual void HandleUpdate() { }
     }
 
 }

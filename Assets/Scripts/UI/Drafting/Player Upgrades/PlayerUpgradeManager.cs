@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities.Modifiers;
 using Common;
 using Common.Levels;
 using Data;
@@ -13,7 +14,8 @@ using UnityEngine;
 
 namespace UI.Drafting.Player_Upgrades {
     public class PlayerUpgradeManager : MonoBehaviour,
-        IModifierHandler<UnitSpawnData, UnitModifier> {
+        IModifierHandler<UnitSpawnData, UnitModifier>,
+        IModifierHandler<UnitSpawnData, AbilityModifier> {
         public PlayerUpgradeManager Owner { get; private set; }
         [SerializeField] private UnitSpawnData model;
 
@@ -67,6 +69,14 @@ namespace UI.Drafting.Player_Upgrades {
             hsd.Waves[0].wave[0] = Model;
             PersistentData.Instance.UpdateHordeModel(ControlType.Local, hsd);
             LevelDirector.Instance.LoadDrafting();
+        }
+
+        public void AddModifier(UnitSpawnData model, AbilityModifier modifier, int cost) {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveModifier(UnitSpawnData model, AbilityModifier modifier, int cost) {
+            throw new NotImplementedException();
         }
     }
 }

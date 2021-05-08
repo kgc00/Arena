@@ -35,6 +35,7 @@ namespace State.ChargingAiStates
 
         public override UnitState HandleUpdate(InputValues input) {
             // TODO: add some leashing mechanic or vision limiter
+            if (playerTransform == null) return new IdleUnitState(Owner);
 
             if (ShouldEnterIdle(out var unitState)) return unitState;
 

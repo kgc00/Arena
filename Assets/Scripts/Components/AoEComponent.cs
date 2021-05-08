@@ -62,19 +62,17 @@ namespace Common
         private void InitializeCollider(ColliderParams colliderParams) {
             if (collider != null) return;
             
-            if (colliderParams is BoxParams) {
-                var p = (BoxParams) colliderParams;
+            if (colliderParams is BoxParams boxParams) {
                 var c = gameObject.AddComponent<BoxCollider>();
-                Bounds = p.Bounds;
+                Bounds = boxParams.Bounds;
                 c.size = Bounds;
                 collider = c;
             }
 
-            if (colliderParams is SphereParams) {
-                var p = (SphereParams) colliderParams;
+            if (colliderParams is SphereParams sphereParams) {
                 var c = gameObject.AddComponent<SphereCollider>();
-                Radius = p.Radius;
-                c.radius = p.Radius;
+                Radius = sphereParams.Radius;
+                c.radius = sphereParams.Radius;
                 collider = c;
             }
 

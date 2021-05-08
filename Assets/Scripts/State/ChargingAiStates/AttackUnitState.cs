@@ -51,6 +51,8 @@ namespace State.ChargingAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
+            if (playerTransform == null) return new IdleUnitState(Owner);
+            
             if (ShouldEnterIdle(out var unitState)) return unitState;
             if (ShouldEnterChase(out unitState)) return unitState;
             if (ShouldAttack(out unitState)) return unitState;
@@ -75,8 +77,7 @@ namespace State.ChargingAiStates
         {
             unitState = null;
             
-            if (playerTransform != null ||
-                playerTransform.GetComponentInChildren<Unit>().StatusComponent.IsVisible()) return false;
+            if (playerTransform.GetComponentInChildren<Unit>().StatusComponent.IsVisible()) return false;
             
             unitState = new IdleUnitState(Owner);
             return true;

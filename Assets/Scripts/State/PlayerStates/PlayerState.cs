@@ -38,7 +38,8 @@ namespace State.PlayerStates
         private void UpdatePlayerPositionForce(InputValues input, Vector3 motion, float movementSpeed)
         {
             if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotMove)) {
-                Owner.Rigidbody.velocity = Vector3.zero;
+                // i don't think we need this
+                // Owner.Rigidbody.velocity = Vector3.zero;
                 return;
             }
 

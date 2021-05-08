@@ -202,7 +202,6 @@ namespace Utils
                 }
             }
 
-            Debug.Log("Camera was NULL");
             return Vector3.zero;
         }
     }

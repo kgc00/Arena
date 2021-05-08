@@ -9,7 +9,7 @@ namespace Controls
 
         [SerializeField] private Rigidbody body; 
         [SerializeField] private PlayerInputMappings playerInput;
-    
+
         // #region MultipleHandlers
         public void OnEnable()
         {
@@ -50,13 +50,11 @@ namespace Controls
             //  is not overwritten by subsequent input calls on the same frame.  If we modify this if statement
             //  to also set false in certain conditions, the 'true' state will never make it to consumers.
 
-
-            // HasStartedFire must be reset in late update to keep an accurate picture of user input.
-            if (context.phase == InputActionPhase.Started &&
-                context.interaction is UnityEngine.InputSystem.Interactions.PressInteraction) {
-                InputValues.ButtonValues[skill].HasStartedPress = true;
+            if (context.performed) {
+                if (context.control.IsActuated()) InputValues.ButtonValues[skill].HasPerformedPress = true;
+                if (!context.control.IsActuated()) InputValues.ButtonValues[skill].HasReleasedPress = true;
             }
-
+            
             InputValues.ButtonValues[skill].PressValue = context.ReadValue<Single>();
             InputValues.ButtonValues[skill].PressPhase = context.phase;
             InputValues.ButtonValues[skill].PressInteraction = context.interaction;

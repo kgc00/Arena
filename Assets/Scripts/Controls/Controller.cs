@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Controls
 {
     public abstract class Controller : MonoBehaviour {
+        [field: SerializeField] public bool QuickCast { get; protected set; } 
         public Unit Owner { get; protected set; }
         public virtual InputValues InputValues { get; protected set; } = new InputValues();
         

@@ -7,56 +7,54 @@ using UnityEngine;
 using Utils;
 using Utils.NotificationCenter;
 
-namespace State.PlayerStates
-{
-    public class StateSkillBehaviour
-    {
+namespace State.PlayerStates {
+    public class StateSkillBehaviour {
         public Unit Owner { get; private set; }
 
-        public StateSkillBehaviour(Unit owner)
-        {
+        public StateSkillBehaviour(Unit owner) {
             Owner = owner;
         }
 
-        public bool ShouldActivateSkill([CanBeNull] InputValues input, out UnitState unitState)
-        {
+        public bool ShouldActivateSkill(InputValues input, bool quickCast, out UnitState unitState) {
             unitState = null;
-            
+
             if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotAct)) return false;
-
-            foreach (var kvp in input.ButtonValues)
-            {
-                var buttonVal = kvp.Value;
+            
+            foreach (var kvp in input.ButtonValues) {
+                var press = kvp.Value;
                 var type = kvp.Key;
-                bool notFiring = buttonVal.PressValue < 0.4f || !buttonVal.HasStartedPress;
-                if (notFiring) continue;
-
-                (Ability, Vector3) activationData = (null, Vector3.zero);
-
-                if (input.ActiveControl == ControllerType.Delta)
-                    activationData = HandleSkillActivation(MouseHelper.GetWorldPosition(),
-                        type);
-                else if (input.ActiveControl == ControllerType.GamePad)
-                    activationData = HandleSkillActivation(RotationHelper.GetUnitForward(Owner),
-                        type);
-                else
-                    Debug.Log("updating for neither");
-
-                if (activationData.Item1 == null) return false;
-
-                var ability = activationData.Item1;
-                var target = activationData.Item2;
+                Debug.Log(press.HasReleasedPress);
+                var notPressing = quickCast ? !press.HasReleasedPress : !press.HasPerformedPress;
+                if (notPressing) continue;
                 
-                unitState = new ActingUnitState(Owner, ability, target);
+                Vector3 targetLocation = Vector3.zero;
+                switch (input.ActiveControl) {
+                    case ControllerType.Delta:
+                        targetLocation = MouseHelper.GetWorldPosition();
+                        break;
+                    case ControllerType.GamePad:
+                        targetLocation = RotationHelper.GetUnitForward(Owner);
+                        break;
+                    default: 
+                        Debug.Log("updating for neither");
+                        break;
+                }
+
+                var intent = HandleSkillActivation(targetLocation, type);
+
+                if (intent.ability == null) return false;
+
+                unitState = new ActingUnitState(Owner, intent.ability, intent.targetLocation);
                 return true;
             }
 
             return false;
         }
-        private (Ability, Vector3) HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType)
-        {
+
+        private (Ability ability, Vector3 targetLocation) HandleSkillActivation(Vector3 targetLocation,
+            ButtonType buttonType) {
             Owner.AbilityComponent.equippedAbilities.TryGetValue(buttonType, out var ability);
-            
+
             if (ability == null || ability.Cooldown.IsOnCooldown) return (null, Vector3.zero);
 
             return (ability, targetLocation);

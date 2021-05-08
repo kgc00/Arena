@@ -42,7 +42,7 @@ namespace Controls
                     ""id"": ""57e974dd-8bd4-4c1a-9ab2-2e87ddce7131"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold""
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Skill 2"",
@@ -50,7 +50,7 @@ namespace Controls
                     ""id"": ""1faefd06-eb51-4467-89dd-69e82b153322"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold""
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Skill 3"",
@@ -58,7 +58,7 @@ namespace Controls
                     ""id"": ""c143cae0-8497-49d8-97d0-5c8c8d5161b3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold""
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Skill 4"",
@@ -66,7 +66,7 @@ namespace Controls
                     ""id"": ""c2a4656c-c30d-45af-904c-193badd42561"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold""
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Normal 1"",
@@ -74,7 +74,7 @@ namespace Controls
                     ""id"": ""e8758806-20ed-415e-a002-893355be5959"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold""
+                    ""interactions"": ""Press(behavior=2)""
                 },
                 {
                     ""name"": ""Normal 2"",
@@ -82,7 +82,7 @@ namespace Controls
                     ""id"": ""c56e4784-63b7-4e91-b2ca-eeb3162c3256"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press,Hold""
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [

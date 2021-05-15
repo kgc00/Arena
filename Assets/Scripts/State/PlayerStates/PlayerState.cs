@@ -15,9 +15,9 @@ namespace State.PlayerStates
     public class PlayerState : UnitState
     {
         protected readonly float movementThreshold = 0.1f;
-        protected StateSkillBehaviour skillBehaviour;
+        protected readonly StateSkillBehaviour skillBehaviour;
 
-        public PlayerState(Unit owner) : base(owner)
+        protected PlayerState(Unit owner) : base(owner)
         {
             skillBehaviour = new StateSkillBehaviour(owner);
         }

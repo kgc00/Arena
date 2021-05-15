@@ -40,7 +40,7 @@ namespace Abilities.AttackAbilities
 
             // instantiation
             return  Instantiate(
-                Resources.Load("Projectiles/Projectile", typeof(GameObject)),
+                Resources.Load("Misc Prefabs/Projectile", typeof(GameObject)),
                 spawnPos, 
                 rotation
             ) as GameObject;

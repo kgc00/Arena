@@ -15,7 +15,7 @@ namespace State.PlayerStates {
             Owner = owner;
         }
 
-        public bool ShouldActivateSkill(InputValues input, bool quickCast, out UnitState unitState) {
+        public bool ShouldActivateSkill(InputValues input, out UnitState unitState) {
             unitState = null;
 
             if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotAct)) return false;
@@ -23,41 +23,51 @@ namespace State.PlayerStates {
             foreach (var kvp in input.ButtonValues) {
                 var press = kvp.Value;
                 var type = kvp.Key;
-                Debug.Log(press.HasReleasedPress);
-                var notPressing = quickCast ? !press.HasReleasedPress : !press.HasPerformedPress;
-                if (notPressing) continue;
                 
-                Vector3 targetLocation = Vector3.zero;
-                switch (input.ActiveControl) {
-                    case ControllerType.Delta:
-                        targetLocation = MouseHelper.GetWorldPosition();
-                        break;
-                    case ControllerType.GamePad:
-                        targetLocation = RotationHelper.GetUnitForward(Owner);
-                        break;
-                    default: 
-                        Debug.Log("updating for neither");
-                        break;
+                if (press.HasPerformedPress) {
+                    var intent = FormIntent(input, type);
+                    
+                    if (intent.ability == null) continue;
+                    
+                    this.PostNotification(NotificationType.AbilityWillActivate, intent);
                 }
+                
+                if (press.HasReleasedPress) {
+                    var intent = FormIntent(input, type);
 
-                var intent = HandleSkillActivation(targetLocation, type);
-
-                if (intent.ability == null) return false;
-
-                unitState = new ActingUnitState(Owner, intent.ability, intent.targetLocation);
-                return true;
+                    if (intent.ability == null) return false;
+                    
+                    unitState = new ActingUnitState(Owner, intent.ability, intent.targetLocation);
+                    this.PostNotification(NotificationType.AbilityDidActivate, intent);
+                    return true;
+                }
             }
-
             return false;
         }
 
-        private (Ability ability, Vector3 targetLocation) HandleSkillActivation(Vector3 targetLocation,
-            ButtonType buttonType) {
+        private PlayerIntent FormIntent(InputValues input, ButtonType type) {
+            Vector3 targetLocation = Vector3.zero;
+            switch (input.ActiveControl) {
+                case ControllerType.Delta:
+                    targetLocation = MouseHelper.GetWorldPosition();
+                    break;
+                case ControllerType.GamePad:
+                    targetLocation = RotationHelper.GetUnitForward(Owner);
+                    break;
+                default:
+                    Debug.Log("updating for neither");
+                    break;
+            }
+
+            return HandleSkillActivation(targetLocation, type);
+        }
+
+        private PlayerIntent HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType) {
             Owner.AbilityComponent.equippedAbilities.TryGetValue(buttonType, out var ability);
 
-            if (ability == null || ability.Cooldown.IsOnCooldown) return (null, Vector3.zero);
+            if (ability == null || ability.Cooldown.IsOnCooldown) return new PlayerIntent(null,Vector3.zero, buttonType);
 
-            return (ability, targetLocation);
+            return new PlayerIntent(ability, targetLocation, buttonType);
         }
     }
 }

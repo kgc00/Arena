@@ -10,6 +10,7 @@ namespace State.PlayerStates
     {
         public Ability Ability { get; private set; }
         public Vector3 TargetLocation;
+        private bool hasActivated;
 
         public ActingUnitState(Unit owner, Ability ability, Vector3 targetLocation) : base(owner)
         {
@@ -19,19 +20,23 @@ namespace State.PlayerStates
 
         public override void Enter()
         {
+                ActivateAbility();
+        }
+
+        private void ActivateAbility() {
+            Debug.Log("Activate ability = " + hasActivated);
             Owner.AbilityComponent.Activate(Ability, TargetLocation);
-            
-            Shader.SetGlobalFloat("_IndicatorType", Ability.IndicatorType);
+            hasActivated = true;
         }
 
         public override void Exit()
-        {
-            Shader.SetGlobalFloat("_IndicatorType", 0);
-        }
+        { }
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (Owner.AbilityComponent.State == AbilityComponentState.Idle)
+            Debug.Log(Owner.AbilityComponent.State);
+            Debug.Log(hasActivated);
+            if (Owner.AbilityComponent.State == AbilityComponentState.Idle && hasActivated)
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
 

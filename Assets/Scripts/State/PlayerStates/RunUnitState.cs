@@ -17,7 +17,7 @@ namespace State.PlayerStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            if (skillBehaviour.ShouldActivateSkill(input, Owner.Controller.QuickCast, out var unitState)) 
+            if (skillBehaviour.ShouldActivateSkill(input, out var unitState)) 
                 return unitState;
 
             var playerIsStationary = Math.Abs(input.Forward) <= movementThreshold && 

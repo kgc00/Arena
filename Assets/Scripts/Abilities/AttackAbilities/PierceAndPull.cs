@@ -13,11 +13,10 @@ namespace Abilities.AttackAbilities {
         private float preFireDelay = 0.5f;
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            yield return new WaitForSeconds(StartupTime);
-            
-            var pullGo = HandlePullEffect();
             Owner.InputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
-            Shader.SetGlobalFloat("_IndicatorType", 0);
+            yield return new WaitForSeconds(StartupTime);
+
+            var pullGo = HandlePullEffect(targetLocation);
             yield return new WaitForSeconds(preFireDelay);
             
             Destroy(pullGo);
@@ -28,10 +27,7 @@ namespace Abilities.AttackAbilities {
             OnAbilityActivationFinished(Owner, this);
         }
 
-        private GameObject HandlePullEffect() {
-            // player may have moved mouse during startup time, update target location 
-            var targetLocation = MouseHelper.GetWorldPosition();
-
+        private GameObject HandlePullEffect(Vector3 targetLocation) {
             var startLocation = Owner.transform.position;
             var heading = targetLocation - startLocation;
             var distance = heading.magnitude;

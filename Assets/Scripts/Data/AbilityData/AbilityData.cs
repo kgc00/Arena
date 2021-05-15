@@ -14,7 +14,7 @@ namespace Data.AbilityData {
         [SerializeField] public float energyCost; // energy/mana cost per use
         [SerializeField] public float force;
         [SerializeField] public Sprite icon;
-        [SerializeField] public int indicatorType; // Used by shader/ 0=none, 1=circular, 2=linear
+        [SerializeField] public IndicatorType indicatorType; 
         [SerializeField] public float projectileSpeed; // projectile speed 10f is average
         [SerializeField] public int range; // maximum targeting or travel range
         [SerializeField] public float startupTime; // delays attack to render targeting graphics

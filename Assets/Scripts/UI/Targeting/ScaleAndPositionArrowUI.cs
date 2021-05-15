@@ -26,11 +26,5 @@ namespace UI.Targeting {
             Quaternion rotation = Quaternion.LookRotation(Vector3.up, heading);
             image.transform.rotation = rotation;
         }
-        
-        private void OnGUI() {
-            GUILayout.BeginArea(new Rect(10, 100, 100, 100));
-            GUILayout.Box(heading.magnitude.ToString() );
-            GUILayout.EndArea();
-        }
     }
 }

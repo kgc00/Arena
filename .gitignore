@@ -4,6 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 [Pp]atAttack/
+Assets/Third Party/Paid/*
 Assets/Personal
 Assets/AssetStoreTools*
 Assets/Scripts/Debug

@@ -2436,6 +2436,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 0df0e3ee1499a25498db8c3ddbb120c7, type: 2}
   - {fileID: 2100000, guid: 38f9988fa98c8394da802b18b5a52408, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -2922,6 +2923,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fba33cf0f7626d74db520e89dc4bfa44, type: 2}
   - {fileID: 2100000, guid: caf01dd5152f3934d8079e6160aa3b1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -3237,7 +3239,7 @@ GameObject:
   - component: {fileID: 2637915664189274584}
   - component: {fileID: 2637915664189274566}
   - component: {fileID: 2637915664189274567}
-  - component: {fileID: 735118616465390952}
+  - component: {fileID: 6901004905728645752}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Untagged
@@ -3304,7 +3306,7 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
---- !u!114 &735118616465390952
+--- !u!114 &6901004905728645752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3381,6 +3383,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 0df0e3ee1499a25498db8c3ddbb120c7, type: 2}
   - {fileID: 2100000, guid: 4c57ae33a72fa6842bafed60410cd603, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

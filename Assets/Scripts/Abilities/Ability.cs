@@ -33,6 +33,8 @@ namespace Abilities
         public static Action<Unit, Ability> OnAbilityFinished { get; set; } = delegate { };
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);
+        public GameObject StartParticlePrefab { get; protected set; }
+        public GameObject EndParticlePrefab { get; protected set; }
         
         protected virtual void LateUpdate() => Cooldown.UpdateCooldown(Time.deltaTime);
 
@@ -52,6 +54,8 @@ namespace Abilities
             DisplayName = data.displayName;
             Description = data.description;
             EnergyCost = data.energyCost;
+            StartParticlePrefab = data.startParticlePrefab;
+            EndParticlePrefab = data.endParticlePrefab;
             return this;
         }
 

@@ -73,7 +73,7 @@ namespace Controls
             foreach (var keyValuePair in ButtonValues)
             {
                 keyValuePair.Value.HasPerformedPress = false;
-                keyValuePair.Value.HasReleasedPress = false;
+                keyValuePair.Value.HasPerformedRelease = false;
             }
         }
     }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Abilities;
 using Components;
 using Controls;
@@ -9,6 +11,7 @@ using UnityEngine;
 using Utils;
 using Players;
 using Status;
+using UI.Targeting;
 using UnityEngine.Serialization;
 
 namespace Units
@@ -16,9 +19,11 @@ namespace Units
     public class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser
     {
         public static Action<Unit> OnDeath = delegate {  };
+        public List<Renderer> Renderers { get; protected set; }
         public Player Owner { get; private set; }
         [FormerlySerializedAs("type")] public UnitType unitType;
         public Sprite Portrait { get; protected set; }
+        public TargetingUIController UIController { get; protected set; }
         [SerializeField] public Rigidbody Rigidbody { get; private set; }
         [SerializeField] public Animator Animator { get; private set; }
         private UnitState state;
@@ -37,7 +42,8 @@ namespace Units
             // properties & fields
             Owner = owner;
             Portrait = data.visualAssets.portrait;
-
+            Renderers = GetComponentsInChildren<Renderer>().ToList();
+            
             // Controller
             if (Controller == null) Controller = GetComponentInChildren<Controller>().Initialize(this);
             
@@ -67,7 +73,9 @@ namespace Units
             if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
 
             if (StatsComponent == null) StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
-            
+
+            // if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>.Initialize(this, data.statsData);
+                                                     
             // State
             state = StateHelper.StateFromEnum(data.state, this);
             
@@ -106,6 +114,10 @@ namespace Units
             Destroy(gameObject);
         }
 
+        public void SetShaderFloat(string name, float value) {
+            
+        }
+        
         private void OnDrawGizmos()
         {
             state?.HandleDrawGizmos();

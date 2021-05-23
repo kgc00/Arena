@@ -19,5 +19,7 @@ namespace Data.AbilityData {
         [SerializeField] public int range; // maximum targeting or travel range
         [SerializeField] public float startupTime; // delays attack to render targeting graphics
         [SerializeField] public AbilityType type; // used by factory to create ability
+        [SerializeField] public GameObject startParticlePrefab;
+        [SerializeField] public GameObject endParticlePrefab;
     }
 }

@@ -19,29 +19,38 @@ namespace State.PlayerStates {
             unitState = null;
 
             if (Owner.InputModifierComponent.InputModifier.HasFlag(InputModifier.CannotAct)) return false;
-            
-            foreach (var kvp in input.ButtonValues) {
-                var press = kvp.Value;
-                var type = kvp.Key;
-                
-                if (press.HasPerformedPress) {
-                    var intent = FormIntent(input, type);
-                    
-                    if (intent.ability == null) continue;
-                    
-                    this.PostNotification(NotificationType.AbilityWillActivate, intent);
-                }
-                
-                if (press.HasReleasedPress) {
+
+            if (Owner.Controller.PreviousPress.HasValue) {
+                var press = Owner.Controller.PreviousPress.Value.Value;
+                var type = Owner.Controller.PreviousPress.Value.Key;
+
+                if (press.HasPerformedRelease) {
                     var intent = FormIntent(input, type);
 
                     if (intent.ability == null) return false;
-                    
+
                     unitState = new ActingUnitState(Owner, intent.ability, intent.targetLocation);
                     this.PostNotification(NotificationType.AbilityDidActivate, intent);
+                    Owner.Controller.PreviousPress = null;
                     return true;
                 }
             }
+            else {
+                foreach (var kvp in input.ButtonValues) {
+                    var press = kvp.Value;
+                    var type = kvp.Key;
+
+                    if (press.HasPerformedPress) {
+                        var intent = FormIntent(input, type);
+
+                        if (intent.ability == null) continue;
+
+                        this.PostNotification(NotificationType.AbilityWillActivate, intent);
+                        Owner.Controller.PreviousPress = kvp;
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -65,7 +74,8 @@ namespace State.PlayerStates {
         private PlayerIntent HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType) {
             Owner.AbilityComponent.equippedAbilities.TryGetValue(buttonType, out var ability);
 
-            if (ability == null || ability.Cooldown.IsOnCooldown) return new PlayerIntent(null,Vector3.zero, buttonType);
+            if (ability == null || ability.Cooldown.IsOnCooldown)
+                return new PlayerIntent(null, Vector3.zero, buttonType);
 
             return new PlayerIntent(ability, targetLocation, buttonType);
         }

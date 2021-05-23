@@ -52,7 +52,7 @@ namespace Controls
 
             if (context.performed) {
                 if (context.control.IsActuated()) InputValues.ButtonValues[skill].HasPerformedPress = true;
-                if (!context.control.IsActuated()) InputValues.ButtonValues[skill].HasReleasedPress = true;
+                if (!context.control.IsActuated()) InputValues.ButtonValues[skill].HasPerformedRelease = true;
             }
             
             InputValues.ButtonValues[skill].PressValue = context.ReadValue<Single>();

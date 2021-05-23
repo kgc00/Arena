@@ -1,3 +1,13 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: 595bde71eae14176bedf0666891168fc
-timeCreated: 1588299415
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - startParticlePrefab: {fileID: 89092746019117981, guid: 67d28d1ff2822804c8611fe3ddc3c984,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

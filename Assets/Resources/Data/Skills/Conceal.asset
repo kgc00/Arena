@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3cf7231cd8a465b91738e63f0d1e85a, type: 3}
   m_Name: Conceal
   m_EditorClassIdentifier: 
-  displayName: Conceal
-  description: 
-  energyCost: 0
-  cooldown: 8
-  duration: 3
-  range: 0
   areaOfEffectRadius: 0
-  type: 6
-  startupTime: 0
-  indicatorType: 0
-  projectileSpeed: 0
+  cooldown: 8
+  description: 
+  displayName: Conceal
+  duration: 3
+  energyCost: 0
   force: 0
   icon: {fileID: 21300000, guid: b9326a8e8184d324f886cc9a12c25e2a, type: 3}
+  indicatorType: 0
+  projectileSpeed: 0
+  range: 0
+  startupTime: 0
+  type: 6
+  startParticlePrefab: {fileID: 89092746019117981, guid: 67d28d1ff2822804c8611fe3ddc3c984,
+    type: 3}
+  endParticlePrefab: {fileID: 0}
   affectedFactions: 00000000

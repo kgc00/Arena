@@ -10,7 +10,7 @@ namespace CustomCamera
     {
         private Transform unitTransform;
         private Unit unit;
-        readonly Vector3 offset = new Vector3(0,10,-10);
+        readonly Vector3 offset = new Vector3(0,5,-5);
     
         void Start()
         {

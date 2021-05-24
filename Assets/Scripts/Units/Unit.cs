@@ -131,8 +131,10 @@ namespace Units
                 // GUILayout.Box($"AbilityComponent State: {AbilityComponent.State}");
                 // GUILayout.Box($"Input Values Forward: {Controller.InputValues.Forward}");
                 // GUILayout.Box($"Input Values Horizontal: {Controller.InputValues.Horizontal}");
+                GUILayout.Box(transform.forward.ToString());
             }
-
+            
+            return;
             if (Owner.ControlType == ControlType.Ai) {
                 var width = 300;
                 GUILayout.BeginArea(new Rect(Screen.width - width, 0, width, 60));

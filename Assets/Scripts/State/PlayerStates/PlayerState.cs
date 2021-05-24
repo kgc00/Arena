@@ -26,11 +26,10 @@ namespace State.PlayerStates {
             var movementSpeed = Owner.StatsComponent.Stats.MovementSpeed;
             var motion = GetMovementFromInput(input, movementSpeed.Value);
 
-            Vector3 looktarget = ObtainLookTarget(input, motion);
 
             UpdatePlayerRotation(input, motion, movementSpeed.Value);
             UpdatePlayerPositionForce(input, motion, movementSpeed.Value);
-            UpdateAnimations(motion, looktarget);
+            UpdateAnimations(motion); // must occur after rotation has been updated
         }
 
         private Vector3 ObtainLookTarget(InputValues input, Vector3 motion) {
@@ -40,7 +39,7 @@ namespace State.PlayerStates {
             return default;
         }
 
-        private void UpdateAnimations(Vector3 motion, Vector3 looktarget) {
+        private void UpdateAnimations(Vector3 motion) {
             var forward = Owner.transform.forward;
             var right = Owner.transform.right;
             var dotForward = Vector3.Dot(forward, motion);

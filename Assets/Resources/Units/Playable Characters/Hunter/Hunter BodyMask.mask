@@ -6,116 +6,188 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Crossbow UpperBody AvatarMask
-  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Name: Hunter BodyMask
+  m_Mask: 00000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Crossbow
+  - m_Path: alpha
     m_Weight: 1
-  - m_Path: Mesh_Crossbow
+  - m_Path: body
     m_Weight: 1
-  - m_Path: Motion
+  - m_Path: crossbow
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis
+  - m_Path: root
+    m_Weight: 1
+  - m_Path: root/pelvis
+    m_Weight: 1
+  - m_Path: root/pelvis/bottle_1
+    m_Weight: 1
+  - m_Path: root/pelvis/bottle_2
+    m_Weight: 1
+  - m_Path: root/pelvis/butt_jiggle_left
+    m_Weight: 1
+  - m_Path: root/pelvis/butt_jiggle_right
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_L_Thigh
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/boob_jiggle_left
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_L_Thigh/B_L_Calf
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/boob_jiggle_right
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_L_Thigh/B_L_Calf/B_L_Foot
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_L_Thigh/B_L_Calf/B_L_Foot/B_L_Toe0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_R_Thigh
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_R_Thigh/B_R_Calf
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_R_Thigh/B_R_Calf/B_R_Foot
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l/index_02_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l/index_02_l/index_03_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l/middle_02_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l/middle_02_l/middle_03_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l/pinky_02_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l/pinky_02_l/pinky_03_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l/ring_02_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l/ring_02_l/ring_03_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l/thumb_02_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l/thumb_02_l/thumb_03_l
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/weapon_left
+    m_Weight: 1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_R_Thigh/B_R_Calf/B_R_Foot/B_R_Toe0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r
     m_Weight: 0
-  - m_Path: Motion/B_Pelvis/B_Spine
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r/index_02_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r/index_02_r/index_03_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r/middle_02_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r/middle_02_r/middle_03_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger0/B_L_Finger01
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r/pinky_02_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger0/B_L_Finger01/B_L_Finger02
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r/pinky_02_r/pinky_03_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger1/B_L_Finger11
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r/ring_02_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger1/B_L_Finger11/B_L_Finger12
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r/ring_02_r/ring_03_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger2
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger2/B_L_Finger21
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r/thumb_02_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger2/B_L_Finger21/B_L_Finger22
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r/thumb_02_r/thumb_03_r
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger3
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/weapon_right
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger3/B_L_Finger31
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger3/B_L_Finger31/B_L_Finger32
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_back_1
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger4
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_back_1/hair_back_2
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger4/B_L_Finger41
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_back_1/hair_back_2/hair_back_3
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_L_Clavicle/B_L_UpperArm/B_L_Forearm/B_L_Hand/B_L_Finger4/B_L_Finger41/B_L_Finger42
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_back_1/hair_back_2/hair_back_3/hair_back_4
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_Neck
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_1
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_Neck/B_Head
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_1/hair_left_2
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_1/hair_left_2/hair_left_3
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_1/hair_left_2/hair_left_3/hair_left_4
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_1/hair_left_2/hair_left_3/hair_left_4/hair_left_5
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_front_1
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_front_1/hair_left_front_2
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger0/B_R_Finger01
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_left_front_1/hair_left_front_2/hair_left_front_3
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger0/B_R_Finger01/B_R_Finger02
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_1
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger1
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_1/hair_right_2
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger1/B_R_Finger11
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_1/hair_right_2/hair_right_3
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger1/B_R_Finger11/B_R_Finger12
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_1/hair_right_2/hair_right_3/hair_right_4
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger2
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_1/hair_right_2/hair_right_3/hair_right_4/hair_right_5
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger2/B_R_Finger21
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_front_1
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger2/B_R_Finger21/B_R_Finger22
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_front_1/hair_right_front_2
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger3
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hair_right_front_1/hair_right_front_2/hair_right_front_3
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger3/B_R_Finger31
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/hat
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger3/B_R_Finger31/B_R_Finger32
+  - m_Path: root/pelvis/thigh_l
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger4
+  - m_Path: root/pelvis/thigh_l/book
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger4/B_R_Finger41
+  - m_Path: root/pelvis/thigh_l/calf_l
     m_Weight: 1
-  - m_Path: Motion/B_Pelvis/B_Spine/B_Spine1/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger4/B_R_Finger41/B_R_Finger42
+  - m_Path: root/pelvis/thigh_l/calf_l/foot_l
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_l/calf_l/foot_l/ball_l
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_l/calf_l/foot_l/ball_l/Character1_LeftFootIndex1
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_l/calf_l/foot_l/ball_l/Character1_LeftFootIndex1/Character1_LeftFootIndex2
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r/foot_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r/foot_r/ball_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r/foot_r/ball_r/Character1_RightFootIndex1
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r/foot_r/ball_r/Character1_RightFootIndex1/Character1_RightFootIndex2
     m_Weight: 1

@@ -50,6 +50,9 @@ namespace Utils {
                 case VfxType.ExplosionRed:
                     s = $"{Constants.PrefabsPath}ExplosionRed";
                     break;
+                case VfxType.Poof:
+                    s = $"{Constants.PrefabsPath}Poof VFX";
+                    break;
             }
 
             return s;

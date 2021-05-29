@@ -5,6 +5,7 @@ using Abilities.Modifiers;
 using Data.AbilityData;
 using Data.Types;
 using DG.Tweening;
+using Extensions;
 using Units;
 using UnityEngine;
 using Utils;
@@ -14,8 +15,7 @@ namespace Abilities.Buffs {
     public class Conceal : BuffAbility {
         private void Start() {
             _seq = DOTween.Sequence()
-                .AppendCallback(() =>
-                    Instantiate(StartParticlePrefab, Owner.transform))
+                .AppendCallback(() => MonoHelper.SpawnVfx(VfxType.Poof, Owner.transform.position.WithoutY()))
                 .AppendInterval(0.1f)
                 .AppendCallback(() => {
                     Owner.Renderers.ForEach(r => {

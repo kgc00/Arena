@@ -2,6 +2,7 @@
     public enum VfxType {
         EnemySpawnIndicator,
         EnemyAoEIndicator,
-        ExplosionRed
+        ExplosionRed,
+        Poof
     }
 }

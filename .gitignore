@@ -6,10 +6,6 @@
 [Bb]uilds/
 [Pp]atAttack/
 Assets/Third Party/Paid/**
-Assets/Personal
-Assets/AssetStoreTools*
-Assets/Scripts/Debug
-Assets/Scripts/Debug.meta
 .idea
 
 # Visual Studio cache directory
@@ -31,10 +27,6 @@ ExportedObj/
 *.svd
 *.pdb
 *.opendb
-
-# Unity3D generated meta files
-*.pidb.meta
-*.pdb.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt

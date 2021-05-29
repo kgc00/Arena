@@ -65,7 +65,7 @@ namespace Abilities.Buffs {
         }
 
         private void OnDestroy() {
-            _seq.Kill();
+            _seq?.Kill();
         }
 
         private bool brokenConcealment = false;

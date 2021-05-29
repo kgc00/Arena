@@ -12,13 +12,12 @@ namespace Abilities.AttackAbilities {
     public class ChainFlame : AttackAbility {
         private int iterations = 3;
         private float delayBetweenProjectiles = 0.5f;
-        public override IEnumerator AbilityActivated(Vector3 targetLocation)
-        {
+        public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
             OnAbilityActivationFinished(Owner, this);
 
             Vector3? updatedTargetLocation = targetLocation;
-            
+
             for (int i = 0; i < iterations; i++) {
                 updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation.Value)?.position;
                 if (updatedTargetLocation == null) yield break;
@@ -26,15 +25,15 @@ namespace Abilities.AttackAbilities {
                 InitializeProjectile(updatedTargetLocation.Value, projectile);
                 yield return new WaitForSeconds(delayBetweenProjectiles);
             }
-            
+
             updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation.Value).position;
             var aoeProjectile = SpawnProjectile();
             InitializeAoEProjectile(updatedTargetLocation.Value, aoeProjectile);
-            
+
             MonoHelper.SpawnEnemyIndicator(updatedTargetLocation.Value, AreaOfEffectRadius, aoeProjectile);
-            
+
             yield return new WaitForSeconds(delayBetweenProjectiles);
-            
+
             OnAbilityFinished(Owner, this);
         }
 
@@ -45,13 +44,13 @@ namespace Abilities.AttackAbilities {
         /// <param name="targetLocation"></param>
         /// <param name="aoeProjectile"></param>
         private void InitializeAoEProjectile(Vector3 targetLocation, GameObject aoeProjectile) {
-            void OnConnected (GameObject other, GameObject projectile) {
+            void OnConnected(GameObject other, GameObject projectile) {
                 var unit = other.GetUnitComponent();
                 if (!unit) {
                     Destroy(projectile.gameObject);
                     return;
                 }
-                
+
                 if (AffectedFactions.Contains(unit.Owner.ControlType)) {
                     var proximityComponent = projectile.transform.root.GetComponent<ProximityComponent>() ??
                                              throw new Exception($"No Proximity component found on {name}");
@@ -67,7 +66,7 @@ namespace Abilities.AttackAbilities {
 
             aoeProjectile.GetComponent<ProjectileComponent>()
                 .Initialize(targetLocation, onConnectedCallback, 10f);
-            
+
             aoeProjectile.AddComponent<ProximityComponent>().Initialize(targetLocation, aoeCallback);
         }
 
@@ -112,35 +111,32 @@ namespace Abilities.AttackAbilities {
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) => projectile
             .GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
 
-        private GameObject SpawnProjectile()
-        {
+        private GameObject SpawnProjectile() {
             var position = gameObject.transform.position;
             var forward = gameObject.transform.forward;
-            
+
             // find offset
             var spawnPos = new Vector3(position.x, 1, position.z) + (forward * 2);
-            
+
             // find rotation
             var relativeOffset = spawnPos - position;
             var yEuler = Quaternion.LookRotation(relativeOffset, Vector3.up).eulerAngles.y;
-            var rotation = Quaternion.Euler(0, yEuler,0);
+            var rotation = Quaternion.Euler(0, yEuler, 0);
 
             // instantiation
-            return  Instantiate(
-                Resources.Load("Misc Prefabs/Projectile", typeof(GameObject)),
-                spawnPos, 
+            return Instantiate(
+                Resources.Load($"{Constants.PrefabsPath}Projectile", typeof(GameObject)),
+                spawnPos,
                 rotation
                 ) as GameObject;
         }
 
-        protected override void AbilityConnected(GameObject other, GameObject projectile = null)
-        {
+        protected override void AbilityConnected(GameObject other, GameObject projectile = null) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-            
-            
-            if (hitGeometry)
-            {
+
+
+            if (hitGeometry) {
                 Destroy(projectile);
                 return;
             }

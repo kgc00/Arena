@@ -7,12 +7,9 @@ using Units;
 using UnityEngine;
 using Utils.NotificationCenter;
 
-namespace Abilities.AttackAbilities
-{
-    public class ShootCrossbow : AttackAbility
-    {
-        public override IEnumerator AbilityActivated(Vector3 targetLocation)
-        {
+namespace Abilities.AttackAbilities {
+    public class ShootCrossbow : AttackAbility {
+        public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
             OnAbilityActivationFinished(Owner, this);
@@ -20,15 +17,13 @@ namespace Abilities.AttackAbilities
         }
 
 
-        private void InitializeProjectile(Vector3 targetLocation, GameObject projectile)
-        {
+        private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) {
             if (projectile == null) return;
 
             projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
         }
 
-        private GameObject SpawnProjectile()
-        {
+        private GameObject SpawnProjectile() {
             var position = gameObject.transform.position;
             var forward = gameObject.transform.forward;
 
@@ -42,27 +37,25 @@ namespace Abilities.AttackAbilities
 
             // instantiation
             return Instantiate(
-                Resources.Load("Misc Prefabs/Projectile", typeof(GameObject)),
+                Resources.Load($"{Constants.PrefabsPath}Projectile", typeof(GameObject)),
                 spawnPos,
                 rotation
             ) as GameObject;
         }
 
-        protected override void AbilityConnected(GameObject target, GameObject projectile = null)
-        {
+        protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
             var hitGeometry = target.gameObject.CompareTag(Tags.Board.ToString());
             var unit = target.transform.root.GetComponentInChildren<Unit>();
 
 
-            if (hitGeometry)
-            {
+            if (hitGeometry) {
                 Destroy(projectile);
                 return;
             }
 
             if (unit == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
-            
+
             unit.HealthComponent.DamageOwner(Damage, this, Owner);
 
             Destroy(projectile);

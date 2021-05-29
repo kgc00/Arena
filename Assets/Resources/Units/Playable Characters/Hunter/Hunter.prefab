@@ -2156,7 +2156,7 @@ MonoBehaviour:
     m_Tip: {fileID: 5539795011463490518}
     m_Target: {fileID: 1430829045011424273}
     m_Hint: {fileID: 8421325930411502326}
-    m_TargetPositionWeight: 0.1
+    m_TargetPositionWeight: 0.02
     m_TargetRotationWeight: 0
     m_HintWeight: 0
     m_MaintainTargetPositionOffset: 0
@@ -2342,6 +2342,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fba33cf0f7626d74db520e89dc4bfa44, type: 2}
   - {fileID: 2100000, guid: eaab5488b406044829e367ee9bc477d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -2694,6 +2695,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fba33cf0f7626d74db520e89dc4bfa44, type: 2}
   - {fileID: 2100000, guid: eaab5488b406044829e367ee9bc477d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -3467,7 +3469,7 @@ GameObject:
   - component: {fileID: 2875285959277486985}
   - component: {fileID: 4602719842200663266}
   m_Layer: 0
-  m_Name: NromalFirePoseRig
+  m_Name: NormalFirePoseRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3957,6 +3959,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: fba33cf0f7626d74db520e89dc4bfa44, type: 2}
   - {fileID: 2100000, guid: eaab5488b406044829e367ee9bc477d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

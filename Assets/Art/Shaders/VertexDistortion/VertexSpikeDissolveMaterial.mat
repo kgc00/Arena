@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VertexSpikeDissolveMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 3032d476cd695e24ab1cd311a4c3c28b,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_8e3fa330ad5b461d8f86962cf215c499:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseFragTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _VertNoiseTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_5523144b405c4db187fea056ffe3926b: 0
+    - Vector1_15416d9c8dc24e9eb11528f4fa9ae6f6: 0.32
+    - Vector1_26f2f257e2984e3580064127c96e02e3: 546.4
+    - Vector1_3f19dc9e6c124bed8410f51583d984a9: 21.88
+    - Vector1_524cdefd590144d6902bb19a0781ea6c: -1.33
+    - Vector1_5f69c47924ee4b3fb982e4b61ca6cd4d: 0.16
+    - Vector1_61afc1a780144ade81c3fb598eed584f: 0.4
+    - Vector1_7a0d6395247c4371b473fc1cab6c8110: 0
+    - Vector1_a24d5940e3df40bfb4c14937fb711155: 32.4
+    - Vector1_b184d7822f694609bcd86e51bbefc342: 3.99
+    - Vector1_e7619d18393949c28d7395af71c80d6e: 395.4
+    - Vector1_fef4fe3bc89b4f14aab1ef788a9bfca0: 0.34
+    - _DisplacementPower: -5.77
+    - _DisplacementScale: 5
+    - _FragScale: 21.87
+    - _ScrollSpeed: 1
+    m_Colors:
+    - Color_2bf3a87786704e05867f4e14126d7fd9: {r: 0, g: 0, b: 0, a: 0}
+    - Color_b4c7c5df5769472ca58a42be4850963c: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_77fc834cbf414c03b832e591e1a6680c: {r: -1, g: -1, b: -1, a: 0}
+    - _Color: {r: 1, g: 0.61698115, b: 0.61698115, a: 0}
+  m_BuildTextureStacks: []

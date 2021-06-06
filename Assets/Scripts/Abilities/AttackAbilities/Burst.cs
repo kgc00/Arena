@@ -11,16 +11,17 @@ using Utils;
 namespace Abilities.AttackAbilities {
     public class Burst : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            ShaderHelper.isCenterPosPlayerPos = false;
             yield return new WaitForSeconds(StartupTime);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             var grenade = SpawnGrenade(updatedTargetLocation);
             OnAbilityActivationFinished(Owner, this);
-            ShaderHelper.isCenterPosPlayerPos = true;
         }
         
         private GameObject SpawnGrenade(Vector3 targetLocation) {
-            return MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            var go =  MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            var vfx = MonoHelper.SpawnVfx(VfxType.BurstProjectile, Vector3.zero);
+            vfx.transform.SetParent(go.transform.Find("TipTransform") ?? go.transform, false);
+            return go;
         }
 
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
@@ -57,6 +58,7 @@ namespace Abilities.AttackAbilities {
                     default,
                     Duration)
                 .gameObject;
+            var vfx = MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
             
             Destroy(projectile);
         }

@@ -3,6 +3,8 @@
         EnemySpawnIndicator,
         EnemyAoEIndicator,
         ExplosionRed,
-        Poof
+        Poof,
+        BurstProjectile,
+        BurstImpact
     }
 }

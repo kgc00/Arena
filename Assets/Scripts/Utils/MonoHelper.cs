@@ -53,6 +53,12 @@ namespace Utils {
                 case VfxType.Poof:
                     s = $"{Constants.PrefabsPath}Poof VFX";
                     break;
+                case VfxType.BurstProjectile:
+                    s = $"{Constants.PrefabsPath}BurstProjectile";
+                    break;
+                case VfxType.BurstImpact:
+                    s = $"{Constants.PrefabsPath}BurstImpactVFX";
+                    break;
             }
 
             return s;

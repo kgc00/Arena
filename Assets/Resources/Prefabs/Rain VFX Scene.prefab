@@ -1,0 +1,216 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5508695837207695118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4588715778494813995}
+  - component: {fileID: 4677929985222376144}
+  m_Layer: 0
+  m_Name: Rain VFX Scene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4588715778494813995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508695837207695118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.024675697, y: 0.030039977, z: -0.00045437436}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3694485171950649430}
+  - {fileID: 5873012654354764098}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &4677929985222376144
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508695837207695118}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: c4b2a796b779f4491a395e52b3774e84, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References:
+    - fdf8f6b08d9594142b4802abcd5e5d65: {fileID: 2478751151957682011}
+    - a8e692ab6a4584d9f8df4fd9279ede4d: {fileID: 7497780059203282104}
+--- !u!1001 &4888907368925133813
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4588715778494813995}
+    m_Modifications:
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3158593872234536781, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Name
+      value: RainStreamVFX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 721f103e4bcbc4cc385622f0a46fddff, type: 3}
+--- !u!1 &7497780059203282104 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3158593872234536781, guid: 721f103e4bcbc4cc385622f0a46fddff,
+    type: 3}
+  m_PrefabInstance: {fileID: 4888907368925133813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5873012654354764098 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+    type: 3}
+  m_PrefabInstance: {fileID: 4888907368925133813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6549518492663720121
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4588715778494813995}
+    m_Modifications:
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.024675697
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.030039977
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00045437436
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683744187194380258, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_Name
+      value: RainLaunchVFX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 98772cb2c43484c9686ad9f50d525ab9, type: 3}
+--- !u!1 &2478751151957682011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8683744187194380258, guid: 98772cb2c43484c9686ad9f50d525ab9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6549518492663720121}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3694485171950649430 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6549518492663720121}
+  m_PrefabAsset: {fileID: 0}

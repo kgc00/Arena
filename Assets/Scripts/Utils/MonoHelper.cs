@@ -27,8 +27,9 @@ namespace Utils {
         #endregion
 
         #region VFX
-        public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos) =>
-            Instantiate(TypeToVfx(vfxType), pos, Quaternion.Euler(-90, 0, 0));
+        public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, bool identityRot = false) =>
+            Instantiate(TypeToVfx(vfxType), pos, identityRot ? Quaternion.identity : Quaternion.Euler(-90, 0, 0));
+            
 
         private static GameObject TypeToVfx(VfxType vfxType) {
             var path = ResourcePathFromType(vfxType) ??
@@ -58,6 +59,12 @@ namespace Utils {
                     break;
                 case VfxType.BurstImpact:
                     s = $"{Constants.PrefabsPath}BurstImpactVFX";
+                    break;
+                case VfxType.RainStream:
+                    s = $"{Constants.PrefabsPath}RainStreamVFX";
+                    break;
+                case VfxType.RainLaunch:
+                    s = $"{Constants.PrefabsPath}RainLaunchVFX";
                     break;
             }
 

@@ -5,6 +5,8 @@
         ExplosionRed,
         Poof,
         BurstProjectile,
-        BurstImpact
+        BurstImpact,
+        RainStream,
+        RainLaunch
     }
 }

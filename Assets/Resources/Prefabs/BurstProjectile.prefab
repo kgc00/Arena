@@ -19316,7 +19316,7 @@ GameObject:
   - component: {fileID: 3293677528643815379}
   - component: {fileID: 4227899191207380846}
   m_Layer: 0
-  m_Name: BustTrailVFX
+  m_Name: BurstProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24176,7 +24176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8589583063245697755
 Transform:
   m_ObjectHideFlags: 0

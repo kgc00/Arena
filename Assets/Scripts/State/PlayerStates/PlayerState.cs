@@ -44,7 +44,7 @@ namespace State.PlayerStates {
             var right = Owner.transform.right;
             var dotForward = Vector3.Dot(forward, motion);
             var dotRight = Vector3.Dot(right, motion);
-
+            
             Owner.Animator.SetFloat("VerticalMotion", dotForward);
             Owner.Animator.SetFloat("HorizontalMotion", dotRight);
         }

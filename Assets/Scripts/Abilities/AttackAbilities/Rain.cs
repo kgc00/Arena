@@ -29,7 +29,7 @@ namespace Abilities.AttackAbilities {
                     185,
                     Duration)
                 .gameObject;
-            var vfx = MonoHelper.SpawnVfx(VfxType.RainStream, updatedTargetLocation, true);
+            var vfx = MonoHelper.SpawnVfx(VfxType.RainScene, updatedTargetLocation, true);
         }
 
         private IEnumerator ApplyDamageOverTime(Collider other, Rigidbody rigidBody, float Force,

@@ -6,7 +6,6 @@
         Poof,
         BurstProjectile,
         BurstImpact,
-        RainStream,
-        RainLaunch
+        RainScene
     }
 }

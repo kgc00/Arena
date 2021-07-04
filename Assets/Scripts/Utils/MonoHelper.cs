@@ -60,11 +60,8 @@ namespace Utils {
                 case VfxType.BurstImpact:
                     s = $"{Constants.PrefabsPath}BurstImpactVFX";
                     break;
-                case VfxType.RainStream:
-                    s = $"{Constants.PrefabsPath}RainStreamVFX";
-                    break;
-                case VfxType.RainLaunch:
-                    s = $"{Constants.PrefabsPath}RainLaunchVFX";
+                case VfxType.RainScene:
+                    s = $"{Constants.PrefabsPath}Rain VFX Scene";
                     break;
             }
 

@@ -6,6 +6,10 @@
         Poof,
         BurstProjectile,
         BurstImpact,
-        RainScene
+        RainScene,
+        PiercePullStartup,
+        PiercePullLaunch,
+        PiercePullProjectile,
+        PiercePullForce
     }
 }

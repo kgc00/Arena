@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using Controls;
 using Data.Types;
+using DG.Tweening;
 using Projectiles;
 using Units;
 using UnityEngine;
@@ -13,6 +14,10 @@ namespace Abilities.AttackAbilities {
         private float preFireDelay = 0.5f;
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
+            var relativePos = targetLocation - transform.position;
+            var lookRotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            var weaponTransform = gameObject.GetWeaponTransform();
+            Destroy( MonoHelper.SpawnVfx(VfxType.PiercePullStartup, weaponTransform.position, lookRotation), StartupTime + preFireDelay);
             Owner.InputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
             yield return new WaitForSeconds(StartupTime);
 
@@ -20,7 +25,12 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(preFireDelay);
             
             Destroy(pullGo);
-            MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            MonoHelper.SpawnVfx(VfxType.PiercePullLaunch, weaponTransform.position, lookRotation);
+            var projectile = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            var tipTransform = projectile.transform.Find("TipTransform") ?? projectile.transform;
+            var projectileVFX = MonoHelper.SpawnVfx(VfxType.PiercePullProjectile, tipTransform.position);
+            projectileVFX.transform.SetParent(tipTransform);
+
             Owner.InputModifierComponent
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate);
@@ -44,6 +54,14 @@ namespace Abilities.AttackAbilities {
             targetLocation += (overgroundDirection * Range); /* ensure the pull component's z 
                                                                 always points away from player */
 
+            var angle = Mathf.Atan2(heading.x, heading.z) * Mathf.Rad2Deg;
+            var lookRotation = Quaternion.Euler(0, angle, 0);
+            
+            var vfxCenter = centerLocation;
+            vfxCenter.y = bounds.y / 2; 
+            var vfx = MonoHelper.SpawnVfx(VfxType.PiercePullForce, vfxCenter, lookRotation);
+            vfx.transform.localScale = bounds;
+            
             var colliderParams = new BoxParams(bounds);
             
             return new GameObject("Pull Force").AddComponent<AoEComponent>()

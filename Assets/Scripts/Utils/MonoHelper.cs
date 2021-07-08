@@ -30,6 +30,9 @@ namespace Utils {
         public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, bool identityRot = false) =>
             Instantiate(TypeToVfx(vfxType), pos, identityRot ? Quaternion.identity : Quaternion.Euler(-90, 0, 0));
             
+        public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, Quaternion rotation) =>
+            Instantiate(TypeToVfx(vfxType), pos, rotation);
+
 
         private static GameObject TypeToVfx(VfxType vfxType) {
             var path = ResourcePathFromType(vfxType) ??
@@ -62,6 +65,18 @@ namespace Utils {
                     break;
                 case VfxType.RainScene:
                     s = $"{Constants.PrefabsPath}Rain VFX Scene";
+                    break;
+                case VfxType.PiercePullStartup:
+                    s = $"{Constants.PrefabsPath}Pierce And Pull Startup VFX";
+                    break;
+                case VfxType.PiercePullLaunch:
+                    s = $"{Constants.PrefabsPath}Pierce And Pull Launch VFX";
+                    break;
+                case VfxType.PiercePullProjectile:
+                    s = $"{Constants.PrefabsPath}Pierce And Pull Projectile VFX";
+                    break;
+                case VfxType.PiercePullForce:
+                    s = $"{Constants.PrefabsPath}Pierce And Pull Force VFX";
                     break;
             }
 

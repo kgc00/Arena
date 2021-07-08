@@ -132,11 +132,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RainStreamVFX
       objectReference: {fileID: 0}
-    - target: {fileID: 4875263136786817657, guid: 721f103e4bcbc4cc385622f0a46fddff,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 721f103e4bcbc4cc385622f0a46fddff, type: 3}
 --- !u!1 &7497780059203282104 stripped

@@ -53,7 +53,7 @@ namespace Abilities.AttackAbilities {
             centerLocation += offset;
             targetLocation += (overgroundDirection * Range); /* ensure the pull component's z 
                                                                 always points away from player */
-z
+
             var angle = Mathf.Atan2(heading.x, heading.z) * Mathf.Rad2Deg;
             var lookRotation = Quaternion.Euler(0, angle, 0);
             

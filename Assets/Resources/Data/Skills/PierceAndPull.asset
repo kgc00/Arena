@@ -25,5 +25,7 @@ MonoBehaviour:
   range: 20
   startupTime: 0.25
   type: 7
+  startParticlePrefab: {fileID: 0}
+  endParticlePrefab: {fileID: 0}
   affectedFactions: 02000000
   damage: 2

@@ -33,6 +33,8 @@ namespace Utils {
         public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, Quaternion rotation) =>
             Instantiate(TypeToVfx(vfxType), pos, rotation);
 
+        public static Material LoadMaterial(MaterialType materialType) =>
+            Resources.Load<Material>(MaterialResourcePaths[materialType]);
 
         private static GameObject TypeToVfx(VfxType vfxType) {
             var path = ResourcePathFromType(vfxType) ??
@@ -78,11 +80,18 @@ namespace Utils {
                 case VfxType.PiercePullForce:
                     s = $"{Constants.PrefabsPath}Pierce And Pull Force VFX";
                     break;
+                case VfxType.Mark:
+                    s = $"{Constants.PrefabsPath}Mark VFX";
+                    break;
             }
 
             return s;
         }
 
+        private static readonly Dictionary<MaterialType, string> MaterialResourcePaths = new Dictionary<MaterialType, string> {
+            {MaterialType.MarkOutline, $"{Constants.MaterialsPath}MarkOutline"}
+        };
+        
         #endregion
 
         #region Projectile

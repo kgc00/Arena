@@ -10,6 +10,7 @@
         PiercePullStartup,
         PiercePullLaunch,
         PiercePullProjectile,
-        PiercePullForce
+        PiercePullForce,
+        Mark
     }
 }

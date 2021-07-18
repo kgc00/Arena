@@ -83,6 +83,9 @@ namespace Utils {
                 case VfxType.Mark:
                     s = $"{Constants.PrefabsPath}Mark VFX";
                     break;
+                case VfxType.MarkExplosion:
+                    s = $"{Constants.PrefabsPath}Mark Explosion VFX";
+                    break;
             }
 
             return s;

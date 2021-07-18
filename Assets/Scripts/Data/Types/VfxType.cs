@@ -11,6 +11,7 @@
         PiercePullLaunch,
         PiercePullProjectile,
         PiercePullForce,
-        Mark
+        Mark,
+        MarkExplosion
     }
 }

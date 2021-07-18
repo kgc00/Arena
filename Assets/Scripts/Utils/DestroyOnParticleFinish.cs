@@ -1,17 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Utils {
     [RequireComponent(typeof(ParticleSystem))]
     public class DestroyOnParticleFinish : MonoBehaviour {
-        private ParticleSystem _particleSystem;
-
-        private void Start() {
+        
+        ParticleSystem _particleSystem;
+        public void Awake(){
             _particleSystem = GetComponent<ParticleSystem>();
+            StartCoroutine(DestroySelf());
         }
 
-        private void Update() {
-            if(_particleSystem.isEmitting)  return;
-            
+        private IEnumerator DestroySelf() {
+            yield return new WaitForSeconds(_particleSystem.main.duration);
             Destroy(gameObject);
         }
 

@@ -5,6 +5,8 @@ using Data.Types;
 using Projectiles;
 using Units;
 using UnityEngine;
+using Utils;
+
 namespace Abilities.AttackAbilities {
     public class Prey : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
@@ -60,6 +62,7 @@ namespace Abilities.AttackAbilities {
             if (isMarked) {
                 totalDamage += 2;
                 unit.StatusComponent.RemoveStatus(StatusType.Marked);
+                MonoHelper.SpawnVfx(VfxType.MarkExplosion, unit.transform.position);
             }
 
             Debug.Log($"Prey has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +

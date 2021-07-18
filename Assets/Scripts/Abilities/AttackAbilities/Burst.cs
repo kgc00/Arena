@@ -58,7 +58,7 @@ namespace Abilities.AttackAbilities {
                     default,
                     Duration)
                 .gameObject;
-            var vfx = MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
+            MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
             
             Destroy(projectile);
         }

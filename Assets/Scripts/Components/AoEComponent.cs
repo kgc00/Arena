@@ -25,7 +25,7 @@ namespace Common
         
         public Vector3 Bounds { get; private set; }
         public float Radius { get; private set; }
-        private Collider collider;
+        private new Collider collider;
 
         private List<ControlType> affectedFactions;
         public Vector3 lookTarget;

@@ -134,13 +134,12 @@ namespace Units
                 GUILayout.Box(transform.forward.ToString());
             }
             
-            return;
-            if (Owner.ControlType == ControlType.Ai) {
-                var width = 300;
-                GUILayout.BeginArea(new Rect(Screen.width - width, 0, width, 60));
-                GUILayout.Box($"State: {state}");
-                GUILayout.EndArea();
-            }
+            // if (Owner.ControlType == ControlType.Ai) {
+            //     var width = 300;
+            //     GUILayout.BeginArea(new Rect(Screen.width - width, 0, width, 60));
+            //     GUILayout.Box($"State: {state}");
+            //     GUILayout.EndArea();
+            // }
         }
     }
 }

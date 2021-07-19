@@ -11,11 +11,11 @@ using UI.Drafting.Player_Upgrades;
 namespace UI.Drafting {
     [RequireComponent(typeof(Toggle))]
     public sealed class UnitModifierButton : MonoBehaviour {
-        public IModifierHandler<UnitSpawnData, UnitModifier> Owner { get; protected set; }
-        public UnitSpawnData SpawnModel { get; protected set; }
-        public UnitData UnitModel { get; protected set; }
-        public UnitModifier Modifier { get; protected set; }
-        public bool Initialized { get; protected set; }
+        public IModifierHandler<UnitSpawnData, UnitModifier> Owner { get; private set; }
+        public UnitSpawnData SpawnModel { get; private set; }
+        public UnitData UnitModel { get; private set; }
+        public UnitModifier Modifier { get; private set; }
+        public bool Initialized { get; private set; }
         [SerializeField] public Image iconImage;
         [SerializeField] public Image buttonImage;
         private Toggle toggle;

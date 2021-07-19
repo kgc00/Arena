@@ -12,7 +12,7 @@ namespace UI.HUD {
         [SerializeField]private GameObject nameGo;
         [SerializeField]private GameObject portraitGo;
         private Image portrait;
-        private TextMeshProUGUI name;
+        private TextMeshProUGUI _portraitName;
         
         [SerializeField]private GameObject healthFillGo;
         [SerializeField]private GameObject healthTextGo;
@@ -20,12 +20,12 @@ namespace UI.HUD {
         private TextMeshProUGUI healthText;
         public PortraitRenderer Initialize(Unit unit) {
             this.unit = unit;
-            name = nameGo.GetComponent<TextMeshProUGUI>();
+            _portraitName = nameGo.GetComponent<TextMeshProUGUI>();
             portrait = portraitGo.GetComponent<Image>();
             healthFill = healthFillGo.GetComponent<Image>();
             healthText = healthTextGo.GetComponent<TextMeshProUGUI>();
             
-            name.SetText(unit.name);
+            _portraitName.SetText(unit.name);
             portrait.sprite = unit.Portrait;
             UpdateHealthValue();
 

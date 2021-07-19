@@ -10,7 +10,8 @@ namespace CustomCamera
     {
         private Transform unitTransform;
         private Unit unit;
-        readonly Vector3 offset = new Vector3(0,5,-5);
+        [SerializeField, Range(5,10)] float _offset;
+        Vector3 _camOffset => new Vector3(0, _offset, -_offset);
     
         void Start()
         {
@@ -35,9 +36,9 @@ namespace CustomCamera
             if (unitTransform == null) return;
 
             var target = new Vector3(
-                unitTransform.position.x + offset.x,
-                offset.y,
-                unitTransform.position.z + offset.z
+                unitTransform.position.x + _camOffset.x,
+                _camOffset.y,
+                unitTransform.position.z + _camOffset.z
             );
 
             // transform.position = Vector3.Slerp(transform.position, target, 3f);

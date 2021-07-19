@@ -11,8 +11,6 @@ namespace State.PlayerStates
 {
     public class RunUnitState : PlayerState
     {
-        private static readonly int Moving = Animator.StringToHash("Moving");
-
         public RunUnitState(Unit owner) : base(owner) { }
 
         public override UnitState HandleUpdate(InputValues input)
@@ -31,13 +29,11 @@ namespace State.PlayerStates
         public override void Enter()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetBool(Moving, true);
         }
 
         public override void Exit()
         {
             if (Owner.Animator == null || !Owner.Animator) return;
-            Owner.Animator.SetBool(Moving, false);
         }
     }
 }

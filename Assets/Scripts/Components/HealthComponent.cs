@@ -29,6 +29,13 @@ namespace Components
 
         public void SetInvulnerable() => Invulnerable = true;
         public void SetVulnerable() => Invulnerable = false;
+        public void DamageOwner(float amount) {
+            // Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");
+
+            OnDamageStarted(Owner, null, amount);
+            if (Invulnerable) return;
+            AdjustHealth(-Math.Abs(amount));
+        }
 
         public void DamageOwner(float amount, Ability damageSource, Unit damageDealer) {
             // Debug.Log($"Adjusting {Owner.name}'s current health by {amount}.");

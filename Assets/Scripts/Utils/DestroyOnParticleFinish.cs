@@ -12,7 +12,7 @@ namespace Utils {
         }
 
         private IEnumerator DestroySelf() {
-            yield return new WaitForSeconds(_particleSystem.main.duration);
+            yield return new WaitForSeconds(_particleSystem.main.duration - Time.deltaTime);
             Destroy(gameObject);
         }
 

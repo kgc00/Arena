@@ -6,7 +6,7 @@ namespace Utils {
     public class DestroyOnParticleFinish : MonoBehaviour {
         
         ParticleSystem _particleSystem;
-        public void Awake(){
+        public void Start(){
             _particleSystem = GetComponent<ParticleSystem>();
             StartCoroutine(DestroySelf());
         }

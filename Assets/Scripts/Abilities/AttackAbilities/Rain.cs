@@ -9,7 +9,7 @@ using Utils;
 
 namespace Abilities.AttackAbilities {
     public class Rain : AttackAbility {
-        private HashSet<Unit> _affectedUnits = new HashSet<Unit>();
+        private readonly HashSet<Unit> _affectedUnits = new HashSet<Unit>();
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
@@ -33,7 +33,7 @@ namespace Abilities.AttackAbilities {
                     duration: Duration)
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.RainScene, updatedTargetLocation, true);
-            pGo.AddComponent<DestroyOtherOnDestroy>().LinkGameObject(vfx);
+            vfx.AddComponent<SetParticleDuration>().Duration = Duration;
         }
 
         private IEnumerator StopApplyingDamage(Collider other, Rigidbody rigidBody, float Force,

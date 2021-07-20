@@ -69,9 +69,10 @@ namespace Abilities.AttackAbilities {
                     centerLocation,
                     targetLocation,
                     ForceStrategies.Strategies[ForceStrategyType.ForceAlongLocalX],
+                    null, 
                     null,
                     AffectedFactions, 
-                    -185f)
+                    force: -185f)
                 .gameObject;
         }
 

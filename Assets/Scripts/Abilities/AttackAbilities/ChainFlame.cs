@@ -79,20 +79,22 @@ namespace Abilities.AttackAbilities {
                     updatedTargetLocation,
                     updatedTargetLocation,
                     ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
+                    null, 
                     null,
                     AffectedFactions,
-                    Force,
-                    Duration)
+                    force: Force,
+                    duration: Duration)
                 .gameObject
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     updatedTargetLocation,
                     updatedTargetLocation,
                     ApplyDamage,
+                    null, 
                     null,
                     AffectedFactions,
-                    0,
-                    Duration)
+                    force: 0,
+                    duration: Duration)
                 .gameObject;
 
             Debug.Log("spawned AoE for Chain Flame");

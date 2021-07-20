@@ -31,22 +31,25 @@ namespace Common
         public Vector3 lookTarget;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> EnterStrategy;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> StayStrategy;
+        public Func<Collider, Rigidbody, float, Transform, IEnumerator> ExitStrategy;
         public float Duration { get; private set; }
         #endregion
 
-        public AoEComponent Initialize(ColliderParams colliderParams, 
-            Vector3 center, 
+        public AoEComponent Initialize(ColliderParams colliderParams,
+            Vector3 center,
             Vector3 lookTarget,
-            Func<Collider, Rigidbody, float, Transform, IEnumerator> Strategy,
+            Func<Collider, Rigidbody, float, Transform, IEnumerator> enterStrategy,
             Func<Collider, Rigidbody, float, Transform, IEnumerator> stayStrategy,
+            Func<Collider, Rigidbody, float, Transform, IEnumerator> exitStrategy,
             List<ControlType> affectedFactions,
             float force = default,
             float duration = -1) {
             Duration = duration;
             Force = force;
             this.affectedFactions = affectedFactions;
-            EnterStrategy = Strategy;
+            EnterStrategy = enterStrategy;
             StayStrategy = stayStrategy;
+            ExitStrategy = exitStrategy;
 
             transform.position = center;
             
@@ -58,7 +61,7 @@ namespace Common
             
             return this;
         }
-
+        
         private void InitializeCollider(ColliderParams colliderParams) {
             if (collider != null) return;
             
@@ -93,6 +96,14 @@ namespace Common
             if (!ShouldActivate(other, out var rigidBody)) return;
             
             StartCoroutine(EnterStrategy(other, rigidBody, Force, transform));
+        }
+
+        private void OnTriggerExit(Collider other) {
+            if (ExitStrategy == null) return;
+
+            if (!ShouldActivate(other, out var rigidBody)) return;
+            
+            StartCoroutine(ExitStrategy(other, rigidBody, Force, transform));
         }
 
         private bool ShouldActivate(Collider other, [CanBeNull] out Rigidbody rigidBody) {

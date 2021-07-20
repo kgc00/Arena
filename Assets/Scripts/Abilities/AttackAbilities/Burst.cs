@@ -43,20 +43,22 @@ namespace Abilities.AttackAbilities {
                     centerLocation,
                     targetLocation,
                     ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
+                    null, 
                     null,
                     AffectedFactions,
-                    185,
-                    Duration)
+                    force: 185,
+                    duration: Duration)
                 .gameObject
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     centerLocation,
                     targetLocation,
                     AoEAddMark,
+                    null, 
                     null,
                     AffectedFactions,
-                    default,
-                    Duration)
+                    force: default,
+                    duration: Duration)
                 .gameObject;
             MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
             

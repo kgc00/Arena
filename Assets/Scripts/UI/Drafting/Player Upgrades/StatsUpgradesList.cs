@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.Stats;
 using Data.Types;
 using Data.UnitData;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace UI.Drafting.Player_Upgrades {
@@ -16,7 +18,7 @@ namespace UI.Drafting.Player_Upgrades {
 
         public bool Initialized { get; private set; }
         public UnitSpawnData Model { get; private set; }
-        public List<StatsListItem> ListItems { get; private set; }
+        [OdinSerialize] public List<StatsListItem> ListItems { get; private set; }
 
         [SerializeField] private GameObject listItem;
         [SerializeField] private GameObject preferredParent;

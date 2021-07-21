@@ -1,7 +1,9 @@
-﻿using Data;
+﻿using System;
+using Data;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.UnitData;
+using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +16,7 @@ namespace UI.Drafting {
         public IModifierHandler<UnitSpawnData, UnitModifier> Owner { get; private set; }
         public UnitSpawnData SpawnModel { get; private set; }
         public UnitData UnitModel { get; private set; }
-        public UnitModifier Modifier { get; private set; }
+        [field: NonSerialized, OdinSerialize] public UnitModifier Modifier { get; private set; }
         public bool Initialized { get; private set; }
         [SerializeField] public Image iconImage;
         [SerializeField] public Image buttonImage;

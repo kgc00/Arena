@@ -4,6 +4,7 @@ using Common;
 using Data.Modifiers;
 using Data.SpawnData;
 using Modifiers.SpawnModifiers;
+using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace UI.Drafting {
         [SerializeField] private GameObject buttonParent;
         private List<GameObject> buttonInstances;
 
-        private List<UnitModifier> modifiers;
+        [NonSerialized, OdinSerialize] private List<UnitModifier> modifiers;
 
         public VisualizerListItem Initialize(UnitSpawnData m,
             ModeledList<WaveSpawnData, UnitSpawnData, VisualizerListItem> o) {

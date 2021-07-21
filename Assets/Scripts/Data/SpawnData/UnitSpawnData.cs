@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Data.Modifiers;
 using Data.Types;
+using Sirenix.Serialization;
 using UnityEngine;
 using TypeReferences;
 

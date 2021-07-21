@@ -7,12 +7,13 @@ using Data;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.Types;
+using Sirenix.Serialization;
 using UnityEngine;
 using TypeReferences;
 
 namespace UI.Drafting {
     public class Visualizer : MonoBehaviour, IInitializable<HordeSpawnData, Visualizer, Visualizer> {
-        public HordeSpawnData model;
+        [OdinSerialize] public HordeSpawnData model;
         public Visualizer Owner { get; private set; }
 
         public HordeSpawnData Model {

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.Stats;
 using Data.Types;
 using Modifiers.SpawnModifiers;
+using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +14,7 @@ namespace UI.Drafting.Player_Upgrades {
         public bool Initialized { get; private set; }
         public IModifierHandler<UnitSpawnData, UnitModifier> Owner { get; set; }
         public UnitSpawnData Model { get; private set; }
-        private List<UnitModifier> modifiers;
+        [NonSerialized, OdinSerialize] private List<UnitModifier> modifiers;
         private Statistic stat;
 
         [SerializeField] private GameObject buttonPrefab;

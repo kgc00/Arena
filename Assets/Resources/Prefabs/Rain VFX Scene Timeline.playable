@@ -25,7 +25,7 @@ MonoBehaviour:
     m_Start: 0.65
     m_ClipIn: 0
     m_Asset: {fileID: 3832297040350360349}
-    m_Duration: 5
+    m_Duration: 3
     m_TimeScale: 1
     m_ParentTrack: {fileID: -6351397739153832763}
     m_EaseInDuration: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
   prefabGameObject: {fileID: 0}
   updateParticle: 1
   particleRandomSeed: 8297
-  updateDirector: 1
-  updateITimeControl: 1
+  updateDirector: 0
+  updateITimeControl: 0
   searchHierarchy: 0
   active: 1
   postPlayback: 2

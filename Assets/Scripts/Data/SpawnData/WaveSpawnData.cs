@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data.Modifiers;
-using Sirenix.Serialization;
-using TypeReferences;
 using UnityEngine;
 
 namespace Data.SpawnData
@@ -12,6 +10,6 @@ namespace Data.SpawnData
     {
         [SerializeField] public List<UnitSpawnData> wave;
         [HideInInspector] public int number;
-        [SerializeField, ClassExtends(typeof(WaveModifier))] public List<ClassTypeReference> modifiers;
+        [SerializeField] public List<WaveModifierType> modifiers;
     }
 }

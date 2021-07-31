@@ -35,7 +35,7 @@ namespace Abilities.AttackAbilities {
                 return;
             }
 
-            if (unit == null) return;
+            if (unit == null || unit.Owner == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
 

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using Data.Modifiers;
 using Data.Types;
-using Sirenix.Serialization;
 using UnityEngine;
-using TypeReferences;
 
 namespace Data.SpawnData
 {
@@ -13,6 +11,6 @@ namespace Data.SpawnData
     {
         [SerializeField] public UnitType Unit;
         [SerializeField] public int Amount;
-        [SerializeField, ClassExtends(typeof(UnitModifier))] public List<ClassTypeReference> modifiers;
+        [SerializeField] public List<UnitModifierType> modifiers;
     }
 }

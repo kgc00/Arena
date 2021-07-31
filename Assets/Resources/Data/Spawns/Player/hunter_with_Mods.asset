@@ -18,3 +18,4 @@ MonoBehaviour:
   - _classRef: Modifiers.SpawnModifiers.UnitStrengthIncreaseMediumModifier, Modifiers
   - _classRef: Modifiers.SpawnModifiers.DoubleUnitMovementSpeedModifier, Modifiers
   - _classRef: Modifiers.SpawnModifiers.UnitEnduranceIncreaseMediumModifier, Modifiers
+  - _classRef: 

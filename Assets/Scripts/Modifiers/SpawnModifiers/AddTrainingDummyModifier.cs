@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Modifiers.SpawnModifiers {
     public class AddTrainingDummyModifier : WaveModifier {
+        public override WaveModifierType ModifierType { get; protected set; } = WaveModifierType.AddTrainingDummy;
         public override void Handle() {
             var instance = ScriptableObject.CreateInstance<UnitSpawnData>();
             instance.Amount = 1;

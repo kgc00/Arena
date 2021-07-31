@@ -111,7 +111,7 @@ namespace Common
             var unit = other.gameObject.GetUnitComponent();
             if (unit == null) return false;
 
-            if (affectedFactions.All(x => x != unit.Owner.ControlType))
+            if (affectedFactions.All(x => unit.Owner != null && x != unit.Owner.ControlType))
                 return false;
 
             rigidBody = other.transform.root.GetComponent<Rigidbody>();

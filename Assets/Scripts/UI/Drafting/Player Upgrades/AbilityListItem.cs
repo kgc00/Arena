@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
 using Abilities.Modifiers;
-using Common;
-using Data.Modifiers;
 using Data.SpawnData;
-using Data.UnitData;
 using TMPro;
-using TypeReferences;
 using UnityEngine;
 
 namespace UI.Drafting.Player_Upgrades {

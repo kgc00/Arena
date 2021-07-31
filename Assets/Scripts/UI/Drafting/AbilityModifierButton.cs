@@ -7,7 +7,6 @@ using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TypeReferences;
 using UI.Drafting.Player_Upgrades;
 
 namespace UI.Drafting {
@@ -74,7 +73,7 @@ namespace UI.Drafting {
             if (SpawnModel.modifiers.Count == 0) return;
             
             SpawnModel.modifiers.ForEach(m => {
-                if (m == Modifier.GetType()) {
+                if (m == Modifier.ModifierType) {
                     toggle.isOn = true;
                     toggle.enabled = false;
                 }

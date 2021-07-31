@@ -4,14 +4,13 @@ using Common;
 using Data.SpawnData;
 using Sirenix.Serialization;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI.Drafting {
     public class VisualizerHeader : ModeledList<HordeSpawnData, WaveSpawnData, WaveButton>, 
         IInitializable<HordeSpawnData, Visualizer, VisualizerHeader> {
         protected override List<WaveSpawnData> Map(HordeSpawnData model) => model.Waves;
         public Visualizer Owner { get; private set; }
-        [NonSerialized, OdinSerialize] private GameObject preferredParent;
+        [NonSerialized, OdinSerialize] private GameObject _preferredParent;
 
         public VisualizerHeader Initialize(HordeSpawnData m, Visualizer o) {
             Model = m;
@@ -20,6 +19,6 @@ namespace UI.Drafting {
             return this;
         }
 
-        protected override void CreateList(GameObject p = null) => base.CreateList(preferredParent);
+        protected override void CreateList(GameObject p = null) => base.CreateList(_preferredParent);
     }
 }

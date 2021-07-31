@@ -13,14 +13,19 @@ using Utils.NotificationCenter;
 
 namespace Abilities.Buffs {
     public class Conceal : BuffAbility {
+        private bool _brokenConcealment = false;
+        private Material _mat;
+        private Sequence _seq;
+        private static readonly int FresnelPower = Shader.PropertyToID("_FresnelPower");
+        
         private void Start() {
             _seq = DOTween.Sequence()
                 .AppendCallback(() => MonoHelper.SpawnVfx(VfxType.Poof, Owner.transform.position.WithoutY()))
                 .AppendInterval(0.1f)
                 .AppendCallback(() => {
                     Owner.Renderers.ForEach(r => {
-                        mat = r.materials[1];
-                        r.material.SetFloat("_FresnelPower", 0.5f);
+                        _mat = r.materials[1];
+                        r.material.SetFloat(FresnelPower, 0.5f);
                         r.materials = new[] {r.materials[0]};
                     });
                 }).SetAutoKill(false).Pause();
@@ -30,7 +35,7 @@ namespace Abilities.Buffs {
             Debug.Log("Handling activation of Conceal");
             Debug.Log("Concealed!");
             float timeLeft = Duration;
-            brokenConcealment = false;
+            _brokenConcealment = false;
             _seq.Restart();
 
             this.AddObserver(BreakConcealment, NotificationType.AbilityDidActivate);
@@ -45,7 +50,7 @@ namespace Abilities.Buffs {
             modifiers.Add(new DoubleDamageModifier(null));
 
             while (timeLeft > 0f && Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden)) {
-                if (brokenConcealment) break;
+                if (_brokenConcealment) break;
 
                 timeLeft -= Time.deltaTime;
                 yield return null;
@@ -58,8 +63,8 @@ namespace Abilities.Buffs {
 
             this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate);
             Owner.Renderers.ForEach(r => {
-                r.material.SetFloat("_FresnelPower", 0f);
-                r.materials = new[] {r.materials[0], mat};
+                r.material.SetFloat(FresnelPower, 0f);
+                r.materials = new[] {r.materials[0], _mat};
             });
             Debug.Log("Finished Concealment");
         }
@@ -68,16 +73,12 @@ namespace Abilities.Buffs {
             _seq?.Kill();
         }
 
-        private bool brokenConcealment = false;
-        private Material mat;
-        private Sequence _seq;
-
         void BreakConcealment(object sender, object args) {
             if (ReferenceEquals(args, this)) return;
-            brokenConcealment = true;
+            _brokenConcealment = true;
             Owner.Renderers.ForEach(r => {
-                r.material.SetFloat("_FresnelPower", 0f);
-                r.materials = new[] {r.materials[0], mat};
+                r.material.SetFloat(FresnelPower, 0f);
+                r.materials = new[] {r.materials[0], _mat};
             });
         }
     }

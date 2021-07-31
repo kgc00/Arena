@@ -6,6 +6,8 @@ namespace Modifiers.SpawnModifiers {
         public override string IconAssetPath() => AssetPaths.Icons.Health;
         public override string DisplayText() => "2x Endurance";
 
+        public override UnitModifierType ModifierType { get; protected set; } = UnitModifierType.EnduranceDouble;
+
         public override void Handle() {
             Model.statsData.endurance *= 2;
             base.Handle();

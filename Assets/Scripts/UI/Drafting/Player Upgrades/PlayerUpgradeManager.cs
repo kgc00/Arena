@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Abilities.Modifiers;
-using Common;
 using Common.Levels;
 using Data;
 using Data.Modifiers;
 using Data.SpawnData;
 using Data.Types;
-using Data.UnitData;
-using TypeReferences;
 using UnityEngine;
 
 namespace UI.Drafting.Player_Upgrades {
@@ -42,7 +38,7 @@ namespace UI.Drafting.Player_Upgrades {
 
         public void AddModifier(UnitSpawnData model, UnitModifier modifier, int cost) {
             if(DoesExist(modifier, Model)) return;
-            Model.modifiers.Add(modifier.GetType());
+            Model.modifiers.Add(modifier.ModifierType);
             PersistentData.Instance.currency -= cost;
         }
 
@@ -50,19 +46,17 @@ namespace UI.Drafting.Player_Upgrades {
     
             // Handles case where modifier was already added
             // and new instance of same type is being supplied by input
-            var m = GetModifier(modifier, Model);
-            if (m != null) {
-                Model.modifiers.Remove(m);
-                PersistentData.Instance.currency += cost;
-            }
+            var m = GetUnitModifierType(modifier, Model);
+            Model.modifiers.Remove(m);
+            PersistentData.Instance.currency += cost;
         }
         
         
         private bool DoesExist(UnitModifier mod, UnitSpawnData selectedUnit) =>
-            selectedUnit.modifiers.Exists(m => m.Type == mod.GetType());
+            selectedUnit.modifiers.Exists(m => m == mod.ModifierType);
         
-        private ClassTypeReference GetModifier(UnitModifier mod, UnitSpawnData selectedUnit) =>
-            selectedUnit.modifiers.FirstOrDefault(m => m.Type == mod.GetType());
+        private UnitModifierType GetUnitModifierType(UnitModifier mod, UnitSpawnData selectedUnit) =>
+            selectedUnit.modifiers.FirstOrDefault(m => m == mod.ModifierType);
 
         public void HandleContinueClick() {
             var hsd = PersistentData.Instance.CurrentHordeModel[ControlType.Local];

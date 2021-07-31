@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49ffe74833943f3946f19bcbd4730b3, type: 3}
   m_Name: EmptyWave
   m_EditorClassIdentifier: 
-  wave: []
+  wave:
+  - {fileID: 11400000, guid: 8c406191385ca534e8a0cc79fbc847dc, type: 2}
   number: 0
   modifiers: []

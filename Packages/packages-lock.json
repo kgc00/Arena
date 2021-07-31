@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.solidalloy.type.references": {
-      "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "ca1c86eba7bcd933cdca295948c43d4adfe84af3"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

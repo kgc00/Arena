@@ -44,7 +44,7 @@ namespace Abilities.Buffs {
 
             OnAbilityActivationFinished(Owner, this);
 
-            var modifiers = Owner.AbilityComponent.Modifiers;
+            var modifiers = Owner.AbilityComponent.GlobalAbilityModifiers;
             var markModifier = new MarkOnHitModifier(null);
             modifiers.Add(markModifier);
             modifiers.Add(new DoubleDamageModifier(null));

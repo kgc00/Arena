@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Controls;
+using Abilities.Modifiers;
 using Data.AbilityData;
 using Data.Types;
 using Units;
@@ -25,6 +25,7 @@ namespace Abilities {
         public Cooldown Cooldown { get; protected set; }
         public Unit Owner { get; protected set; }
         public Sprite Icon { get; protected set; }
+        public List<AbilityModifier> Modifiers { get; protected set; }
         public static Action<Unit, Ability> OnAbilityActivationFinished { get; set; } = delegate { };
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);
@@ -51,6 +52,7 @@ namespace Abilities {
             DisplayName = data.displayName;
             Description = data.description;
             EnergyCost = data.energyCost;
+            Modifiers = new List<AbilityModifier>();
             return this;
         }
 

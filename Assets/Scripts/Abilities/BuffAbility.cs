@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.Modifiers;
 using Data.AbilityData;
 using Data.Types;
 using Units;
@@ -16,7 +17,9 @@ namespace Abilities
             base.Initialize(data, owner);
             Model = data;
             AffectedFactions = data.AffectedFactions;
-            OnActivation = new List<Func<Vector3, IEnumerator>> {targetLocation => AbilityActivated(targetLocation)};
+            OnActivation = new List<Func<Vector3, IEnumerator>> {AbilityActivated};
+            Modifiers = new List<AbilityModifier>();
+            data.modifiers.ForEach(type => Modifiers.Add(Utils.AbilityFactory.AbilityModifierFromEnum(this, type)));
             return this;
         }
         

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using Abilities;
 using Abilities.AttackAbilities;
 using Abilities.Buffs;
+using Abilities.Modifiers;
 using Data.AbilityData;
+using Data.Modifiers;
 using Data.Types;
 using State;
 using Units;
@@ -159,6 +161,16 @@ namespace Utils
             }
 
             return retVal;
+        }
+
+        public static AbilityModifier AbilityModifierFromEnum( Ability ability, AbilityModifierType type) {
+            AbilityModifier instance = type switch {
+                AbilityModifierType.AddMarkOnHit => new MarkOnHitModifier(ability),
+                AbilityModifierType.BaseAbilityModifier => new AbilityModifier(ability),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+
+            return instance;
         }
     }
 

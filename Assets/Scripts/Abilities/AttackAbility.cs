@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.AttackAbilities;
+using Abilities.Modifiers;
 using Data.AbilityData;
 using Data.Types;
 using Units;
@@ -23,6 +24,8 @@ namespace Abilities
             Damage = data.Damage;
             AffectedFactions = data.AffectedFactions;
             OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
+            Modifiers = new List<AbilityModifier>();
+            data.modifiers.ForEach(type => Modifiers.Add(Utils.AbilityFactory.AbilityModifierFromEnum(this, type)));
             return this;
         }
 

@@ -20,9 +20,9 @@ namespace Abilities
         public Unit Owner { get ; private set; }
         [SerializeField] public Dictionary<ButtonType, Ability> equippedAbilities;
         public Ability longestRangeAbility;
-        public List<AbilityModifier> Modifiers { get; private set; }
-        private List<AbilityModifier> BuffAbilityModifiers => Modifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
-        private List<AbilityModifier> AttackAbilityModifiers => Modifiers.Where(x => x is AttackAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+        public List<AbilityModifier> GlobalAbilityModifiers { get; private set; } // used for modifiers that affect other ability's executions
+        private List<AbilityModifier> BuffAbilityModifiers => GlobalAbilityModifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
+        private List<AbilityModifier> AttackAbilityModifiers => GlobalAbilityModifiers.Where(x => x is AttackAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
 
         private void UpdateState(Unit unit, Ability ability) {
             if (unit == Owner) {
@@ -37,7 +37,7 @@ namespace Abilities
             
             Ability.OnAbilityActivationFinished += UpdateState;
 
-            Modifiers = new List<AbilityModifier>();
+            GlobalAbilityModifiers = new List<AbilityModifier>();
             
             equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, owner);
             
@@ -60,17 +60,20 @@ namespace Abilities
             ability.ResetInstanceValues();
 
             var modifiers = new List<AbilityModifier>();
-            
-            if (ability is AttackAbility)
-                modifiers = AttackAbilityModifiers;
-            else if (ability is BuffAbility)
-                modifiers = BuffAbilityModifiers;
+            switch (ability) {
+                case AttackAbility _:
+                    modifiers = AttackAbilityModifiers;
+                    break;
+                case BuffAbility _:
+                    modifiers = BuffAbilityModifiers;
+                    break;
+            }
+            modifiers.AddRange(ability.Modifiers);
             
             var root = new AbilityModifier(ability);
             
-            for (int i = 0; i < modifiers.Count; i++) 
-            {
-                root.Add(modifiers[i].InitializeModifier(ability));
+            foreach (var mod in modifiers) {
+                root.Add(mod.InitializeModifier(ability));
             }
 
             // Debug.Log($"Modifer list is {modifiers.Count} items long");
@@ -80,7 +83,8 @@ namespace Abilities
             root.Handle();
             
             // clear modifiers list for next call of this function
-            Modifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
+            GlobalAbilityModifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
+            ability.Modifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
 
             StartCoroutine(ExecuteAndSetComponentState(ability, targetLocation));
         }

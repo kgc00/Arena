@@ -21,7 +21,7 @@ namespace State.BossAiStates {
 
             abilityFinished = false;
             
-            Owner.AbilityComponent.Activate(ability, playerTransform.position);
+            Owner.AbilityComponent.Activate(ref ability, playerTransform.position);
             
             yield return new WaitUntil(() => abilityFinished);
         }

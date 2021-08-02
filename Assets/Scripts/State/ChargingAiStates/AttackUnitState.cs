@@ -35,7 +35,7 @@ namespace State.ChargingAiStates
             yield return new WaitForSeconds(0.45f);
             if (playerTransform == null) yield break;
             
-            Owner.AbilityComponent.Activate(Owner.AbilityComponent.longestRangeAbility, 
+            Owner.AbilityComponent.Activate(ref Owner.AbilityComponent.longestRangeAbility, 
                                             playerTransform.position);
             
             Debug.Log("Finishing attack execution");

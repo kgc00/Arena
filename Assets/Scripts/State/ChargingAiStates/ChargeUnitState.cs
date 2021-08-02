@@ -10,12 +10,14 @@ namespace State.ChargingAiStates {
     public class ChargeUnitState : UnitState {
         private static readonly int Charging = Animator.StringToHash("Charging");
         private readonly Transform playerTransform;
-        private readonly Charge charge;
+        private Charge charge;
         private bool charging;
         private bool impactedWall;
+        Ability chargeAsAbility;
         public ChargeUnitState(Unit owner, Transform playerTransform) : base(owner) {
             this.playerTransform = playerTransform;
             charge = owner.AbilityComponent.GetEquippedAbility<Charge>();
+            chargeAsAbility = charge;
             Ability.OnAbilityFinished += HandleChargeFinished;
             charging = true;
         }
@@ -36,7 +38,7 @@ namespace State.ChargingAiStates {
             Owner.Animator.SetTrigger(Charging);
 
             var targetPosition = GetTargetPosition(playerTransform.position);
-            Owner.AbilityComponent.Activate(charge, targetPosition);
+            Owner.AbilityComponent.Activate(ref chargeAsAbility, targetPosition);
             
             yield return new WaitUntil(() => !charging);
         }

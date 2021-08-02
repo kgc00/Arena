@@ -6,7 +6,7 @@ using Units;
 namespace State.BossAiStates {
     public abstract class AbilityUnitState<T> : UnitState where T : Ability {
         protected bool abilityFinished;
-        protected T ability;
+        protected Ability ability;
 
         protected AbilityUnitState(Unit owner) : base(owner) {
             ability = Owner.AbilityComponent.GetEquippedAbility<T>();

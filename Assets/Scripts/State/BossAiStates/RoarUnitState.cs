@@ -8,7 +8,7 @@ using UnityEngine;
 namespace State.BossAiStates {
     public class RoarUnitState : UnitState{
         private static readonly int Roaring = Animator.StringToHash("Roaring");
-        private readonly Roar roar;
+        private Ability roar;
         private bool roaring;
 
         public RoarUnitState(Unit owner) : base(owner) {
@@ -28,7 +28,7 @@ namespace State.BossAiStates {
             
             yield return new WaitForSeconds(roar.StartupTime);
             
-            Owner.AbilityComponent.Activate(roar, Vector3.zero);
+            Owner.AbilityComponent.Activate(ref roar, Vector3.zero);
             
             yield return new WaitUntil(() => !roaring);
         }

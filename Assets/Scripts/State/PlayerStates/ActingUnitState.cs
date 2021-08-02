@@ -6,16 +6,15 @@ using UnityEngine;
 
 namespace State.PlayerStates
 {
-    public class ActingUnitState : PlayerState
-    {
-        public Ability Ability { get; private set; }
-        public Vector3 TargetLocation;
-        private bool hasActivated;
+    public class ActingUnitState : PlayerState {
+        private Ability _ability;
+        private Vector3 _targetLocation;
+        private bool _hasActivated;
 
         public ActingUnitState(Unit owner, Ability ability, Vector3 targetLocation) : base(owner)
         {
-            TargetLocation = targetLocation;
-            Ability = ability;
+            _targetLocation = targetLocation;
+            _ability = ability;
         }
 
         public override void Enter()
@@ -24,9 +23,9 @@ namespace State.PlayerStates
         }
 
         private void ActivateAbility() {
-            Debug.Log("Activate ability = " + hasActivated);
-            Owner.AbilityComponent.Activate(Ability, TargetLocation);
-            hasActivated = true;
+            Debug.Log("Activate ability = " + _hasActivated);
+            Owner.AbilityComponent.Activate(ref _ability, _targetLocation);
+            _hasActivated = true;
         }
 
         public override void Exit()
@@ -35,8 +34,8 @@ namespace State.PlayerStates
         public override UnitState HandleUpdate(InputValues input)
         {
             Debug.Log(Owner.AbilityComponent.State);
-            Debug.Log(hasActivated);
-            if (Owner.AbilityComponent.State == AbilityComponentState.Idle && hasActivated)
+            Debug.Log(_hasActivated);
+            if (Owner.AbilityComponent.State == AbilityComponentState.Idle && _hasActivated)
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;
 

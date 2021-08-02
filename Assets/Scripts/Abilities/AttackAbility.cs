@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Abilities.AttackAbilities;
 using Abilities.Modifiers;
 using Data.AbilityData;
@@ -29,7 +30,7 @@ namespace Abilities
             return this;
         }
 
-        public override void ResetInstanceValues()
+        public override void ResetInstanceValuesExcludingSpentModifiers()
         {
             if (Model == null || Owner == null)
             {
@@ -37,7 +38,9 @@ namespace Abilities
                 return;
             }
 
+            var previousMods = Modifiers;
             Initialize(Model, Owner);
+            Modifiers = previousMods.Intersect(Modifiers).ToList();
         }
 
         public override string ToString()

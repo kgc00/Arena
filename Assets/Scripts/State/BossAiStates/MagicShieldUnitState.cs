@@ -9,7 +9,7 @@ using Utils;
 namespace State.BossAiStates {
     public class MagicShieldUnitState : UnitState {
         private static readonly int Guarding = Animator.StringToHash("Guarding");
-        private readonly MagicShield magicShield;
+        private Ability magicShield;
         private bool shieldActive;
 
         public MagicShieldUnitState(Unit owner) : base(owner) {
@@ -35,7 +35,7 @@ namespace State.BossAiStates {
 
             Owner.Animator.speed = 0;
 
-            Owner.AbilityComponent.Activate(magicShield, Owner.transform.position);
+            Owner.AbilityComponent.Activate(ref magicShield, Owner.transform.position);
 
             yield return new WaitUntil(() => !shieldActive);
 

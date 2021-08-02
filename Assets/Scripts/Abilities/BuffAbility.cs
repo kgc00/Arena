@@ -23,7 +23,7 @@ namespace Abilities
             return this;
         }
         
-        public override void ResetInstanceValues()
+        public override void ResetInstanceValuesExcludingSpentModifiers()
         {
             if (Model == null || Owner == null)
             {

@@ -55,9 +55,8 @@ namespace Abilities
             Ability.OnAbilityActivationFinished -= UpdateState;
         }
 
-        public void Activate(Ability ability, Vector3 targetLocation) {
+        public void Activate(ref Ability ability, Vector3 targetLocation) {
             State = AbilityComponentState.Executing;
-            ability.ResetInstanceValues();
 
             var modifiers = new List<AbilityModifier>();
             switch (ability) {
@@ -94,6 +93,11 @@ namespace Abilities
                 StartCoroutine(effect(targetLocation));
 
             yield return new WaitUntil(() => State == AbilityComponentState.Idle);
+            /*
+             * MAY introduce bugs due to concurrent ability executions but probably fine
+             * but here because we need to remove old modifiers after ability execution. 
+             */
+            ability.ResetInstanceValuesExcludingSpentModifiers(); 
         }
 
         [CanBeNull]

@@ -56,6 +56,6 @@ namespace Abilities {
             return this;
         }
 
-        public abstract void ResetInstanceValues();
+        public abstract void ResetInstanceValuesExcludingSpentModifiers();
     }
 }

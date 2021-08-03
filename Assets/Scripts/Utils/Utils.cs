@@ -166,6 +166,8 @@ namespace Utils
         public static AbilityModifier AbilityModifierFromEnum( Ability ability, AbilityModifierType type) {
             AbilityModifier instance = type switch {
                 AbilityModifierType.AddMarkOnHit => new MarkOnHitModifier(ability),
+                AbilityModifierType.PersistentAddMarkOnHit => new PersistentMarkOnHitModifier(ability),
+                AbilityModifierType.DoubleDamage => new DoubleDamageModifier(ability),
                 AbilityModifierType.BaseAbilityModifier => new AbilityModifier(ability),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };

@@ -5,12 +5,12 @@ using Utils;
 
 namespace Abilities.Modifiers
 {
-    public class MarkOnHitModifier : AttackAbilityModifier
+    public class PersistentMarkOnHitModifier : AttackAbilityModifier
     {
-        public MarkOnHitModifier(Ability ability) : base(ability) {
-            Type = AbilityModifierType.AddMarkOnHit;
+        public PersistentMarkOnHitModifier(Ability ability) : base(ability) {
+            Type = AbilityModifierType.PersistentAddMarkOnHit;
         }
-
+        public override bool ShouldConsume() => false;
         public override void Handle()
         {
             Debug.Log($"Calling {ToString()} to add a mark on collision.");

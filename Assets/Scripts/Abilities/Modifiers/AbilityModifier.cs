@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Data.Modifiers;
+using UnityEngine;
 
 namespace Abilities.Modifiers
 {
@@ -11,18 +13,18 @@ namespace Abilities.Modifiers
     /// Chain of Responsibility: a class with a linked list and a reference to another class.
     /// Each node on the linked list is called sequentially, modifying the referenced class.
     /// </summary>
-    public class AbilityModifier  {
-        protected Ability Ability;
+    public class AbilityModifier: IEquatable<AbilityModifier>  {
         protected AbilityModifier Next;
+        public AbilityModifierType Type;
+        
         public virtual bool ShouldConsume()
         {
             Debug.Log($"Consuming: Some Modifier");
             return true;
         }
 
-        public AbilityModifier(Ability ability)
-        {
-            Ability = ability;
+        public AbilityModifier(Ability ability) {
+            Type = AbilityModifierType.BaseAbilityModifier;
         }
 
         /// <summary>
@@ -35,7 +37,6 @@ namespace Abilities.Modifiers
         public virtual AbilityModifier InitializeModifier(Ability ability)
         {
             Next = null;
-            Ability = null;
             return this;
         }
 
@@ -46,5 +47,22 @@ namespace Abilities.Modifiers
         }
 
         public virtual void Handle() => Next?.Handle();
+
+        public bool Equals(AbilityModifier other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Type == other.Type;
+        }
+
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((AbilityModifier) obj);
+        }
+
+        public override int GetHashCode() {
+            return (int) Type;
+        }
     }
 }

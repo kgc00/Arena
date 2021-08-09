@@ -18,11 +18,11 @@ namespace State.ChargingAiStates {
             this.playerTransform = playerTransform;
             charge = owner.AbilityComponent.GetEquippedAbility<Charge>();
             chargeAsAbility = charge;
-            Ability.OnAbilityFinished += HandleChargeFinished;
+            charge.OnAbilityFinished.Insert(0,HandleChargeFinished);
             charging = true;
         }
 
-        ~ChargeUnitState() => Ability.OnAbilityFinished -= HandleChargeFinished;
+        ~ChargeUnitState() => charge.OnAbilityFinished.Remove(HandleChargeFinished);
 
         void HandleChargeFinished(Unit u, Ability a) {
             if (u != Owner || a != charge) return;

@@ -45,7 +45,7 @@ namespace Abilities.Buffs {
 
             ResetState();
             Owner.HealthComponent.SetVulnerable();
-            OnAbilityFinished(Owner, this);
+            foreach (var cb in OnAbilityFinished) cb(Owner, this);
         }
 
         void RememberPain(Unit unit, Unit damageDealer, float amount) {

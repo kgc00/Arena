@@ -17,7 +17,7 @@ namespace Abilities.Buffs {
         private Material _mat;
         private Sequence _seq;
         private static readonly int FresnelPower = Shader.PropertyToID("_FresnelPower");
-        
+        private bool doubleMovementSpeed;
         private void Start() {
             _seq = DOTween.Sequence()
                 .AppendCallback(() => MonoHelper.SpawnVfx(VfxType.Poof, Owner.transform.position.WithoutY()))
@@ -29,6 +29,11 @@ namespace Abilities.Buffs {
                         r.materials = new[] {r.materials[0]};
                     });
                 }).SetAutoKill(false).Pause();
+            NotificationCenter.instance.AddObserver(EnableDoubleMovementSpeed, NotificationType.EnableDoubleMovementSpeed);
+        }
+
+        private void EnableDoubleMovementSpeed(object sender, object args) {
+            doubleMovementSpeed = true;
         }
 
         private void OnDisable() {this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate); }
@@ -46,10 +51,13 @@ namespace Abilities.Buffs {
 
             OnAbilityActivationFinished(Owner, this);
 
-            var modifiers = Owner.AbilityComponent.GlobalAbilityModifiers;
-            var markModifier = new MarkOnHitModifier(null);
-            modifiers.Add(markModifier);
-            modifiers.Add(new DoubleDamageModifier(null));
+            // var modifiers = Owner.AbilityComponent.GlobalAbilityModifiers;
+            // var markModifier = new MarkOnHitModifier(null);
+            // modifiers.Add(markModifier);
+            
+            if (doubleMovementSpeed) {
+                Owner.StatsComponent.IncrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value * 2f);
+            }
 
             while (timeLeft > 0f && Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden)) {
                 if (_brokenConcealment) break;
@@ -61,7 +69,7 @@ namespace Abilities.Buffs {
             if (Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden))
                 Owner.StatusComponent.RemoveStatus(StatusType.Hidden);
 
-            if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
+            // if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
 
             this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate);
             Owner.Renderers.ForEach(r => {
@@ -69,6 +77,10 @@ namespace Abilities.Buffs {
                 r.materials = new[] {r.materials[0], _mat};
             });
             Debug.Log("Finished Concealment");
+            foreach (var cb in OnAbilityFinished) cb(Owner, this);
+            if (doubleMovementSpeed) {
+                Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value * 0.5f);
+            }
         }
 
         private void OnDestroy() {
@@ -82,6 +94,9 @@ namespace Abilities.Buffs {
                 r.material.SetFloat(FresnelPower, 0f);
                 r.materials = new[] {r.materials[0], _mat};
             });
+            if (doubleMovementSpeed) {
+                Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value * 0.5f);
+            }
         }
     }
 }

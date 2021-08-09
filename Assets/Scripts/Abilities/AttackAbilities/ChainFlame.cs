@@ -34,7 +34,7 @@ namespace Abilities.AttackAbilities {
 
             yield return new WaitForSeconds(delayBetweenProjectiles);
 
-            OnAbilityFinished(Owner, this);
+            foreach (var cb in OnAbilityFinished) cb(Owner, this);
         }
 
         /// <summary>

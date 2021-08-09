@@ -14,10 +14,10 @@ namespace State.BossAiStates {
 
         public MagicShieldUnitState(Unit owner) : base(owner) {
             magicShield = Owner.AbilityComponent.GetEquippedAbility<MagicShield>();
-            Ability.OnAbilityFinished += HandleMagicShieldFinished;
+            magicShield.OnAbilityFinished.Insert(0, HandleMagicShieldFinished);
         }
-
-        ~MagicShieldUnitState() => Ability.OnAbilityFinished -= HandleMagicShieldFinished;
+        
+        ~MagicShieldUnitState() => magicShield.OnAbilityFinished.Remove(HandleMagicShieldFinished);
 
         public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleShield());
         public override void Exit() {

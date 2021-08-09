@@ -13,10 +13,10 @@ namespace State.BossAiStates {
 
         public RoarUnitState(Unit owner) : base(owner) {
             roar = Owner.AbilityComponent.GetEquippedAbility<Roar>();
-            Ability.OnAbilityFinished += HandleRoarFinished;
+            roar.OnAbilityFinished.Insert( 0,HandleRoarFinished);
         }
 
-        ~RoarUnitState() => Ability.OnAbilityFinished -= HandleRoarFinished;
+        ~RoarUnitState() => roar.OnAbilityFinished.Remove(HandleRoarFinished);
 
         public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleRoar());
 

@@ -10,7 +10,7 @@ namespace Abilities.AttackAbilities {
             var units = FindObjectsOfType<Unit>().Where(u => AffectedFactions.Contains(u.Owner.ControlType)).ToList();
 
             if (units.Count == 0) {
-                OnAbilityFinished(Owner, this);
+                foreach (var cb in OnAbilityFinished) cb(Owner, this);
                 yield break;
             }
 
@@ -34,7 +34,7 @@ namespace Abilities.AttackAbilities {
                 yield return null;
             }
 
-            OnAbilityFinished(Owner, this);
+            foreach (var cb in OnAbilityFinished) cb(Owner, this);
         }
 
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {

@@ -49,13 +49,14 @@ namespace Abilities.AttackAbilities {
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) yield break;
-
-            unit.StatusComponent.AddStatus(StatusType.Marked);
+            
             _affectedUnits.Add(unit);
+            foreach (var cb in OnAbilityConnection)
+                cb(other.gameObject, null);
+            
             while (_affectedUnits.Contains(unit) && unit != null) {
                 var damage = Damage * Time.deltaTime;
-                Debug.Log($"Rain has connected with a unit: {unit.name}.  The unit has a marked status of {unit.StatusComponent.StatusType.HasFlag(StatusType.Marked)}.\n" +
-                          $"Base damage is {damage}.");
+                Debug.Log($"Rain has connected with a unit: {unit.name}. Base damage is {damage}.");
                 unit.HealthComponent.DamageOwner(damage, this, Owner);
                 yield return new WaitForEndOfFrame();
             }

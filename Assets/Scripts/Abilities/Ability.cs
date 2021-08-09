@@ -30,7 +30,7 @@ namespace Abilities {
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);
 
-        public static Action<Unit, Ability> OnAbilityFinished { get; set; } = delegate { };
+        public List<Action<Unit, Ability>> OnAbilityFinished { get; set; }
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);
 
@@ -49,6 +49,7 @@ namespace Abilities {
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;
             OnActivation = new List<Func<Vector3, IEnumerator>> { AbilityActivated };
+            OnAbilityFinished = new List<Action<Unit, Ability>> {};
             DisplayName = data.displayName;
             Description = data.description;
             EnergyCost = data.energyCost;

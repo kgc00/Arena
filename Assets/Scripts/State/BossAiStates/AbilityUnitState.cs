@@ -10,10 +10,10 @@ namespace State.BossAiStates {
 
         protected AbilityUnitState(Unit owner) : base(owner) {
             ability = Owner.AbilityComponent.GetEquippedAbility<T>();
-            Ability.OnAbilityFinished += HandleAbilityFinished;
+            ability.OnAbilityFinished.Insert(0, HandleAbilityFinished);
         }
         
-        ~AbilityUnitState() => Ability.OnAbilityFinished -= HandleAbilityFinished;
+        ~AbilityUnitState() => ability.OnAbilityFinished.Remove(HandleAbilityFinished);
 
         public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleAbility());
 

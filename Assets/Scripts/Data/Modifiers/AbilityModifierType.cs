@@ -5,6 +5,7 @@
         BaseAbilityModifier,
         DoubleDamage,
         ExplosionAroundCaster,
-        DamageOnCollision
+        DamageOnCollision,
+        DoubleMovementSpeed
     }
 }

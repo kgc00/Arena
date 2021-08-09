@@ -21,6 +21,7 @@
             EnableInput = "EnableInput";
 
         public const string
+            EnableDoubleMovementSpeed = "EnableDoubleMovementSpeed",
             UnitDidCollide = "UnitDidCollide";
     }
 }

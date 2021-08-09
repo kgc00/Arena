@@ -170,6 +170,7 @@ namespace Utils
                 AbilityModifierType.DoubleDamage => new DoubleDamageModifier(ability),
                 AbilityModifierType.BaseAbilityModifier => new AbilityModifier(ability),
                 AbilityModifierType.ExplosionAroundCaster => new ExplosionAroundCasterModifier(ability),
+                AbilityModifierType.DamageOnCollision => new DamageOnCollision(ability),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 

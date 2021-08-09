@@ -4,6 +4,7 @@
         PersistentAddMarkOnHit,
         BaseAbilityModifier,
         DoubleDamage,
-        ExplosionAroundCaster
+        ExplosionAroundCaster,
+        DamageOnCollision
     }
 }

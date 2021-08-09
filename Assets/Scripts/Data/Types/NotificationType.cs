@@ -19,5 +19,8 @@
             EnableMovementAndRotation = "EnableMovementAndRotation",
             DisableInput = "DisableInput",
             EnableInput = "EnableInput";
+
+        public const string
+            UnitDidCollide = "UnitDidCollide";
     }
 }

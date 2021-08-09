@@ -169,6 +169,7 @@ namespace Utils
                 AbilityModifierType.PersistentAddMarkOnHit => new PersistentMarkOnHitModifier(ability),
                 AbilityModifierType.DoubleDamage => new DoubleDamageModifier(ability),
                 AbilityModifierType.BaseAbilityModifier => new AbilityModifier(ability),
+                AbilityModifierType.ExplosionAroundCaster => new ExplosionAroundCasterModifier(ability),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 

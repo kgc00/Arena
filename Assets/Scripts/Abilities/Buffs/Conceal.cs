@@ -31,6 +31,8 @@ namespace Abilities.Buffs {
                 }).SetAutoKill(false).Pause();
         }
 
+        private void OnDisable() {this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate); }
+
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             Debug.Log("Handling activation of Conceal");
             Debug.Log("Concealed!");
@@ -74,7 +76,7 @@ namespace Abilities.Buffs {
         }
 
         void BreakConcealment(object sender, object args) {
-            if (ReferenceEquals(args, this)) return;
+            if (this != null && ReferenceEquals(args, this)) return;
             _brokenConcealment = true;
             Owner.Renderers.ForEach(r => {
                 r.material.SetFloat(FresnelPower, 0f);

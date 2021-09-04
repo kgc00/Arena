@@ -6,6 +6,7 @@ using Components;
 using Controls;
 using Data.Types;
 using Data.UnitData;
+using JetBrains.Annotations;
 using State;
 using UnityEngine;
 using Utils;
@@ -83,6 +84,14 @@ namespace Units
             state.Enter ();
             return this;
         }
+
+        public Unit UpdateModel(UnitData data) {
+            Debug.Assert(Initialized);
+            AbilityComponent.UpdateModel(data.abilities);
+            HealthComponent.UpdateModel(data.health);
+            StatsComponent.UpdateModel(data.statsData);
+            return this;
+        }
         
         void Update () {
             if (!Initialized) return;
@@ -114,10 +123,7 @@ namespace Units
             Destroy(gameObject);
         }
 
-        public void SetShaderFloat(string name, float value) {
-            
-        }
-        
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             state?.HandleDrawGizmos();
@@ -141,5 +147,6 @@ namespace Units
             //     GUILayout.EndArea();
             // }
         }
+#endif
     }
 }

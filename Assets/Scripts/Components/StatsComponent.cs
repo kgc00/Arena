@@ -13,11 +13,18 @@ namespace Components {
             Stats = new Stats(data);
             return this;
         }
-        public Statistic StatFromEnum(StatType type) => (Statistic) Stats.GetType().GetProperty(type.ToString())?.GetValue(Stats, null);
-        public Statistic IncrementStat(StatType type, float value) => ModifyStatValue(type, Mathf.Abs(value));
 
-        public Statistic DecrementStat(StatType type, float value) => ModifyStatValue(type, -Mathf.Abs(value));
-        private Statistic ModifyStatValue(StatType type, float value) {
+        public void UpdateModel(StatsData data) {
+            SetStatValue(StatType.Endurance, data.endurance);
+            SetStatValue(StatType.Strength, data.strength);
+            SetStatValue(StatType.MovementSpeed, data.movementSpeed);
+        }
+        
+        public Statistic StatFromEnum(StatType type) => (Statistic) Stats.GetType().GetProperty(type.ToString())?.GetValue(Stats, null);
+        public Statistic IncrementStat(StatType type, float value) => SetStatValue(type, Mathf.Abs(value));
+
+        public Statistic DecrementStat(StatType type, float value) => SetStatValue(type, -Mathf.Abs(value));
+        private Statistic SetStatValue(StatType type, float value) {
             var stat = StatFromEnum(type);
             stat.Value += value;
             return stat;

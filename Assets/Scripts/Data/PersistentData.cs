@@ -34,6 +34,10 @@ namespace Data {
             };
         }
 
+        private void Start() {
+            
+        }
+
         public void UpdateHordeModel(ControlType ctrlType, HordeSpawnData horde) {
             foreach (var spawnData in CurrentHordeModel[ctrlType].Waves[0].wave) {
                 print(spawnData.Unit);

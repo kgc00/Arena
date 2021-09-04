@@ -83,6 +83,14 @@ namespace Controls
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa0bd2e9-ba11-4347-8a52-9439e9987127"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -358,6 +366,17 @@ namespace Controls
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Normal 2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b1cd55e-e865-4a4a-9aba-d9436646d659"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -940,6 +959,7 @@ namespace Controls
             m_Player_Skill4 = m_Player.FindAction("Skill 4", throwIfNotFound: true);
             m_Player_Normal1 = m_Player.FindAction("Normal 1", throwIfNotFound: true);
             m_Player_Normal2 = m_Player.FindAction("Normal 2", throwIfNotFound: true);
+            m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1010,6 +1030,7 @@ namespace Controls
         private readonly InputAction m_Player_Skill4;
         private readonly InputAction m_Player_Normal1;
         private readonly InputAction m_Player_Normal2;
+        private readonly InputAction m_Player_Menu;
         public struct PlayerActions
         {
             private @PlayerInputMappings m_Wrapper;
@@ -1022,6 +1043,7 @@ namespace Controls
             public InputAction @Skill4 => m_Wrapper.m_Player_Skill4;
             public InputAction @Normal1 => m_Wrapper.m_Player_Normal1;
             public InputAction @Normal2 => m_Wrapper.m_Player_Normal2;
+            public InputAction @Menu => m_Wrapper.m_Player_Menu;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1055,6 +1077,9 @@ namespace Controls
                     @Normal2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNormal2;
                     @Normal2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNormal2;
                     @Normal2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNormal2;
+                    @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                    @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                    @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1083,6 +1108,9 @@ namespace Controls
                     @Normal2.started += instance.OnNormal2;
                     @Normal2.performed += instance.OnNormal2;
                     @Normal2.canceled += instance.OnNormal2;
+                    @Menu.started += instance.OnMenu;
+                    @Menu.performed += instance.OnMenu;
+                    @Menu.canceled += instance.OnMenu;
                 }
             }
         }
@@ -1255,6 +1283,7 @@ namespace Controls
             void OnSkill4(InputAction.CallbackContext context);
             void OnNormal1(InputAction.CallbackContext context);
             void OnNormal2(InputAction.CallbackContext context);
+            void OnMenu(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

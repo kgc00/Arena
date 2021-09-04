@@ -18,7 +18,9 @@ namespace Abilities.Buffs {
         private Sequence _seq;
         private static readonly int FresnelPower = Shader.PropertyToID("_FresnelPower");
         private bool _doubleMovementSpeed;
-        private float _startingMoveSpeed;
+        private float _startingMoveSpeed;      
+        private bool _concealed;
+
         private void Start() {
             _seq = DOTween.Sequence()
                 .AppendCallback(() => MonoHelper.SpawnVfx(VfxType.Poof, Owner.transform.position.WithoutY()))
@@ -39,7 +41,10 @@ namespace Abilities.Buffs {
 
         private void OnDisable() {this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate); }
 
-        public override IEnumerator AbilityActivated(Vector3 targetLocation) {
+        public override IEnumerator AbilityActivated(Vector3 targetLocation)
+        {
+            if (_concealed) yield break;
+            _concealed = true;
             Debug.Log("Handling activation of Conceal");
             Debug.Log("Concealed!");
             float timeLeft = Duration;
@@ -84,6 +89,8 @@ namespace Abilities.Buffs {
             if (_doubleMovementSpeed) {
                 Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value - _startingMoveSpeed);
             }
+
+            _concealed = false;
         }
 
         private void OnDestroy() {
@@ -100,6 +107,7 @@ namespace Abilities.Buffs {
             if (_doubleMovementSpeed) {
                 Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value - _startingMoveSpeed);
             }
+            _concealed = false;
         }
     }
 }

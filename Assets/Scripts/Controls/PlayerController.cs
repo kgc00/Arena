@@ -1,7 +1,9 @@
 ﻿using System;
 using Data.Types;
+using UI.InGameShop;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils.NotificationCenter;
 
 namespace Controls
 {
@@ -87,6 +89,12 @@ namespace Controls
 
         public void OnNormal2(InputAction.CallbackContext context) {
             HandleSkill(context, ButtonType.Normal2);
+        }
+
+        public void OnMenu(InputAction.CallbackContext context) {
+            if (context.performed) {
+                InGameShopManager.Instance.ToggleVisibility();
+            }
         }
 
         // #endregion

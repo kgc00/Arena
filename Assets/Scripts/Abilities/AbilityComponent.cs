@@ -55,6 +55,22 @@ namespace Abilities
             Ability.OnAbilityActivationFinished -= UpdateState;
         }
 
+        
+        public void UpdateModel(List<AbilityData> abilities) {
+            // TODO - confirm global ability modifiers should be reset / not reset
+            Debug.Assert(State == AbilityComponentState.Idle);
+            Debug.Assert(Owner != null);
+            
+            GlobalAbilityModifiers = new List<AbilityModifier>();
+            
+            equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, Owner);
+            
+            if (equippedAbilities.Count > 0 && equippedAbilities.Values.Any((a) => a is AttackAbility))
+                longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility)
+                    .OrderByDescending(a => a.Value.Range)
+                    .First().Value;
+        }
+        
         public void Activate(ref Ability ability, Vector3 targetLocation) {
             State = AbilityComponentState.Executing;
 

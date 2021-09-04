@@ -27,6 +27,12 @@ namespace Components
             return this;
         }
 
+        public void UpdateModel(HealthData data) {
+            var healthPercentage = Math.Min(CurrentHp / MaxHp, 1);
+            MaxHp = data.maxHp;
+            CurrentHp = MaxHp * healthPercentage;
+        }
+
         public void SetInvulnerable() => Invulnerable = true;
         public void SetVulnerable() => Invulnerable = false;
         public void DamageOwner(float amount) {

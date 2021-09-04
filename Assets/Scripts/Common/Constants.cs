@@ -1,4 +1,7 @@
-public static class Constants {
-    public static string PrefabsPath = "Prefabs/";
-    public static string MaterialsPath = "Materials/";
+namespace Common {
+    public static class Constants {
+        public static string PrefabsPath = "Prefabs/";
+        public static string MaterialsPath = "Materials/";
+        public static string UIPath = "UI/";
+    }
 }

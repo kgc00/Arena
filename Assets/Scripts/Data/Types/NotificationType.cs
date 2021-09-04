@@ -18,6 +18,7 @@
             DisableMovementAndRotation = "DisableMovementAndRotation",
             EnableMovementAndRotation = "EnableMovementAndRotation",
             DisableInput = "DisableInput",
+            MenuRequested = "MenuRequested",
             EnableInput = "EnableInput";
 
         public const string

@@ -127,10 +127,120 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1938553973680055670, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotation.scalar
+      value: 0.2617994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938553973680055670, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotation.minScalar
+      value: -0.2617994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938553973680055670, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotation.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938553973680055670, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1938553973680055670, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768390511144278107, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotation.scalar
+      value: 6.283185
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768390511144278107, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotation.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768390511144278107, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768390511144278107, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3158593872234536781, guid: 721f103e4bcbc4cc385622f0a46fddff,
         type: 3}
       propertyPath: m_Name
       value: RainStreamVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5701288925214054628, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[1].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[2].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[0].emitter
+      value: 
+      objectReference: {fileID: 7328394368975594414}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[1].emitter
+      value: 
+      objectReference: {fileID: 2219875666369669395}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[2].emitter
+      value: 
+      objectReference: {fileID: 6431074056863047299}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[3].emitter
+      value: 
+      objectReference: {fileID: 5433327744644207762}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[3].properties
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[0].emitProbability
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: SubModule.subEmitters.Array.data[2].emitProbability
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 721f103e4bcbc4cc385622f0a46fddff, type: 3}
@@ -143,6 +253,30 @@ GameObject:
 --- !u!4 &5873012654354764098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
+    type: 3}
+  m_PrefabInstance: {fileID: 4888907368925133813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5433327744644207762 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 630483686581120871, guid: 721f103e4bcbc4cc385622f0a46fddff,
+    type: 3}
+  m_PrefabInstance: {fileID: 4888907368925133813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2219875666369669395 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6707678923857924838, guid: 721f103e4bcbc4cc385622f0a46fddff,
+    type: 3}
+  m_PrefabInstance: {fileID: 4888907368925133813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6431074056863047299 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1938553973680055670, guid: 721f103e4bcbc4cc385622f0a46fddff,
+    type: 3}
+  m_PrefabInstance: {fileID: 4888907368925133813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7328394368975594414 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2768390511144278107, guid: 721f103e4bcbc4cc385622f0a46fddff,
     type: 3}
   m_PrefabInstance: {fileID: 4888907368925133813}
   m_PrefabAsset: {fileID: 0}

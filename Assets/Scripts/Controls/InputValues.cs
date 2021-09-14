@@ -30,6 +30,7 @@ namespace Controls
                 [ButtonType.Skill4] = new ButtonValues(ButtonType.Skill4),
                 [ButtonType.Normal1] = new ButtonValues(ButtonType.Normal1),
                 [ButtonType.Normal2] = new ButtonValues(ButtonType.Normal2),
+                [ButtonType.ShopMenu] = new ButtonValues(ButtonType.ShopMenu)
             };
         }
         

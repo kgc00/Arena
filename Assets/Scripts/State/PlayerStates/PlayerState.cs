@@ -5,6 +5,7 @@ using Abilities.AttackAbilities;
 using Controls;
 using Data.Types;
 using JetBrains.Annotations;
+using UI.InGameShop;
 using Units;
 using UnityEngine;
 using Utils;
@@ -19,7 +20,13 @@ namespace State.PlayerStates {
             skillBehaviour = new StateSkillBehaviour(owner);
         }
 
-        public override UnitState HandleUpdate(InputValues input) => null;
+        public override UnitState HandleUpdate(InputValues input) {
+            if (input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) {
+                InGameShopManager.Instance.ToggleVisibility();
+            }
+            
+            return null;
+        }
 
         // need to look into handling input only in update and storing values onto a field for fixed update
         public override void HandleFixedUpdate(InputValues input) {

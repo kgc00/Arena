@@ -23,7 +23,7 @@ namespace State.PlayerStates
             
             if (playerIsStationary) return new IdleUnitState(Owner);
 
-            return null;
+            return base.HandleUpdate(input);
         }
 
         public override void Enter()

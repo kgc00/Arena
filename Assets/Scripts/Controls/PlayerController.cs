@@ -92,9 +92,7 @@ namespace Controls
         }
 
         public void OnMenu(InputAction.CallbackContext context) {
-            if (context.performed) {
-                InGameShopManager.Instance.ToggleVisibility();
-            }
+            HandleSkill(context, ButtonType.ShopMenu);
         }
 
         // #endregion

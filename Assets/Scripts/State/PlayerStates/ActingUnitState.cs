@@ -41,10 +41,8 @@ namespace State.PlayerStates
 
                 return playerIsMoving ? (UnitState) new RunUnitState(Owner) : new IdleUnitState(Owner);
             }
-
-            base.HandleUpdate(input);
             
-            return null;
+            return base.HandleUpdate(input);
         }
     }
 }

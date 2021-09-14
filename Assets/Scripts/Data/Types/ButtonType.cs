@@ -9,5 +9,7 @@
         
         Normal1 = 4,
         Normal2 = 5,
+        
+        ShopMenu = 6
     }
 }

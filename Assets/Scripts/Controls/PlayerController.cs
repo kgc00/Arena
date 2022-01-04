@@ -7,10 +7,12 @@ using Utils.NotificationCenter;
 
 namespace Controls
 {
-    public class PlayerController : Controller, PlayerInputMappings.IPlayerActions {
+    public partial class PlayerController : Controller, PlayerInputMappings.IPlayerActions, PlayerInputMappings.IUIActions {
 
         [SerializeField] private Rigidbody body; 
         [SerializeField] private PlayerInputMappings playerInput;
+
+        public ControlSchemeEnum ControlScheme { get; private set; }
 
         // #region MultipleHandlers
         public void OnEnable()
@@ -24,15 +26,38 @@ namespace Controls
             {
                 playerInput = new PlayerInputMappings();
                 playerInput.Player.SetCallbacks(this);
+                playerInput.UI.SetCallbacks(this);
             }
-            playerInput.Player.Enable();
+
+            EnablePlayerSchema();
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
+            DisableControls();
+        }
+
+        private void DisableControls() {
             playerInput.Player.Disable();
+            playerInput.UI.Disable();
+            ControlScheme = ControlSchemeEnum.None;
+            InputValues.ControlSchema = ControlScheme;
         }
 
+        public void EnablePlayerSchema() {
+            playerInput.UI.Disable();
+            playerInput.Player.Enable();
+            ControlScheme = ControlSchemeEnum.Player;
+            InputValues.ControlSchema = ControlScheme;
+        }
+        
+        public void EnableUISchema(){
+            playerInput.Player.Disable();
+            playerInput.UI.Enable();
+            ControlScheme = ControlSchemeEnum.UI;
+            InputValues.ControlSchema = ControlScheme;
+        }
+
+        // Player
         public void OnMove(InputAction.CallbackContext context)
         {
             // Debug.Log("context = " + context);
@@ -47,7 +72,7 @@ namespace Controls
             InputValues.SetControlType(context.action.activeControl.displayName);
         }
 
-        private void HandleSkill(InputAction.CallbackContext context, ButtonType skill) {
+        private void HandleButtonPress(InputAction.CallbackContext context, ButtonType skill) {
             // Must use this if statement- it sets HasStartedFire to true for this frame and
             //  is not overwritten by subsequent input calls on the same frame.  If we modify this if statement
             //  to also set false in certain conditions, the 'true' state will never make it to consumers.
@@ -63,38 +88,50 @@ namespace Controls
         }
         
         public void OnSkill1(InputAction.CallbackContext context) {
-            HandleSkill(context, ButtonType.Skill1);
+            HandleButtonPress(context, ButtonType.Skill1);
         }
 
 
         public void OnSkill2(InputAction.CallbackContext context)
         {
-            HandleSkill(context, ButtonType.Skill2);
+            HandleButtonPress(context, ButtonType.Skill2);
         }
 
         public void OnSkill3(InputAction.CallbackContext context)
         {
-            HandleSkill(context, ButtonType.Skill3);
+            HandleButtonPress(context, ButtonType.Skill3);
         }
 
         public void OnSkill4(InputAction.CallbackContext context)
         {
-            HandleSkill(context, ButtonType.Skill4);
+            HandleButtonPress(context, ButtonType.Skill4);
         }
         
         public void OnNormal1(InputAction.CallbackContext context)
         {
-            HandleSkill(context, ButtonType.Normal1);
+            HandleButtonPress(context, ButtonType.Normal1);
         }
 
         public void OnNormal2(InputAction.CallbackContext context) {
-            HandleSkill(context, ButtonType.Normal2);
+            HandleButtonPress(context, ButtonType.Normal2);
         }
 
         public void OnMenu(InputAction.CallbackContext context) {
-            HandleSkill(context, ButtonType.ShopMenu);
+            HandleButtonPress(context, ButtonType.ShopMenu);
         }
-
+        
+        // UI
+        public void OnNavigate(InputAction.CallbackContext context) { }
+        public void OnSubmit(InputAction.CallbackContext context) { }
+        public void OnCancel(InputAction.CallbackContext context) { }
+        public void OnPoint(InputAction.CallbackContext context) { }
+        public void OnClick(InputAction.CallbackContext context) { }
+        public void OnScrollWheel(InputAction.CallbackContext context) { }
+        public void OnMiddleClick(InputAction.CallbackContext context) { }
+        public void OnRightClick(InputAction.CallbackContext context) { }
+        public void OnTrackedDevicePosition(InputAction.CallbackContext context) { }
+        public void OnTrackedDeviceOrientation(InputAction.CallbackContext context) { }
+        public void OnTrackedDeviceSelect(InputAction.CallbackContext context) { }
         // #endregion
     }
 }

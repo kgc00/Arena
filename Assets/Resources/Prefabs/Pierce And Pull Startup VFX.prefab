@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7548356570021577602}
   - component: {fileID: 6373626350194266093}
   - component: {fileID: 2268150506749693322}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6067940076466700532}
   - component: {fileID: 8593382629770664676}
   - component: {fileID: 6559155833118891684}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spiral Large
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4973,7 +4973,7 @@ GameObject:
   - component: {fileID: 4597582779120543256}
   - component: {fileID: 7575302934205040130}
   - component: {fileID: 4329711685631687521}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pierce And Pull Startup VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

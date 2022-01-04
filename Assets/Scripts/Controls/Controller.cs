@@ -17,7 +17,7 @@ namespace Controls
         // This is how we accurately determine which frame a key was pressed down.
         private void LateUpdate()
         {
-            InputValues.ResetValues();
+            InputValues.ResetButtonValues();
         }
 
         public Controller Initialize(Unit unit) {

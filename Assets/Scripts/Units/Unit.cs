@@ -133,11 +133,11 @@ namespace Units
             if (!Initialized) return;
             
             if (Owner.ControlType == ControlType.Local) {
-                GUILayout.Box($"State: {state}");
+                // GUILayout.Box($"State: {state}");
                 // GUILayout.Box($"AbilityComponent State: {AbilityComponent.State}");
                 // GUILayout.Box($"Input Values Forward: {Controller.InputValues.Forward}");
                 // GUILayout.Box($"Input Values Horizontal: {Controller.InputValues.Horizontal}");
-                GUILayout.Box(transform.forward.ToString());
+                // GUILayout.Box(transform.forward.ToString());
             }
             
             // if (Owner.ControlType == ControlType.Ai) {

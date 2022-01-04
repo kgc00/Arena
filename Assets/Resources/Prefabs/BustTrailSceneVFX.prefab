@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2898146792796679568}
   - component: {fileID: 7703684963512208686}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BustTrailSceneVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,6 +338,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299906044632045907, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299906045440532420, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642823166312330454, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147329863718049746, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8335917345785314602, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397464007868994241, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610100721877623228, guid: 7302acf4df08a26458a8b7fe953bb807,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7302acf4df08a26458a8b7fe953bb807, type: 3}

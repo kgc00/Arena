@@ -1,14 +1,20 @@
-﻿using UI.InGameShop;
+﻿using Data.Types;
+using UI.InGameShop;
+using Units;
 using UnityEngine;
 
 namespace Arena {
     public class ShopTrigger : MonoBehaviour {
         private void OnTriggerEnter(Collider other) {
-            InGameShopManager.Instance.PlayerEnteredProximity(true);
+            if (other.transform.root.TryGetComponent(out Unit unit) && unit.Owner.ControlType == ControlType.Local) {
+                InGameShopManager.Instance.PlayerEnteredProximity(true);
+            }
         }
 
         private void OnTriggerExit(Collider other) {
-            InGameShopManager.Instance.PlayerEnteredProximity(false);
+            if (other.transform.root.TryGetComponent(out Unit unit) && unit.Owner.ControlType == ControlType.Local) {
+                InGameShopManager.Instance.PlayerEnteredProximity(false);
+            }
         }
     }
 }

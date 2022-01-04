@@ -33,8 +33,6 @@ namespace State.PlayerStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            Debug.Log(Owner.AbilityComponent.State);
-            Debug.Log(_hasActivated);
             if (Owner.AbilityComponent.State == AbilityComponentState.Idle && _hasActivated)
             {
                 bool playerIsMoving = Math.Abs(input.Forward) > 0 || Math.Abs(input.Horizontal) > 0;

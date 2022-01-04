@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7111094387235822686}
   - component: {fileID: 1483873808009879489}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Central Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8262817368021911620}
   - component: {fileID: 5454823899569274630}
   - component: {fileID: 4023999680236801895}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5011,7 +5011,7 @@ GameObject:
   - component: {fileID: 6537546703313083308}
   - component: {fileID: 984852259696405890}
   - component: {fileID: 2476868650089035077}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HelixParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5078,7 +5078,7 @@ GameObject:
   - component: {fileID: 7836817751371505788}
   - component: {fileID: 7046115602044901659}
   - component: {fileID: 8561669884263192998}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pierce And Pull Projectile VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9905,7 +9905,7 @@ GameObject:
   - component: {fileID: 2617201724636675105}
   - component: {fileID: 5586045707672556692}
   - component: {fileID: 4452254407217801012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Speed Lines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14717,7 +14717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6071754749511125155}
   - component: {fileID: 6106788324050504004}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left Helix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14855,7 +14855,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3775411593662341557}
   - component: {fileID: 5592028048660387875}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right Helix
   m_TagString: Untagged
   m_Icon: {fileID: 0}

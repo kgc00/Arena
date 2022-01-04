@@ -4,7 +4,7 @@
     {
         protected new BuffAbility Ability;
 
-        public BuffAbilityModifier(Ability ability) : base(ability)
+        protected BuffAbilityModifier(Ability ability) : base(ability)
         {
             Ability = (BuffAbility) ability;
         }

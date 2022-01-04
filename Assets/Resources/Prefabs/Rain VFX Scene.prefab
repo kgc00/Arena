@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4588715778494813995}
   - component: {fileID: 4677929985222376144}
   - component: {fileID: 7723089891549519048}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rain VFX Scene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,6 +72,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4588715778494813995}
     m_Modifications:
+    - target: {fileID: 275585921494820152, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1322302086785985207, guid: 721f103e4bcbc4cc385622f0a46fddff,
         type: 3}
       propertyPath: m_RootOrder
@@ -152,6 +157,11 @@ PrefabInstance:
       propertyPath: InitialModule.startRotationY.minMaxState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2563774247811549696, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2768390511144278107, guid: 721f103e4bcbc4cc385622f0a46fddff,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
@@ -177,10 +187,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: RainStreamVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 3158593872234536781, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370854388145657036, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524622782957137133, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5701288925214054628, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5701288925214054628, guid: 721f103e4bcbc4cc385622f0a46fddff,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6163356848156066798, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7630596417580867331, guid: 721f103e4bcbc4cc385622f0a46fddff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8545328845893932352, guid: 721f103e4bcbc4cc385622f0a46fddff,
         type: 3}
@@ -287,6 +327,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4588715778494813995}
     m_Modifications:
+    - target: {fileID: 1053319126285534732, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423365358995726561, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4967237503884153615, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7611614360468957423, guid: 98772cb2c43484c9686ad9f50d525ab9,
         type: 3}
       propertyPath: m_RootOrder
@@ -346,6 +401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RainLaunchVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683744187194380258, guid: 98772cb2c43484c9686ad9f50d525ab9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98772cb2c43484c9686ad9f50d525ab9, type: 3}

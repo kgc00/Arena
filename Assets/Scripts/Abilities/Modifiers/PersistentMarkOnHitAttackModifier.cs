@@ -5,9 +5,9 @@ using Utils;
 
 namespace Abilities.Modifiers
 {
-    public class PersistentMarkOnHitModifier : AttackAbilityModifier
+    public class PersistentMarkOnHitAttackModifier : AttackAbilityModifier
     {
-        public PersistentMarkOnHitModifier(Ability ability) : base(ability) {
+        public PersistentMarkOnHitAttackModifier(Ability ability) : base(ability) {
             Type = AbilityModifierType.PersistentAddMarkOnHit;
         }
         public override bool ShouldConsume() => false;

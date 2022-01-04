@@ -8,6 +8,8 @@ TagManager:
   - Ability Timer
   - Ability Text
   - Ability Icon
+  - Abilities
+  - Units
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Board
+  - Abilities
+  - Units
   - 
   - 
   - 

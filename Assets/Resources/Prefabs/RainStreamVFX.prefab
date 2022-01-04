@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5344654901941117283}
   - component: {fileID: 8545328845893932352}
   - component: {fileID: 5103855023192007578}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: Arrows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4852,7 +4852,7 @@ GameObject:
   - component: {fileID: 4407525211459100650}
   - component: {fileID: 6707678923857924838}
   - component: {fileID: 1192258284311987228}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9724,7 +9724,7 @@ GameObject:
   - component: {fileID: 3385051214293116637}
   - component: {fileID: 7212233702215251144}
   - component: {fileID: 4875263136786817657}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RainStreamVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14542,7 +14542,7 @@ GameObject:
   - component: {fileID: 345985629987169784}
   - component: {fileID: 1420555470753194594}
   - component: {fileID: 8384520211917540963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19422,7 +19422,7 @@ GameObject:
   - component: {fileID: 2113040466840361464}
   - component: {fileID: 2768390511144278107}
   - component: {fileID: 2773405374936496943}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24293,7 +24293,7 @@ GameObject:
   - component: {fileID: 533269870010578303}
   - component: {fileID: 2643283805262118740}
   - component: {fileID: 1014867493245327851}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29097,7 +29097,7 @@ GameObject:
   - component: {fileID: 4948222186554287331}
   - component: {fileID: 630483686581120871}
   - component: {fileID: 3226588091915047934}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: RainLaunchVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33971,7 +33971,7 @@ GameObject:
   - component: {fileID: 5943129601275050097}
   - component: {fileID: 1938553973680055670}
   - component: {fileID: 5459268954118223414}
-  m_Layer: 1
+  m_Layer: 7
   m_Name: ImpactRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}

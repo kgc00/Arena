@@ -11,7 +11,7 @@ namespace Controls
         public float Look;
         public float Turn;
         public ControllerType ActiveControl { get; private set; }
-
+        public ControlSchemeEnum ControlSchema;
         public Dictionary<ButtonType, ButtonValues> ButtonValues;
             
 
@@ -32,6 +32,7 @@ namespace Controls
                 [ButtonType.Normal2] = new ButtonValues(ButtonType.Normal2),
                 [ButtonType.ShopMenu] = new ButtonValues(ButtonType.ShopMenu)
             };
+            ControlSchema = ControlSchemeEnum.None;
         }
         
         public InputValues(float forward,
@@ -56,6 +57,7 @@ namespace Controls
                 [ButtonType.Skill3] = new ButtonValues(ButtonType.Skill3),
                 [ButtonType.Skill4] = new ButtonValues(ButtonType.Skill4)
             };
+            ControlSchema = ControlSchemeEnum.None;
         }
 
         public void SetControlType(string displayName)
@@ -69,7 +71,7 @@ namespace Controls
             }
         }
 
-        public virtual void ResetValues()
+        public virtual void ResetButtonValues()
         {
             foreach (var keyValuePair in ButtonValues)
             {

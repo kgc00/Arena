@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2157677863919792838}
   - component: {fileID: 2578134408840161870}
   - component: {fileID: 5162551427721962651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt Impact VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

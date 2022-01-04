@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4478052698991843997}
   - component: {fileID: 1198913631397720168}
   - component: {fileID: 7822452093181720069}
-  m_Layer: 0
-  m_Name: Burst VFX
+  m_Layer: 7
+  m_Name: Burst VFX - IDK SOmthng
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

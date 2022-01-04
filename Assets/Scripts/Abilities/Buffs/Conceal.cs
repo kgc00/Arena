@@ -6,6 +6,7 @@ using Data.AbilityData;
 using Data.Types;
 using DG.Tweening;
 using Extensions;
+using State.PlayerStates;
 using Units;
 using UnityEngine;
 using Utils;
@@ -20,6 +21,9 @@ namespace Abilities.Buffs {
         private bool _doubleMovementSpeed;
         private float _startingMoveSpeed;      
         private bool _concealed;
+        private bool _persistentAddMarkOnHitModifier;
+        private MarkOnHitModifier _currentMarkModifier;
+        private List<AbilityModifier> _globalAbilityModifiers;
 
         private void Start() {
             _seq = DOTween.Sequence()
@@ -33,13 +37,21 @@ namespace Abilities.Buffs {
                     });
                 }).SetAutoKill(false).Pause();
             NotificationCenter.instance.AddObserver(EnableDoubleMovementSpeed, NotificationType.EnableDoubleMovementSpeed);
+            NotificationCenter.instance.AddObserver(EnablePersistentAddMarkOnHit, NotificationType.EnableConcealPersistentAddMarkOnHit);
         }
 
+        private void OnDisable() {
+            NotificationCenter.instance.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate);
+            NotificationCenter.instance.RemoveObserver(EnableDoubleMovementSpeed, NotificationType.EnableDoubleMovementSpeed);
+            NotificationCenter.instance.RemoveObserver(EnablePersistentAddMarkOnHit, NotificationType.EnableConcealPersistentAddMarkOnHit);
+        }
         private void EnableDoubleMovementSpeed(object sender, object args) {
             _doubleMovementSpeed = true;
         }
-
-        private void OnDisable() {this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate); }
+        
+        private void EnablePersistentAddMarkOnHit(object sender, object args) {
+            _persistentAddMarkOnHitModifier = true;
+        }
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation)
         {
@@ -51,63 +63,70 @@ namespace Abilities.Buffs {
             _brokenConcealment = false;
             _seq.Restart();
 
-            this.AddObserver(BreakConcealment, NotificationType.AbilityDidActivate);
+            NotificationCenter.instance.AddObserver(BreakConcealment, NotificationType.AbilityDidActivate);
 
             Owner.StatusComponent.AddStatus(StatusType.Hidden);
 
             OnAbilityActivationFinished(Owner, this);
 
-            // var modifiers = Owner.AbilityComponent.GlobalAbilityModifiers;
-            // var markModifier = new MarkOnHitModifier(null);
-            // modifiers.Add(markModifier);
+            if (_persistentAddMarkOnHitModifier) {
+                _globalAbilityModifiers = Owner.AbilityComponent.GlobalAbilityModifiers;
+                _currentMarkModifier = new MarkOnHitModifier(null);
+                _globalAbilityModifiers.Insert(0, _currentMarkModifier);
+            }   
             
-            if (_doubleMovementSpeed)
-            {
+            if (_doubleMovementSpeed) {
                 _startingMoveSpeed = Owner.StatsComponent.Stats.MovementSpeed.Value;
                 Owner.StatsComponent.IncrementStat(StatType.MovementSpeed, _startingMoveSpeed);
             }
 
             while (timeLeft > 0f && Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden)) {
-                if (_brokenConcealment) break;
-
+                if (_brokenConcealment) {
+                    this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate);
+                    yield break;
+                }
                 timeLeft -= Time.deltaTime;
                 yield return null;
             }
 
+            // must be here so that the modifier is not removed before the ability finished completion
+            // can move this into HandleBreakConcealment when the notification type is AbilityCompleted... not sure it's hooked up
+            if (_persistentAddMarkOnHitModifier && _globalAbilityModifiers.Contains(_currentMarkModifier)) {
+                _globalAbilityModifiers.Remove(_currentMarkModifier);
+            }
+            
+            HandleBreakConcealment();
+        }
+
+        void BreakConcealment(object sender, object args) {
+            if (!(args is PlayerIntent playerIntent)) return;
+            var isPlayerActivatedAbility = ReferenceEquals(playerIntent.ability.Owner, Owner);
+            if (this == null || !isPlayerActivatedAbility) return;
+            
+            HandleBreakConcealment();
+        }
+
+        private void HandleBreakConcealment() {
             if (Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden))
                 Owner.StatusComponent.RemoveStatus(StatusType.Hidden);
-
-            // if (modifiers.Contains(markModifier)) modifiers.Remove(markModifier);
-
-            this.RemoveObserver(BreakConcealment, NotificationType.AbilityDidActivate);
+            
             Owner.Renderers.ForEach(r => {
                 r.material.SetFloat(FresnelPower, 0f);
                 r.materials = new[] {r.materials[0], _mat};
             });
-            Debug.Log("Finished Concealment");
+            
             foreach (var cb in OnAbilityFinished) cb(Owner, this);
+
             if (_doubleMovementSpeed) {
                 Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value - _startingMoveSpeed);
             }
-
+            
             _concealed = false;
+            _brokenConcealment = true;
         }
 
         private void OnDestroy() {
             _seq?.Kill();
-        }
-
-        void BreakConcealment(object sender, object args) {
-            if (this != null && ReferenceEquals(args, this)) return;
-            _brokenConcealment = true;
-            Owner.Renderers.ForEach(r => {
-                r.material.SetFloat(FresnelPower, 0f);
-                r.materials = new[] {r.materials[0], _mat};
-            });
-            if (_doubleMovementSpeed) {
-                Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value - _startingMoveSpeed);
-            }
-            _concealed = false;
         }
     }
 }

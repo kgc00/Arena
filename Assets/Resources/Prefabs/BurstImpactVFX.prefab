@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6619183337361678896}
   - component: {fileID: 2353572129623766086}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 2525364403884872532}
   - component: {fileID: 5561613710289203118}
   - component: {fileID: 1684743112399125156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RayBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4966,7 +4966,7 @@ GameObject:
   - component: {fileID: 3343700845487438344}
   - component: {fileID: 2391712629952658961}
   - component: {fileID: 461052262636172713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: botw3dHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9905,7 +9905,7 @@ GameObject:
   - component: {fileID: 9198494912867667571}
   - component: {fileID: 432896272683966861}
   - component: {fileID: 7305327914350876268}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BurstImpactVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14727,7 +14727,7 @@ GameObject:
   - component: {fileID: 5408884115814691501}
   - component: {fileID: 5363442503925071660}
   - component: {fileID: 2976456643321255506}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19589,7 +19589,7 @@ GameObject:
   - component: {fileID: 2433165881457846607}
   - component: {fileID: 6167009379938508606}
   - component: {fileID: 6539346455110195634}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FastSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24469,7 +24469,7 @@ GameObject:
   - component: {fileID: 6522547551550026842}
   - component: {fileID: 2453212113802201911}
   - component: {fileID: 456496624544358582}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29332,7 +29332,7 @@ GameObject:
   - component: {fileID: 6316246369114039433}
   - component: {fileID: 1655078277681552011}
   - component: {fileID: 6478048789983367252}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SphereDissolveBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34203,7 +34203,7 @@ GameObject:
   - component: {fileID: 2338747404985544572}
   - component: {fileID: 976646504109840220}
   - component: {fileID: 3123609791163657430}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}

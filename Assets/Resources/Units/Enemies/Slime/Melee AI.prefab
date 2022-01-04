@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 3640983151590248246}
   - component: {fileID: 3640983151590248244}
   - component: {fileID: -1309334750830225620}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Melee AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3640983151786924126}
   - component: {fileID: 3640983151786924120}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,9 +139,57 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3640983151590248246}
     m_Modifications:
+    - target: {fileID: 1063458555033194, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1098284176842396, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1159606757873184, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1332007666501914, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402250236228086, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458944189346406, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1463649340635624, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503310629534036, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665332316372866, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704581108590040, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1919012471076396, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 1919012471076396, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1989916952965676, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4023215848608658, guid: 6054c431e0c0e0141be27c86d79010d5, type: 3}
       propertyPath: m_RootOrder

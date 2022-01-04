@@ -23,6 +23,7 @@
 
         public const string
             EnableDoubleMovementSpeed = "EnableDoubleMovementSpeed",
+            EnableConcealPersistentAddMarkOnHit = "EnableConcealPersistentAddMarkOnHit",
             UnitDidCollide = "UnitDidCollide";
     }
 }

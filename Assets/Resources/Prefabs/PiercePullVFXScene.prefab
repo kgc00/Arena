@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6777391511272488985}
   - component: {fileID: 4912207734163663881}
   - component: {fileID: 3345056198943371007}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PullEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4815,7 +4815,7 @@ GameObject:
   - component: {fileID: 5091220114003822927}
   - component: {fileID: -1687394342043121534}
   - component: {fileID: 5102034614355565775}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PiercePullVFXScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2535737550398483834}
   - component: {fileID: 1731902640646024409}
   - component: {fileID: 1738008718155108269}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 665509013286495235}
   - component: {fileID: 2975616004837780297}
   - component: {fileID: 4606282792554483043}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ring Shrink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9754,7 +9754,7 @@ GameObject:
   - component: {fileID: 7548356570021577602}
   - component: {fileID: 6373626350194266093}
   - component: {fileID: 2268150506749693322}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9848,7 +9848,7 @@ GameObject:
   - component: {fileID: 236742539842710376}
   - component: {fileID: 7166861668662142564}
   - component: {fileID: 3380083812682412190}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ring Expand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14719,7 +14719,7 @@ GameObject:
   - component: {fileID: 6067940076466700532}
   - component: {fileID: 8593382629770664676}
   - component: {fileID: 6559155833118891684}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spiral Large
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19585,8 +19585,8 @@ GameObject:
   - component: {fileID: 4301934463563643247}
   - component: {fileID: 4597582779120543256}
   - component: {fileID: 7575302934205040130}
-  m_Layer: 0
-  m_Name: Pierce And Pull Startup VFX
+  m_Layer: 7
+  m_Name: Pierce And Pull Startup And LaunchVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24394,7 +24394,7 @@ GameObject:
   - component: {fileID: 7789402322463804659}
   - component: {fileID: 2631395583768285684}
   - component: {fileID: 8475916294885835444}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ImpactRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}

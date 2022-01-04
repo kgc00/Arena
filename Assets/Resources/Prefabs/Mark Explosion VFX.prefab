@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8414541215289084153}
   - component: {fileID: 2558402057867493349}
   - component: {fileID: 2086797702191116115}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Large RisingRedLines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 2737965429854169236}
   - component: {fileID: 8980546711641511284}
   - component: {fileID: 6934092767574694265}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9696,7 +9696,7 @@ GameObject:
   - component: {fileID: 2143813582228767388}
   - component: {fileID: 4701771544553210610}
   - component: {fileID: 1703979645270295487}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mark Explosion VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14515,7 +14515,7 @@ GameObject:
   - component: {fileID: 1423038853458634363}
   - component: {fileID: 5233951103133655064}
   - component: {fileID: 6694862339613184203}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: smaller horizontal aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}

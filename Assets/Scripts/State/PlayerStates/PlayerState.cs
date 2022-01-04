@@ -15,14 +15,24 @@ namespace State.PlayerStates {
     public class PlayerState : UnitState {
         protected readonly float movementThreshold = 0.1f;
         protected readonly StateSkillBehaviour skillBehaviour;
+        private PlayerController _ownerPlayerController;
 
         protected PlayerState(Unit owner) : base(owner) {
             skillBehaviour = new StateSkillBehaviour(owner);
+            _ownerPlayerController = Owner.Controller as PlayerController 
+                                     ?? throw new Exception("Cannot cast controller to player controller");
         }
 
         public override UnitState HandleUpdate(InputValues input) {
             if (input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) {
                 InGameShopManager.Instance.ToggleVisibility();
+                if (!InGameShopManager.Instance._playerWithinProximity) return null;
+                if (InGameShopManager.Instance._shopUI.activeInHierarchy) {
+                    _ownerPlayerController.EnableUISchema();
+                }
+                else {
+                    _ownerPlayerController.EnablePlayerSchema();
+                }
             }
             
             return null;
@@ -34,6 +44,7 @@ namespace State.PlayerStates {
             var motion = GetMovementFromInput(input, movementSpeed.Value);
 
 
+            if (input.ControlSchema != ControlSchemeEnum.Player) return;
             UpdatePlayerRotation(input, motion, movementSpeed.Value);
             UpdatePlayerPositionForce(input, motion, movementSpeed.Value);
             UpdateAnimations(motion); // must occur after rotation has been updated

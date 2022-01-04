@@ -13,21 +13,25 @@ namespace Abilities.AttackAbilities {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
-            var grenade = SpawnGrenade(updatedTargetLocation);
+            SpawnGrenade(updatedTargetLocation);
             OnAbilityActivationFinished(Owner, this);
         }
         
-        private GameObject SpawnGrenade(Vector3 targetLocation) {
+        private void SpawnGrenade(Vector3 targetLocation) {
             var go =  MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
             var vfx = MonoHelper.SpawnVfx(VfxType.BurstProjectile, Vector3.zero);
             vfx.transform.SetParent(go.transform.Find("TipTransform") ?? go.transform, false);
-            return go;
         }
 
-        protected override void AbilityConnected(GameObject other, GameObject projectile) {
+        protected override void AbilityConnected(GameObject other, GameObject projectile = null) {
+            // https://answers.unity.com/questions/50279/check-if-layer-is-in-layermask.html
+            var layerMask = LayerMask.GetMask("Units", "Board");
+            if (layerMask != (layerMask | (1 << other.layer))) return;
+            
             var colliderParams = new SphereParams(5f);
-            var centerLocation = other.GetComponent<Collider>().ClosestPoint(projectile.transform.position);
-            var offset = centerLocation - projectile.transform.position;
+            var projectilePosition = projectile == null ? Vector3.zero : projectile.transform.position;
+            var centerLocation = other.GetComponent<Collider>().ClosestPoint(projectilePosition);
+            var offset = centerLocation - projectilePosition;
             offset.y = 0;
             offset = offset.normalized * 2f;
             var targetLocation = centerLocation + offset;
@@ -46,8 +50,8 @@ namespace Abilities.AttackAbilities {
                     null, 
                     null,
                     AffectedFactions,
-                    force: 185,
-                    duration: Duration)
+                    185,
+                    Duration)
                 .gameObject
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
@@ -57,8 +61,8 @@ namespace Abilities.AttackAbilities {
                     null, 
                     null,
                     AffectedFactions,
-                    force: default,
-                    duration: Duration)
+                    default,
+                    Duration)
                 .gameObject;
             MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
             

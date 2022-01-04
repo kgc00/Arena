@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8414541215289084153}
   - component: {fileID: 2558402057867493349}
   - component: {fileID: 2086797702191116115}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Large RisingRedLines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 6266264868342621471}
   - component: {fileID: 951032601870147297}
   - component: {fileID: 3723818783570004099}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Small RisingRedLines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9628,7 +9628,7 @@ GameObject:
   - component: {fileID: 2355383284037617242}
   - component: {fileID: 3119616245126368259}
   - component: {fileID: 7953288378557877347}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outer Vertical Aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14499,7 +14499,7 @@ GameObject:
   - component: {fileID: 4529618018527550367}
   - component: {fileID: 6337394934405132802}
   - component: {fileID: 8605983172932612744}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Inner VerticalAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19370,7 +19370,7 @@ GameObject:
   - component: {fileID: 8504605234594726114}
   - component: {fileID: 3250437939826836036}
   - component: {fileID: 7673262424401727352}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24232,7 +24232,7 @@ GameObject:
   - component: {fileID: 2737965429854169236}
   - component: {fileID: 8980546711641511284}
   - component: {fileID: 6934092767574694265}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29095,7 +29095,7 @@ GameObject:
   - component: {fileID: 2143813582228767388}
   - component: {fileID: 4701771544553210610}
   - component: {fileID: 1703979645270295487}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mark VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

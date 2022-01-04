@@ -380,6 +380,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "9a375979-c41f-4bf3-beaf-dbacc51e5d88",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "90cc5a6c-bd08-44b9-ae08-c4da9d52e28b",
@@ -865,6 +873,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6231d266-b54e-4fa5-b194-28a0f27da968",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

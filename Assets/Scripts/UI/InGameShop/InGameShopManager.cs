@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace UI.InGameShop {
     public class InGameShopManager : Singleton<InGameShopManager> {
-        private GameObject _shopUI;
-        private bool _playerWithinProximity;
+        public GameObject _shopUI { get; private set; }
+        public bool _playerWithinProximity { get; private set; }
 
         private void Start() {
             try {
@@ -17,7 +17,7 @@ namespace UI.InGameShop {
             if (_shopUI != null) return;
             var canvas = FindObjectOfType<Canvas>();
             if (_shopUI != null || canvas == null) return;
-            var shopUI = Instantiate(Resources.Load<RectTransform>($"{Constants.UIPath}InGameShop"),
+            var shopUI = Instantiate(Resources.Load<RectTransform>($"{Constants.UIPath}In Game Shop"),
                 Vector3.one,
                 Quaternion.identity, canvas.transform);
             shopUI.anchoredPosition = Vector2.zero;

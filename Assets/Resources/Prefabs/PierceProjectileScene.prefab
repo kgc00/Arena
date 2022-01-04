@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2898146792796679568}
   - component: {fileID: 1782329126200519361}
   - component: {fileID: 8330327792262957016}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PierceProjectileScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}

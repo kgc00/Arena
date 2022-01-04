@@ -18,8 +18,7 @@ namespace Abilities
             Model = data;
             AffectedFactions = data.AffectedFactions;
             OnActivation = new List<Func<Vector3, IEnumerator>> {AbilityActivated};
-            Modifiers = new List<AbilityModifier>();
-            data.modifiers.ForEach(type => Modifiers.Add(Utils.AbilityFactory.AbilityModifierFromEnum(this, type)));
+            data.modifiers.ForEach(type => Modifiers.Add(Utils.AbilityFactory.AbilityModifierFromEnum(this, type) as BuffAbilityModifier));
             return this;
         }
         

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5049231409884592496}
   - component: {fileID: 8097445078264182701}
   - component: {fileID: 5991473734841085811}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Smoke (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4872,7 +4872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 853196097555719009}
   - component: {fileID: 8583038950763253962}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FF Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5399,7 +5399,7 @@ GameObject:
   - component: {fileID: 6501484082109381176}
   - component: {fileID: 4025794595000071039}
   - component: {fileID: 5786186436118590563}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DustLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10261,7 +10261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8947041799649559381}
   - component: {fileID: 2747119810192846268}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FF Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10789,7 +10789,7 @@ GameObject:
   - component: {fileID: 3473059753922040749}
   - component: {fileID: 7172430842041528377}
   - component: {fileID: 2679598309016371332}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10884,7 +10884,7 @@ GameObject:
   - component: {fileID: 8258254731656358736}
   - component: {fileID: 4317897575185590214}
   - component: {fileID: 176282855198849319}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DustRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15747,7 +15747,7 @@ GameObject:
   - component: {fileID: 183215981778546494}
   - component: {fileID: 8869649271423989057}
   - component: {fileID: 907460886688546861}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20610,7 +20610,7 @@ GameObject:
   - component: {fileID: 2964933596699570884}
   - component: {fileID: 4049207237858978811}
   - component: {fileID: 3147617169295419520}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pierce And Pull Force VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25434,7 +25434,7 @@ GameObject:
   - component: {fileID: 5641090802820668851}
   - component: {fileID: 1476247143556831215}
   - component: {fileID: 2872247007188463842}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pierce And Pull Force VFX (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

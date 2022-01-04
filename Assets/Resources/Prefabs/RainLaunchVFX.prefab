@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1162161669596304358}
   - component: {fileID: 8078342015695773418}
   - component: {fileID: 4432034227267766288}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 3483947906892715508}
   - component: {fileID: 819993450783233111}
   - component: {fileID: 826237139086374691}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9753,7 +9753,7 @@ GameObject:
   - component: {fileID: 9182914201014662269}
   - component: {fileID: 4029982395709712762}
   - component: {fileID: 7406529136636541498}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ImpactRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14633,7 +14633,7 @@ GameObject:
   - component: {fileID: 7611614360468957423}
   - component: {fileID: 2717239169957847915}
   - component: {fileID: 129861069259661298}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RainLaunchVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

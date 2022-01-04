@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6499290684946920153}
   - component: {fileID: 6919921323811017624}
   - component: {fileID: 8987265982859616867}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Poof VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4906,7 +4906,7 @@ GameObject:
   - component: {fileID: 9033171656042624567}
   - component: {fileID: 6769309537604845407}
   - component: {fileID: 2626882518883842188}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ground Aura (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9840,7 +9840,7 @@ GameObject:
   - component: {fileID: 7763587284188985276}
   - component: {fileID: 8881852160800292755}
   - component: {fileID: 8493065279290809295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dust Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14711,7 +14711,7 @@ GameObject:
   - component: {fileID: 7869121970502807623}
   - component: {fileID: 3340296442061343555}
   - component: {fileID: 5875189360524515174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ground Aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19582,7 +19582,7 @@ GameObject:
   - component: {fileID: 7274788746959371008}
   - component: {fileID: 6591835252948119836}
   - component: {fileID: 2285714135775330}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wind Swirl 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24453,7 +24453,7 @@ GameObject:
   - component: {fileID: 698629845314388438}
   - component: {fileID: 2008756994765022316}
   - component: {fileID: 1181700403357458538}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dust Cloud S no outward force
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29360,7 +29360,7 @@ GameObject:
   - component: {fileID: 977592908338225643}
   - component: {fileID: 2653559751910122524}
   - component: {fileID: 551869459976185086}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dust Cloud S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34267,7 +34267,7 @@ GameObject:
   - component: {fileID: 7902058382154713699}
   - component: {fileID: 8066346310548883638}
   - component: {fileID: 5226205147313870661}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wind Swirl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39138,7 +39138,7 @@ GameObject:
   - component: {fileID: 5281854728651691447}
   - component: {fileID: 8021743489185040712}
   - component: {fileID: 9122184408372039146}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Inner Solid Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44018,7 +44018,7 @@ GameObject:
   - component: {fileID: 7865427612815944286}
   - component: {fileID: 4745061660970994985}
   - component: {fileID: 7103282241594152966}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dust Cloud M no outward force
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48925,7 +48925,7 @@ GameObject:
   - component: {fileID: 6481074366787388766}
   - component: {fileID: 977345647410320591}
   - component: {fileID: 8844876225474351212}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Inner Solid Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53805,7 +53805,7 @@ GameObject:
   - component: {fileID: 1596297482468243062}
   - component: {fileID: 4416093697122163495}
   - component: {fileID: 4667560059655447116}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dust Cloud M
   m_TagString: Untagged
   m_Icon: {fileID: 0}

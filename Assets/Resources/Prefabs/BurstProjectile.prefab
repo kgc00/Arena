@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5005370624496963264}
   - component: {fileID: 5150065219068544952}
   - component: {fileID: 4957207605828367700}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Smoke (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4824,7 +4824,7 @@ GameObject:
   - component: {fileID: 7507361585216299753}
   - component: {fileID: 141921067547626076}
   - component: {fileID: 8193243197583620604}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Speed Lines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9637,7 +9637,7 @@ GameObject:
   - component: {fileID: 7353344007899702851}
   - component: {fileID: 3190937772608256242}
   - component: {fileID: 8080409968459365300}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Glow (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14500,7 +14500,7 @@ GameObject:
   - component: {fileID: 3031022645690075091}
   - component: {fileID: 9184520306742033227}
   - component: {fileID: 7424609156008850579}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19315,7 +19315,7 @@ GameObject:
   - component: {fileID: 2358851242819616436}
   - component: {fileID: 3293677528643815379}
   - component: {fileID: 4227899191207380846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BurstProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19363,6 +19363,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: -8920253898738246124, guid: 4d06022f84e03e24dba4bc70f2d9e174, type: 2}
     value: {fileID: 4227899191207380846}
+  - key: {fileID: 3029325558749905075, guid: 4d06022f84e03e24dba4bc70f2d9e174, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - f7d286a3541af1149a25046301a39b93: {fileID: 8815269474988449848}
@@ -24170,7 +24172,7 @@ GameObject:
   - component: {fileID: 8589583063245697755}
   - component: {fileID: 7329169377668277621}
   - component: {fileID: 8346643398788886841}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Glow (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

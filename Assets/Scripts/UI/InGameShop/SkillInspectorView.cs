@@ -17,10 +17,10 @@ namespace UI.InGameShop {
         [SerializeField] private TextMeshProUGUI _cooldownText;
         [SerializeField] private TextMeshProUGUI _damageText;
         private void OnEnable() {
-            UpdateAbilityModifierShopData(AbilityData);
+            UpdateAbilityInspectorShopData(AbilityData);
         }
 
-        void UpdateAbilityModifierShopData(AbilityData abilityData) {
+        void UpdateAbilityInspectorShopData(AbilityData abilityData) {
             AbilityData = abilityData;
             _skillImage.sprite = AbilityData.icon;
             _titleText.SetText(AbilityData.displayName);

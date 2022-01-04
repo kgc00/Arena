@@ -25,9 +25,10 @@ namespace State.PlayerStates {
 
         public override UnitState HandleUpdate(InputValues input) {
             if (input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) {
+                if (!InGameShopManager.Instance.IsPlayerWithinProximity) return null;
+                
                 InGameShopManager.Instance.ToggleVisibility();
-                if (!InGameShopManager.Instance._playerWithinProximity) return null;
-                if (InGameShopManager.Instance._shopUI.activeInHierarchy) {
+                if (InGameShopManager.Instance.ShopUI.activeInHierarchy) {
                     _ownerPlayerController.EnableUISchema();
                 }
                 else {

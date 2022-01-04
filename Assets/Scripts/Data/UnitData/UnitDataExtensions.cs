@@ -18,6 +18,7 @@ namespace Data.UnitData {
             instance.state = data.state;
             instance.visualAssets = new VisualAssets(data.visualAssets);
             instance.statsData = new StatsData(data.statsData);
+            instance.fundsData = new FundsData(data.fundsData);
             return instance;
         }
     }

@@ -15,6 +15,8 @@ namespace Data.UnitData
         [SerializeField] public HealthData health;
         // Exp
         [SerializeField] public ExperienceData experience;
+        // Funds
+        [SerializeField] public FundsData fundsData;
         // States
         [SerializeField] public UnitStateType state;
         // Visuals

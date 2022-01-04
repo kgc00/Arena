@@ -1,37 +1,46 @@
-﻿using Common;
+﻿using System;
+using Common;
+using Units;
 using UnityEngine;
 
 namespace UI.InGameShop {
     public class InGameShopManager : Singleton<InGameShopManager> {
-        public GameObject _shopUI { get; private set; }
-        public bool _playerWithinProximity { get; private set; }
+        public GameObject ShopUI { get; private set; }
+        public bool IsPlayerWithinProximity { get; private set; }
+        public Unit Player { get; private set; }
+        public Action<bool, Unit> OnShopVisibilityToggled = delegate { };
 
         private void Start() {
             try {
-                _shopUI = FindObjectOfType<InGameShop>(true).gameObject;
+                ShopUI = FindObjectOfType<InGameShop>(true).gameObject;
             }
             catch {
                 // ignored
             }
 
-            if (_shopUI != null) return;
+            if (ShopUI != null) return;
             var canvas = FindObjectOfType<Canvas>();
-            if (_shopUI != null || canvas == null) return;
+            if (ShopUI != null || canvas == null) return;
             var shopUI = Instantiate(Resources.Load<RectTransform>($"{Constants.UIPath}In Game Shop"),
                 Vector3.one,
                 Quaternion.identity, canvas.transform);
             shopUI.anchoredPosition = Vector2.zero;
-            _shopUI = shopUI.gameObject;
-            _shopUI.SetActive(false);
+            ShopUI = shopUI.gameObject;
+            ShopUI.SetActive(false);
         }
 
         public void ToggleVisibility() {
-            if (_playerWithinProximity) _shopUI.SetActive(!_shopUI.activeInHierarchy);
+            var previousVisibility = ShopUI.activeInHierarchy;
+            var currentVisibility = !previousVisibility;
+            ShopUI.SetActive(currentVisibility);
+            Debug.Assert(Player != null);
+            OnShopVisibilityToggled(currentVisibility, Player);
         }
 
-        public void PlayerEnteredProximity(bool withinProximity) {
-            _playerWithinProximity = withinProximity;
-            if (!_playerWithinProximity) _shopUI.SetActive(false);
+        public void PlayerEnteredOrExitedProximity(bool withinProximity, Unit unit) {
+            IsPlayerWithinProximity = withinProximity;
+            Player = unit;
+            if (!IsPlayerWithinProximity && ShopUI.activeInHierarchy) ToggleVisibility();
         }
     }
 }

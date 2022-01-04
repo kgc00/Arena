@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities.Modifiers;
 using Data.AbilityData;
+using Data.Modifiers;
 using Data.Types;
 using Units;
 using UnityEngine;
@@ -31,6 +32,8 @@ namespace Abilities {
         public abstract IEnumerator AbilityActivated(Vector3 targetLocation);
 
         public List<Action<Unit, Ability>> OnAbilityFinished { get; set; }
+
+        public List<AbilityModifierType> EquipableModifiers { get; protected set; }
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);
 
@@ -54,6 +57,7 @@ namespace Abilities {
             Description = data.description;
             EnergyCost = data.energyCost;
             Modifiers = new List<AbilityModifier>();
+            EquipableModifiers = data.equipableModifiers;
             return this;
         }
 

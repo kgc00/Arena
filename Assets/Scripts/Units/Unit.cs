@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Common;
 using Components;
 using Controls;
 using Data.Types;
@@ -36,6 +37,7 @@ namespace Units
         public StatusComponent StatusComponent { get; private set; }
         public CoroutineHelper CoroutineHelper { get; private set; }
         public StatsComponent StatsComponent { get; private set; }
+        public FundsComponent FundsComponent { get; private set; }
         public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
@@ -73,8 +75,12 @@ namespace Units
             // Status 
             if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
 
+            // Stats
             if (StatsComponent == null) StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
 
+            // Funds
+            if (FundsComponent == null) FundsComponent = gameObject.AddComponent<FundsComponent>().Initialize(this, data.fundsData);
+            
             // if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>.Initialize(this, data.statsData);
                                                      
             // State
@@ -84,7 +90,7 @@ namespace Units
             state.Enter ();
             return this;
         }
-
+        
         public Unit UpdateModel(UnitData data) {
             Debug.Assert(Initialized);
             AbilityComponent.UpdateModel(data.abilities);

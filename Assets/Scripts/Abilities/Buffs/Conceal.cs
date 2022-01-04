@@ -24,7 +24,7 @@ namespace Abilities.Buffs {
         private bool _persistentAddMarkOnHitModifier;
         private MarkOnHitModifier _currentMarkModifier;
         private List<AbilityModifier> _globalAbilityModifiers;
-
+        
         private void Start() {
             _seq = DOTween.Sequence()
                 .AppendCallback(() => MonoHelper.SpawnVfx(VfxType.Poof, Owner.transform.position.WithoutY()))

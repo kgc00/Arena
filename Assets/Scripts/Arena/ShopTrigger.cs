@@ -7,13 +7,13 @@ namespace Arena {
     public class ShopTrigger : MonoBehaviour {
         private void OnTriggerEnter(Collider other) {
             if (other.transform.root.TryGetComponent(out Unit unit) && unit.Owner.ControlType == ControlType.Local) {
-                InGameShopManager.Instance.PlayerEnteredProximity(true);
+                InGameShopManager.Instance.PlayerEnteredOrExitedProximity(true, unit);
             }
         }
 
         private void OnTriggerExit(Collider other) {
             if (other.transform.root.TryGetComponent(out Unit unit) && unit.Owner.ControlType == ControlType.Local) {
-                InGameShopManager.Instance.PlayerEnteredProximity(false);
+                InGameShopManager.Instance.PlayerEnteredOrExitedProximity(false, unit);
             }
         }
     }

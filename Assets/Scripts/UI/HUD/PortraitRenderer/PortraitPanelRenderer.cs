@@ -21,7 +21,7 @@ namespace UI.HUD {
             
             foreach (var unit in localPlayer.Units) {
                 _ = Instantiate(PortraitPanel, gameObject.transform)
-                    .GetComponent<PortraitRenderer>()
+                    .GetComponent<PortraitRenderer.PortraitRenderer>()
                     .Initialize(unit);
             }
         }

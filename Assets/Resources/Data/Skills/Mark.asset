@@ -25,6 +25,6 @@ MonoBehaviour:
   range: 0
   startupTime: 0.5
   type: 4
-  modifiers: 05000000
+  modifiers: 04000000
   affectedFactions: 02000000
   damage: 0

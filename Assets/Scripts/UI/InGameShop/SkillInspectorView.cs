@@ -1,8 +1,11 @@
 ﻿using Abilities.Buffs;
 using Data.AbilityData;
+using Data.Modifiers;
+using Data.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.NotificationCenter;
 
 namespace UI.InGameShop {
     public class SkillInspectorView : MonoBehaviour {
@@ -18,8 +21,20 @@ namespace UI.InGameShop {
         [SerializeField] private TextMeshProUGUI _damageText;
         private void OnEnable() {
             UpdateAbilityInspectorShopData(AbilityData);
+            NotificationCenter.instance.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
         }
 
+        private void OnDisable() {
+            NotificationCenter.instance.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
+        }
+
+        void HandleSkillScrollViewToggleToggledOn(object sender, object args) 
+        {
+            if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
+            
+            UpdateAbilityInspectorShopData(toggleEvent.AbilityModel);
+        }
+        
         void UpdateAbilityInspectorShopData(AbilityData abilityData) {
             AbilityData = abilityData;
             _skillImage.sprite = AbilityData.icon;

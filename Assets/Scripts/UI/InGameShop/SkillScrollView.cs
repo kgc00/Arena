@@ -11,10 +11,15 @@ namespace UI.InGameShop {
 
         private void OnEnable() {
             InGameShopManager.Instance.OnShopVisibilityToggled += HandleShopVisibilityToggled;
+            SkillScrollViewPanels = new List<SkillScrollViewPanel>();
         }
 
         private void OnDisable() {
             InGameShopManager.Instance.OnShopVisibilityToggled -= HandleShopVisibilityToggled;
+            foreach (var panel in SkillScrollViewPanels) {
+                Destroy(panel);
+            }
+            SkillScrollViewPanels.Clear();
         }
 
         private void HandleShopVisibilityToggled(bool currentVisibility, Unit player) {

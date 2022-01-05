@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillName: {fileID: 4115871801806380642}
-  togglePrefab: {fileID: 6343986921333152543, guid: 6e5233de28af4394ba275ef5b700322b,
+  togglePrefab: {fileID: 3709524286586709881, guid: 6e5233de28af4394ba275ef5b700322b,
     type: 3}
   toggleSelections: {fileID: 1893659734168815309}
 --- !u!114 &7909023100664802683

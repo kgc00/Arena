@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaOfEffectRadius: 0
   cooldown: 1
-  description: 
-  displayName: 
+  description: Fires a projectile at the target location, dealing additional damage
+    to marked units.
+  displayName: Prey
   duration: 0
   energyCost: 0
   force: 0
@@ -25,5 +26,7 @@ MonoBehaviour:
   range: 0
   startupTime: 0
   type: 5
+  modifiers: 
+  equipableModifiers: 04000000
   affectedFactions: 02000000
   damage: 1

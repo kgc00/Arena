@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaOfEffectRadius: 5
   cooldown: 7
-  description: 
+  description: Launches a volley of arrows at the target location, dealing persistent
+    damage over time.
   displayName: Rain
   duration: 3
   energyCost: 0
@@ -25,6 +26,7 @@ MonoBehaviour:
   range: 8
   startupTime: 0.5
   type: 9
-  modifiers: 02000000
+  modifiers: 
+  equipableModifiers: 0200000004000000
   affectedFactions: 02000000
   damage: 0.5

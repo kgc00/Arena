@@ -3,5 +3,6 @@ namespace Common {
         public static string PrefabsPath = "Prefabs/";
         public static string MaterialsPath = "Materials/";
         public static string UIPath = "UI/";
+        public static string AbilityModifierShopDataPath = "Data/Skills/AbilityModifierShopData/";
     }
 }

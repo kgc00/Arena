@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Abilities.Modifiers;
+using Abilities.Modifiers.AbilityModifierShopData;
 using Data.AbilityData;
 using Data.Modifiers;
 using Data.Types;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace Abilities {
     public class Intent { }
 
     public abstract class Ability : MonoBehaviour {
+        public AbilityType Type { get; protected set; }
         public AbilityData Model { get; private set; }
         public float EnergyCost { get; protected set; }
         public string Description { get; protected set; }
@@ -34,6 +38,8 @@ namespace Abilities {
         public List<Action<Unit, Ability>> OnAbilityFinished { get; set; }
 
         public List<AbilityModifierType> EquipableModifiers { get; protected set; }
+
+        public List<AbilityModifierShopData> EquipableModifiersShopData { get; protected set; }
         // public List<Func<Vector3, IEnumerator>> OnAoEExecution { get; set; }
         // public abstract IEnumerator AbilityAoEExecuted(Vector3 targetLocation);
 
@@ -51,13 +57,17 @@ namespace Abilities {
             Cooldown = new Cooldown(data.cooldown);
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;
-            OnActivation = new List<Func<Vector3, IEnumerator>> { AbilityActivated };
-            OnAbilityFinished = new List<Action<Unit, Ability>> {};
+            OnActivation = new List<Func<Vector3, IEnumerator>> {AbilityActivated};
+            OnAbilityFinished = new List<Action<Unit, Ability>> { };
             DisplayName = data.displayName;
             Description = data.description;
             EnergyCost = data.energyCost;
             Modifiers = new List<AbilityModifier>();
             EquipableModifiers = data.equipableModifiers;
+            EquipableModifiersShopData = EquipableModifiers
+                .Select(AbilityFactory.AbilityModifierShopDataFromType)
+                .ToList();
+            Type = data.type;
             return this;
         }
 

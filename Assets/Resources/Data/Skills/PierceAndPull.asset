@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaOfEffectRadius: 5
   cooldown: 4
-  description: 
+  description: Fires a strong projectile at the target location, dealing damage to
+    all enemies in it's path. Pulls enemies into the center of the affected area.
   displayName: Pierce And Pull
   duration: 0
   energyCost: 0
@@ -25,7 +26,7 @@ MonoBehaviour:
   range: 20
   startupTime: 0.25
   type: 7
-  startParticlePrefab: {fileID: 0}
-  endParticlePrefab: {fileID: 0}
+  modifiers: 
+  equipableModifiers: 0200000004000000
   affectedFactions: 02000000
   damage: 2

@@ -25,5 +25,10 @@
             EnableDoubleMovementSpeed = "EnableDoubleMovementSpeed",
             EnableConcealPersistentAddMarkOnHit = "EnableConcealPersistentAddMarkOnHit",
             UnitDidCollide = "UnitDidCollide";
+
+
+        public const string
+            SkillScrollViewToggleToggledOn = "SkillScrollViewToggleToggledOn",
+            SkillScrollViewToggleToggledOff = "SkillScrollViewToggleToggledOff";
     }
 }

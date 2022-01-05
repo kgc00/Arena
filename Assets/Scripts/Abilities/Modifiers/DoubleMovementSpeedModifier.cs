@@ -21,7 +21,7 @@ namespace Abilities.Modifiers {
         }
 
         private IEnumerator AddModifier(Vector3 arg) {
-            NotificationCenter.instance.PostNotification(NotificationType.EnableDoubleMovementSpeed);
+            this.PostNotification(NotificationType.EnableDoubleMovementSpeed);
             yield break;
         }
     }

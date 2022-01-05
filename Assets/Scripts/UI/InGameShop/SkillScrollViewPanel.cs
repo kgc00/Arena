@@ -8,12 +8,12 @@ using UnityEngine.UI;
 namespace UI.InGameShop {
     public class SkillScrollViewPanel : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI skillName;
-        [SerializeField] private GameObject togglePrefab;
+        [SerializeField] private SkillScrollViewToggle togglePrefab;
         [SerializeField] private GameObject toggleSelections;
-        private List<GameObject> toggles;
+        private List<SkillScrollViewToggle> toggles;
 
         private void OnEnable() {
-            toggles = new List<GameObject>();
+            toggles = new List<SkillScrollViewToggle>();
         }
 
         private void OnDisable() {
@@ -31,7 +31,7 @@ namespace UI.InGameShop {
             
             skillName.SetText(ability.DisplayName);
             ability.EquipableModifiers.ForEach(equipableModifierType => {
-                var toggle = Instantiate(togglePrefab, toggleSelections.transform);
+                var toggle = Instantiate(togglePrefab, toggleSelections.transform).Initialize(ability.Model, equipableModifierType);
                 toggles.Add(toggle);
                 toggle.GetComponent<Toggle>().interactable = !ability.Modifiers
                     .Select(equippedModifierType => equippedModifierType.Type)

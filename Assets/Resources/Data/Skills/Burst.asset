@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaOfEffectRadius: 5
   cooldown: 4
-  description: 
+  description: Marks and deals damage to all enemies in target area.
   displayName: Burst
   duration: 0.15
   energyCost: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   range: 8
   startupTime: 0.5
   type: 8
-  startParticlePrefab: {fileID: 0}
-  endParticlePrefab: {fileID: 0}
+  modifiers: 
+  equipableModifiers: 0400000006000000
   affectedFactions: 02000000
   damage: 2

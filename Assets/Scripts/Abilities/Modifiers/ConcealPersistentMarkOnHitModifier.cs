@@ -23,7 +23,7 @@ namespace Abilities.Modifiers
         }
 
         private IEnumerator EnableConcealPersistentAddMarkOnHit(Vector3 arg) {
-            NotificationCenter.instance.PostNotification(NotificationType.EnableConcealPersistentAddMarkOnHit);
+            this.PostNotification(NotificationType.EnableConcealPersistentAddMarkOnHit);
             yield break;
         }
     }

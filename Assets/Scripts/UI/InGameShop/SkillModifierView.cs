@@ -1,7 +1,10 @@
 using Abilities.Modifiers.AbilityModifierShopData;
+using Data.AbilityData;
+using Data.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils.NotificationCenter;
 
 namespace UI.InGameShop {
     public class SkillModifierView : MonoBehaviour {
@@ -16,7 +19,19 @@ namespace UI.InGameShop {
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
         private void OnEnable() {
+            this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             UpdateAbilityModifierShopData(AbilityModifierShopData);
+        }
+
+        private void OnDisable() {
+            this.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
+        }
+
+        private void HandleSkillScrollViewToggleToggledOn(object sender, object args) {
+            // todo
+            if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
+
+            UpdateAbilityModifierShopData(toggleEvent.AbilityModifierShopData);
         }
 
         void UpdateAbilityModifierShopData(AbilityModifierShopData abilityModifierShopData) {

@@ -16,4 +16,4 @@ MonoBehaviour:
   Description: Adds the 'Mark on Hit' modifier to the next ability used during conceal.
     Marked units take additional damage when hit with certain abilities.
   Cost: 100
-  Image: {fileID: 21300000, guid: 4096d788f95b0dd4cb2c9588333933f8, type: 3}
+  Image: {fileID: 21300000, guid: fc391f5fb2f3ad342a23c3e672ffcb11, type: 3}

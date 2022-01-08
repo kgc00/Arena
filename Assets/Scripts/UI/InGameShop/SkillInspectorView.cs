@@ -49,5 +49,9 @@ namespace UI.InGameShop {
                 _damageText.SetText(attackAbilityData.Damage.ToString());
             }
         }
+
+        public void HandlePurchase() {
+            // todo
+        }
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine;
 namespace UI.InGameShop {
     public class InGameShopManager : Singleton<InGameShopManager> {
         public GameObject ShopUI { get; private set; }
-        public bool IsPlayerWithinProximity { get; private set; }
-        public Unit Player { get; private set; }
+        public bool IsPurchasingUnitWithinProximity { get; private set; }
+        public Unit PurchasingUnit { get; private set; }
         public Action<bool, Unit> OnShopVisibilityToggled = delegate { };
 
         private void Start() {
@@ -33,14 +33,14 @@ namespace UI.InGameShop {
             var previousVisibility = ShopUI.activeInHierarchy;
             var currentVisibility = !previousVisibility;
             ShopUI.SetActive(currentVisibility);
-            Debug.Assert(Player != null);
-            OnShopVisibilityToggled(currentVisibility, Player);
+            Debug.Assert(PurchasingUnit != null);
+            OnShopVisibilityToggled(currentVisibility, PurchasingUnit);
         }
 
         public void PlayerEnteredOrExitedProximity(bool withinProximity, Unit unit) {
-            IsPlayerWithinProximity = withinProximity;
-            Player = unit;
-            if (!IsPlayerWithinProximity && ShopUI.activeInHierarchy) ToggleVisibility();
+            IsPurchasingUnitWithinProximity = withinProximity;
+            PurchasingUnit = unit;
+            if (!IsPurchasingUnitWithinProximity && ShopUI.activeInHierarchy) ToggleVisibility();
         }
     }
 }

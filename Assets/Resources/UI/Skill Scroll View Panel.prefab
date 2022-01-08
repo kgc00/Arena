@@ -89,7 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9014077539058340254}
   - component: {fileID: 8379057963518456658}
-  - component: {fileID: 7909023100664802683}
   - component: {fileID: 6504463588344784752}
   m_Layer: 5
   m_Name: Skill Scroll View Panel
@@ -135,19 +134,6 @@ MonoBehaviour:
   togglePrefab: {fileID: 3709524286586709881, guid: 6e5233de28af4394ba275ef5b700322b,
     type: 3}
   toggleSelections: {fileID: 1893659734168815309}
---- !u!114 &7909023100664802683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030547128469311492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 0
 --- !u!114 &6504463588344784752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +496,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8364739370637166602}
   toggleTransition: 1
   graphic: {fileID: 2734888723200845410}
-  m_Group: {fileID: 7909023100664802683}
+  m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -826,7 +812,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8327515199366675478}
   toggleTransition: 1
   graphic: {fileID: 7851889914210253079}
-  m_Group: {fileID: 7909023100664802683}
+  m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1272,7 +1258,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7269033640537519571}
   toggleTransition: 1
   graphic: {fileID: 4922156228537235621}
-  m_Group: {fileID: 7909023100664802683}
+  m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1288,7 +1274,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Group
       value: 
-      objectReference: {fileID: 7909023100664802683}
+      objectReference: {fileID: 0}
     - target: {fileID: 5461200114401430515, guid: 6e5233de28af4394ba275ef5b700322b,
         type: 3}
       propertyPath: m_Pivot.x

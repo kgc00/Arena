@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Data.AbilityData;
 using Data.StatData;
 using UnityEngine;
 
 namespace Data.UnitData {
-    public static class UnitDataExtensions{
+    public static class UnitDataExtensions {
         /// <summary>
         /// Makes a copy of all variables passed by reference
         /// to avoid overwriting data on the original object
@@ -12,7 +14,7 @@ namespace Data.UnitData {
         /// <returns>An instance of UnitData with the same values as the input</returns>
         public static UnitData CreateInstance(this UnitData data) {
             var instance = ScriptableObject.CreateInstance<UnitData>();
-            instance.abilities = data.abilities.ConvertAll(x => x).ToList();
+            AssignAbilities(data, instance);
             instance.experience = new ExperienceData(data.experience);
             instance.health = new HealthData(data.health);
             instance.state = data.state;
@@ -20,6 +22,21 @@ namespace Data.UnitData {
             instance.statsData = new StatsData(data.statsData);
             instance.fundsData = new FundsData(data.fundsData);
             return instance;
+        }
+
+        private static void AssignAbilities(UnitData data, UnitData instance) {
+            instance.abilities = data.abilities.ConvertAll(x => x).ToList();
+            // maybe i'll use later
+            // instance.abilities = new List<AbilityData.AbilityData>();
+            // foreach (var abilityData in data.abilities) {
+            //     if (abilityData is AttackAbilityData attackAbilityData)
+            //         instance.abilities.Add(attackAbilityData.CreateInstance());
+            //     else if (abilityData is BuffAbilityData buffAbilityData)
+            //         instance.abilities.Add(buffAbilityData.CreateInstance());
+            //     else if (abilityData is MovementAttackAbilityData movementAttackAbilityData)
+            //         instance.abilities.Add(movementAttackAbilityData.CreateInstance());
+            //     else instance.abilities.Add(abilityData.CreateInstance());
+            // }
         }
     }
 }

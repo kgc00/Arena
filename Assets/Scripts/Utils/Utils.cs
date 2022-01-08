@@ -107,75 +107,75 @@ namespace Utils {
         }
 
         public static Dictionary<ButtonType, Ability> CreateAbilitiesFromData(List<AbilityData> data, Unit owner) {
-            var retVal = new Dictionary<ButtonType, Ability>();
+            var equippedAbilities = new Dictionary<ButtonType, Ability>();
             for (int i = 0; i < data.Count; i++) {
                 if (data[i] == null) throw new Exception("Skill SO was unassigned");
 
-                Ability instance;
-                ButtonType type = (ButtonType) Enum.ToObject(typeof(ButtonType), i);
+                Ability abilityInstance;
+                var type = (ButtonType) Enum.ToObject(typeof(ButtonType), i);
                 switch (data[i].type) {
                     // enemies
                     case AbilityType.ShootCrossbow:
-                        instance = owner.gameObject.AddComponent<ShootCrossbow>()
-                            .Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<ShootCrossbow>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.IceBolt:
-                        instance = owner.gameObject.AddComponent<IceBolt>()
-                            .Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<IceBolt>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.BodySlam:
-                        instance = owner.gameObject.AddComponent<BodySlam>()
-                            .Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<BodySlam>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Charge:
-                        instance = owner.gameObject.AddComponent<Charge>()
-                            .Initialize((MovementAttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Charge>()
+                            .Initialize((data[i] as MovementAttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.MagicShield:
-                        instance = owner.gameObject.AddComponent<MagicShield>()
-                            .Initialize((BuffAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<MagicShield>()
+                            .Initialize((data[i] as BuffAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Roar:
-                        instance = owner.gameObject.AddComponent<Roar>().Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Roar>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.ChainFlame:
-                        instance = owner.gameObject.AddComponent<ChainFlame>()
-                            .Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<ChainFlame>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     // hunter
                     case AbilityType.Mark:
-                        instance = owner.gameObject.AddComponent<Mark>().Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Mark>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Prey:
-                        instance = owner.gameObject.AddComponent<Prey>().Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Prey>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Conceal:
-                        instance = owner.gameObject.AddComponent<Conceal>()
-                            .Initialize((BuffAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Conceal>()
+                            .Initialize((data[i] as BuffAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.PierceAndPull:
-                        instance = owner.gameObject.AddComponent<PierceAndPull>()
-                            .Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<PierceAndPull>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Burst:
-                        instance = owner.gameObject.AddComponent<Burst>()
-                            .Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Burst>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Rain:
-                        instance = owner.gameObject.AddComponent<Rain>().Initialize((AttackAbilityData) data[i], owner);
-                        retVal.Add(type, instance);
+                        abilityInstance = owner.gameObject.AddComponent<Rain>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
                         break;
                     default:
                         Debug.LogWarning("Skill Instance was not assigned");
@@ -183,7 +183,7 @@ namespace Utils {
                 }
             }
 
-            return retVal;
+            return equippedAbilities;
         }
 
         public static AbilityModifier AbilityModifierFromEnum(Ability ability, AbilityModifierType type) {

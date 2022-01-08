@@ -20,11 +20,13 @@ namespace UI.InGameShop {
 
         private void OnEnable() {
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
+            this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
             UpdateAbilityModifierShopData(AbilityModifierShopData);
         }
 
         private void OnDisable() {
             this.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
+            this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 
         private void HandleSkillScrollViewToggleToggledOn(object sender, object args) {
@@ -41,7 +43,12 @@ namespace UI.InGameShop {
             _costText.SetText(AbilityModifierShopData.Cost.ToString());
             _descriptionText.SetText(AbilityModifierShopData.Description);
 
-            var player = InGameShopManager.Instance.Player;
+            UpdateCostText();
+        }
+
+
+        private void UpdateCostText() {
+            var player = InGameShopManager.Instance.PurchasingUnit;
             if (player == null) return;
             var operation = player.FundsComponent.ContainsEnoughFunds(AbilityModifierShopData.Cost);
             if (operation.containsEnoughFunds) {
@@ -52,7 +59,10 @@ namespace UI.InGameShop {
                 _costDifferenceText.fontMaterial = cannotPuchaseCostDifferenceMaterial;
                 _costDifferenceText.SetText($"(-{operation.remainder})");
             }
+        }
 
+        public void HandlePurchase(object sender, object args) {
+            UpdateCostText();
         }
     }
 }

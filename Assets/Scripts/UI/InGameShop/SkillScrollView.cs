@@ -2,16 +2,20 @@
 using System.Linq;
 using Units;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.InGameShop {
     public class SkillScrollView : MonoBehaviour {
         [SerializeField] private Transform gridTransform;
         [SerializeField] private SkillScrollViewPanel SkillScrollViewPanelPrefab;
+        [SerializeField] private ToggleGroup _toggleGroup;
+        public static ToggleGroup ToggleGroup;
         [SerializeField] private List<SkillScrollViewPanel> SkillScrollViewPanels;
 
         private void OnEnable() {
             InGameShopManager.Instance.OnShopVisibilityToggled += HandleShopVisibilityToggled;
             SkillScrollViewPanels = new List<SkillScrollViewPanel>();
+            ToggleGroup = _toggleGroup;
         }
 
         private void OnDisable() {
@@ -28,7 +32,7 @@ namespace UI.InGameShop {
         }
 
         void UpdateSkillScrollView() {
-            var player = InGameShopManager.Instance.Player;
+            var player = InGameShopManager.Instance.PurchasingUnit;
             if (player == null) return;
 
             foreach (var panel in SkillScrollViewPanels) {

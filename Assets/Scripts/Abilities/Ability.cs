@@ -71,6 +71,17 @@ namespace Abilities {
             return this;
         }
 
+        public void AddModifier(AbilityModifierType modifierType) {
+            if (Model.modifiers.Contains(modifierType) 
+                || Modifiers.Exists(x => x.Type == modifierType) 
+                || !EquipableModifiers.Contains(modifierType)) {
+                return;
+            }
+            
+            // Model.modifiers.Add(modifierType); // if we want to permanently modify the spawn data
+            Modifiers.Add(AbilityFactory.AbilityModifierFromEnum(this, modifierType));
+        }
+        
         public abstract void ResetInstanceValuesExcludingSpentModifiers();
     }
 }

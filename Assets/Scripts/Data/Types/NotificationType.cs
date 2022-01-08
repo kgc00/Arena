@@ -21,14 +21,18 @@
             MenuRequested = "MenuRequested",
             EnableInput = "EnableInput";
 
+        // ability modifiers
         public const string
             EnableDoubleMovementSpeed = "EnableDoubleMovementSpeed",
             EnableConcealPersistentAddMarkOnHit = "EnableConcealPersistentAddMarkOnHit",
             UnitDidCollide = "UnitDidCollide";
 
 
+        // shop
         public const string
             SkillScrollViewToggleToggledOn = "SkillScrollViewToggleToggledOn",
-            SkillScrollViewToggleToggledOff = "SkillScrollViewToggleToggledOff";
+            SkillScrollViewToggleToggledOff = "SkillScrollViewToggleToggledOff",
+            InsufficientFundsForPurchase = "InsufficientFundsForPurchase",
+            PurchaseComplete = "PurchaseComplete";
     }
 }

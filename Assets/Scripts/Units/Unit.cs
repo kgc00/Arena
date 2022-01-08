@@ -38,11 +38,13 @@ namespace Units
         public CoroutineHelper CoroutineHelper { get; private set; }
         public StatsComponent StatsComponent { get; private set; }
         public FundsComponent FundsComponent { get; private set; }
+        public UnitData UnitData;
         public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
         public Unit Initialize (Player owner, UnitData data) {
             // properties & fields
+            UnitData = data;
             Owner = owner;
             Portrait = data.visualAssets.portrait;
             Renderers = GetComponentsInChildren<Renderer>().ToList();

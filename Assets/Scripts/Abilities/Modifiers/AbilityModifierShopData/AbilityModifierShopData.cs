@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Data.Modifiers;
+using UnityEngine;
 
 namespace Abilities.Modifiers.AbilityModifierShopData {
     [CreateAssetMenu(fileName = "AbilityModifierShopData", menuName = "ScriptableObjects/AbilityModifierShopData", order = 0)]
@@ -7,5 +8,6 @@ namespace Abilities.Modifiers.AbilityModifierShopData {
         public string Description;
         public int Cost;
         public Sprite Image;
+        public AbilityModifierType Type;
     }
 }

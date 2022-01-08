@@ -17,3 +17,4 @@ MonoBehaviour:
     a wall using this ability
   Cost: 100
   Image: {fileID: 21300000, guid: 098a72961e9f4e44ab69310ad8e0daa0, type: 3}
+  Type: 6

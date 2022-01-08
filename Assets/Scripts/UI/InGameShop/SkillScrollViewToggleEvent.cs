@@ -5,10 +5,13 @@ namespace UI.InGameShop {
     public class SkillScrollViewToggleEvent {
         public readonly AbilityData AbilityModel;
         public readonly AbilityModifierShopData AbilityModifierShopData;
-        
-        public SkillScrollViewToggleEvent(AbilityData abilityModel, AbilityModifierShopData abilityModifierShopData) {
+        public readonly bool IsPurchased;
+
+        public SkillScrollViewToggleEvent(AbilityData abilityModel, AbilityModifierShopData abilityModifierShopData,
+            bool isPurchased) {
             AbilityModel = abilityModel;
             AbilityModifierShopData = abilityModifierShopData;
+            IsPurchased = isPurchased;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace UI.InGameShop {
         [SerializeField] private Image _background;
         [SerializeField] private Image _frame;
         private bool _initialized;
+        public bool IsPurchased;
 
         private void OnEnable() {
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
@@ -29,7 +30,7 @@ namespace UI.InGameShop {
         public void HandleToggle(bool toggleValue) {
             if (toggleValue) {
                 this.PostNotification(NotificationType.SkillScrollViewToggleToggledOn,
-                    new SkillScrollViewToggleEvent(AbilityModel, ModifierShopData));
+                    new SkillScrollViewToggleEvent(AbilityModel, ModifierShopData, IsPurchased));
                 _frame.enabled = true;
             }
             else {
@@ -38,12 +39,13 @@ namespace UI.InGameShop {
         }
 
         public SkillScrollViewToggle Initialize(AbilityData abilityModel,
-            AbilityModifierType modifierShopDataType) {
+            AbilityModifierType modifierShopDataType, bool isPurchased) {
             AbilityModel = abilityModel;
             ModifierShopData = Utils.AbilityFactory.AbilityModifierShopDataFromType(modifierShopDataType);
             _background.sprite = ModifierShopData.Image;
-            if (SkillScrollView.ToggleGroup == null) throw new Exception("Unable to find toggle group");
+            Debug.Assert(SkillScrollView.ToggleGroup != null);
             _toggle.group = SkillScrollView.ToggleGroup;
+            IsPurchased = isPurchased;
             _initialized = true;
             return this;
         }
@@ -51,7 +53,8 @@ namespace UI.InGameShop {
         public void HandlePurchase(object sender, object args) {
             if (!_initialized || !_toggle.isOn) return;
 
-            _toggle.interactable = false;
+            // _toggle.interactable = false;
+            IsPurchased = true;
             _toggle.isOn = false;
         }
     }

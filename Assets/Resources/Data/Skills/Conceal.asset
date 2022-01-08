@@ -26,6 +26,6 @@ MonoBehaviour:
   range: 11
   startupTime: 0
   type: 6
-  modifiers: 0100000007000000
+  modifiers: 07000000
   equipableModifiers: 010000000500000007000000
   affectedFactions: 02000000

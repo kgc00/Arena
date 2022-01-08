@@ -16,3 +16,4 @@ MonoBehaviour:
   Description: Deals damage to nearby enemies upon activating the ability.
   Cost: 100
   Image: {fileID: 21300000, guid: 2703b2d4325611243ac35ea3906a416d, type: 3}
+  Type: 5

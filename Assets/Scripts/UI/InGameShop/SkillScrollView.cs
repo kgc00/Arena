@@ -11,7 +11,7 @@ namespace UI.InGameShop {
         [SerializeField] private ToggleGroup _toggleGroup;
         public static ToggleGroup ToggleGroup;
         [SerializeField] private List<SkillScrollViewPanel> SkillScrollViewPanels;
-
+        private bool _initialized;
         private void OnEnable() {
             InGameShopManager.Instance.OnShopVisibilityToggled += HandleShopVisibilityToggled;
             SkillScrollViewPanels = new List<SkillScrollViewPanel>();
@@ -21,7 +21,7 @@ namespace UI.InGameShop {
         private void OnDisable() {
             InGameShopManager.Instance.OnShopVisibilityToggled -= HandleShopVisibilityToggled;
             foreach (var panel in SkillScrollViewPanels) {
-                Destroy(panel);
+                Destroy(panel.gameObject);
             }
             SkillScrollViewPanels.Clear();
         }
@@ -36,7 +36,7 @@ namespace UI.InGameShop {
             if (player == null) return;
 
             foreach (var panel in SkillScrollViewPanels) {
-                Destroy(panel);
+                Destroy(panel.gameObject);
             }
             SkillScrollViewPanels.Clear();
             

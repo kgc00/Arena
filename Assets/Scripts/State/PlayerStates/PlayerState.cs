@@ -28,7 +28,7 @@ namespace State.PlayerStates {
                 if (!InGameShopManager.Instance.IsPurchasingUnitWithinProximity) return null;
                 
                 InGameShopManager.Instance.ToggleVisibility();
-                if (InGameShopManager.Instance.ShopUI.activeInHierarchy) {
+                if (InGameShopManager.Instance.ShopUI.gameObject.activeInHierarchy) {
                     _ownerPlayerController.EnableUISchema();
                 }
                 else {

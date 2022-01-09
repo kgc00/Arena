@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace UI.InGameShop {
     public class InGameShopManager : Singleton<InGameShopManager> {
-        public GameObject ShopUI { get; private set; }
+        public InGameShop ShopUI { get; private set; }
         public bool IsPurchasingUnitWithinProximity { get; private set; }
         public Unit PurchasingUnit { get; private set; }
         public Action<bool, Unit> OnShopVisibilityToggled = delegate { };
 
         private void Start() {
             try {
-                ShopUI = FindObjectOfType<InGameShop>(true).gameObject;
+                ShopUI = FindObjectOfType<InGameShop>(true);
             }
             catch {
                 // ignored
@@ -25,14 +25,14 @@ namespace UI.InGameShop {
                 Vector3.one,
                 Quaternion.identity, canvas.transform);
             shopUI.anchoredPosition = Vector2.zero;
-            ShopUI = shopUI.gameObject;
-            ShopUI.SetActive(false);
+            ShopUI = shopUI.GetComponent<InGameShop>();
+            ShopUI.gameObject.SetActive(false);
         }
 
         public void ToggleVisibility() {
-            var previousVisibility = ShopUI.activeInHierarchy;
+            var previousVisibility = ShopUI.gameObject.activeInHierarchy;
             var currentVisibility = !previousVisibility;
-            ShopUI.SetActive(currentVisibility);
+            ShopUI.gameObject.SetActive(currentVisibility);
             Debug.Assert(PurchasingUnit != null);
             OnShopVisibilityToggled(currentVisibility, PurchasingUnit);
         }
@@ -40,7 +40,17 @@ namespace UI.InGameShop {
         public void PlayerEnteredOrExitedProximity(bool withinProximity, Unit unit) {
             IsPurchasingUnitWithinProximity = withinProximity;
             PurchasingUnit = unit;
-            if (!IsPurchasingUnitWithinProximity && ShopUI.activeInHierarchy) ToggleVisibility();
+            if (IsPurchasingUnitWithinProximity) {
+                ShopUI.Initialize();
+                ShopUI.ArrowObject.Initialize(PurchasingUnit); 
+                ShopUI.ArrowObject.gameObject.SetActive(true);
+            }
+            else {
+                ShopUI.ArrowObject.gameObject.SetActive(false);
+                if (ShopUI.gameObject.activeInHierarchy) {
+                    ToggleVisibility();
+                }
+            }
         }
     }
 }

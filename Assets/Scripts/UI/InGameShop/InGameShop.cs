@@ -12,9 +12,12 @@ namespace UI.InGameShop {
         private AbilityModifierShopData _selectedModifierData;
 
         [SerializeField] private GameObject SkillInspectorWrapper;
-        public bool IsDisplayingSkillInfo;
+        [SerializeField] private ShopArrow ArrowPrefab;
+        [HideInInspector] public ShopArrow ArrowObject;
+        private bool IsDisplayingSkillInfo;
 
         private void OnEnable() {
+            Initialize();
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             InGameShopManager.Instance.OnShopVisibilityToggled += HandleVisibilityToggled;
         }
@@ -65,6 +68,13 @@ namespace UI.InGameShop {
             }
 
             IsDisplayingSkillInfo = visibility;
+        }
+
+        public void Initialize() {
+            if (ArrowObject == null) {
+                ArrowObject = Instantiate(ArrowPrefab);
+                ArrowObject.gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -4484,7 +4484,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillInspectorWrapper: {fileID: 1388735172811303815}
-  IsDisplayingSkillInfo: 0
+  ArrowPrefab: {fileID: 4314425663450015104, guid: 23d48fe3d5522d84bb505b4d8f710036,
+    type: 3}
+  ArrowObject: {fileID: 0}
 --- !u!1 &7947147190578196047
 GameObject:
   m_ObjectHideFlags: 0

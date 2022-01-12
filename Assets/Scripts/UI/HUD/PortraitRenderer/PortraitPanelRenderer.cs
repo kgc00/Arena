@@ -16,8 +16,10 @@ namespace UI.HUD {
 
         IEnumerator Initialize() {
             localPlayer = FindObjectsOfType<Player>()?.Where(x => x.ControlType == ControlType.Local).FirstOrDefault();
+
+            if (localPlayer == null) yield break;
             
-            yield return new WaitUntil(() => localPlayer?.Units.Count > 0);
+            yield return new WaitUntil(() => localPlayer.Units.Count > 0);
             
             foreach (var unit in localPlayer.Units) {
                 _ = Instantiate(PortraitPanel, gameObject.transform)

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MarkOutline
+  m_Name: ArrowOutline
   m_Shader: {fileID: -6465566751694194690, guid: bd594c110b406984fb3f74dd882af7f6,
     type: 3}
   m_ShaderKeywords: 
@@ -38,10 +38,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_11b230d0bec1470da3aad3154fd09b35: 0.3
-    - Vector1_198c490893fa41b88329b05f4d401d06: 0.43
+    - Vector1_198c490893fa41b88329b05f4d401d06: 0.6
     - Vector1_c828ba0a72974521a404de8a39ced05f: 5
-    - Vector1_eedceecf94704f69ac95bc75386370bd: 0.66
+    - Vector1_eedceecf94704f69ac95bc75386370bd: 0.4
     m_Colors:
-    - Color_3ae32a163e9545c8a4d1d3ae4e89b63e: {r: 1, g: 0.055000007, b: 0.06415282,
+    - Color_3ae32a163e9545c8a4d1d3ae4e89b63e: {r: 0.054901958, g: 0.9617815, b: 1,
         a: 1}
   m_BuildTextureStacks: []

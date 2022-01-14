@@ -13,6 +13,7 @@ namespace Abilities.AttackAbilities {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
             yield break;
         }
 

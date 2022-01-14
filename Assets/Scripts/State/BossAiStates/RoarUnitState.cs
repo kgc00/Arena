@@ -6,7 +6,7 @@ using Units;
 using UnityEngine;
 
 namespace State.BossAiStates {
-    public class RoarUnitState : UnitState{
+    public class RoarUnitState : BossState {
         private static readonly int Roaring = Animator.StringToHash("Roaring");
         private Ability roar;
         private bool roaring;

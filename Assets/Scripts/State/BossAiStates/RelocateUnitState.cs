@@ -5,7 +5,7 @@ using UnityEngine;
 using static Utils.MathHelpers;
 
 namespace State.BossAiStates {
-    public class RelocateUnitState : UnitState {
+    public class RelocateUnitState : BossState {
         
         private static readonly int Moving = Animator.StringToHash("Moving");
         private Transform playerTransform;

@@ -42,7 +42,7 @@ namespace Abilities.AttackAbilities {
                 .RemoveModifier(InputModifier.CannotRotate)
                 .RemoveModifier(InputModifier.CannotAct);
             
-            foreach (var cb in OnAbilityFinished) cb(Owner, this);
+            ExecuteOnAbilityFinished();
         }
 
         private void FixedUpdate() {

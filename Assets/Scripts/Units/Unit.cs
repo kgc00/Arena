@@ -154,6 +154,8 @@ namespace Units
             //     GUILayout.Box($"State: {state}");
             //     GUILayout.EndArea();
             // }
+            
+            state?.HandleOnGUI();
         }
 #endif
     }

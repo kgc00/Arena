@@ -35,6 +35,7 @@ namespace Abilities.AttackAbilities {
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate);
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
         }
 
         private GameObject HandlePullEffect(Vector3 targetLocation) {

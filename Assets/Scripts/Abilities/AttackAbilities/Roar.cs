@@ -34,7 +34,7 @@ namespace Abilities.AttackAbilities {
                 yield return null;
             }
 
-            foreach (var cb in OnAbilityFinished) cb(Owner, this);
+            ExecuteOnAbilityFinished();
         }
 
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {

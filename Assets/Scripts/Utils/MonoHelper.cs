@@ -20,7 +20,7 @@ namespace Utils {
 
 
         public static GameObject SpawnEnemyIndicator(Vector3 pos, float radius, GameObject projectile) =>
-            Instantiate(Resources.Load<GameObject>("VFX/EnemyIndicator"))
+            Instantiate(Resources.Load<GameObject>($"{Constants.PrefabsPath}EnemyIndicator"))
                 .GetComponent<EnemyIndicator>()
                 .Initialize(pos, radius, projectile)
                 .gameObject;

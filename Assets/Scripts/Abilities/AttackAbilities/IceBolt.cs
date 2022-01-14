@@ -16,6 +16,7 @@ namespace Abilities.AttackAbilities {
             InitializeProjectile(targetLocation, projectile);
 
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
         }
 
 

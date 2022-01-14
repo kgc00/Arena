@@ -7,6 +7,7 @@ namespace Abilities.AttackAbilities {
     public class BodySlam : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
             yield break;
         }
 

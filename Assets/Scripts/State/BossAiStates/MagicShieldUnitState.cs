@@ -7,7 +7,7 @@ using UnityEngine;
 using Utils;
 
 namespace State.BossAiStates {
-    public class MagicShieldUnitState : UnitState {
+    public class MagicShieldUnitState : BossState {
         private static readonly int Guarding = Animator.StringToHash("Guarding");
         private Ability magicShield;
         private bool shieldActive;

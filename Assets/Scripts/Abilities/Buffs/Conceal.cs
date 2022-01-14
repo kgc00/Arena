@@ -115,12 +115,12 @@ namespace Abilities.Buffs {
                 r.materials = new[] {r.materials[0], _mat};
             });
             
-            foreach (var cb in OnAbilityFinished) cb(Owner, this);
+            ExecuteOnAbilityFinished();
 
             if (_doubleMovementSpeed) {
                 Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value - _startingMoveSpeed);
             }
-            
+
             _concealed = false;
             _brokenConcealment = true;
         }

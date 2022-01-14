@@ -15,6 +15,7 @@ namespace Abilities.AttackAbilities {
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             SpawnGrenade(updatedTargetLocation);
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
         }
         
         private void SpawnGrenade(Vector3 targetLocation) {

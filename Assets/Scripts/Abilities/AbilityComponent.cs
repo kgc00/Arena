@@ -24,18 +24,13 @@ namespace Abilities
         private List<AbilityModifier> BuffAbilityModifiers => GlobalAbilityModifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
         private List<AbilityModifier> AttackAbilityModifiers => GlobalAbilityModifiers.Where(x => x is AttackAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
 
-        private void UpdateState(Unit unit, Ability ability) {
-            if (unit == Owner) {
+        public void SetAbilityComponentOnCooldown() {
                 State = AbilityComponentState.Idle;
-                ability.Cooldown.SetOnCooldown();
-            }
         }
         
         public AbilityComponent Initialize(Unit owner, List<AbilityData> abilities)
         {
             Owner = owner;
-            
-            Ability.OnAbilityActivationFinished += UpdateState;
 
             GlobalAbilityModifiers = new List<AbilityModifier>();
             
@@ -50,11 +45,6 @@ namespace Abilities
 
             return this;
         }
-
-        private void OnDisable() {
-            Ability.OnAbilityActivationFinished -= UpdateState;
-        }
-
         
         public void UpdateModel(List<AbilityData> abilities) {
             // TODO - confirm global ability modifiers should be reset / not reset

@@ -12,7 +12,7 @@ namespace Abilities.AttackAbilities {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
-            OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
             yield break;
         }
 

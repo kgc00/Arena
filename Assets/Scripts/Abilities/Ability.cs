@@ -29,7 +29,8 @@ namespace Abilities {
         public float StartupTime { get; protected set; }
         public Cooldown Cooldown { get; protected set; }
         public Unit Owner { get; protected set; }
-        public Sprite Icon { get; protected set; }
+        public Sprite Icon { get; protected set; }        
+        public bool Initialized { get; private set; }
         public List<AbilityModifier> Modifiers { get; protected set; }
         public static Action<Unit, Ability> OnAbilityActivationFinished { get; set; } = delegate { };
         public List<Func<Vector3, IEnumerator>> OnActivation { get; set; }
@@ -68,12 +69,21 @@ namespace Abilities {
                 .Select(AbilityFactory.AbilityModifierShopDataFromType)
                 .ToList();
             Type = data.type;
+            Initialized = true;
             return this;
         }
 
+        protected void ExecuteOnAbilityFinished() {
+            foreach (var cb in OnAbilityFinished) {
+                cb(Owner, this);
+            }
+            Cooldown.SetOnCooldown();
+            Owner.AbilityComponent.SetAbilityComponentOnCooldown();
+        }
+
+
         public void AddModifier(AbilityModifierType modifierType) {
-            if (Model.modifiers.Contains(modifierType) 
-                || Modifiers.Exists(x => x.Type == modifierType) 
+            if (Modifiers.Exists(x => x.Type == modifierType) 
                 || !EquipableModifiers.Contains(modifierType)) {
                 return;
             }

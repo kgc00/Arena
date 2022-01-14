@@ -6,7 +6,7 @@ using Utils;
 
 namespace State.BossAiStates
 {
-    public class IdleUnitState : UnitState
+    public class IdleUnitState : BossState
     {
         private Transform playerTransform;
         private static readonly int Idle = Animator.StringToHash("Idle");

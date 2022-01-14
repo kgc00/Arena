@@ -12,10 +12,11 @@ namespace Abilities.AttackAbilities {
         private readonly HashSet<Unit> _affectedUnits = new HashSet<Unit>();
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            OnAbilityActivationFinished(Owner, this);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             _affectedUnits.Clear();
             SpawnAoEEffect(updatedTargetLocation);
-            OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
         }
 
         private void SpawnAoEEffect(Vector3 updatedTargetLocation) {

@@ -24,6 +24,7 @@ namespace Abilities.AttackAbilities {
             renderer.materials = withFresnel.ToArray();
 
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
         }
 
         protected override void AbilityConnected(GameObject other, GameObject projectile) {

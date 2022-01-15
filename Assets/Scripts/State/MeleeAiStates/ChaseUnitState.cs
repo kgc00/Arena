@@ -1,5 +1,7 @@
-﻿using Controls;
+﻿using System;
+using Controls;
 using JetBrains.Annotations;
+using Pathfinding;
 using Units;
 using UnityEngine;
 
@@ -12,6 +14,7 @@ namespace State.MeleeAiStates
         private readonly float movementSpeed = 2f;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private readonly float attackRange;
+        private IAstarAI astarAI;
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
@@ -24,12 +27,14 @@ namespace State.MeleeAiStates
         {
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(Moving);
+            astarAI = Owner.GetComponent<IAstarAI>() ?? throw new Exception("Unable to find AstarAI component in " + GetType());
         }
 
         public override void Exit()
         {
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.ResetTrigger(Moving);
+            astarAI.isStopped = true;
         }
 
         public override UnitState HandleUpdate(InputValues input)
@@ -40,27 +45,9 @@ namespace State.MeleeAiStates
             if (invalidTarget) return new IdleUnitState(Owner);
             
             if (ShouldEnterAttack(out var unitState)) return unitState;
-            
+
+            astarAI.destination = targetUnit.transform.position;
             return null;
-        }
-
-        public override void HandleFixedUpdate(InputValues input)
-        {
-            bool invalidTarget = playerTransform == null ||
-                                 !targetUnit.StatusComponent.IsVisible();
-
-            if (invalidTarget) return;
-                
-            UpdateUnitLocation();
-            UpdateUnitRotation();
-        }
-
-        private void UpdateUnitRotation()
-        {
-            var difference = playerTransform.position - Owner.transform.position;
-            Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
-                Quaternion.LookRotation(difference),
-                Time.deltaTime * 10f);
         }
 
         private bool ShouldEnterAttack([CanBeNull] out UnitState unitState)
@@ -72,15 +59,6 @@ namespace State.MeleeAiStates
             
             unitState = new AttackUnitState(Owner, playerTransform);
             return true;
-        }
-
-        private void UpdateUnitLocation()
-        {
-            var moveDirection = playerTransform.position - Owner.transform.position;
-            Owner.Rigidbody.AddForce( moveDirection.normalized * 50f);
-            // Owner.transform.position = Vector3.MoveTowards(Owner.transform.position,
-            //                                                 playerTransform.position,
-            //                                                 movementSpeed * Time.deltaTime);
         }
     }
 }

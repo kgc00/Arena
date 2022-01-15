@@ -4,30 +4,32 @@ using static Utils.MathHelpers;
 
 namespace Abilities
 {
-    public class Cooldown
-    {
-        public float TimeLeft = 0f;
-        public float? CooldownTime;
-        public bool IsFrozen = false;
+    public class Cooldown {
+        public float TimeLeft;
+        public readonly float CooldownTime;
+        public bool IsFrozen;
         public bool Freeze() => IsFrozen = true;
         public bool UnFreeze() => IsFrozen = false;
         public bool IsOnCooldown => TimeLeft > 0f;
+        public const float DefaultTimeLeft = -1;
+
         public float SetOnCooldown() => TimeLeft = (float) CooldownTime;
 
-        public Cooldown(float cooldownTime)
+        public Cooldown(float cooldownTime, float currentTimeLeft)
         {
             CooldownTime = cooldownTime;
+            if (currentTimeLeft != DefaultTimeLeft) {
+                TimeLeft = currentTimeLeft;
+            }
         }
         
         // Must be called from ability component's update loop
         public float UpdateCooldown(float deltaTime)
         {
-            if (CooldownTime == null) throw new Exception("CooldownTime was never assigned");
-            
-            // Debug.Log($"Cooldown time left: {TimeLeft}");
             if (IsFrozen || !IsOnCooldown) return TimeLeft;
-            
-            return TimeLeft = Clamp(TimeLeft -= deltaTime, 0, (float)CooldownTime);
+            // Debug.Log($"Cooldown time left: {TimeLeft}");
+            TimeLeft = Clamp(TimeLeft -= deltaTime, 0, (float)CooldownTime);
+            return TimeLeft;
         }
     }
 }

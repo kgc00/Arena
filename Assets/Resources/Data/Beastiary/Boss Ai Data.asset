@@ -23,6 +23,8 @@ MonoBehaviour:
   experience:
     currentExp: 0
     bounty: 24
+  fundsData:
+    balance: 0
   state: 5
   visualAssets:
     portrait: {fileID: 0}
@@ -31,4 +33,4 @@ MonoBehaviour:
     strength: 1
     intelligence: 1
     endurance: 1
-    movementSpeed: 50
+    movementSpeed: 3

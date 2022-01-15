@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using Data.Types;
 using Units;
 using UnityEngine;
 
@@ -11,6 +11,14 @@ namespace Abilities.AttackAbilities {
             yield break;
         }
 
-        protected override void AbilityConnected(GameObject targetedUnit, GameObject projectile) { }
+        public void OnCollisionEnter(Collision other) => AbilityConnected(other.gameObject, default);
+
+        protected override void AbilityConnected(GameObject targetedUnit, GameObject _) {
+            if (!targetedUnit.gameObject.TryGetComponent(out Unit objectAsUnit)) return;
+            if (objectAsUnit.Owner.ControlType == ControlType.Ai) return;
+
+            objectAsUnit.HealthComponent.DamageOwner(Damage, this, Owner);
+
+        }
     }
 }

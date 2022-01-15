@@ -61,7 +61,7 @@ namespace Abilities
                     .First().Value;
         }
         
-        public void Activate(ref Ability ability, Vector3 targetLocation) {
+        public Coroutine Activate(ref Ability ability, Vector3 targetLocation) {
             State = AbilityComponentState.Executing;
 
             var modifiers = new List<AbilityModifier>();
@@ -91,7 +91,7 @@ namespace Abilities
             GlobalAbilityModifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
             ability.Modifiers.RemoveAll(m => m.ShouldConsume() && modifiers.Contains(m));
 
-            StartCoroutine(ExecuteAndSetComponentState(ability, targetLocation));
+            return StartCoroutine(ExecuteAndSetComponentState(ability, targetLocation));
         }
 
         private IEnumerator ExecuteAndSetComponentState(Ability ability, Vector3 targetLocation) {

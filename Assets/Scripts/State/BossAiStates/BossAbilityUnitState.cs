@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections;
 using Abilities;
-using Controls;
-using Data.Types;
+using State.BossAiStates;
 using Units;
-using UnityEngine;
 
-namespace State.BossAiStates {
-    public abstract class AbilityUnitState<T> : BossState where T : Ability {
+namespace State {
+    public abstract class BossAbilityUnitState<T> : BossState where T : Ability {
         protected bool abilityFinished;
         protected Ability ability;
 
-        protected AbilityUnitState(Unit owner) : base(owner) {
+        protected BossAbilityUnitState(Unit owner) : base(owner) {
             ability = Owner.AbilityComponent.GetEquippedAbility<T>();
             if (ability == null) {
                 throw new Exception("Ability must be assigned in AbilityUnitState constructor");
@@ -23,9 +21,9 @@ namespace State.BossAiStates {
         }
 
         public override void Exit() {
-            // if (ability.OnAbilityFinished.Contains(HandleAbilityFinished)) {
-            //     ability.OnAbilityFinished.Remove(HandleAbilityFinished);
-            // }
+            if (ability.OnAbilityFinished.Contains(HandleAbilityFinished)) {
+                ability.OnAbilityFinished.Remove(HandleAbilityFinished);
+            }
         }
         
         public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleAbility());

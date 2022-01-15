@@ -28,6 +28,8 @@ namespace State.MeleeAiStates
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) return;
             Owner.Animator.SetTrigger(Moving);
             astarAI = Owner.GetComponent<IAstarAI>() ?? throw new Exception("Unable to find AstarAI component in " + GetType());
+            astarAI.maxSpeed = Owner.StatsComponent.Stats.MovementSpeed.Value;
+            astarAI.isStopped = false;
         }
 
         public override void Exit()
@@ -57,7 +59,7 @@ namespace State.MeleeAiStates
             var distanceToUnit = Vector3.Distance(Owner.transform.position, playerTransform.position);
             if (distanceToUnit > attackRange) return false;
             
-            unitState = new AttackUnitState(Owner, playerTransform);
+            unitState = new BodySlamState(Owner, playerTransform);
             return true;
         }
     }

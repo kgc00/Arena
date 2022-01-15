@@ -38,7 +38,7 @@ namespace UI.HUD {
             var timeLeft = abilityRenderer.ability.Cooldown.TimeLeft;
             var cooldownTime = abilityRenderer.ability.Cooldown.CooldownTime;
             var fill =  timeLeft / cooldownTime;
-            return fill ?? 0;
+            return fill;
         }
     }
 }

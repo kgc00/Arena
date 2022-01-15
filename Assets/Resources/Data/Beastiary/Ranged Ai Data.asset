@@ -16,8 +16,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b70d2997f2ca8f2408b15a12f943811e, type: 2}
   health:
     maxHp: 4
+    invulnerable: 0
     currentHp: 4
   experience:
     currentExp: 0
     bounty: 6
+  fundsData:
+    balance: 0
   state: 3
+  visualAssets:
+    portrait: {fileID: 0}
+  statsData:
+    agility: 0
+    strength: 0
+    intelligence: 0
+    endurance: 0
+    movementSpeed: 3

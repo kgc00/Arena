@@ -55,7 +55,8 @@ namespace Abilities {
             Duration = data.duration;
             AreaOfEffectRadius = data.areaOfEffectRadius;
             IndicatorType = data.indicatorType;
-            Cooldown = new Cooldown(data.cooldown);
+            var currentTimeLeft = Cooldown?.TimeLeft ?? Cooldown.DefaultTimeLeft;
+            Cooldown = new Cooldown(data.cooldown, currentTimeLeft);
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;
             OnActivation = new List<Func<Vector3, IEnumerator>> {AbilityActivated};
@@ -74,11 +75,11 @@ namespace Abilities {
         }
 
         protected void ExecuteOnAbilityFinished() {
+            Cooldown.SetOnCooldown();
+            Owner.AbilityComponent.SetAbilityComponentOnCooldown();
             foreach (var cb in OnAbilityFinished) {
                 cb(Owner, this);
             }
-            Cooldown.SetOnCooldown();
-            Owner.AbilityComponent.SetAbilityComponentOnCooldown();
         }
 
 

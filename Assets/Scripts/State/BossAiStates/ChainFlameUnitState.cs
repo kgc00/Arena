@@ -17,15 +17,15 @@ namespace State.BossAiStates {
         }
         protected override IEnumerator HandleAbility() {
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) {
-                abilityFinished = true;
+                AbilityFinished = true;
                 yield break;
             }
             Owner.Animator.SetTrigger(ChainFlame);
-            Owner.AbilityComponent.Activate(ref ability, playerTransform.position);
+            Owner.AbilityComponent.Activate(ref Ability, playerTransform.position);
         }
 
         public override UnitState HandleUpdate(InputValues input) {
-            if (abilityFinished != true) return null;
+            if (AbilityFinished != true) return null;
             return new IdleUnitState(Owner);
         }
         

@@ -47,7 +47,7 @@ namespace UI.InGameShop {
             purchasingUnit.FundsComponent.SetBalance(remainder);
             purchasingUnit
                 .AbilityComponent
-                .equippedAbilities
+                .equippedAbilitiesByButton
                 .Values
                 .First(x => x.Type == _selectedAbilityData.type)
                 .AddModifier(_selectedModifierData.Type);

@@ -40,7 +40,7 @@ namespace UI.InGameShop {
             }
             SkillScrollViewPanels.Clear();
             
-            var abilities = player.AbilityComponent.equippedAbilities.Select(x => x.Value).ToList();
+            var abilities = player.AbilityComponent.equippedAbilitiesByButton.Select(x => x.Value).ToList();
             foreach (var ability in abilities) {
                 var panel = Instantiate(SkillScrollViewPanelPrefab, gridTransform);
                 panel.UpdateSkillScrollViewPanel(ability);

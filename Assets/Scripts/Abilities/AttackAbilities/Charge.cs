@@ -3,75 +3,77 @@ using Controls;
 using Data.Types;
 using Units;
 using UnityEngine;
-using static Utils.MathHelpers;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Charge : MovementAttackAbility {
-        private Vector3 targetLocation = new Vector3(-999,-999,-999);
-        private bool charging;
+        private Vector3 startLocation = new Vector3(-999, -999, -999);
+        private Vector3 targetLocation = new Vector3(-999, -999, -999);
         public bool ImpactedWall { get; private set; }
         // should parameterize this on the model/data
         public float WallImpactStunDuration { get; private set; } = 3f;
+        private float distanceTraveled;
+        private Rigidbody rb;
+        private Vector3 heading;
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            Debug.Log("starting");
+            if (rb == null) {
+                rb = Owner.GetComponent<Rigidbody>();
+            }
+            startLocation = Owner.transform.position;
             this.targetLocation = targetLocation;
-            OnAbilityActivationFinished(Owner, this); 
-            
+            heading = targetLocation - startLocation;
+            heading.y = 0f;
+            heading = heading.normalized;
+            distanceTraveled = 0f;
+            ImpactedWall = false;
+
+            yield return new WaitForSeconds(StartupTime);
+
+            OnAbilityActivationFinished(Owner, this);
+
             Owner.StatsComponent.IncrementStat(StatType.MovementSpeed, MovementSpeedModifier);
             Owner.InputModifierComponent
                 .AddModifier(InputModifier.CannotMove)
                 .AddModifier(InputModifier.CannotRotate)
                 .AddModifier(InputModifier.CannotAct);
 
-            charging = true;
-            ImpactedWall = false;
-            var timeLeft = Duration;
-            while (timeLeft > 0 
-                    && Vector3.Distance(Owner.transform.position, targetLocation) > 1f
-                    && !ImpactedWall) {
-                timeLeft = Clamp(timeLeft - Time.deltaTime, 0, Duration);
-                yield return null;
+            while (distanceTraveled < Range) {
+                if (ImpactedWall) break;
+                distanceTraveled = Vector3.Distance(startLocation, Owner.transform.position);
+                yield return new WaitForFixedUpdate();
+                var baseForce = Owner.StatsComponent.Stats.MovementSpeed.Value * heading;
+                float deceleration = (1 - distanceTraveled / Range) + 0.2f;
+                var force = distanceTraveled / Range < 0.8f
+                    ? baseForce
+                    : deceleration * baseForce;
+                rb.AddForce(force);
             }
-            charging = false;
-            
+
             Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, MovementSpeedModifier);
-            
             Owner.InputModifierComponent
                 .RemoveModifier(InputModifier.CannotMove)
                 .RemoveModifier(InputModifier.CannotRotate)
                 .RemoveModifier(InputModifier.CannotAct);
-            
+
             ExecuteOnAbilityFinished();
-        }
-
-        private void FixedUpdate() {
-            if (!charging) return;
-            
-            Vector3 heading = targetLocation - Owner.transform.position;
-            heading.y = 0f;
-            heading = Owner.StatsComponent.Stats.MovementSpeed.Value * heading.normalized;
-            Owner.GetComponent<Rigidbody>().AddForce(heading);
-        }
-
-        private void OnDrawGizmos() {
-            if (!charging) return;
-            
-            Gizmos.DrawSphere(targetLocation, 1);
         }
 
         // should look into some alternative...
         // i'd prefer to hook some event or something and do all my collision checking in one place
         // rather than have multiple abilities all checking on collision enter.
         private void OnCollisionEnter(Collision other) {
-            if (charging && other.gameObject.CompareTag("Board")) ImpactedWall = true;
-            if (charging && other.gameObject.GetComponentInChildren<Unit>() != null) AbilityConnected(other.gameObject);
+            if (other.gameObject.CompareTag("Board")) {
+                ImpactedWall = true;
+                this.PostNotification(NotificationType.ChargeDidImpactWall);
+            }
+            if (other.gameObject.GetComponentInChildren<Unit>() != null) AbilityConnected(other.gameObject);
         }
 
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
             // checking for null is done in the collision enter method
             var unit = target.GetComponent<Unit>();
-            if(AffectedFactions.Contains(unit.Owner.ControlType)) unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            if (AffectedFactions.Contains(unit.Owner.ControlType)) unit.HealthComponent.DamageOwner(Damage, this, Owner);
         }
     }
 }

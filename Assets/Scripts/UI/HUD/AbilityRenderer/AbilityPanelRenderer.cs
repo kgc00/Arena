@@ -30,7 +30,7 @@ namespace UI.HUD {
             });
             
             var abilityComponent = localPlayer.Units[0].AbilityComponent;
-            var equippedAbilities = abilityComponent.equippedAbilities;
+            var equippedAbilities = abilityComponent.equippedAbilitiesByButton;
             
             foreach (var kvp in equippedAbilities) {
                 _ = Instantiate(AbilityPanel, gameObject.transform)

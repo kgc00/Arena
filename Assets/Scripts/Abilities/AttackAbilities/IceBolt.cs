@@ -9,21 +9,21 @@ using UnityEngine;
 namespace Abilities.AttackAbilities {
     public class IceBolt : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            if (Cooldown.IsOnCooldown)
-                yield break;
-
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
 
             OnAbilityActivationFinished(Owner, this);
             ExecuteOnAbilityFinished();
+            yield break;
         }
 
 
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) {
             if (projectile == null) return;
 
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
+            projectile
+            .GetComponent<ProjectileComponent>()
+            .Initialize(targetLocation, OnAbilityConnection, ProjectileSpeed, Range);
         }
 
         private GameObject SpawnProjectile() {

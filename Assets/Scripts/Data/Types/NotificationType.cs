@@ -34,5 +34,8 @@
             SkillScrollViewToggleToggledOff = "SkillScrollViewToggleToggledOff",
             InsufficientFundsForPurchase = "InsufficientFundsForPurchase",
             PurchaseComplete = "PurchaseComplete";
+
+        public const string
+            ChargeDidImpactWall = "ChargeDidImpactWall";
     }
 }

@@ -10,7 +10,9 @@ namespace State.RangedAiStates
         private Transform playerTransform;
         private static readonly int Idle = Animator.StringToHash("Idle");
 
-        public IdleUnitState(Unit owner) : base(owner) { }
+        public IdleUnitState(Unit owner) : base(owner) {
+            playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
+         }
 
         public override void Enter()
         {
@@ -27,9 +29,6 @@ namespace State.RangedAiStates
         public override UnitState HandleUpdate(InputValues input)
         {
             // TODO: add some leashing mechanic or vision limiter
-            
-            if (playerTransform == null) playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
-
             if (playerTransform == null) return null;
             
             return new ChaseUnitState(Owner, playerTransform);

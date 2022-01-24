@@ -18,7 +18,7 @@ namespace Data.AbilityData {
         [SerializeField] public Sprite icon;
         [SerializeField] public IndicatorType indicatorType; 
         [SerializeField] public float projectileSpeed; // projectile speed 10f is average
-        [SerializeField] public int range; // maximum targeting or travel range
+        [SerializeField] public float range; // maximum travel range
         [SerializeField] public float startupTime; // delays attack to render targeting graphics
         [SerializeField] public AbilityType type; // used by factory to create ability
         [SerializeField] public List<AbilityModifierType> modifiers; // currently active modifiers

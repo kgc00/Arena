@@ -2,23 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities.AttackAbilities;
 using Abilities.Modifiers;
-using Controls;
 using Data.AbilityData;
 using Data.Types;
 using JetBrains.Annotations;
 using Units;
 using UnityEngine;
-using Utils.NotificationCenter;
-using Object = System.Object;
 
 namespace Abilities
 {
     public class AbilityComponent : MonoBehaviour {
         public AbilityComponentState State { get; set; } = AbilityComponentState.NotInitialized;
         public Unit Owner { get ; private set; }
-        [SerializeField] public Dictionary<ButtonType, Ability> equippedAbilities;
+        [SerializeField] public Dictionary<ButtonType, Ability> equippedAbilitiesByButton;
+        public Dictionary<AbilityType, Ability> equippedAbilitiesByType;
         public Ability longestRangeAbility;
         public List<AbilityModifier> GlobalAbilityModifiers { get; private set; } // used for modifiers that affect other ability's executions
         private List<AbilityModifier> BuffAbilityModifiers => GlobalAbilityModifiers.Where(x => x is BuffAbilityModifier || x.GetType() == typeof(AbilityModifier)).ToList();
@@ -28,35 +25,37 @@ namespace Abilities
                 State = AbilityComponentState.Idle;
         }
         
-        public AbilityComponent Initialize(Unit owner, List<AbilityData> abilities)
-        {
+        public AbilityComponent Initialize(Unit owner, List<AbilityData> abilities) {
             Owner = owner;
 
             GlobalAbilityModifiers = new List<AbilityModifier>();
+
             
-            equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, owner);
-            
-            if (equippedAbilities.Count > 0 && equippedAbilities.Values.Any((a) => a is AttackAbility))
-                longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility)
+            equippedAbilitiesByButton = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, owner);
+            CreateEquippedAbilitiesByType(equippedAbilitiesByButton);
+            if (equippedAbilitiesByButton.Count > 0 && equippedAbilitiesByButton.Values.Any((a) => a is AttackAbility))
+                longestRangeAbility = equippedAbilitiesByButton.Where(a => a.Value is AttackAbility)
                     .OrderByDescending(a => a.Value.Range)
                     .First().Value;
-            
+
             State = AbilityComponentState.Idle;
 
             return this;
         }
-        
+
         public void UpdateModel(List<AbilityData> abilities) {
             // TODO - confirm global ability modifiers should be reset / not reset
             Debug.Assert(State == AbilityComponentState.Idle);
             Debug.Assert(Owner != null);
             
             GlobalAbilityModifiers = new List<AbilityModifier>();
+
+            if (equippedAbilitiesByType == null) equippedAbilitiesByType = new Dictionary<AbilityType, Ability>();
+            equippedAbilitiesByButton = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, Owner);
+            CreateEquippedAbilitiesByType(equippedAbilitiesByButton);
             
-            equippedAbilities = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, Owner);
-            
-            if (equippedAbilities.Count > 0 && equippedAbilities.Values.Any((a) => a is AttackAbility))
-                longestRangeAbility = equippedAbilities.Where(a => a.Value is AttackAbility)
+            if (equippedAbilitiesByButton.Count > 0 && equippedAbilitiesByButton.Values.Any((a) => a is AttackAbility))
+                longestRangeAbility = equippedAbilitiesByButton.Where(a => a.Value is AttackAbility)
                     .OrderByDescending(a => a.Value.Range)
                     .First().Value;
         }
@@ -106,9 +105,14 @@ namespace Abilities
             ability.ResetInstanceValuesExcludingSpentModifiers(); 
         }
 
+        private void CreateEquippedAbilitiesByType(Dictionary<ButtonType, Ability> initializedAbilities) {
+            if (equippedAbilitiesByType == null) equippedAbilitiesByType = new Dictionary<AbilityType, Ability>();
+            equippedAbilitiesByType = initializedAbilities.Values.ToDictionary((a) => a.Type);
+        }
+
         [CanBeNull]
         public TAbility GetEquippedAbility<TAbility>() where TAbility : Ability =>
-            (TAbility) equippedAbilities.Values.FirstOrDefault(a => a.GetType() == typeof(TAbility)) 
+            (TAbility) equippedAbilitiesByType.Values.FirstOrDefault(a => a.GetType() == typeof(TAbility)) 
                             ?? throw new Exception($"{typeof(TAbility)} ability was not found by {Owner}'s {this}");
     }
 }

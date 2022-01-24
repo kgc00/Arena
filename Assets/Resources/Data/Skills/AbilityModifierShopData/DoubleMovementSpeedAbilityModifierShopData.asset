@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32cf815ded0f47c5ab9ef5f0fe29be7d, type: 3}
-  m_Name: ConcealAbilityModifierShopData
+  m_Name: DoubleMovementSpeedAbilityModifierShopData
   m_EditorClassIdentifier: 
   Title: Double Movement Speed
   Description: Grants +100% movement speed while ability is active.

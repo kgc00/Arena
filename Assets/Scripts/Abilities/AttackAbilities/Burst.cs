@@ -17,9 +17,9 @@ namespace Abilities.AttackAbilities {
             OnAbilityActivationFinished(Owner, this);
             ExecuteOnAbilityFinished();
         }
-        
+
         private void SpawnGrenade(Vector3 targetLocation) {
-            var go =  MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            var go = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
             var vfx = MonoHelper.SpawnVfx(VfxType.BurstProjectile, Vector3.zero);
             vfx.transform.SetParent(go.transform.Find("TipTransform") ?? go.transform, false);
         }
@@ -28,7 +28,7 @@ namespace Abilities.AttackAbilities {
             // https://answers.unity.com/questions/50279/check-if-layer-is-in-layermask.html
             var layerMask = LayerMask.GetMask("Units", "Board");
             if (layerMask != (layerMask | (1 << other.layer))) return;
-            
+
             var colliderParams = new SphereParams(5f);
             var projectilePosition = projectile == null ? Vector3.zero : projectile.transform.position;
             var centerLocation = other.GetComponent<Collider>().ClosestPoint(projectilePosition);
@@ -39,7 +39,7 @@ namespace Abilities.AttackAbilities {
 
             // should create some list that I can iterate through-
             // foreach AoEEffect => gameobject.AddComponent<AoEComponent>().Initialize(AoEEffect);
-            
+
             // Requires refactoring this logic out into a more generic model which would live on abilities themselves
             // May also need to have the AoEComponent inherit from Ability or something.
             var pGo = new GameObject("Push Force")
@@ -48,7 +48,7 @@ namespace Abilities.AttackAbilities {
                     centerLocation,
                     targetLocation,
                     ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
-                    null, 
+                    null,
                     null,
                     AffectedFactions,
                     185,
@@ -59,20 +59,20 @@ namespace Abilities.AttackAbilities {
                     centerLocation,
                     targetLocation,
                     AoEAddMark,
-                    null, 
+                    null,
                     null,
                     AffectedFactions,
                     default,
                     Duration)
                 .gameObject;
             MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
-            
+
             Destroy(projectile);
         }
 
         private IEnumerator AoEAddMark(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
-            var unit= other.transform.root.GetComponentInChildren<Unit>();
+            var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit != null) {
                 StatusHelper.AddMark(unit);
             }

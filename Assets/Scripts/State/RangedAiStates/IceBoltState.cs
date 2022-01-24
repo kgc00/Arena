@@ -10,7 +10,6 @@ namespace State.RangedAiStates {
     public class IceBoltState : AbilityUnitState<IceBolt> {
         private readonly Transform _playerTransform;
         private static readonly int Attacking = Animator.StringToHash("Attacking");
-        private static readonly int Idle = Animator.StringToHash("Idle");
 
         public IceBoltState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
@@ -23,7 +22,6 @@ namespace State.RangedAiStates {
             }
 
             Owner.Animator.SetTrigger(Attacking);
-            yield return new WaitForSeconds(0.5f);
             yield return Owner.AbilityComponent.Activate(ref Ability, _playerTransform.position);
         }
 

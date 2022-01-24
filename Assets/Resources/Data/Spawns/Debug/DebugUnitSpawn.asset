@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197cc9a3fcb24cb39899456fe9eb7090, type: 3}
   m_Name: DebugUnitSpawn
   m_EditorClassIdentifier: 
-  Unit: 1
+  Unit: 3
   Amount: 1
   modifiers: 

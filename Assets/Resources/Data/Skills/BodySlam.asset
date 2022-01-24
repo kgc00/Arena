@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BodySlam
   m_EditorClassIdentifier: 
   areaOfEffectRadius: 0
-  cooldown: 2
+  cooldown: 0.85
   description: 
   displayName: Body Slam
   duration: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   indicatorType: 0
   projectileSpeed: 0
-  range: 3
+  range: 2.25
   startupTime: 0
   type: 1
   modifiers: 

@@ -9,12 +9,12 @@ using UnityEngine;
 namespace Abilities.AttackAbilities {
     public class IceBolt : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
+            yield return new WaitForSeconds(StartupTime);
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
 
             OnAbilityActivationFinished(Owner, this);
             ExecuteOnAbilityFinished();
-            yield break;
         }
 
 

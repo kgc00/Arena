@@ -12,12 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
   m_Name: IceBolt
   m_EditorClassIdentifier: 
-  displayName: Ice Bolt
-  description: 
-  energyCost: 0
-  cooldown: 2
-  range: 16
   areaOfEffectRadius: 0
+  cooldown: 1.4
+  description: 
+  displayName: Ice Bolt
+  duration: 0
+  energyCost: 0
+  force: 0
+  icon: {fileID: 0}
+  indicatorType: 0
+  projectileSpeed: 10
+  range: 11
+  startupTime: 0.5
   type: 2
-  damage: 1
+  modifiers: 
+  equipableModifiers: 
   affectedFactions: 0000000001000000
+  damage: 1

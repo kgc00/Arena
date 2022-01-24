@@ -31,7 +31,6 @@ namespace State.ChargingAiStates {
         }
 
         IEnumerator ExecuteWaitForCooldown() {
-            yield return new WaitUntil(() => !Ability.Cooldown.IsOnCooldown);
             base.HandleAbilityFinished(Owner, Ability);
             if (Owner.Animator == null || !Owner.Animator) yield break;
             Owner.Animator.ResetTrigger(Attacking);

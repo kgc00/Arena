@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Abilities;
 using Abilities.AttackAbilities;
@@ -63,14 +62,14 @@ namespace State.ChargingAiStates {
             
             if (!AbilityFinished) return state;
 
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, _playerTransform.position);
-            var isWithinAttackRange = distanceToUnit <= Ability.Range;
+            var distanceToUnit = Vector3.Distance(_playerTransform.position, Owner.transform.position);
+            var isWithinSlashRange = distanceToUnit <= orcSlash.Range;
 
-            if (ShouldEnterAttack(ref state, isWithinAttackRange)) {
+            if (ShouldEnterAttack(ref state, isWithinSlashRange)) {
                 return state;
             }
 
-            if (ShouldEnterChase(ref state, isWithinAttackRange)) {
+            if (ShouldEnterChase(ref state, isWithinSlashRange)) {
                 return state;
             }
 

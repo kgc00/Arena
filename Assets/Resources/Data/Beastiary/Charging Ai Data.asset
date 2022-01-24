@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Charging Ai Data
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 11400000, guid: e37c9188fce8bfd4c88b25e2453c92ed, type: 2}
   - {fileID: 11400000, guid: 9440a169bf7738d4a81ad861775c520a, type: 2}
+  - {fileID: 11400000, guid: ca5bea299bc5789439086056e3155760, type: 2}
   health:
     maxHp: 5
     invulnerable: 0

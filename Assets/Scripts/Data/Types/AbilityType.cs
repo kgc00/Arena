@@ -3,6 +3,7 @@
     public enum AbilityType {
         ShootCrossbow,
         BodySlam,
+        OrcSlash,
         IceBolt,
         Charge,
         // Hunter

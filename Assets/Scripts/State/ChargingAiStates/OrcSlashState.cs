@@ -7,11 +7,11 @@ using Abilities;
 using Abilities.AttackAbilities;
 
 namespace State.ChargingAiStates {
-    public class BodySlamState : AbilityUnitState<BodySlam> {
+    public class OrcSlashState : AbilityUnitState<OrcSlash> {
         private readonly Transform _playerTransform;
         private static readonly int Attacking = Animator.StringToHash("Attacking");
 
-        public BodySlamState(Unit owner, Transform targetTransform) : base(owner) {
+        public OrcSlashState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
         }
 
@@ -59,7 +59,7 @@ namespace State.ChargingAiStates {
 
         private bool ShouldEnterAttack([CanBeNull] ref UnitState unitState, bool isWithinAttackRange) {
             if (isWithinAttackRange && AbilityFinished) {
-                unitState = new BodySlamState(Owner, _playerTransform);
+                unitState = new OrcSlashState(Owner, _playerTransform);
                 return true;
             }
 

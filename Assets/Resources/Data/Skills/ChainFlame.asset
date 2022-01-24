@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
   m_Name: ChainFlame
   m_EditorClassIdentifier: 
-  displayName: Chain Flame
-  description: 
-  energyCost: 0
-  cooldown: 4
-  duration: 0.25
-  range: 0
   areaOfEffectRadius: 3
-  type: 12
-  startupTime: 0.5
-  indicatorType: 0
-  projectileSpeed: 10
+  cooldown: 4
+  description: 
+  displayName: Chain Flame
+  duration: 0.25
+  energyCost: 0
   force: 120
   icon: {fileID: 0}
-  damage: 1
+  indicatorType: 0
+  projectileSpeed: 10
+  range: 0
+  startupTime: 0.5
+  type: 13
+  modifiers: 
+  equipableModifiers: 
   affectedFactions: 0000000001000000
+  damage: 1

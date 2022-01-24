@@ -13,7 +13,7 @@ namespace State.ChargingAiStates
         readonly Transform playerTransform;
         private readonly Unit targetUnit;
         private Charge charge;
-        private BodySlam bodySlam;
+        private OrcSlash slash;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private IAstarAI astarAI;
 
@@ -22,7 +22,7 @@ namespace State.ChargingAiStates
             this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             charge = Owner.AbilityComponent.GetEquippedAbility<Charge>();
-            bodySlam = Owner.AbilityComponent.GetEquippedAbility<BodySlam>();
+            slash = Owner.AbilityComponent.GetEquippedAbility<OrcSlash>();
         }
 
         public override void Enter()
@@ -58,11 +58,11 @@ namespace State.ChargingAiStates
         }
 
         private bool ShouldEnterAttack(ref UnitState unitState, float dist) {
-            var abilityWillNotReach = dist > bodySlam.Range;
-            var abilityCoolingDown = bodySlam.Cooldown.IsOnCooldown;
+            var abilityWillNotReach = dist > slash.Range;
+            var abilityCoolingDown = slash.Cooldown.IsOnCooldown;
             if (abilityWillNotReach || abilityCoolingDown) return false;
 
-            unitState = new BodySlamState(Owner, playerTransform);
+            unitState = new OrcSlashState(Owner, playerTransform);
             return true;
         }
 

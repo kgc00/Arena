@@ -24,7 +24,7 @@ MonoBehaviour:
   projectileSpeed: 0
   range: 0
   startupTime: 0.5
-  type: 4
+  type: 5
   modifiers: 
   equipableModifiers: 0400000006000000
   affectedFactions: 02000000

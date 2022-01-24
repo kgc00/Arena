@@ -130,6 +130,11 @@ namespace Utils {
                             .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
                         equippedAbilities.Add(type, abilityInstance);
                         break;
+                    case AbilityType.OrcSlash:
+                        abilityInstance = owner.gameObject.AddComponent<OrcSlash>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
+                        equippedAbilities.Add(type, abilityInstance);
+                        break;
                     case AbilityType.Charge:
                         abilityInstance = owner.gameObject.AddComponent<Charge>()
                             .Initialize((data[i] as MovementAttackAbilityData).CreateInstance(), owner);

@@ -8,15 +8,13 @@ namespace State.ChargingAiStates {
     public class IdleUnitState : UnitState {
         private Transform playerTransform;
         private Charge charge;
-        private BodySlam bodySlam;
+        private OrcSlash orcSlash;
         private readonly float attackRange;
         private static readonly int Idle = Animator.StringToHash("Idle");
 
         public IdleUnitState(Unit owner) : base(owner) {
-            Debug.Log(Owner.AbilityComponent.equippedAbilitiesByButton.Values.Count);
-            Debug.Log(Owner.AbilityComponent.equippedAbilitiesByType.Values.Count);
             charge = Owner.AbilityComponent.GetEquippedAbility<Charge>();
-            bodySlam = Owner.AbilityComponent.GetEquippedAbility<BodySlam>();
+            orcSlash = Owner.AbilityComponent.GetEquippedAbility<OrcSlash>();
         }
 
         public override void Enter() {
@@ -46,11 +44,11 @@ namespace State.ChargingAiStates {
         }
 
         private bool ShouldEnterAttack(ref UnitState unitState, float dist) {
-            var abilityWillNotReach = dist > bodySlam.Range;
-            var abilityCoolingDown = bodySlam.Cooldown.IsOnCooldown;
+            var abilityWillNotReach = dist > orcSlash.Range;
+            var abilityCoolingDown = orcSlash.Cooldown.IsOnCooldown;
             if (abilityWillNotReach || abilityCoolingDown) return false;
 
-            unitState = new BodySlamState(Owner, playerTransform);
+            unitState = new OrcSlashState(Owner, playerTransform);
             return true;
         }
 

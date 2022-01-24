@@ -1372,6 +1372,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6496318964286935799, guid: 7e881a9852a23ff4c94c3bc0397f028d,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496318964286935799, guid: 7e881a9852a23ff4c94c3bc0397f028d,
+        type: 3}
       propertyPath: enemyHordes.Array.size
       value: 4
       objectReference: {fileID: 0}

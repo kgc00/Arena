@@ -14,10 +14,10 @@ namespace State.ChargingAiStates {
         private readonly Transform _playerTransform;
         private static readonly int Charging = Animator.StringToHash("Charging");
         private bool isStunned;
-        BodySlam bodySlam;
+        OrcSlash orcSlash;
         public ChargeUnitState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
-            bodySlam = Owner.AbilityComponent.GetEquippedAbility<BodySlam>();
+            orcSlash = Owner.AbilityComponent.GetEquippedAbility<OrcSlash>();
             this.AddObserver(HandleDidCollide, NotificationType.ChargeDidImpactWall);
         }
         ~ChargeUnitState() => this.RemoveObserver(HandleDidCollide, NotificationType.ChargeDidImpactWall);
@@ -83,8 +83,8 @@ namespace State.ChargingAiStates {
 
 
         private bool ShouldEnterAttack([CanBeNull] ref UnitState unitState, bool isWithinAttackRange) {
-            if (isWithinAttackRange && !bodySlam.Cooldown.IsOnCooldown) {
-                unitState = new BodySlamState(Owner, _playerTransform);
+            if (isWithinAttackRange && !orcSlash.Cooldown.IsOnCooldown) {
+                unitState = new OrcSlashState(Owner, _playerTransform);
                 return true;
             }
 

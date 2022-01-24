@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
   m_Name: Roar
   m_EditorClassIdentifier: 
-  displayName: Roar
-  description: 
-  energyCost: 0
-  cooldown: 5.5
-  duration: 2.5
-  range: 4
   areaOfEffectRadius: 0
-  type: 14
-  startupTime: 0.5
-  indicatorType: 0
-  projectileSpeed: 0
+  cooldown: 5.5
+  description: 
+  displayName: Roar
+  duration: 2.5
+  energyCost: 0
   force: 25
   icon: {fileID: 0}
-  damage: 0.25
+  indicatorType: 0
+  projectileSpeed: 0
+  range: 4
+  startupTime: 0.5
+  type: 15
+  modifiers: 
+  equipableModifiers: 
   affectedFactions: 0000000001000000
+  damage: 0.25

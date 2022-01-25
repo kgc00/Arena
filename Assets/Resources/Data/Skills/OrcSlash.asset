@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: OrcSlash
   m_EditorClassIdentifier: 
   areaOfEffectRadius: 0
-  cooldown: 1.33
+  cooldown: 0.5
   description: 
   displayName: Slash
-  duration: 0
+  duration: 1.33
   energyCost: 0
   force: 0
   icon: {fileID: 0}
   indicatorType: 0
   projectileSpeed: 0
   range: 2.25
-  startupTime: 0
+  startupTime: 0.4
   type: 2
   modifiers: 
   equipableModifiers: 

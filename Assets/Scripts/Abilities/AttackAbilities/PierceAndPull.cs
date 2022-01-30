@@ -73,7 +73,7 @@ namespace Abilities.AttackAbilities {
                     null, 
                     null,
                     AffectedFactions, 
-                    force: -185f)
+                    force: Force)
                 .gameObject;
         }
 

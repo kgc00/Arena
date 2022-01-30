@@ -82,8 +82,8 @@ namespace Units
 
             // Funds
             if (FundsComponent == null) FundsComponent = gameObject.AddComponent<FundsComponent>().Initialize(this, data.fundsData);
-            
-            // if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>.Initialize(this, data.statsData);
+
+            if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>().Initialize(this);
                                                      
             // State
             state = StateHelper.StateFromEnum(data.state, this);

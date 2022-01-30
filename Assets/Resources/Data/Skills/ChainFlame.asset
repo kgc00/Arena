@@ -20,7 +20,7 @@ MonoBehaviour:
   energyCost: 0
   force: 120
   icon: {fileID: 0}
-  indicatorType: 0
+  indicatorType: 4
   projectileSpeed: 10
   range: 0
   startupTime: 0.5

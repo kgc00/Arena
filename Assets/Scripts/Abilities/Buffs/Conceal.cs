@@ -6,6 +6,7 @@ using Data.AbilityData;
 using Data.Types;
 using DG.Tweening;
 using Extensions;
+using State;
 using State.PlayerStates;
 using Units;
 using UnityEngine;
@@ -99,7 +100,7 @@ namespace Abilities.Buffs {
         }
 
         void BreakConcealment(object sender, object args) {
-            if (!(args is PlayerIntent playerIntent)) return;
+            if (!(args is UnitIntent playerIntent)) return;
             var isPlayerActivatedAbility = ReferenceEquals(playerIntent.ability.Owner, Owner);
             if (this == null || !isPlayerActivatedAbility) return;
             

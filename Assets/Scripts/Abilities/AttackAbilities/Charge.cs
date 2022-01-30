@@ -1,8 +1,13 @@
 ﻿using System.Collections;
+using Common;
 using Controls;
+using Data;
 using Data.Types;
+using Projectiles;
+using State;
 using Units;
 using UnityEngine;
+using Utils;
 using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
@@ -15,6 +20,7 @@ namespace Abilities.AttackAbilities {
         private float distanceTraveled;
         private Rigidbody rb;
         private Vector3 heading;
+        private bool _active;
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             if (rb == null) {
@@ -27,8 +33,11 @@ namespace Abilities.AttackAbilities {
             heading = heading.normalized;
             distanceTraveled = 0f;
             ImpactedWall = false;
+            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, targetLocation), Owner));
 
             yield return new WaitForSeconds(StartupTime);
+            _active = true;
+            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, targetLocation), Owner));
 
             OnAbilityActivationFinished(Owner, this);
 
@@ -56,6 +65,7 @@ namespace Abilities.AttackAbilities {
                 .RemoveModifier(InputModifier.CannotRotate)
                 .RemoveModifier(InputModifier.CannotAct);
 
+            _active = false;
             ExecuteOnAbilityFinished();
         }
 
@@ -63,17 +73,38 @@ namespace Abilities.AttackAbilities {
         // i'd prefer to hook some event or something and do all my collision checking in one place
         // rather than have multiple abilities all checking on collision enter.
         private void OnCollisionEnter(Collision other) {
+            if (!_active) return;
             if (other.gameObject.CompareTag("Board")) {
                 ImpactedWall = true;
                 this.PostNotification(NotificationType.ChargeDidImpactWall);
             }
-            if (other.gameObject.GetComponentInChildren<Unit>() != null) AbilityConnected(other.gameObject);
-        }
 
+            var target = other.gameObject.GetComponentInChildren<Unit>();
+            if (target == null) return;
+            _other = other;
+            AbilityConnected(target.gameObject);
+        }
+        private Collision _other;
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
             // checking for null is done in the collision enter method
-            var unit = target.GetComponent<Unit>();
-            if (AffectedFactions.Contains(unit.Owner.ControlType)) unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            var unit = target.gameObject.GetComponent<Unit>();
+            if (AffectedFactions.Contains(unit.Owner.ControlType)) {
+                unit.HealthComponent.DamageOwner(Damage, this, Owner);
+                // var colliderParams = new BoxParams(Vector3.one);
+                // var _ = new GameObject("Pull Force").AddComponent<AoEComponent>()
+                //     .Initialize(colliderParams,
+                //         _other.contacts[0].point,
+                //         heading * 10f + transform.position,
+                //         ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
+                //         null, 
+                //         null,
+                //         AffectedFactions, 
+                //         force: Force)
+                //     .gameObject;
+                if (unit.TryGetComponent<Rigidbody>(out var rb)) {
+                    rb.AddForce(_other.contacts[0].normal * Force, ForceMode.Impulse);
+                }
+            }
         }
     }
 }

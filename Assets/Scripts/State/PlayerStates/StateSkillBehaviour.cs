@@ -1,5 +1,6 @@
 ﻿using Abilities;
 using Controls;
+using Data;
 using Data.Types;
 using JetBrains.Annotations;
 using Units;
@@ -29,7 +30,7 @@ namespace State.PlayerStates {
 
                     if (intent.ability == null) return false;
 
-                    unitState = new ActingUnitState(Owner, intent.ability, intent.targetLocation);
+                    unitState = new ActingUnitState(Owner, intent.ability, intent.targetingData._location);
                     this.PostNotification(NotificationType.AbilityDidActivate, intent);
                     Owner.Controller.PreviousPress = null;
                     return true;
@@ -54,7 +55,7 @@ namespace State.PlayerStates {
             return false;
         }
 
-        private PlayerIntent FormIntent(InputValues input, ButtonType type) {
+        private UnitIntent FormIntent(InputValues input, ButtonType type) {
             Vector3 targetLocation = Vector3.zero;
             switch (input.ActiveControl) {
                 case ControllerType.Delta:
@@ -71,13 +72,13 @@ namespace State.PlayerStates {
             return HandleSkillActivation(targetLocation, type);
         }
 
-        private PlayerIntent HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType) {
+        private UnitIntent HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType) {
             Owner.AbilityComponent.equippedAbilitiesByButton.TryGetValue(buttonType, out var ability);
 
             if (ability == null || ability.Cooldown.IsOnCooldown)
-                return new PlayerIntent(null, Vector3.zero, buttonType);
+                return new UnitIntent(null, new TargetingData(TargetingBehavior.CursorLocation, Vector3.zero), Owner);
 
-            return new PlayerIntent(ability, targetLocation, buttonType);
+            return new UnitIntent(ability, new TargetingData(TargetingBehavior.CursorLocation, targetLocation), Owner);
         }
     }
 }

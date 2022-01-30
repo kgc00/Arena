@@ -1,17 +1,22 @@
-﻿using Data.Types;
+﻿using Common;
+using Data.Types;
+using State;
 using State.PlayerStates;
+using Units;
 using UnityEngine;
 using Utils;
 using Utils.NotificationCenter;
 
 namespace UI.Targeting {
     public class TargetingUIController : MonoBehaviour {
-        [SerializeField] private GameObject _arrowPrefab;
-        [SerializeField] private GameObject _circlePrefab;
-        [SerializeField] private GameObject _rectanglePrefab;
+        private GameObject _arrowPrefab;
+        private GameObject _circlePrefab;
+        private GameObject _rectanglePrefab;
         private GameObject _arrow;
-        private GameObject _circle;
-        private GameObject _rectangle;
+        private ScaleAndPositionCircleUI _circle;
+        private ScaleAndPositionRectangleUI _rectangle;
+        private bool _initialized;
+        public Unit Owner { get; private set; }
 
         private void Awake() {
             this.AddObserver(EnableTargeting, NotificationType.AbilityWillActivate);
@@ -23,33 +28,41 @@ namespace UI.Targeting {
             this.RemoveObserver(DisableTargeting, NotificationType.AbilityDidActivate);
         }
 
-        private void Start() {
+        public TargetingUIController Initialize(Unit unit) {
+            Owner = unit;
+            _arrowPrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_arrow");
+            _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle");
+            _rectanglePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_square");
             _arrow = Instantiate(_arrowPrefab, transform, true);
             _arrow.SetActive(false);
-            _circle = Instantiate(_circlePrefab, transform, true);
-            _circle.SetActive(false);
-            _rectangle = Instantiate(_rectanglePrefab, transform, true);
-            _rectangle.SetActive(false);
+            _circle = Instantiate(_circlePrefab, transform, true).GetComponent<ScaleAndPositionCircleUI>();
+            _circle.gameObject.SetActive(false);
+            _rectangle = Instantiate(_rectanglePrefab, transform, true).GetComponent<ScaleAndPositionRectangleUI>();
+            _rectangle.gameObject.SetActive(false);
+            _initialized = true;
+            return this;
         }
 
         private void EnableTargeting(object notificationName, object eventData) {
-            if (!(eventData is PlayerIntent intent)) return;
+            if (!_initialized) return;
+            if (!(eventData is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(true);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) {
-                _circle.SetActive(true);
-                _circle.SendMessage("SetSize", intent.ability.AreaOfEffectRadius);
+                _circle.gameObject.SetActive(true);
+                _circle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
             }
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) {
-                _rectangle.SetActive(true);
-                _rectangle.SendMessage("SetSize", intent.ability.Range);
+                _rectangle.gameObject.SetActive(true);
+                _rectangle.SetSizeAndLocation(intent.ability.Range, intent.targetingData);
             }
         }
 
         private void DisableTargeting(object notificationName, object eventData) {
-            if (!(eventData is PlayerIntent intent)) return;
+            if (!_initialized) return;
+            if (!(eventData is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(false);
-            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) _circle.SetActive(false);
-            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) _rectangle.SetActive(false);
+            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) _circle.gameObject.SetActive(false);
+            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) _rectangle.gameObject.SetActive(false);
         }
     }
 }

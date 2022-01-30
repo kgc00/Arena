@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Common;
+using Data;
 using Data.Types;
 using Projectiles;
+using State;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class ChainFlame : AttackAbility {
@@ -30,9 +33,9 @@ namespace Abilities.AttackAbilities {
             var aoeProjectile = SpawnProjectile();
             InitializeAoEProjectile(updatedTargetLocation.Value, aoeProjectile);
 
-            MonoHelper.SpawnEnemyIndicator(updatedTargetLocation.Value, AreaOfEffectRadius, aoeProjectile);
-
+            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, updatedTargetLocation.Value), Owner));
             yield return new WaitForSeconds(delayBetweenProjectiles);
+            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, updatedTargetLocation.Value), Owner));
 
             ExecuteOnAbilityFinished();
         }
@@ -45,20 +48,20 @@ namespace Abilities.AttackAbilities {
         /// <param name="aoeProjectile"></param>
         private void InitializeAoEProjectile(Vector3 targetLocation, GameObject aoeProjectile) {
             void OnConnected(GameObject other, GameObject projectile) {
-                var unit = other.GetUnitComponent();
-                if (!unit) {
+                if (other.gameObject.CompareTag("Board")) {
                     Destroy(projectile.gameObject);
                     return;
                 }
+                
+                var unit = other.GetUnitComponent();
+                if (unit == null) return;
 
-                if (AffectedFactions.Contains(unit.Owner.ControlType)) {
-                    var proximityComponent = projectile.transform.root.GetComponent<ProximityComponent>() ??
-                                             throw new Exception($"No Proximity component found on {name}");
-                    if (proximityComponent.IsLive) {
-                        SpawnAoEEffect(projectile.transform.position);
-                        proximityComponent.SetInactive();
-                    }
-                }
+                if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
+                var proximityComponent = projectile.transform.root.GetComponent<ProximityComponent>() ??
+                                         throw new Exception($"No Proximity component found on {name}");
+                if (!proximityComponent.IsLive) return;
+                SpawnAoEEffect(projectile.transform.position);
+                proximityComponent.SetInactive();
             }
 
             var onConnectedCallback = new List<Action<GameObject, GameObject>> { OnConnected };

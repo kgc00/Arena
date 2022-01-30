@@ -20,7 +20,7 @@ namespace Abilities.AttackAbilities {
         }
 
         private void SpawnAoEEffect(Vector3 updatedTargetLocation) {
-            var colliderParams = new SphereParams(5f);
+            var colliderParams = new SphereParams(AreaOfEffectRadius);
             var pGo = new GameObject("Rain AoE Effect")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
@@ -30,11 +30,11 @@ namespace Abilities.AttackAbilities {
                     null, 
                     StopApplyingDamage,
                     AffectedFactions,
-                    force: 185,
+                    force: default,
                     duration: Duration)
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.RainScene, updatedTargetLocation, true);
-            vfx.AddComponent<SetParticleDuration>().Duration = Duration;
+            vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
         }
 
         private IEnumerator StopApplyingDamage(Collider other, Rigidbody rigidBody, float Force,

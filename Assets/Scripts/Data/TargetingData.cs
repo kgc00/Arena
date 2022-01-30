@@ -6,6 +6,7 @@ namespace Data {
     public class TargetingData {
         [SerializeField] public TargetingBehavior _behavior;
         [SerializeField] public Vector3 _location;
+        [SerializeField] 
         public TargetingData(TargetingBehavior behavior, Vector3 location) {
             _behavior = behavior;
             _location = location;

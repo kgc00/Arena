@@ -10,22 +10,6 @@ using UnityEngine;
 
 namespace Utils {
     public class MonoHelper : MonoBehaviour {
-
-        #region Indicator
-        public static GameObject SpawnEnemyIndicator(Vector3 pos, float radius, float lifetime) =>
-            Instantiate(Resources.Load<GameObject>("VFX/EnemyIndicator"))
-                .GetComponent<EnemyIndicator>()
-                .Initialize(pos, radius, lifetime)
-                .gameObject;
-
-
-        public static GameObject SpawnEnemyIndicator(Vector3 pos, float radius, GameObject projectile) =>
-            Instantiate(Resources.Load<GameObject>($"{Constants.PrefabsPath}EnemyIndicator"))
-                .GetComponent<EnemyIndicator>()
-                .Initialize(pos, radius, projectile)
-                .gameObject;
-        #endregion
-
         #region VFX
         public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, bool identityRot = false) =>
             Instantiate(TypeToVfx(vfxType), pos, identityRot ? Quaternion.identity : Quaternion.Euler(-90, 0, 0));

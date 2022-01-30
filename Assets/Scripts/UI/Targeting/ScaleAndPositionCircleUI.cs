@@ -15,7 +15,7 @@ namespace UI.Targeting {
 
         public void SetSizeAndLocation(float size, TargetingData targetingData) {
             _size = size;
-            transform.localScale = Vector3.one * (size / 2);
+            image.size = Vector3.one * (size * 2);
             _targetingData = targetingData;
         }
 

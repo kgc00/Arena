@@ -30,9 +30,16 @@ namespace UI.Targeting {
 
         public TargetingUIController Initialize(Unit unit) {
             Owner = unit;
-            _arrowPrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_arrow");
-            _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle");
-            _rectanglePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_square");
+            if (Owner.Owner.ControlType == ControlType.Ai) {
+                _arrowPrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_arrow_enemy");
+                _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle_enemy");
+                _rectanglePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_square_enemy");
+                
+            } else {
+                _arrowPrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_arrow");
+                _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle");
+                _rectanglePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_square");
+            }
             _arrow = Instantiate(_arrowPrefab, transform, true);
             _arrow.SetActive(false);
             _circle = Instantiate(_circlePrefab, transform, true).GetComponent<ScaleAndPositionCircleUI>();

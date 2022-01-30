@@ -90,18 +90,8 @@ namespace Abilities.AttackAbilities {
             var unit = target.gameObject.GetComponent<Unit>();
             if (AffectedFactions.Contains(unit.Owner.ControlType)) {
                 unit.HealthComponent.DamageOwner(Damage, this, Owner);
-                // var colliderParams = new BoxParams(Vector3.one);
-                // var _ = new GameObject("Pull Force").AddComponent<AoEComponent>()
-                //     .Initialize(colliderParams,
-                //         _other.contacts[0].point,
-                //         heading * 10f + transform.position,
-                //         ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
-                //         null, 
-                //         null,
-                //         AffectedFactions, 
-                //         force: Force)
-                //     .gameObject;
                 if (unit.TryGetComponent<Rigidbody>(out var rb)) {
+                    // todo - lower force, extend duration
                     rb.AddForce(_other.contacts[0].normal * Force, ForceMode.Impulse);
                 }
             }

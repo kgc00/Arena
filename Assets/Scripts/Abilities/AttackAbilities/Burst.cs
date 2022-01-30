@@ -29,7 +29,7 @@ namespace Abilities.AttackAbilities {
             var layerMask = LayerMask.GetMask("Units", "Board");
             if (layerMask != (layerMask | (1 << other.layer))) return;
 
-            var colliderParams = new SphereParams(5f);
+            var colliderParams = new SphereParams(AreaOfEffectRadius);
             var projectilePosition = projectile == null ? Vector3.zero : projectile.transform.position;
             var centerLocation = other.GetComponent<Collider>().ClosestPoint(projectilePosition);
             var offset = centerLocation - projectilePosition;
@@ -51,7 +51,7 @@ namespace Abilities.AttackAbilities {
                     null,
                     null,
                     AffectedFactions,
-                    185,
+                    Force,
                     Duration)
                 .gameObject
                 .AddComponent<AoEComponent>()
@@ -65,8 +65,8 @@ namespace Abilities.AttackAbilities {
                     default,
                     Duration)
                 .gameObject;
-            MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
-
+            var vfx = MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
+            vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
             Destroy(projectile);
         }
 

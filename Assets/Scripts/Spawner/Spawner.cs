@@ -42,7 +42,7 @@ namespace Spawner {
             }
 
             transform.position = new Vector3(xPos, 0, zPos);
-            Bounds = new Vector3(size + xModifier, 1f, size + zModifier);
+            Bounds = new Vector3(size + xModifier, .1f, size + zModifier);
 
             if (Handler == null) Handler = new WaveHandler(hordeSpawnData, this);
 

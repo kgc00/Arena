@@ -29,9 +29,10 @@ namespace State.RangedAiStates
         public override UnitState HandleUpdate(InputValues input)
         {
             // TODO: add some leashing mechanic or vision limiter
-            if (playerTransform == null) return null;
+            if (playerTransform != null) return new ChaseUnitState(Owner, playerTransform);
             
-            return new ChaseUnitState(Owner, playerTransform);
+            playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
+            return playerTransform == null ? null : new ChaseUnitState(Owner, playerTransform);
         }
     }
 }

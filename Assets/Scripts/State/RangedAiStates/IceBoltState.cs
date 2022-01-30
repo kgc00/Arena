@@ -10,9 +10,12 @@ namespace State.RangedAiStates {
     public class IceBoltState : AbilityUnitState<IceBolt> {
         private readonly Transform _playerTransform;
         private static readonly int Attacking = Animator.StringToHash("Attacking");
+        private Unit _targetUnit;
 
         public IceBoltState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
+            _playerTransform.TryGetComponent(out Unit unit);
+            _targetUnit = unit;
         }
 
         protected override IEnumerator HandleAbility() {
@@ -36,16 +39,20 @@ namespace State.RangedAiStates {
 
         public override UnitState HandleUpdate(InputValues input) {
             UnitState state = null;
+            var isNotVisible = _targetUnit == null || !_targetUnit.StatusComponent.IsVisible();
+            var invalidTarget = _playerTransform == null ||
+                                isNotVisible;
             var distanceToUnit = Vector3.Distance(Owner.transform.position, _playerTransform.position);
             var isWithinAttackRange = distanceToUnit <= Ability.Range;
+            
+            if (ShouldEnterIdle(ref state, invalidTarget)) {
+                return state;
+            }
             
             if (ShouldEnterAttack(ref state, isWithinAttackRange)) {
                 return state;
             }
 
-            if (ShouldEnterIdle(ref state)) {
-                return state;
-            }
 
             if (ShouldEnterChase(ref state, isWithinAttackRange)) {
                 return state;
@@ -55,6 +62,12 @@ namespace State.RangedAiStates {
         }
 
 
+        private bool ShouldEnterIdle([CanBeNull] ref UnitState unitState, bool invalidTarget) {
+            if (!invalidTarget) return false;
+            unitState = new IdleUnitState(Owner);
+            return true;
+        }
+        
         private bool ShouldEnterAttack([CanBeNull] ref UnitState unitState, bool isWithinAttackRange) {
             if (isWithinAttackRange && AbilityFinished) {
                 unitState = new IceBoltState(Owner, _playerTransform);
@@ -63,18 +76,7 @@ namespace State.RangedAiStates {
 
             return false;
         }
-
-        private bool ShouldEnterIdle([CanBeNull] ref UnitState unitState) {
-            var playerIsHidden = false;
-            if (_playerTransform.TryGetComponent(out Unit unit)) {
-                playerIsHidden = !unit.StatusComponent.IsVisible();
-            }
-
-            if (_playerTransform != null && !playerIsHidden) return false;
-            unitState = new IdleUnitState(Owner);
-            return true;
-        }
-
+        
         private bool ShouldEnterChase([CanBeNull] ref UnitState unitState, bool isWithinAttackRange) {
             if (isWithinAttackRange || !AbilityFinished) return false;
             unitState = new ChaseUnitState(Owner, _playerTransform);

@@ -17,10 +17,7 @@ namespace Controls
         // #region MultipleHandlers
         public void OnEnable()
         {
-            if (InputValues == null)
-            {
-                InputValues = new InputValues();
-            }
+            InputValues ??= new InputValues();
         
             if (playerInput == null)
             {

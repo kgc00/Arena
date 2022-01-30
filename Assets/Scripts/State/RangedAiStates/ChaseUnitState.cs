@@ -36,20 +36,19 @@ namespace State.RangedAiStates {
 
         public override UnitState HandleUpdate(InputValues input) {
             UnitState nextState = null;
-            bool invalidTarget = playerTransform == null ||
-                                 !targetUnit.StatusComponent.IsVisible();
+            var invalidTarget = playerTransform == null ||
+                                !targetUnit.StatusComponent.IsVisible();
+            
+            
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
-            if (ShouldEnterIdle(ref nextState)) return nextState;
+            if (ShouldEnterIdle(ref nextState, invalidTarget)) return nextState;
             if (ShouldEnterAttack(ref nextState, dist)) return nextState;
 
             astarAI.destination = targetUnit.transform.position;
             return nextState;
         }
 
-        private bool ShouldEnterIdle(ref UnitState nextState) {
-            bool invalidTarget = playerTransform == null ||
-                                 !targetUnit.StatusComponent.IsVisible();
-
+        private bool ShouldEnterIdle(ref UnitState nextState, bool invalidTarget) {
             if (!invalidTarget) return false;
 
             nextState = new IdleUnitState(Owner);

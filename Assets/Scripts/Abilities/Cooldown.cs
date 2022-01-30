@@ -15,12 +15,13 @@ namespace Abilities
 
         public float SetOnCooldown() => TimeLeft = (float) CooldownTime;
 
-        public Cooldown(float cooldownTime, float currentTimeLeft)
+        public Cooldown(float cooldownTime, float currentTimeLeft, bool currentIsfrozen)
         {
             CooldownTime = cooldownTime;
             if (currentTimeLeft != DefaultTimeLeft) {
                 TimeLeft = currentTimeLeft;
             }
+            IsFrozen = currentIsfrozen;
         }
         
         // Must be called from ability component's update loop

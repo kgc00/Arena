@@ -69,6 +69,8 @@ namespace Abilities.Buffs {
             Owner.StatusComponent.AddStatus(StatusType.Hidden);
 
             OnAbilityActivationFinished(Owner, this);
+            ExecuteOnAbilityFinished();
+            Cooldown.Freeze();
 
             if (_persistentAddMarkOnHitModifier) {
                 _globalAbilityModifiers = Owner.AbilityComponent.GlobalAbilityModifiers;
@@ -101,7 +103,7 @@ namespace Abilities.Buffs {
 
         void BreakConcealment(object sender, object args) {
             if (!(args is UnitIntent playerIntent)) return;
-            var isPlayerActivatedAbility = ReferenceEquals(playerIntent.ability.Owner, Owner);
+            var isPlayerActivatedAbility = UnityEngine.Object.Equals(playerIntent.ability.Owner, Owner);
             if (this == null || !isPlayerActivatedAbility) return;
             
             HandleBreakConcealment();
@@ -116,7 +118,7 @@ namespace Abilities.Buffs {
                 r.materials = new[] {r.materials[0], _mat};
             });
             
-            ExecuteOnAbilityFinished();
+            Cooldown.UnFreeze();
 
             if (_doubleMovementSpeed) {
                 Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Owner.StatsComponent.Stats.MovementSpeed.Value - _startingMoveSpeed);

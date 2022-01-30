@@ -58,7 +58,7 @@ namespace Spawner {
 
         private static Vector3 GetRandomSpawnPos(Vector3 extentNegative, Vector3 extentPositive) {
             var x = Random.Range(extentNegative.x, extentPositive.x);
-            var y = 1.0f;
+            var y = 0.1f;
             var z = Random.Range(extentNegative.z, extentPositive.z);
             var spawnPos = new Vector3(x, y, z);
             return spawnPos;

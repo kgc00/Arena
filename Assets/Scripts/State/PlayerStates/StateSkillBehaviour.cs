@@ -40,7 +40,7 @@ namespace State.PlayerStates {
                 foreach (var kvp in input.ButtonValues) {
                     var press = kvp.Value;
                     var type = kvp.Key;
-
+                    
                     if (press.HasPerformedPress) {
                         var intent = FormIntent(input, type);
 

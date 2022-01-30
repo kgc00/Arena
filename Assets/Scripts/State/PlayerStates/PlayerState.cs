@@ -24,18 +24,17 @@ namespace State.PlayerStates {
         }
 
         public override UnitState HandleUpdate(InputValues input) {
-            if (input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) {
-                if (!InGameShopManager.Instance.IsPurchasingUnitWithinProximity) return null;
+            if (!input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) return null;
+            if (!InGameShopManager.Instance.IsPurchasingUnitWithinProximity) return null;
                 
-                InGameShopManager.Instance.ToggleVisibility();
-                if (InGameShopManager.Instance.ShopUI.gameObject.activeInHierarchy) {
-                    _ownerPlayerController.EnableUISchema();
-                }
-                else {
-                    _ownerPlayerController.EnablePlayerSchema();
-                }
+            InGameShopManager.Instance.ToggleVisibility();
+            if (InGameShopManager.Instance.ShopUI.gameObject.activeInHierarchy) {
+                _ownerPlayerController.EnableUISchema();
             }
-            
+            else {
+                _ownerPlayerController.EnablePlayerSchema();
+            }
+
             return null;
         }
 

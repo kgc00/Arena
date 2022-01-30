@@ -3,13 +3,18 @@ using Abilities.AttackAbilities;
 using Controls;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace State.BossAiStates {
     public class ChainFlameUnitState : AbilityUnitState<ChainFlame> {
         private readonly Transform playerTransform;
         private static readonly int ChainFlame = Animator.StringToHash("ChainFlame");
+        private Unit _targetUnit;
 
-        public ChainFlameUnitState(Unit owner, Transform playerTransform) : base(owner) => this.playerTransform = playerTransform;
+        public ChainFlameUnitState(Unit owner, Transform playerTransform) : base(owner) {
+            this.playerTransform = playerTransform;
+            _targetUnit = playerTransform.gameObject.GetUnitComponent();
+        }
 
         public override void Exit() {
             if (Owner.Animator == null || !Owner.Animator) return;
@@ -36,6 +41,9 @@ namespace State.BossAiStates {
 
         private void UpdateUnitRotation()
         {
+            if (_targetUnit != null && !_targetUnit.StatusComponent.IsVisible()) {
+                return;
+            }
             var difference = playerTransform.position - Owner.transform.position;
             Owner.Rigidbody.MoveRotation(Quaternion.LookRotation(difference));
         }

@@ -22,14 +22,13 @@ namespace Abilities.AttackAbilities {
             Vector3? updatedTargetLocation = targetLocation;
 
             for (int i = 0; i < iterations; i++) {
-                updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation.Value)?.position;
-                if (updatedTargetLocation == null) yield break;
+                updatedTargetLocation = Locator.GetClosestVisiblePlayerUnit(updatedTargetLocation.Value)?.position ?? targetLocation;
                 var projectile = SpawnProjectile();
                 InitializeProjectile(updatedTargetLocation.Value, projectile);
                 yield return new WaitForSeconds(delayBetweenProjectiles);
             }
 
-            updatedTargetLocation = Locator.GetClosestPlayerUnit(updatedTargetLocation.Value).position;
+            updatedTargetLocation = Locator.GetClosestVisiblePlayerUnit(updatedTargetLocation.Value)?.position ?? updatedTargetLocation;
             var aoeProjectile = SpawnProjectile();
             InitializeAoEProjectile(updatedTargetLocation.Value, aoeProjectile);
 

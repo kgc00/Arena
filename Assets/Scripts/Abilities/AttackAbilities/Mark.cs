@@ -41,8 +41,10 @@ namespace Abilities.AttackAbilities {
 
 
             StatusHelper.AddMark(unit);
-            var moveDirection = other.transform.position - projectile.transform.position;
-            other.GetComponentInParent<Rigidbody>()?.AddForce(moveDirection.normalized * 7500f);
+            var heading = other.transform.position - projectile.transform.position;
+            heading.y = 0;
+            heading = heading.normalized;
+            other.GetComponentInParent<Rigidbody>()?.AddForce(heading * Force, ForceMode.Impulse);
             Destroy(projectile);
         }
     }

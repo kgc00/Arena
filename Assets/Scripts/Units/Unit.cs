@@ -39,7 +39,6 @@ namespace Units
         public StatsComponent StatsComponent { get; private set; }
         public FundsComponent FundsComponent { get; private set; }
         public UnitData UnitData;
-        public void OnLevelUp() { }
         public bool Initialized { get; private set; } = false;
 
         public Unit Initialize (Player owner, UnitData data) {
@@ -65,6 +64,9 @@ namespace Units
             // Health
             if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>().Initialize(this, data.health);
 
+            // Stats -- must occur before abilities
+            if (StatsComponent == null) StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
+
             // Abilities
             if (AbilityComponent == null) AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this, data.abilities);
             
@@ -76,9 +78,6 @@ namespace Units
             
             // Status 
             if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
-
-            // Stats
-            if (StatsComponent == null) StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
 
             // Funds
             if (FundsComponent == null) FundsComponent = gameObject.AddComponent<FundsComponent>().Initialize(this, data.fundsData);
@@ -131,6 +130,11 @@ namespace Units
             Destroy(gameObject);
         }
 
+        public virtual void OnLevelUp() {
+            var spawnPos = new Vector3(transform.position.x, 0, transform.position.z);
+            MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos);
+        }
+
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
@@ -141,6 +145,10 @@ namespace Units
             if (!Initialized) return;
             
             if (Owner.ControlType == ControlType.Local) {
+                if (GUILayout.Button("Add Exp"))
+                {
+                    ExperienceComponent.AwardBounty(10);
+                }
                 // GUILayout.Box($"State: {state}");
                 // GUILayout.Box($"AbilityComponent State: {AbilityComponent.State}");
                 // GUILayout.Box($"Input Values Forward: {Controller.InputValues.Forward}");

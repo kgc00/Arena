@@ -12,6 +12,7 @@
         PiercePullProjectile,
         PiercePullForce,
         Mark,
-        MarkExplosion
+        MarkExplosion,
+        LevelUp
     }
 }

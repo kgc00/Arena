@@ -129,7 +129,7 @@ namespace Abilities.AttackAbilities {
 
             // instantiation
             return Instantiate(
-                Resources.Load($"{Constants.PrefabsPath}Projectile", typeof(GameObject)),
+                Resources.Load($"{Constants.PrefabsPath}Fireball Projectile VFX", typeof(GameObject)),
                 spawnPos,
                 rotation
                 ) as GameObject;

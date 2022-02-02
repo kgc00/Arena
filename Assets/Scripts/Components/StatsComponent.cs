@@ -29,5 +29,11 @@ namespace Components {
             stat.Value += value;
             return stat;
         }
+        
+        public float GetAbilityCooldown(float baseCooldown, float minimumAbilityCooldown = 0f) {
+            var coolDownModifier = Mathf.Max(Stats.Intelligence.Value, 1) - 1;
+            var cooldownReduction = 1 - coolDownModifier / 9; // intel of 10 = no cooldown
+            return Mathf.Max(minimumAbilityCooldown, baseCooldown * cooldownReduction);
+        }
     }
 }

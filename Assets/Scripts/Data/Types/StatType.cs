@@ -2,6 +2,8 @@
     public enum StatType {
         Strength,
         Endurance,
-        MovementSpeed
+        MovementSpeed,
+        Intelligence,
+        Agility
     }
 }

@@ -15,8 +15,7 @@ namespace Abilities
 
         public float SetOnCooldown() => TimeLeft = (float) CooldownTime;
 
-        public Cooldown(float cooldownTime, float currentTimeLeft, bool currentIsfrozen)
-        {
+        public Cooldown(float cooldownTime, float currentTimeLeft, bool currentIsfrozen) {
             CooldownTime = cooldownTime;
             if (currentTimeLeft != DefaultTimeLeft) {
                 TimeLeft = currentTimeLeft;
@@ -29,7 +28,7 @@ namespace Abilities
         {
             if (IsFrozen || !IsOnCooldown) return TimeLeft;
             // Debug.Log($"Cooldown time left: {TimeLeft}");
-            TimeLeft = Clamp(TimeLeft -= deltaTime, 0, (float)CooldownTime);
+            TimeLeft = Clamp(TimeLeft -= deltaTime, 0, CooldownTime);
             return TimeLeft;
         }
     }

@@ -56,8 +56,9 @@ namespace Abilities {
             AreaOfEffectRadius = data.areaOfEffectRadius;
             IndicatorType = data.indicatorType;
             var currentTimeLeft = Cooldown?.TimeLeft ?? Cooldown.DefaultTimeLeft;
-            var currentIsfrozen = Cooldown?.IsFrozen ?? default;
-            Cooldown = new Cooldown(data.cooldown, currentTimeLeft, currentIsfrozen);
+            var cooldownIsFrozen = Cooldown?.IsFrozen ?? default;
+            var reducedCooldown = Owner.StatsComponent.GetAbilityCooldown( data.cooldown,data.minimumCooldown);
+            Cooldown = new Cooldown(reducedCooldown, currentTimeLeft, cooldownIsFrozen);
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;
             OnActivation = new List<Func<Vector3, IEnumerator>> {AbilityActivated};

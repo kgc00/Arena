@@ -10,6 +10,7 @@ namespace Data.AbilityData {
     public class AbilityData : ScriptableObject {
         [SerializeField] public int areaOfEffectRadius; // 0 (none), 100f, 200f
         [SerializeField] public float cooldown; // time between uses
+        [SerializeField] public float minimumCooldown; // time between uses
         [SerializeField] public string description; // shown to player via UI
         [SerializeField] public string displayName; // shown to player via UI
         [SerializeField] public float duration;

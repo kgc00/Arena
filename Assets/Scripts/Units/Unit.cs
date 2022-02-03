@@ -132,7 +132,7 @@ namespace Units
 
         public virtual void OnLevelUp() {
             var spawnPos = new Vector3(transform.position.x, 0, transform.position.z);
-            MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos);
+            MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos).transform.SetParent(transform);
         }
 
 #if UNITY_EDITOR

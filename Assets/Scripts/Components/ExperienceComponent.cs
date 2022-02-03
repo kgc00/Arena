@@ -54,8 +54,9 @@ namespace Components
             // Award xp to local player if monster died
             bool unitWasNotAi = unit.Owner.ControlType != ControlType.Ai;
             bool ownerIsAi = Owner.Owner.ControlType != ControlType.Local;
+            bool unitWasSelf = unit == Owner; 
             
-            if (unitWasNotAi || ownerIsAi) return;
+            if (unitWasNotAi || ownerIsAi || unitWasSelf) return;
             
             Debug.Log($"Awarding {unit.ExperienceComponent.Bounty} EXP");
             AdjustExperience(Mathf.Abs(unit.ExperienceComponent.Bounty));

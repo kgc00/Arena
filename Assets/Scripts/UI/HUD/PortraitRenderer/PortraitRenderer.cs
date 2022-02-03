@@ -33,6 +33,10 @@ namespace UI.HUD.PortraitRenderer {
             return this;
         }
 
+        private void OnDestroy() {
+            HealthComponent.OnHealthChanged -= UpdateHealthValue;
+        }
+
         private void UpdateHealthValue(Unit u, float arg2) {
             if (u == _unit)
                 UpdateHealthValue();

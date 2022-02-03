@@ -13,8 +13,10 @@ namespace Components
         public int CurrentExp { get; private set; }
         public int Bounty;
         public int Level { get; private set; }
+        public int SkillPoints { get; private set; }
 
         private const float EXP_CURVE_MODIFIER = 0.75f;
+        private const int SKILL_POINTS_PER_LEVEL = 1;
         // https://www.transum.org/Maths/Activity/Graph/Desmos.asp
         private int LevelFromExp(int exp) => Mathf.RoundToInt(EXP_CURVE_MODIFIER * Mathf.Sqrt(Mathf.Max(exp, 1)));
         private int ExpFromLevel(int level) => Mathf.RoundToInt(EXP_CURVE_MODIFIER * (Mathf.Max(level, 1) * Mathf.Max(level, 1)));
@@ -35,6 +37,7 @@ namespace Components
             Debug.Log($"Current EXP is {CurrentExp} EXP");
             Level = LevelFromExp(CurrentExp);
             if (Level == prevLevel) return;
+            SkillPoints += 1 * SKILL_POINTS_PER_LEVEL;
             Owner.OnLevelUp();
         }
         

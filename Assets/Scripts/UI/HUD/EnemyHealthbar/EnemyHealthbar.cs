@@ -9,23 +9,24 @@ namespace UI.HUD.EnemyHealthbar {
         [SerializeField] private GameObject healthFillGo;
         private Image _healthFill;
         [SerializeField] private GameObject healthbar;
-        private EnemyHealthbarHolder _enemyHealthbarHolder;
+        [SerializeField] private Vector3 rotationOffset;
+        [SerializeField] Vector3 offset = Vector3.forward;
+        private Quaternion _originalRotation;
+        [SerializeField] private float yOffset = .1f;
 
         private void Start() {
-            _enemyHealthbarHolder = EnemyHealthbarHolder.Instance; 
+            _originalRotation = Quaternion.Euler(rotationOffset);
             _owner = transform.root.GetComponent<Unit>();
             _healthFill = healthFillGo.GetComponent<Image>();
             UpdateHealthValue();
 
             HealthComponent.OnHealthChanged += UpdateHealthValue;
             Unit.OnDeath += Cleanup;
-            transform.SetParent(_enemyHealthbarHolder.transform);
         }
 
         private void Cleanup(Unit unit) {
             if (unit != _owner) return;
-            Destroy(healthbar);
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         private void UpdateHealthValue(Unit u, float arg2) {
@@ -40,9 +41,10 @@ namespace UI.HUD.EnemyHealthbar {
         }
 
         private void Update() {
-            if (_owner != null) {
-                transform.position = _owner.transform.position - Vector3.forward;
-            }
+            transform.rotation = _originalRotation;
+            if (_owner == null) return;
+            var ownerPos = _owner.transform.position;
+            transform.position = new Vector3(ownerPos.x,yOffset,ownerPos.z) - offset;
         }
     }
 }

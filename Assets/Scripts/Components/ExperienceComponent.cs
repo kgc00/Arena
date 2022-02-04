@@ -57,7 +57,7 @@ namespace Components
             // Award xp to local player if monster died
             bool unitWasNotAi = unit.Owner.ControlType != ControlType.Ai;
             bool ownerIsAi = Owner.Owner.ControlType != ControlType.Local;
-            bool unitWasSelf = unit == Owner; 
+            bool unitWasSelf = Owner == null || unit == Owner; 
             
             if (unitWasNotAi || ownerIsAi || unitWasSelf) return;
             

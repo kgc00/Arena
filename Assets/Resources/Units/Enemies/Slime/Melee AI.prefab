@@ -320,6 +320,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthFillGo: {fileID: 1572899118070345697}
   healthbar: {fileID: 3236358028341272783}
+  rotationOffset: {x: 66, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 1}
 --- !u!114 &3640983151898651683
 MonoBehaviour:
   m_ObjectHideFlags: 0

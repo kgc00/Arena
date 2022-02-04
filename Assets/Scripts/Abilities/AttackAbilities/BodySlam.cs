@@ -2,6 +2,7 @@
 using Data.Types;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace Abilities.AttackAbilities {
     public class BodySlam : AttackAbility {
@@ -18,7 +19,7 @@ namespace Abilities.AttackAbilities {
             if (objectAsUnit.Owner.ControlType == ControlType.Ai) return;
 
             objectAsUnit.HealthComponent.DamageOwner(Damage, this, Owner);
-
+            MonoHelper.SpawnVfx(VfxType.PlayerImpact, objectAsUnit.transform.position);
         }
     }
 }

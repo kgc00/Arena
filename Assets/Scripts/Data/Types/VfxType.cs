@@ -13,6 +13,8 @@
         PiercePullForce,
         Mark,
         MarkExplosion,
-        LevelUp
+        LevelUp,
+        EnemyImpact,
+        PlayerImpact,
     }
 }

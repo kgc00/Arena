@@ -45,6 +45,7 @@ namespace Abilities.AttackAbilities {
             heading.y = 0;
             heading = heading.normalized;
             other.GetComponentInParent<Rigidbody>()?.AddForce(heading * Force, ForceMode.Impulse);
+            MonoHelper.SpawnVfx(VfxType.EnemyImpact, projectile.transform.position);
             Destroy(projectile);
         }
     }

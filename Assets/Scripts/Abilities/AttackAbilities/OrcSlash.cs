@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data.Types;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace Abilities.AttackAbilities {
     public class OrcSlash : AttackAbility {
@@ -31,6 +32,7 @@ namespace Abilities.AttackAbilities {
             if (impactedUnits.Contains(objectAsUnit)) return; // this triggers on the same unit multiple times per hit, only allow the first to deal damage
             objectAsUnit.HealthComponent.DamageOwner(Damage, this, Owner);
             impactedUnits.Add(objectAsUnit);
+            MonoHelper.SpawnVfx(VfxType.PlayerImpact, objectAsUnit.transform.position);
         }
     }
 }

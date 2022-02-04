@@ -1,7 +1,7 @@
 ﻿namespace Data.Types
 {
     public enum AbilityType {
-        ShootCrossbow,
+        None,
         BodySlam,
         OrcSlash,
         IceBolt,

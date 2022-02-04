@@ -110,6 +110,8 @@ namespace Abilities.AttackAbilities {
             if (unit == null) yield break;
 
             unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            var spawnPos = other.ClosestPoint(transform.position);
+            MonoHelper.SpawnVfx(VfxType.PlayerImpact, spawnPos);
         }
 
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) => projectile
@@ -148,6 +150,11 @@ namespace Abilities.AttackAbilities {
             if (unit == null || unit.Owner == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
             unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            var projPos = projectile.transform.position;
+            var offset = (other.transform.position - projPos) / 2;
+            var spawnPos = projPos + offset;
+            spawnPos.y = projPos.y;
+            MonoHelper.SpawnVfx(VfxType.PlayerImpact, spawnPos);
             Destroy(projectile);
         }
     }

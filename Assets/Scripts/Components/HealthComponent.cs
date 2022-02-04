@@ -1,8 +1,10 @@
 ﻿using System;
 using Abilities;
 using Data.StatData;
+using Data.Types;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace Components
 {

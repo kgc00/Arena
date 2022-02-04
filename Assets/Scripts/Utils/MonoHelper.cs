@@ -73,6 +73,12 @@ namespace Utils {
                 case VfxType.LevelUp:
                     s = $"{Constants.PrefabsPath}Level Up VFX";
                     break;
+                case VfxType.EnemyImpact:
+                    s = $"{Constants.PrefabsPath}Enemy Impact VFX";
+                    break;
+                case VfxType.PlayerImpact:
+                    s = $"{Constants.PrefabsPath}Player Impact VFX";
+                    break;
             }
 
             return s;

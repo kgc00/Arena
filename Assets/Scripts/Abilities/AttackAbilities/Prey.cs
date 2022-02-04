@@ -70,6 +70,7 @@ namespace Abilities.AttackAbilities {
                       $"Base damage is {Damage}. Total Damage: {totalDamage}");
 
             unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            MonoHelper.SpawnVfx(VfxType.EnemyImpact, projectile.transform.position);
 
             Destroy(projectile);
         }

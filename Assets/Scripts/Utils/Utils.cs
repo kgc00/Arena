@@ -115,11 +115,6 @@ namespace Utils {
                 var type = (ButtonType) Enum.ToObject(typeof(ButtonType), i);
                 switch (data[i].type) {
                     // enemies
-                    case AbilityType.ShootCrossbow:
-                        abilityInstance = owner.gameObject.AddComponent<ShootCrossbow>()
-                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);
-                        equippedAbilities.Add(type, abilityInstance);
-                        break;
                     case AbilityType.IceBolt:
                         abilityInstance = owner.gameObject.AddComponent<IceBolt>()
                             .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner);

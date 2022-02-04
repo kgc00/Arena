@@ -5,6 +5,7 @@ using Data.Types;
 using Projectiles;
 using Units;
 using UnityEngine;
+using Utils;
 
 namespace Abilities.AttackAbilities {
     public class IceBolt : AttackAbility {
@@ -59,6 +60,11 @@ namespace Abilities.AttackAbilities {
             if (unit == null || unit.Owner == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
             unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            var projPos = projectile.transform.position;
+            var offset = (other.transform.position - projPos) / 2;
+            var spawnPos = projPos + offset;
+            spawnPos.y = projPos.y;
+            MonoHelper.SpawnVfx(VfxType.PlayerImpact, spawnPos);
             Destroy(projectile);
         }
     }

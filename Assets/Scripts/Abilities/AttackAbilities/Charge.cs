@@ -90,6 +90,7 @@ namespace Abilities.AttackAbilities {
             var unit = target.gameObject.GetComponent<Unit>();
             if (AffectedFactions.Contains(unit.Owner.ControlType)) {
                 unit.HealthComponent.DamageOwner(Damage, this, Owner);
+                MonoHelper.SpawnVfx(VfxType.PlayerImpact, _other.contacts[0].point);
                 if (unit.TryGetComponent<Rigidbody>(out var rb)) {
                     // todo - lower force, extend duration
                     rb.AddForce(_other.contacts[0].normal * Force, ForceMode.Impulse);

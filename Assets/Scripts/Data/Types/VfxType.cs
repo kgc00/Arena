@@ -16,5 +16,6 @@
         LevelUp,
         EnemyImpact,
         PlayerImpact,
+        RainImpact
     }
 }

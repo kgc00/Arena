@@ -79,6 +79,9 @@ namespace Utils {
                 case VfxType.PlayerImpact:
                     s = $"{Constants.PrefabsPath}Player Impact VFX";
                     break;
+                case VfxType.RainImpact:
+                    s = $"{Constants.PrefabsPath}Rain Impact VFX";
+                    break;
             }
 
             return s;

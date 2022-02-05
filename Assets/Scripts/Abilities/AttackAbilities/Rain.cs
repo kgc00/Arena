@@ -31,12 +31,25 @@ namespace Abilities.AttackAbilities {
                     StopApplyingDamage,
                     AffectedFactions,
                     force: default,
-                    duration: Duration)
+                    duration: Duration,
+                    HandleAoEComponentDestroyed
+                    )
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.RainScene, updatedTargetLocation, true);
             vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
         }
 
+        private void HandleAoEComponentDestroyed() {
+            foreach (var unit in _affectedUnits) {
+                if (unit == null) continue;
+                var vfx = unit.GetComponentInChildren<ModifyPositionAndTagVFX>();
+                if (vfx) {
+                    Destroy(vfx.gameObject);
+                }
+            }
+            _affectedUnits.Clear();
+        }
+        
         private IEnumerator StopApplyingDamage(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
@@ -44,6 +57,10 @@ namespace Abilities.AttackAbilities {
 
             if (!_affectedUnits.Contains(unit)) yield break;
             _affectedUnits.Remove(unit);
+            var vfx = unit.GetComponentInChildren<ModifyPositionAndTagVFX>();
+            if (vfx) {
+                Destroy(vfx.gameObject);
+            }
         }
 
         private IEnumerator ApplyDamageOverTime(Collider other, Rigidbody rigidBody, float Force,
@@ -54,7 +71,8 @@ namespace Abilities.AttackAbilities {
             _affectedUnits.Add(unit);
             foreach (var cb in OnAbilityConnection)
                 cb(other.gameObject, null);
-            
+
+            MonoHelper.SpawnVfx(VfxType.RainImpact, unit.transform.position).transform.SetParent(unit.transform);
             while (_affectedUnits.Contains(unit) && unit != null) {
                 var damage = Damage * Time.deltaTime;
                 Debug.Log($"Rain has connected with a unit: {unit.name}. Base damage is {damage}.");

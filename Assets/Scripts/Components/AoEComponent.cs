@@ -28,6 +28,7 @@ namespace Common
         private new Collider collider;
 
         private List<ControlType> affectedFactions;
+        private Action OnDestroyCallback { get; set; }
         public Vector3 lookTarget;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> EnterStrategy;
         public Func<Collider, Rigidbody, float, Transform, IEnumerator> StayStrategy;
@@ -43,7 +44,8 @@ namespace Common
             Func<Collider, Rigidbody, float, Transform, IEnumerator> exitStrategy,
             List<ControlType> affectedFactions,
             float force = default,
-            float duration = -1) {
+            float duration = -1,
+            Action OnDestroyCallback = null) {
             Duration = duration;
             Force = force;
             this.affectedFactions = affectedFactions;
@@ -58,7 +60,7 @@ namespace Common
             // lock y to unit's current y
             this.lookTarget = new Vector3(lookTarget.x, gameObject.transform.position.y, lookTarget.z);
             gameObject.transform.LookAt(this.lookTarget);
-            
+            this.OnDestroyCallback = OnDestroyCallback;
             return this;
         }
         
@@ -129,6 +131,10 @@ namespace Common
             
             if (Duration <= 0) Destroy(gameObject);
             else Duration -= Time.deltaTime;
+        }
+
+        private void OnDestroy() {
+            OnDestroyCallback?.Invoke();
         }
 
         #region Debug

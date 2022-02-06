@@ -60,7 +60,7 @@ namespace UI.Targeting {
             }
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) {
                 _rectangle.gameObject.SetActive(true);
-                _rectangle.SetSizeAndLocation(intent.ability.Range, intent.targetingData);
+                _rectangle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
             }
         }
 

@@ -16,25 +16,19 @@ namespace Status
             return this;
         }
         
-        public void AddStatus(StatusType statusType) {
-            if (!StatusType.HasFlag(statusType)) {
-                AddVFX(statusType);
-            }
+        public void AddStatus(StatusType statusType, float duration, float amount) {
+            if (StatusType.HasFlag(statusType)) return;
+            AddTimedStatus(statusType, duration, amount);
+            StatusType |= statusType;
+        }
+        
+        public void AddStatus(StatusType statusType, float amount) {
+            if (StatusType.HasFlag(statusType)) return;
+            AddUntimedStatus(statusType, amount);
             StatusType |= statusType;
         }
 
-        private void RemoveVFX(StatusType statusType) {
-            switch (statusType) {
-                case StatusType.Marked:
-                    var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
-                    var materials = rend.materials;
-                    var withoutFresnel = materials.ToList().Where(m => m.shader.name != _fresnel.shader.name).ToArray();
-                    rend.materials = withoutFresnel;
-                    break;
-            }
-        }
-        
-        private void AddVFX(StatusType statusType) {
+        private void AddUntimedStatus(StatusType statusType, float amount) {
             switch (statusType) {
                 case StatusType.Marked:
                     var spawnPos = Owner.transform.position;
@@ -45,17 +39,39 @@ namespace Status
                     var materials = rend.materials.ToList();
                     materials.Add(_fresnel);
                     rend.materials = materials.ToArray();
+                    gameObject.AddComponent<Marked>().Initialize(Owner, false, amount);
+                    break;
+                case StatusType.Hidden:
+                    break;
+            }
+        }
+
+        private void AddTimedStatus(StatusType statusType, float duration, float amount) {
+            switch (statusType) {
+                case StatusType.Stunned:
+                    gameObject.AddComponent<Stunned>().Initialize(Owner, duration, amount);
+                    break;
+                case StatusType.Hidden:
                     break;
             }
         }
 
         public void RemoveStatus(StatusType statusType) {
-            if (StatusType.HasFlag(statusType)) RemoveVFX(statusType);
+            if (!StatusType.HasFlag(statusType)) return;
+            switch (statusType) {
+                case StatusType.Marked:
+                    var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
+                    var materials = rend.materials;
+                    var withoutFresnel = materials.ToList().Where(m => m.shader.name != _fresnel.shader.name).ToArray();
+                    rend.materials = withoutFresnel;
+                    break;
+            }
             StatusType &= ~statusType;
             Debug.Log("Removed Status");
         }
 
         public bool IsVisible() => !StatusType.HasFlag(StatusType.Hidden);
+        public bool IsStunned() => StatusType.HasFlag(StatusType.Stunned);
     }
  
 }

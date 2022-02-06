@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using Components;
 using Data.AbilityData;
 using Data.Types;
 using Units;
@@ -10,9 +11,9 @@ namespace Abilities.AttackAbilities {
     public class Mark : AttackAbility {
         private Material _fresnel;
 
-        public override AttackAbility Initialize(AttackAbilityData data, Unit owner) {
+        public override AttackAbility Initialize(AttackAbilityData data, Unit owner, StatsComponent statsComponent) {
             _fresnel = MonoHelper.LoadMaterial(MaterialType.MarkOutline);
-            return base.Initialize(data, owner);
+            return base.Initialize(data, owner, statsComponent);
         }
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
@@ -40,7 +41,7 @@ namespace Abilities.AttackAbilities {
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
 
-            StatusHelper.AddMark(unit);
+            unit.StatusComponent.AddStatus(StatusType.Marked, 1);
             var heading = other.transform.position - projectile.transform.position;
             heading.y = 0;
             heading = heading.normalized;

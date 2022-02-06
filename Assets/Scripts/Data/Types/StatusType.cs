@@ -10,6 +10,9 @@ namespace Data.Types
         Stunned = 2,
         Rooted = 4,
         Marked = 8,
-        Hidden = 16
+        Hidden = 16,
+        Slowed = 32,
+        Fragile = 64,
+        DragonFury = 128
     };
 }

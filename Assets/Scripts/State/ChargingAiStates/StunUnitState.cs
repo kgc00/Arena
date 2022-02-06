@@ -1,18 +1,14 @@
-﻿using Controls;
+using Controls;
 using Units;
 using UnityEngine;
-using static Utils.MathHelpers;
 
-namespace State.ChargingAiStates {
-    public class StunUnitState : UnitState {
-        private float timeLeft;
-        private readonly float stunDuration;
+namespace State.ChargingAiStates
+{
+    public class StunUnitState : UnitState
+    {
         private static readonly int Idle = Animator.StringToHash("Idle");
 
-        public StunUnitState(Unit owner, float stunDuration) : base(owner) {
-            timeLeft = stunDuration;
-            this.stunDuration = stunDuration;
-        }
+        public StunUnitState(Unit owner) : base(owner) { }
 
         public override void Enter()
         {
@@ -27,10 +23,7 @@ namespace State.ChargingAiStates {
         }
 
         public override UnitState HandleUpdate(InputValues input) {
-            timeLeft = Clamp(timeLeft - Time.deltaTime, 0, stunDuration);
-            
-            if (timeLeft > 0) return null;
-            return new IdleUnitState(Owner); 
+            return Owner.StatusComponent.IsStunned() ? null : new IdleUnitState(Owner);
         }
     }
 }

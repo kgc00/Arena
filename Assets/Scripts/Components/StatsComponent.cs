@@ -31,9 +31,27 @@ namespace Components {
         }
         
         public float GetAbilityCooldown(float baseCooldown, float minimumAbilityCooldown = 0f) {
-            var coolDownModifier = Mathf.Max(Stats.Intelligence.Value, 1) - 1;
-            var cooldownReduction = 1 - coolDownModifier / 9; // intel of 10 = no cooldown
+            var cooldownModifier = Mathf.Max(Stats.Intelligence.Value, 1) - 1;
+            var cooldownReduction = 1 - cooldownModifier / 9; // intel of 10 = no cooldown
             return Mathf.Max(minimumAbilityCooldown, baseCooldown * cooldownReduction);
+        }
+        
+        public int GetMaxHealth(float baseMaxHp) {
+            var healthModifier = Mathf.Max(Stats.Endurance.Value, 1) - 1;
+            var healthIncrease = healthModifier / 9; // Endurance of 10 = double hp
+            return (int) (baseMaxHp + baseMaxHp  * healthIncrease);
+        }
+
+        public float GetAoERadius(int baseAreaOfEffectRadius) {
+            var aoeRadiusModifier = Mathf.Max(Stats.Intelligence.Value, 1) - 1;
+            var aoeRadiusIncrease = aoeRadiusModifier / 9; // intel of 10 = no cooldown
+            return baseAreaOfEffectRadius + baseAreaOfEffectRadius  * aoeRadiusIncrease;
+        }
+        
+        public float GetDamage(float baseDamage) {
+            var damageModifier = Mathf.Max(Stats.Strength.Value, 1) - 1;
+            var damageIncrease = damageModifier / 9; // intel of 10 = no cooldown
+            return baseDamage + baseDamage  * damageIncrease;
         }
     }
 }

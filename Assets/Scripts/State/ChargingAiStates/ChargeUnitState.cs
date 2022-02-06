@@ -4,6 +4,8 @@ using Abilities.AttackAbilities;
 using Controls;
 using Data.Types;
 using JetBrains.Annotations;
+using State.MeleeAiStates;
+using Status;
 using Units;
 using UnityEngine;
 using Utils.NotificationCenter;
@@ -12,7 +14,6 @@ namespace State.ChargingAiStates {
     public class ChargeUnitState : AbilityUnitState<Charge> {
         private readonly Transform _playerTransform;
         private static readonly int Charging = Animator.StringToHash("Charging");
-        private bool isStunned;
         OrcSlash orcSlash;
         public ChargeUnitState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
@@ -24,7 +25,7 @@ namespace State.ChargingAiStates {
             if (!UnityEngine.Object.Equals(sender, Ability)) {
                 return;
             }
-            isStunned = true;
+            Owner.StatusComponent.AddStatus(StatusType.Stunned,1, 2f);
         }
 
         protected override IEnumerator HandleAbility() {
@@ -53,11 +54,11 @@ namespace State.ChargingAiStates {
         public override UnitState HandleUpdate(InputValues input) {
             UnitState state = null;
 
-            if (isStunned) {
+            if (Owner.StatusComponent.IsStunned()) {
                 if (Owner.Animator != null) {
                     Owner.Animator.ResetTrigger(Charging);
                 }
-                return new StunUnitState(Owner, 2f);
+                return new StunUnitState(Owner);
             }
             
             if (!AbilityFinished) return state;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities.Modifiers;
 using Abilities.Modifiers.AbilityModifierShopData;
+using Components;
 using Data.AbilityData;
 using Data.Modifiers;
 using Data.Types;
@@ -15,6 +16,7 @@ namespace Abilities {
     public class Intent { }
 
     public abstract class Ability : MonoBehaviour {
+        protected StatsComponent StatsComponent;
         public AbilityType Type { get; protected set; }
         public AbilityData Model { get; private set; }
         public float EnergyCost { get; protected set; }
@@ -25,7 +27,7 @@ namespace Abilities {
         public float ProjectileSpeed { get; protected set; }
         public float Duration { get; protected set; }
         public IndicatorType IndicatorType { get; protected set; }
-        public int AreaOfEffectRadius { get; protected set; }
+        public float AreaOfEffectRadius { get; protected set; }
         public float StartupTime { get; protected set; }
         public Cooldown Cooldown { get; protected set; }
         public Unit Owner { get; protected set; }
@@ -46,18 +48,19 @@ namespace Abilities {
 
         protected virtual void LateUpdate() => Cooldown.UpdateCooldown(Time.deltaTime);
 
-        protected virtual Ability Initialize(AbilityData data, Unit owner) {
+        protected virtual Ability Initialize(AbilityData data, Unit owner, StatsComponent statsComponent) {
             Owner = owner;
             Model = data;
+            StatsComponent = statsComponent;
             Range = data.range;
             Force = data.force;
             Icon = data.icon;
             Duration = data.duration;
-            AreaOfEffectRadius = data.areaOfEffectRadius;
+            AreaOfEffectRadius = StatsComponent.GetAoERadius(data.areaOfEffectRadius);
             IndicatorType = data.indicatorType;
             var currentTimeLeft = Cooldown?.TimeLeft ?? Cooldown.DefaultTimeLeft;
             var cooldownIsFrozen = Cooldown?.IsFrozen ?? default;
-            var reducedCooldown = Owner.StatsComponent.GetAbilityCooldown( data.cooldown,data.minimumCooldown);
+            var reducedCooldown = StatsComponent.GetAbilityCooldown( data.cooldown,data.minimumCooldown);
             Cooldown = new Cooldown(reducedCooldown, currentTimeLeft, cooldownIsFrozen);
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;

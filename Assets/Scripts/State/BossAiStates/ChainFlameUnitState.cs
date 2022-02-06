@@ -20,11 +20,13 @@ namespace State.BossAiStates {
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.ResetTrigger(ChainFlame);
         }
+
         protected override IEnumerator HandleAbility() {
             if (Owner.Animator == null || !Owner.Animator || playerTransform == null) {
                 AbilityFinished = true;
                 yield break;
             }
+
             Owner.Animator.SetTrigger(ChainFlame);
             Owner.AbilityComponent.Activate(ref Ability, playerTransform.position);
         }
@@ -33,19 +35,22 @@ namespace State.BossAiStates {
             if (AbilityFinished != true) return null;
             return new IdleUnitState(Owner);
         }
-        
+
         public override void HandleFixedUpdate(InputValues input) {
             if (playerTransform == null) return;
             UpdateUnitRotation();
         }
 
-        private void UpdateUnitRotation()
-        {
+        private void UpdateUnitRotation() {
             if (_targetUnit != null && !_targetUnit.StatusComponent.IsVisible()) {
                 return;
             }
-            var difference = playerTransform.position - Owner.transform.position;
-            Owner.Rigidbody.MoveRotation(Quaternion.LookRotation(difference));
+
+            Quaternion wantedRotation =
+                Quaternion.LookRotation(playerTransform.position - Owner.transform.position, Vector3.up);
+            float rotationDamping = 5f;
+            Owner.transform.rotation =
+                Quaternion.Slerp(Owner.transform.rotation, wantedRotation, Time.fixedDeltaTime * rotationDamping);
         }
     }
 }

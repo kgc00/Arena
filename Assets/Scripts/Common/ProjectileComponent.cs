@@ -14,15 +14,21 @@ namespace Common {
 
         //optional param for setting projectile speed
         public void Initialize(Vector3 dir,
-        List<Action<GameObject, GameObject>> callbacks,
-        float projectileSpeed = default,
-        float range = Int16.MaxValue) {
+            List<Action<GameObject, GameObject>> callbacks,
+            float projectileSpeed = default,
+            float range = Int16.MaxValue,
+            float triggerWidthOverride = -1) {
             var forward = gameObject.transform.forward;
             Direction = new Vector3(forward.x, 0, forward.z);
             onConnected = callbacks;
             speed = projectileSpeed;
             Range = range;
             InitialPosition = gameObject.transform.position;
+            if (triggerWidthOverride == -1) return;
+            if (!TryGetComponent<BoxCollider>(out var boxCollider)) return;
+            var newSize = boxCollider.size;
+            newSize.x = triggerWidthOverride;
+            boxCollider.size = newSize;
             // rigidbody = GetComponent<Rigidbody>() ?? throw new Exception($"No rigidbody found on {name}");
         }
         void Update() => CheckRange();

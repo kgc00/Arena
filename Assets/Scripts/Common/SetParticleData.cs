@@ -2,9 +2,13 @@
 
 namespace Common {
     public class SetParticleData : MonoBehaviour {
-        public void Initialize(float duration, float areaOfEffectRadius) { 
+        [SerializeField] private float baseRadiusOverride = -1f;
+
+        public void Initialize(float duration, float areaOfEffectRadius) {
             var topLevelPS = GetComponent<ParticleSystem>();
-            var baseRadius = GetComponentInChildren<BaseRadiusProvider>().baseRadius;
+            var baseRadius = baseRadiusOverride != -1
+                ? baseRadiusOverride
+                : GetComponentInChildren<BaseRadiusProvider>().baseRadius;
             foreach (var ps in GetComponentsInChildren<ParticleSystem>()) {
                 if (ps == topLevelPS) continue;
                 ps.Stop();

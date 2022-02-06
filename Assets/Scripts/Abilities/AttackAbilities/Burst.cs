@@ -53,7 +53,7 @@ namespace Abilities.AttackAbilities {
                     AffectedFactions,
                     Force,
                     Duration)
-                .gameObject
+                .gameObject // todo - refactor into a single aoe component
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     centerLocation,
@@ -74,8 +74,9 @@ namespace Abilities.AttackAbilities {
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit != null) {
-                StatusHelper.AddMark(unit);
+                unit.StatusComponent.AddStatus(StatusType.Marked, 1);
             }
+
             yield break;
         }
     }

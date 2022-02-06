@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.Modifiers;
+using Components;
 using Data.AbilityData;
 using Data.Types;
 using Units;
@@ -13,8 +14,8 @@ namespace Abilities
     {
         private new BuffAbilityData Model { get; set; }
         public List<ControlType> AffectedFactions { get; protected set; }
-        public virtual BuffAbility Initialize(BuffAbilityData data, Unit owner) {
-            base.Initialize(data, owner);
+        public virtual BuffAbility Initialize(BuffAbilityData data, Unit owner, StatsComponent statsComponent) {
+            base.Initialize(data, owner, statsComponent);
             Model = data;
             AffectedFactions = data.AffectedFactions;
             OnActivation = new List<Func<Vector3, IEnumerator>> {AbilityActivated};
@@ -30,7 +31,7 @@ namespace Abilities
                 return;
             }
 
-            Initialize(Model, Owner);
+            Initialize(Model, Owner, StatsComponent);
         }
     }
 }

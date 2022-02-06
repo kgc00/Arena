@@ -28,6 +28,9 @@ namespace State.RangedAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            
             // TODO: add some leashing mechanic or vision limiter
             if (playerTransform != null) return new ChaseUnitState(Owner, playerTransform);
             

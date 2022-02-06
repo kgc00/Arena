@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace State.ChargingAiStates
 {
-    public class ChaseUnitState : UnitState
+    public class ChaseUnitState : ChargeAiState
     {
         readonly Transform playerTransform;
         private readonly Unit targetUnit;
@@ -43,6 +43,9 @@ namespace State.ChargingAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            
             UnitState nextState = null;
             bool invalidTarget = playerTransform == null ||
                                  !targetUnit.StatusComponent.IsVisible();

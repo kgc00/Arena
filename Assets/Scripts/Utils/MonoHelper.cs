@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Common;
 using Data.Types;
 using Projectiles;
+using Status;
 using UI;
 using Units;
 using UnityEngine;
@@ -64,6 +65,9 @@ namespace Utils {
                 case VfxType.PiercePullForce:
                     s = $"{Constants.PrefabsPath}Pierce And Pull Force VFX";
                     break;
+                case VfxType.PiercePullImpact:
+                    s = $"{Constants.PrefabsPath}Pierce And Pull Impact VFX";
+                    break;
                 case VfxType.Mark:
                     s = $"{Constants.PrefabsPath}Mark VFX";
                     break;
@@ -82,6 +86,9 @@ namespace Utils {
                 case VfxType.RainImpact:
                     s = $"{Constants.PrefabsPath}Rain Impact VFX";
                     break;
+                case VfxType.Roar:
+                    s = $"{Constants.PrefabsPath}Roar VFX";
+                    break;
             }
 
             return s;
@@ -94,12 +101,13 @@ namespace Utils {
         #endregion
 
         #region Projectile
-        public static GameObject SpawnProjectile(GameObject owner, Vector3 targetLocation, List<Action<GameObject,
-                                                GameObject>> onAbilityConnection, float projectileSpeed = default) {
+        public static GameObject SpawnProjectile(GameObject owner, Vector3 targetLocation,
+            List<Action<GameObject, GameObject>> onAbilityConnection, float projectileSpeed = default,
+            float triggerWidthOverride = -1) {
             var projectile = SpawnProjectile(owner);
 
             projectile.GetComponent<ProjectileComponent>()
-                .Initialize(targetLocation, onAbilityConnection, projectileSpeed);
+                .Initialize(targetLocation, onAbilityConnection, projectileSpeed, Int16.MaxValue, triggerWidthOverride);
 
             return projectile;
         }

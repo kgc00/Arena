@@ -6,31 +6,12 @@ using Units;
 using UnityEngine;
 
 namespace State.BossAiStates {
-    public class RoarUnitState : BossState {
+    public class RoarUnitState : AbilityUnitState<Roar> {
         private static readonly int Roaring = Animator.StringToHash("Roaring");
-        private Ability roar;
-        private bool roaring;
+        private Transform playerTransform;
 
-        public RoarUnitState(Unit owner) : base(owner) {
-            roar = Owner.AbilityComponent.GetEquippedAbility<Roar>();
-            roar.OnAbilityFinished.Insert( 0,HandleRoarFinished);
-        }
-
-        ~RoarUnitState() => roar.OnAbilityFinished.Remove(HandleRoarFinished);
-
-        public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleRoar());
-
-        public IEnumerator HandleRoar() {
-            if (Owner.Animator == null || !Owner.Animator) yield break;
-            Owner.Animator.SetTrigger(Roaring);
-
-            roaring = true;
-            
-            yield return new WaitForSeconds(roar.StartupTime);
-            
-            Owner.AbilityComponent.Activate(ref roar, Vector3.zero);
-            
-            yield return new WaitUntil(() => !roaring);
+        public RoarUnitState(Unit owner, Transform playerTransform) : base(owner) {
+            this.playerTransform = playerTransform;
         }
 
         public override void Exit() {
@@ -38,14 +19,18 @@ namespace State.BossAiStates {
             Owner.Animator.ResetTrigger(Roaring);
         }
 
-        private void HandleRoarFinished(Unit u, Ability a) {
-            if (u != Owner || a != roar) return;
-            roaring = false;
+        protected override IEnumerator HandleAbility() {
+            if (Owner.Animator == null || !Owner.Animator) yield break;
+            Owner.Animator.SetTrigger(Roaring);
+
+            yield return new WaitForSeconds(Ability.StartupTime);
+            
+            Owner.AbilityComponent.Activate(ref Ability, Vector3.zero);
         }
 
         public override UnitState HandleUpdate(InputValues input) {
-            if (roaring) return null;
-            return new IdleUnitState(Owner);
+            if (AbilityFinished != true) return null;
+            return new ChainFlameUnitState(Owner, playerTransform);
         }
     }
 }

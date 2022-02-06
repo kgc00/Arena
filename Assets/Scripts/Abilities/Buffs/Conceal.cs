@@ -66,7 +66,7 @@ namespace Abilities.Buffs {
 
             NotificationCenter.instance.AddObserver(BreakConcealment, NotificationType.AbilityDidActivate);
 
-            Owner.StatusComponent.AddStatus(StatusType.Hidden);
+            Owner.StatusComponent.AddStatus(StatusType.Hidden, Duration, 1);
 
             OnAbilityActivationFinished(Owner, this);
             ExecuteOnAbilityFinished();
@@ -110,8 +110,7 @@ namespace Abilities.Buffs {
         }
 
         private void HandleBreakConcealment() {
-            if (Owner.StatusComponent.StatusType.HasFlag(StatusType.Hidden))
-                Owner.StatusComponent.RemoveStatus(StatusType.Hidden);
+            Owner.StatusComponent.RemoveStatus(StatusType.Hidden);
             
             Owner.Renderers.ForEach(r => {
                 r.material.SetFloat(FresnelPower, 0f);

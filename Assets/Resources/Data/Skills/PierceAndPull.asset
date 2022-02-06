@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
   m_Name: PierceAndPull
   m_EditorClassIdentifier: 
-  areaOfEffectRadius: 5
+  areaOfEffectRadius: 20
   cooldown: 4
+  minimumCooldown: 0
   description: Fires a strong projectile at the target location, dealing damage to
     all enemies in it's path. Pulls enemies into the center of the affected area.
   displayName: Pierce And Pull
-  duration: 0
+  duration: 0.5
   energyCost: 0
   force: -185
   icon: {fileID: 21300000, guid: 29076f0ae297d3c428eb9f5b479115e9, type: 3}
   indicatorType: 10
   projectileSpeed: 20
-  range: 20
+  range: 5
   startupTime: 0.25
   type: 8
   modifiers: 

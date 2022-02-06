@@ -16,6 +16,8 @@
         LevelUp,
         EnemyImpact,
         PlayerImpact,
-        RainImpact
+        RainImpact,
+        PiercePullImpact,
+        Roar
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace State.MeleeAiStates
 {
-    public class ChaseUnitState : UnitState
+    public class ChaseUnitState : MeleeAiState
     {
         readonly Transform playerTransform;
         private readonly Unit targetUnit;
@@ -41,6 +41,9 @@ namespace State.MeleeAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            
             bool invalidTarget = playerTransform == null ||
                                  !targetUnit.StatusComponent.IsVisible();
             

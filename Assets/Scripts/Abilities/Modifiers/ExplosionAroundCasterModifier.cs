@@ -61,7 +61,7 @@ namespace Abilities.Modifiers {
             Transform forceComponentTransform) {
             if (other.transform.root.TryGetComponent<Unit>(out var unit)) {
                 if (unit == Ability.Owner) yield break;
-                StatusHelper.AddMark(unit);
+                unit.StatusComponent.AddStatus(StatusType.Marked, 1);
                 unit.HealthComponent.DamageOwner(1);
             }
         }

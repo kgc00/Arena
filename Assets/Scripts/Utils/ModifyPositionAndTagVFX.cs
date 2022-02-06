@@ -22,7 +22,7 @@ namespace Utils {
             while (_particleSystem != null) {
                 yield return new WaitForSeconds(duration);
                 var range = 1.5f;
-                Vector3 randomOffset = new Vector3(Random.Range(-range,range), Random.Range(-range,range), Random.Range(-range,range));
+                Vector3 randomOffset = new Vector3(Random.Range(-range,range), Random.Range(-(range/2), (range/2)), Random.Range(-range,range));
                 transform.position = gameObject.transform.root.position + randomOffset;
             }
         }

@@ -34,6 +34,6 @@ MonoBehaviour:
   statsData:
     agility: 1
     strength: 1
-    intelligence: 1
+    intelligence: 5
     endurance: 1
     movementSpeed: 100

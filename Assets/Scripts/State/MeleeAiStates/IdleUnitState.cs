@@ -5,7 +5,7 @@ using Utils;
 
 namespace State.MeleeAiStates
 {
-    public class IdleUnitState : UnitState
+    public class IdleUnitState : MeleeAiState
     {
         private readonly float movementSpeed = 2f;
         private Transform playerTransform;
@@ -27,8 +27,10 @@ namespace State.MeleeAiStates
 
         public override UnitState HandleUpdate(InputValues input)
         {
-            // TODO: add some leashing mechanic or vision limiter
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
             
+            // TODO: add some leashing mechanic or vision limiter
             if (playerTransform == null) playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
 
             if (playerTransform == null) return null;

@@ -6,6 +6,8 @@ using Utils.NotificationCenter;
 namespace Status {
     // hurts unit when it collides with other objects
     public class Fragile : MonoStatus {
+        public override StatusType Type { get; protected set; } = StatusType.Fragile;
+
         protected override void EnableEffect() { }
 
         private void OnCollisionEnter(Collision other) {

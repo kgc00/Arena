@@ -21,7 +21,7 @@ namespace Abilities.AttackAbilities {
 
         private void SpawnAoEEffect(Vector3 updatedTargetLocation) {
             var colliderParams = new SphereParams(AreaOfEffectRadius);
-            var pGo = new GameObject("Rain AoE Effect")
+            var _ = new GameObject("Rain AoE Effect")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     updatedTargetLocation,

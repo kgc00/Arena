@@ -1,26 +1,24 @@
 ﻿using Data.Modifiers;
+using Data.Types;
 using Units;
 using UnityEngine;
 using Utils;
 
-namespace Abilities.Modifiers
-{
-    public class MarkOnHitModifier : AttackAbilityModifier
-    {
+namespace Abilities.Modifiers {
+    public class MarkOnHitModifier : AttackAbilityModifier {
         public MarkOnHitModifier(Ability ability) : base(ability) {
             Type = AbilityModifierType.AddMarkOnHit;
         }
 
-        public override void Handle()
-        {
+        public override void Handle() {
             Debug.Log($"Calling {ToString()} to add a mark on collision.");
             Ability.OnAbilityConnection.Insert(0, AddMark);
             base.Handle();
         }
-        
-        private void AddMark(GameObject target, GameObject projectile = null)
-        {
-            StatusHelper.AddMark(target);
+
+        private void AddMark(GameObject target, GameObject projectile = null) {
+            if (!target.TryGetComponent<Unit>(out var unit)) return;
+            unit.StatusComponent.AddStatus(StatusType.Marked, 1);
         }
     }
 }

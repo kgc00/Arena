@@ -25,7 +25,9 @@ namespace State {
             }
         }
         
-        public override void Enter() => Owner.CoroutineHelper.SpawnCoroutine(HandleAbility());
+        public override void Enter() {
+            Owner.CoroutineHelper.SpawnCoroutine(HandleAbility());
+        }
 
         protected virtual void HandleAbilityFinished(Unit u, Ability a) {
             AbilityFinished = true;

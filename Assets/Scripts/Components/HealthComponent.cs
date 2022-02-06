@@ -13,14 +13,14 @@ namespace Components
         public static Action<Unit, float> OnHealthChanged = delegate { };
         public static Action<Unit, Unit, float> OnDamageStarted = delegate { };
         public Unit Owner { get; private set; }
-        public float MaxHp { get; private set; }
+        public int MaxHp { get; private set; }
         public float CurrentHp { get; private set; }
         public bool IsDead => CurrentHp <= 0;
         public bool Invulnerable { get; private set; }
 
-        public HealthComponent Initialize (Unit owner, HealthData healthData) {
+        public HealthComponent Initialize(Unit owner, HealthData healthData, StatsComponent statsComponent) {
             Owner = owner;
-            MaxHp = healthData.maxHp;
+            MaxHp = statsComponent.GetMaxHealth(healthData.maxHp);
             CurrentHp = MaxHp;
 
             Invulnerable = healthData.invulnerable;
@@ -29,9 +29,9 @@ namespace Components
             return this;
         }
 
-        public void UpdateModel(HealthData data) {
+        public void UpdateModel(HealthData data, StatsComponent statsComponent) {
             var healthPercentage = Math.Min(CurrentHp / MaxHp, 1);
-            MaxHp = data.maxHp;
+            MaxHp = statsComponent.GetMaxHealth(data.maxHp);
             CurrentHp = MaxHp * healthPercentage;
         }
 

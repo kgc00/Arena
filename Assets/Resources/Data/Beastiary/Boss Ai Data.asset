@@ -33,4 +33,4 @@ MonoBehaviour:
     strength: 1
     intelligence: 1
     endurance: 1
-    movementSpeed: 3
+    movementSpeed: 6

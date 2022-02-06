@@ -60,15 +60,15 @@ namespace Units
             
             // Animator
             if (Animator == null) Animator = GetComponentInChildren<Animator>();
+
+            // Stats -- must occur before abilities & health
+            if (StatsComponent == null) StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
             
             // Health
-            if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>().Initialize(this, data.health);
-
-            // Stats -- must occur before abilities
-            if (StatsComponent == null) StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
+            if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>().Initialize(this, data.health, StatsComponent);
 
             // Abilities
-            if (AbilityComponent == null) AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this, data.abilities);
+            if (AbilityComponent == null) AbilityComponent= gameObject.AddComponent<AbilityComponent>().Initialize(this, data.abilities, StatsComponent); 
             
             // Experience
             if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>().Initialize(this, data.experience);
@@ -94,9 +94,9 @@ namespace Units
         
         public Unit UpdateModel(UnitData data) {
             Debug.Assert(Initialized);
-            AbilityComponent.UpdateModel(data.abilities);
-            HealthComponent.UpdateModel(data.health);
             StatsComponent.UpdateModel(data.statsData);
+            AbilityComponent.UpdateModel(data.abilities);
+            HealthComponent.UpdateModel(data.health, StatsComponent);
             return this;
         }
         
@@ -133,6 +133,7 @@ namespace Units
         public virtual void OnLevelUp() {
             var spawnPos = new Vector3(transform.position.x, 0, transform.position.z);
             MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos).transform.SetParent(transform);
+            
         }
 
 #if UNITY_EDITOR

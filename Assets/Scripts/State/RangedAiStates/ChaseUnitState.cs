@@ -35,6 +35,9 @@ namespace State.RangedAiStates {
         }
 
         public override UnitState HandleUpdate(InputValues input) {
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            
             UnitState nextState = null;
             var invalidTarget = playerTransform == null ||
                                 !targetUnit.StatusComponent.IsVisible();

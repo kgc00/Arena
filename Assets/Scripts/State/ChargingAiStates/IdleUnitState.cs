@@ -5,7 +5,7 @@ using UnityEngine;
 using Utils;
 
 namespace State.ChargingAiStates {
-    public class IdleUnitState : UnitState {
+    public class IdleUnitState : ChargeAiState {
         private Transform playerTransform;
         private Charge charge;
         private OrcSlash orcSlash;
@@ -28,6 +28,9 @@ namespace State.ChargingAiStates {
         }
 
         public override UnitState HandleUpdate(InputValues input) {
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            
             UnitState nextState = null;
 
             if (playerTransform == null) {

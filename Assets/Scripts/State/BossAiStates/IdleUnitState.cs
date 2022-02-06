@@ -11,9 +11,12 @@ namespace State.BossAiStates
         private Transform playerTransform;
         private static readonly int Idle = Animator.StringToHash("Idle");
         private Roar roar;
+        private float _randomSeed;
 
         public IdleUnitState(Unit owner) : base(owner) {
+            playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
             roar = Owner.AbilityComponent.GetEquippedAbility<Roar>();
+            _randomSeed = Random.Range(0,1);
         }
 
         public override void Enter()
@@ -29,36 +32,38 @@ namespace State.BossAiStates
         }
 
         public override UnitState HandleUpdate(InputValues input) {
-            // TODO: add some leashing mechanic or vision limiter
-            if (playerTransform == null) playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            UnitState nextState = null;
+            if (playerTransform == null) {
+                playerTransform = Locator.GetClosestVisiblePlayerUnit(Owner.transform.position);
+            }
 
-            if (playerTransform == null) return null;
+            bool invalidTarget = playerTransform == null;
+            
+            if (invalidTarget) return nextState;
             
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
-
-            if (ShouldEnterRelocateState(out var unitState, dist)) return unitState;
-            if (ShouldEnterShield(out unitState, dist)) return unitState;
+            if (ShouldEnterRoar(ref nextState, dist)) return nextState;
+            if (ShouldEnterRelocateState(ref nextState, dist)) return nextState;
+            // if (ShouldEnterShield(ref nextState, dist)) return nextState;
             return null;
         }
 
-        private bool ShouldEnterShield(out UnitState unitState, float dist) {
-            unitState = null;
-
-            if (!playerTransform.GetComponent<Unit>().StatusComponent.IsVisible()) return false;
-
+        private bool ShouldEnterRoar(ref UnitState unitState, float dist) {
+            if (dist > roar.Range) return false;
+            unitState = new RoarUnitState(Owner, playerTransform);
+            return true;
+        }
+        
+        private bool ShouldEnterShield(ref UnitState unitState, float dist) {
             if (dist >= roar.Range) return false;
             
-            unitState = new MagicShieldUnitState(Owner);
+            unitState = new MagicShieldUnitState(Owner, playerTransform);
             return true;
         }
 
-        private bool ShouldEnterRelocateState(out UnitState unitState, float dist) {
-            unitState = null;
-
-            if (!playerTransform.GetComponent<Unit>().StatusComponent.IsVisible()) return false;
-
-            if (dist < roar.Range) return false;
-            
+        private bool ShouldEnterRelocateState(ref UnitState unitState, float dist) {
             unitState = new RelocateUnitState(Owner, playerTransform);
             return true;
         }

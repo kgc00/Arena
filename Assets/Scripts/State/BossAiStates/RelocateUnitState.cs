@@ -43,16 +43,19 @@ namespace State.BossAiStates {
         }
         
         private void DefineDestination() {
-            var arenaBounds = 20f;
+            var arenaBounds = 10f;
             var position = Owner.transform.position;
-            var x = Clamp(position.x + Random.Range(-8, 8), -arenaBounds, arenaBounds);
+            var x = Clamp(position.x + Random.Range(-arenaBounds, arenaBounds), -arenaBounds, arenaBounds);
             var y = position.y;
-            var z = Clamp(position.z + Random.Range(-8, 8), -arenaBounds, arenaBounds);
+            var z = Clamp(position.z + Random.Range(-arenaBounds, arenaBounds), -arenaBounds, arenaBounds);
             destination = new Vector3(x, y, z);
         }
 
 
         public override UnitState HandleUpdate(InputValues input) {
+            var isStunned = base.HandleUpdate(input);
+            if (isStunned != null) return isStunned;
+            
             UnitState nextState = null;
             bool invalidTarget = playerTransform == null ||
                                  !targetUnit.StatusComponent.IsVisible();
@@ -62,7 +65,7 @@ namespace State.BossAiStates {
             var distToPlayer = Vector3.Distance(playerTransform.position, Owner.transform.position);
             return distToPlayer > roar.Range
                 ? (UnitState) new ChainFlameUnitState(Owner, playerTransform)
-                : new RoarUnitState(Owner);
+                : new RoarUnitState(Owner, playerTransform);
         }
     }
 }

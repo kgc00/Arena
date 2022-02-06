@@ -11,10 +11,12 @@ namespace State.BossAiStates {
         private static readonly int Guarding = Animator.StringToHash("Guarding");
         private Ability magicShield;
         private bool shieldActive;
+        private Transform playerTransform;
 
-        public MagicShieldUnitState(Unit owner) : base(owner) {
+        public MagicShieldUnitState(Unit owner, Transform playerTransform) : base(owner) {
             magicShield = Owner.AbilityComponent.GetEquippedAbility<MagicShield>();
             magicShield.OnAbilityFinished.Insert(0, HandleMagicShieldFinished);
+            this.playerTransform = playerTransform;
         }
         
         ~MagicShieldUnitState() => magicShield.OnAbilityFinished.Remove(HandleMagicShieldFinished);
@@ -50,7 +52,7 @@ namespace State.BossAiStates {
         
         public override UnitState HandleUpdate(InputValues input) {
             if (shieldActive) return null;
-            return new RoarUnitState(Owner);
+            return new RoarUnitState(Owner, playerTransform);
         }
     }
 }

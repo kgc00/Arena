@@ -1,44 +1,50 @@
 ﻿using System.Collections;
 using System.Linq;
+using Common;
+using Data.Types;
+using Projectiles;
 using Units;
 using UnityEngine;
+using Utils;
 using static Utils.MathHelpers;
 
 namespace Abilities.AttackAbilities {
     public class Roar : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            var units = FindObjectsOfType<Unit>().Where(u => AffectedFactions.Contains(u.Owner.ControlType)).ToList();
-
-            if (units.Count == 0) {
-                foreach (var cb in OnAbilityFinished) cb(Owner, this);
-                yield break;
-            }
-
-            foreach (var u in units) AbilityConnected(u.gameObject);
-
-            var timeLeft = Duration;
-            while (timeLeft > 0) {
-                foreach (var u in units) {
-                    if (u == null) continue;
-
-                    var dist = Vector3.Distance(u.transform.position, Owner.transform.position);
-                    if (dist > Range) continue;
-                    
-                    var heading = u.transform.position - Owner.transform.position;
-                    heading.y = 0;
-                    var force = heading.normalized * Force;
-                    u.Rigidbody.AddForce(force);
-                }
-
-                timeLeft = Clamp(timeLeft - Time.deltaTime, 0, Duration);
-                yield return null;
-            }
-
+            yield return new WaitForSeconds(StartupTime);
+            OnAbilityActivationFinished(Owner, this);
+            Destroy(MonoHelper.SpawnVfx(VfxType.Roar, gameObject.transform.position), Duration - StartupTime);
+            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var _ = new GameObject("Pull Force").AddComponent<AoEComponent>()
+                .Initialize(colliderParams,
+                    Owner.transform.position,
+                    Owner.transform.position,
+                    HandleEnterEnterEffect,
+                    null,
+                    null,
+                    AffectedFactions,
+                    Force, 
+                    Duration - StartupTime)
+                .gameObject;
+            yield return new WaitForSeconds(Duration);
             ExecuteOnAbilityFinished();
         }
 
+        private IEnumerator HandleEnterEnterEffect(Collider arg1, Rigidbody arg2, float arg3, Transform arg4) {
+            var unit = arg1.gameObject.GetUnitComponent();
+            if (unit != null) {
+                AbilityConnected(unit.gameObject, null);
+                foreach (var cb in OnAbilityConnection) {
+                    cb(unit.gameObject, null);
+                }
+            }
+
+            yield return StartCoroutine(
+                ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading](arg1, arg2, arg3, arg4));
+        }
+
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
-            target.GetComponent<Unit>().HealthComponent.DamageOwner(Damage, this, Owner);
+            target.GetUnitComponent().HealthComponent.DamageOwner(Damage, this, Owner);
         }
     }
 }

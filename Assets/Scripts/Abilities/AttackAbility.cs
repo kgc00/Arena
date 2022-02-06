@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities.AttackAbilities;
 using Abilities.Modifiers;
+using Components;
 using Data.AbilityData;
 using Data.Types;
 using Units;
@@ -19,10 +20,10 @@ namespace Abilities
         public List<Action<GameObject, GameObject>> OnAbilityConnection { get; set; }
         protected abstract void AbilityConnected(GameObject target, GameObject projectile = null);
 
-        public virtual AttackAbility Initialize(AttackAbilityData data, Unit owner) {
-            base.Initialize(data, owner);
+        public virtual AttackAbility Initialize(AttackAbilityData data, Unit owner, StatsComponent statsComponent) {
+            base.Initialize(data, owner, statsComponent);
             Model = data;
-            Damage = data.Damage;
+            Damage = StatsComponent.GetDamage(data.Damage);
             AffectedFactions = data.AffectedFactions;
             OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
             Modifiers = new List<AbilityModifier>();
@@ -39,7 +40,7 @@ namespace Abilities
             }
 
             var previousMods = Modifiers;
-            Initialize(Model, Owner);
+            Initialize(Model, Owner, StatsComponent);
             Modifiers = previousMods.Intersect(Modifiers).ToList();
         }
 

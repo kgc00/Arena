@@ -1312,7 +1312,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &2637915664189274567
 CapsuleCollider:
@@ -1340,12 +1340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb86fe39c8e4414abb66dd8d477d9c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arrowPrefab: {fileID: 4484504172046110944, guid: 9b5b1e0d891afd440a6ea38d26872db2,
-    type: 3}
-  _circlePrefab: {fileID: 4484504172046110944, guid: cd39a23ba82ba1144885891ca0a82d31,
-    type: 3}
-  _rectanglePrefab: {fileID: 9083980580751218260, guid: 1e9a9bdbc027557498076045de369ca8,
-    type: 3}
 --- !u!1 &2879531745995332625
 GameObject:
   m_ObjectHideFlags: 0

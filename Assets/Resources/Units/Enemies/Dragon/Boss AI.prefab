@@ -314,7 +314,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &3793309328275552996
 CapsuleCollider:
@@ -517,6 +517,7 @@ MonoBehaviour:
   healthbar: {fileID: 6631698747716504237}
   rotationOffset: {x: 66, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 3}
+  yOffset: 0.1
 --- !u!1001 &3876003476357923023
 PrefabInstance:
   m_ObjectHideFlags: 0

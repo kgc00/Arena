@@ -31,7 +31,6 @@ namespace Spawner {
             var wave = SpawnDataSmith.ModifyWaveData(currentWave);
 
             foreach (UnitSpawnData spawnData in wave.wave) {
-                Debug.Log($"Spawning {spawnData.Amount} {spawnData.Unit}");
                 for (int i = 0; i < spawnData.Amount; i++) {
                     var spawnPos = GetRandomSpawnPos(extentNegative, extentPositive);
 
@@ -58,7 +57,7 @@ namespace Spawner {
 
         private static Vector3 GetRandomSpawnPos(Vector3 extentNegative, Vector3 extentPositive) {
             var x = Random.Range(extentNegative.x, extentPositive.x);
-            var y = 0.1f;
+            var y = 0f;
             var z = Random.Range(extentNegative.z, extentPositive.z);
             var spawnPos = new Vector3(x, y, z);
             return spawnPos;

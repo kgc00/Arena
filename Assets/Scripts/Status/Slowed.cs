@@ -8,7 +8,7 @@ namespace Status {
             Owner.StatsComponent.DecrementStat(StatType.MovementSpeed, Amount);
         }
 
-        protected override void DisableEffect() {
+        public override void DisableEffect() {
             Owner.StatsComponent.IncrementStat(StatType.MovementSpeed, Amount);
             base.DisableEffect();
         }

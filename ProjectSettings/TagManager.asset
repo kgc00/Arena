@@ -10,6 +10,8 @@ TagManager:
   - Ability Icon
   - Abilities
   - Units
+  - InGameShopUI
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Board
   - Abilities
   - Units
-  - 
-  - 
+  - AbilitiesThatIgnoreBoard
+  - AbilitiesThatOnlyHitBoard
   - 
   - 
   - 

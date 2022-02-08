@@ -107,16 +107,16 @@ namespace Abilities.AttackAbilities {
 
             var totalDamage = Damage;
             var isMarked = unit.StatusComponent.StatusType.HasFlag(StatusType.Marked);
-            if (isMarked) {
-                totalDamage += 2;
-                unit.StatusComponent.RemoveStatus(StatusType.Marked);
-                MonoHelper.SpawnVfx(VfxType.MarkExplosion, unit.transform.position);
-            }
-
+            
             Debug.Log($"Pierce has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
                       $"Base damage is {Damage}. Total Damage is {totalDamage}");
-
-            unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            
+            if (isMarked) {
+                unit.StatusComponent.TriggerStatus(StatusType.Marked, this);
+            }else {
+                unit.HealthComponent.DamageOwner(Damage, this, Owner);
+            }
+            
             var spawnPos = unit.transform.position;
             spawnPos.y = projectile != null ? projectile.transform.position.y : 1.0f;
             MonoHelper.SpawnVfx(VfxType.PiercePullImpact, spawnPos, unit.transform.rotation);

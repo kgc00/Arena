@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Common;
 using Data.Types;
 using Projectiles;
-using UI.Targeting;
 using Units;
 using UnityEngine;
 using Utils;
@@ -39,30 +37,16 @@ namespace Abilities.AttackAbilities {
 
             // should create some list that I can iterate through-
             // foreach AoEEffect => gameobject.AddComponent<AoEComponent>().Initialize(AoEEffect);
-
-            // Requires refactoring this logic out into a more generic model which would live on abilities themselves
-            // May also need to have the AoEComponent inherit from Ability or something.
-            var pGo = new GameObject("Push Force")
+            var _ = new GameObject("Push Force")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     centerLocation,
                     targetLocation,
-                    ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
+                    HandleEnterStrategy,
                     null,
                     null,
                     AffectedFactions,
                     Force,
-                    Duration)
-                .gameObject // todo - refactor into a single aoe component
-                .AddComponent<AoEComponent>()
-                .Initialize(colliderParams,
-                    centerLocation,
-                    targetLocation,
-                    AoEAddMark,
-                    null,
-                    null,
-                    AffectedFactions,
-                    default,
                     Duration)
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
@@ -70,13 +54,18 @@ namespace Abilities.AttackAbilities {
             Destroy(projectile);
         }
 
-        private IEnumerator AoEAddMark(Collider other, Rigidbody rigidBody, float Force,
+        private IEnumerator HandleEnterStrategy(Collider arg1, Rigidbody arg2, float arg3, Transform arg4) {
+            yield return StartCoroutine(AoEAddMarkAndDealDamage(arg1, arg2, arg3, arg4));
+            yield return StartCoroutine(ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading](arg1, arg2, arg3, arg4));
+        }
+
+        private IEnumerator AoEAddMarkAndDealDamage(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
+            unit.HealthComponent.DamageOwner(Damage);
             if (unit != null) {
                 unit.StatusComponent.AddStatus(StatusType.Marked, 1);
             }
-
             yield break;
         }
     }

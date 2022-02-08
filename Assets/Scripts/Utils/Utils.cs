@@ -50,6 +50,7 @@ namespace Utils {
             // Apply force over several frames for a smoother acceleration
             var frames = 10;
             for (int j = 0; j < frames; j++) {
+                if (rigidBody == null) yield break;
                 rigidBody.AddForce(appliedForce);
                 yield return null;
             }
@@ -60,6 +61,7 @@ namespace Utils {
             // Debug.Log("LOGGING forceComponentTransform");
             // Debug.Log(forceComponentTransform.position);
 
+            if (other == null || forceComponentTransform == null) yield break;
             Vector3 heading = other.transform.position - forceComponentTransform.position;
             heading.y = 0f;
             heading = heading.normalized;
@@ -143,7 +145,8 @@ namespace Utils {
                         equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Roar:
-                        abilityInstance = owner.gameObject.AddComponent<Roar>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
+                        abilityInstance = owner.gameObject.AddComponent<Roar>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
                         equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.ChainFlame:
@@ -153,11 +156,13 @@ namespace Utils {
                         break;
                     // hunter
                     case AbilityType.Mark:
-                        abilityInstance = owner.gameObject.AddComponent<Mark>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
+                        abilityInstance = owner.gameObject.AddComponent<Mark>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
                         equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Prey:
-                        abilityInstance = owner.gameObject.AddComponent<Prey>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
+                        abilityInstance = owner.gameObject.AddComponent<Prey>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
                         equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Conceal:
@@ -176,7 +181,8 @@ namespace Utils {
                         equippedAbilities.Add(type, abilityInstance);
                         break;
                     case AbilityType.Rain:
-                        abilityInstance = owner.gameObject.AddComponent<Rain>().Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
+                        abilityInstance = owner.gameObject.AddComponent<Rain>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
                         equippedAbilities.Add(type, abilityInstance);
                         break;
                     default:

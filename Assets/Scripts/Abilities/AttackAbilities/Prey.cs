@@ -59,19 +59,15 @@ namespace Abilities.AttackAbilities {
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
             var totalDamage = Damage;
-            var isMarked = unit.StatusComponent.StatusType.HasFlag(StatusType.Marked);
+            var isMarked = unit.StatusComponent.IsMarked();
             if (isMarked) {
-                totalDamage += 2;
-                unit.StatusComponent.RemoveStatus(StatusType.Marked);
-                MonoHelper.SpawnVfx(VfxType.MarkExplosion, unit.transform.position);
+                unit.StatusComponent.TriggerStatus(StatusType.Marked, this);
+            } else {
+                unit.HealthComponent.DamageOwner(Damage, this, Owner);
             }
-
             Debug.Log($"Prey has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
                       $"Base damage is {Damage}. Total Damage: {totalDamage}");
-
-            unit.HealthComponent.DamageOwner(Damage, this, Owner);
             MonoHelper.SpawnVfx(VfxType.EnemyImpact, projectile.transform.position);
-
             Destroy(projectile);
         }
     }

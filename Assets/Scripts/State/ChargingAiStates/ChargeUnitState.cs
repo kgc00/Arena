@@ -25,7 +25,7 @@ namespace State.ChargingAiStates {
             if (!UnityEngine.Object.Equals(sender, Ability)) {
                 return;
             }
-            Owner.StatusComponent.AddStatus(StatusType.Stunned,1, 2f);
+            Owner.StatusComponent.AddStatus(StatusType.Stunned,2f, 1);
         }
 
         protected override IEnumerator HandleAbility() {

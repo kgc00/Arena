@@ -13,7 +13,7 @@ namespace Status {
                 .AddModifier(InputModifier.CannotRotate);
         }
 
-        protected override void DisableEffect() {
+        public override void DisableEffect() {
             Owner.InputModifierComponent
                 .RemoveModifier(InputModifier.CannotAct)
                 .RemoveModifier(InputModifier.CannotMove)

@@ -1,47 +1,54 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using Abilities;
 using Data.Types;
 using Units;
 using UnityEngine;
-using Utils;
 
 namespace Status
 {
     public class StatusComponent : MonoBehaviour {
-        private Material _fresnel;
         public Unit Owner { get; private set; }
         public StatusType StatusType { get; private set; } = 0;
+        private Dictionary<StatusType, MonoStatus> currentStatusEffects;
         public StatusComponent Initialize (Unit owner) {
             Owner = owner;
-            _fresnel = MonoHelper.LoadMaterial(MaterialType.MarkOutline);
+            currentStatusEffects = new Dictionary<StatusType, MonoStatus>();
             return this;
         }
         
         public void AddStatus(StatusType statusType, float duration, float amount) {
-            if (StatusType.HasFlag(statusType)) return;
-            AddTimedStatus(statusType, duration, amount);
+            if (StatusType.HasFlag(statusType)) {
+                ReapplyTimedStatus(statusType, duration, amount);
+            } else {
+                AddTimedStatus(statusType, duration, amount);
+            }
             StatusType |= statusType;
         }
-        
+
+
         public void AddStatus(StatusType statusType, float amount) {
-            if (StatusType.HasFlag(statusType)) return;
-            AddUntimedStatus(statusType, amount);
+            if (StatusType.HasFlag(statusType)) {
+                ReapplyUntimedStatus(statusType, amount);
+            }else {
+                AddUntimedStatus(statusType, amount);
+            }
             StatusType |= statusType;
         }
 
         private void AddUntimedStatus(StatusType statusType, float amount) {
             switch (statusType) {
                 case StatusType.Marked:
-                    var spawnPos = Owner.transform.position;
-                    spawnPos.y += 1.5f;
-                    var vfx = MonoHelper.SpawnVfx(VfxType.Mark, spawnPos);
-                    vfx.transform.SetParent(Owner.transform);
-                    var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
-                    var materials = rend.materials.ToList();
-                    materials.Add(_fresnel);
-                    rend.materials = materials.ToArray();
-                    gameObject.AddComponent<Marked>().Initialize(Owner, false, amount);
+                    currentStatusEffects.Add(StatusType.Marked, gameObject.AddComponent<Marked>().Initialize(Owner, false, amount));
                     break;
                 case StatusType.Hidden:
+                    break;
+            }
+        }
+        
+        private void ReapplyUntimedStatus(StatusType statusType, float amount) {
+            switch (statusType) {
+                case StatusType.Marked:
+                    currentStatusEffects[StatusType.Marked].ReapplyStatus(amount);
                     break;
             }
         }
@@ -49,29 +56,39 @@ namespace Status
         private void AddTimedStatus(StatusType statusType, float duration, float amount) {
             switch (statusType) {
                 case StatusType.Stunned:
-                    gameObject.AddComponent<Stunned>().Initialize(Owner, duration, amount);
-                    break;
-                case StatusType.Hidden:
+                    currentStatusEffects.Add(StatusType.Stunned, gameObject.AddComponent<Stunned>().Initialize(Owner, duration, amount));
                     break;
             }
+        }
+
+        private void ReapplyTimedStatus(StatusType statusType, float duration, float amount) { 
+            switch (statusType) {
+                case StatusType.Stunned:
+                    currentStatusEffects[StatusType.Stunned].ReapplyStatus(duration, amount);
+                    break;
+            }
+        }
+
+        public void TriggerStatus(StatusType statusType, Ability catalyst) {
+            if (!StatusType.HasFlag(statusType)) return;
+            currentStatusEffects[statusType].TriggerEffect(catalyst);
+            currentStatusEffects.Remove(statusType);
+            StatusType &= ~statusType;
         }
 
         public void RemoveStatus(StatusType statusType) {
             if (!StatusType.HasFlag(statusType)) return;
-            switch (statusType) {
-                case StatusType.Marked:
-                    var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
-                    var materials = rend.materials;
-                    var withoutFresnel = materials.ToList().Where(m => m.shader.name != _fresnel.shader.name).ToArray();
-                    rend.materials = withoutFresnel;
-                    break;
+            // some legacy effects dont use the monostatus system
+            if(currentStatusEffects.ContainsKey(statusType)) {
+                currentStatusEffects[statusType].DisableEffect();
+                currentStatusEffects.Remove(statusType);
             }
             StatusType &= ~statusType;
-            Debug.Log("Removed Status");
         }
 
         public bool IsVisible() => !StatusType.HasFlag(StatusType.Hidden);
         public bool IsStunned() => StatusType.HasFlag(StatusType.Stunned);
+        public bool IsMarked() => StatusType.HasFlag(StatusType.Marked);
     }
  
 }

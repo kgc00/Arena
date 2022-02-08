@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9440a169bf7738d4a81ad861775c520a, type: 2}
   - {fileID: 11400000, guid: ca5bea299bc5789439086056e3155760, type: 2}
   health:
-    maxHp: 5
+    maxHp: 15
     invulnerable: 0
     currentHp: 0
   experience:

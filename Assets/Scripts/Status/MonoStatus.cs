@@ -1,4 +1,5 @@
 ﻿using System;
+using Abilities;
 using Data.Types;
 using Units;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Status {
         public float TimeLeft { get;protected set; }
         public float Amount { get; protected set; }
         public bool IsTimed { get; set; }
+        public bool Initialized { get; set; }
         public abstract StatusType Type {  get; protected set; }
         public virtual MonoStatus Initialize(Unit owner, float duration, float amount) {
             Owner = owner;
@@ -18,6 +20,7 @@ namespace Status {
             IsTimed = true;
             TimeLeft = duration;
             Amount = amount;
+            Initialized = true;
             EnableEffect();
             return this;
         }
@@ -26,6 +29,7 @@ namespace Status {
             Owner = owner;
             IsTimed = isTimed;
             Amount = amount;
+            Initialized = true;
             EnableEffect();
             return this;
         }
@@ -33,16 +37,31 @@ namespace Status {
 
         protected abstract void EnableEffect();
 
-        protected virtual void DisableEffect() {
+        public virtual void DisableEffect() {
             Destroy(this, 0.01f);
-            Owner.StatusComponent.RemoveStatus(Type);
+        }
+
+        public virtual void TriggerEffect(Ability catalyst) {
+            DisableEffect();
+        }
+
+        public virtual void ReapplyStatus(float amount) {
+            IsTimed = false;
+            Amount += amount;
+        }
+        
+        public virtual void ReapplyStatus(float duration, float amount) {
+            Duration = duration;
+            TimeLeft = Duration - TimeLeft;
+            Amount += amount;
         }
 
         protected virtual void Update() {
-            if (!IsTimed) return;
+            if (!IsTimed || !Initialized) return;
             TimeLeft = Clamp(TimeLeft - Time.deltaTime, 0, Duration);
             if(TimeLeft > 0) return;
-            DisableEffect();
+            // todo - trigger vs disable logic
+            Owner.StatusComponent.RemoveStatus(Type);
         }
     }
 }

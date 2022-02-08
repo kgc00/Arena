@@ -45,5 +45,11 @@ namespace Status {
             MonoHelper.SpawnVfx(VfxType.MarkExplosion, Owner.transform.position);
             base.TriggerEffect(catalyst);
         }
+
+        public override void ReapplyStatus(float amount) {
+            var vfx = MonoHelper.SpawnVfx(VfxType.Mark, Owner.transform.position);
+            vfx.transform.SetParent(Owner.transform);
+            base.ReapplyStatus(amount);
+        }
     }
 }

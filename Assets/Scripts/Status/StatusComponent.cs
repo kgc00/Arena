@@ -10,15 +10,32 @@ namespace Status
         public Unit Owner { get; private set; }
         public StatusType StatusType { get; private set; } = 0;
         private Dictionary<StatusType, MonoStatus> currentStatusEffects;
+        private Dictionary<StatusType, bool> canReapplyEffect;
         public StatusComponent Initialize (Unit owner) {
             Owner = owner;
             currentStatusEffects = new Dictionary<StatusType, MonoStatus>();
+            canReapplyEffect = new Dictionary<StatusType, bool>();
+            canReapplyEffect.Add(StatusType.Fragile, false);
+            canReapplyEffect.Add(StatusType.Healthy, false);
+            canReapplyEffect.Add(StatusType.Hidden, false);
+            canReapplyEffect.Add(StatusType.Marked, false);
+            canReapplyEffect.Add(StatusType.Rooted, false);
+            canReapplyEffect.Add(StatusType.Slowed, false);
+            canReapplyEffect.Add(StatusType.Silenced, false);
+            canReapplyEffect.Add(StatusType.Stunned, false);
+            canReapplyEffect.Add(StatusType.DragonFury, false);
             return this;
+        }
+
+        public void EnableReapplyEffect(StatusType statusType) {
+            canReapplyEffect[statusType] = true;
         }
         
         public void AddStatus(StatusType statusType, float duration, float amount) {
             if (StatusType.HasFlag(statusType)) {
-                ReapplyTimedStatus(statusType, duration, amount);
+                if (canReapplyEffect[statusType]) {
+                    ReapplyTimedStatus(statusType, duration, amount);
+                }
             } else {
                 AddTimedStatus(statusType, duration, amount);
             }
@@ -28,7 +45,9 @@ namespace Status
 
         public void AddStatus(StatusType statusType, float amount) {
             if (StatusType.HasFlag(statusType)) {
-                ReapplyUntimedStatus(statusType, amount);
+                if(canReapplyEffect[statusType]) {
+                    ReapplyUntimedStatus(statusType, amount);
+                }
             }else {
                 AddUntimedStatus(statusType, amount);
             }

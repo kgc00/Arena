@@ -92,11 +92,11 @@ namespace Units
             return this;
         }
         
-        public Unit UpdateModel(UnitData data) {
+        public Unit UpdateComponents() {
             Debug.Assert(Initialized);
-            StatsComponent.UpdateModel(data.statsData);
-            AbilityComponent.UpdateModel(data.abilities);
-            HealthComponent.UpdateModel(data.health, StatsComponent);
+            // stats component not updated to keep gains from level ups
+            AbilityComponent.UpdateModel(UnitData.abilities);
+            HealthComponent.UpdateModel(UnitData.health, StatsComponent);
             return this;
         }
         
@@ -133,7 +133,12 @@ namespace Units
         public virtual void OnLevelUp() {
             var spawnPos = new Vector3(transform.position.x, 0, transform.position.z);
             MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos).transform.SetParent(transform);
-            
+            StatsComponent.IncrementStat(StatType.Agility, 2);
+            StatsComponent.IncrementStat(StatType.Endurance, 2);
+            StatsComponent.IncrementStat(StatType.Intelligence, 2);
+            StatsComponent.IncrementStat(StatType.Strength, 2);
+            StatsComponent.IncrementStat(StatType.MovementSpeed, 2);
+            UpdateComponents();
         }
 
 #if UNITY_EDITOR
@@ -150,6 +155,7 @@ namespace Units
                 {
                     ExperienceComponent.AwardBounty(10);
                 }
+                GUILayout.Box($"stats: {StatsComponent.Stats.Intelligence.Value.ToString()}");
                 // GUILayout.Box($"State: {state}");
                 // GUILayout.Box($"AbilityComponent State: {AbilityComponent.State}");
                 // GUILayout.Box($"Input Values Forward: {Controller.InputValues.Forward}");

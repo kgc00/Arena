@@ -17,6 +17,7 @@ namespace Components
 
         private const float EXP_CURVE_MODIFIER = 0.75f;
         private const int SKILL_POINTS_PER_LEVEL = 1;
+        private const int MAX_LEVEL = 50;
         // https://www.transum.org/Maths/Activity/Graph/Desmos.asp
         private int LevelFromExp(int exp) => Mathf.RoundToInt(EXP_CURVE_MODIFIER * Mathf.Sqrt(Mathf.Max(exp, 1)));
         private int ExpFromLevel(int level) => Mathf.RoundToInt(EXP_CURVE_MODIFIER * (Mathf.Max(level, 1) * Mathf.Max(level, 1)));

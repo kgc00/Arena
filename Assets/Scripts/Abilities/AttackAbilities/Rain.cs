@@ -54,13 +54,13 @@ namespace Abilities.AttackAbilities {
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) yield break;
-
-            if (!_affectedUnits.Contains(unit)) yield break;
-            _affectedUnits.Remove(unit);
             var vfx = unit.GetComponentInChildren<ModifyPositionAndTagVFX>();
             if (vfx) {
                 Destroy(vfx.gameObject);
             }
+            
+            if (!_affectedUnits.Contains(unit)) yield break;
+            _affectedUnits.Remove(unit);
         }
 
         private IEnumerator ApplyDamageOverTime(Collider other, Rigidbody rigidBody, float Force,

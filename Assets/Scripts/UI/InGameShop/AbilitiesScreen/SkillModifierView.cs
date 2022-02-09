@@ -1,12 +1,11 @@
 using Abilities.Modifiers.AbilityModifierShopData;
-using Data.AbilityData;
 using Data.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils.NotificationCenter;
 
-namespace UI.InGameShop {
+namespace UI.InGameShop.AbilitiesScreen {
     public class SkillModifierView : MonoBehaviour {
         public AbilityModifierShopData AbilityModifierShopData;
 
@@ -38,6 +37,7 @@ namespace UI.InGameShop {
         void UpdateAbilityModifierShopData(AbilityModifierShopData abilityModifierShopData, bool isPurchased) {
             AbilityModifierShopData = abilityModifierShopData;
             _skillModifierImage.sprite = AbilityModifierShopData.Image;
+            _skillModifierImage.enabled = true;
             _titleText.SetText(AbilityModifierShopData.Title);
             _costText.SetText(AbilityModifierShopData.Cost.ToString());
             _descriptionText.SetText(AbilityModifierShopData.Description);

@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using Data.Types;
+﻿using Data.Types;
 using UnityEngine;
 using Utils.NotificationCenter;
 
-namespace UI.InGameShop {
+namespace UI.InGameShop.AbilitiesScreen {
     public class SkillPurchaseOption : MonoBehaviour {
         [SerializeField] private GameObject button;
 

@@ -1,36 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.InGameShop {
+namespace UI.InGameShop.AbilitiesScreen {
     public class SkillScrollView : MonoBehaviour {
         [SerializeField] private Transform gridTransform;
         [SerializeField] private SkillScrollViewPanel SkillScrollViewPanelPrefab;
         [SerializeField] private ToggleGroup _toggleGroup;
         public static ToggleGroup ToggleGroup;
         [SerializeField] private List<SkillScrollViewPanel> SkillScrollViewPanels;
-        private bool _initialized;
+        [SerializeField] private ScrollRect _scrollRect;
         private void OnEnable() {
-            InGameShopManager.Instance.OnShopVisibilityToggled += HandleShopVisibilityToggled;
             SkillScrollViewPanels = new List<SkillScrollViewPanel>();
             ToggleGroup = _toggleGroup;
+            UpdateSkillScrollView();
+            StartCoroutine(DelayInspectToggle());
+        }
+
+        private IEnumerator DelayInspectToggle() {
+            yield return new WaitForEndOfFrame();
+            SkillScrollViewPanels[0].InspectAbility();
         }
 
         private void OnDisable() {
-            InGameShopManager.Instance.OnShopVisibilityToggled -= HandleShopVisibilityToggled;
             foreach (var panel in SkillScrollViewPanels) {
                 Destroy(panel.gameObject);
             }
             SkillScrollViewPanels.Clear();
         }
-
-        private void HandleShopVisibilityToggled(bool currentVisibility, Unit player) {
-            if (!currentVisibility) return;
-            UpdateSkillScrollView();
-        }
-
+        
         void UpdateSkillScrollView() {
             var player = InGameShopManager.Instance.PurchasingUnit;
             if (player == null) return;

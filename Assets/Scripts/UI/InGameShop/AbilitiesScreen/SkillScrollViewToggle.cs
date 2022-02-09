@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Abilities;
-using Abilities.Modifiers.AbilityModifierShopData;
+﻿using Abilities.Modifiers.AbilityModifierShopData;
 using Data.AbilityData;
 using Data.Modifiers;
 using Data.Types;
@@ -9,11 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils.NotificationCenter;
 
-namespace UI.InGameShop {
+namespace UI.InGameShop.AbilitiesScreen {
     public class SkillScrollViewToggle : MonoBehaviour {
         public AbilityData AbilityModel { get; private set; }
         public AbilityModifierShopData ModifierShopData { get; private set; }
-        [SerializeField] private Toggle _toggle;
+        public Toggle _toggle;
         [SerializeField] private Image _background;
         [SerializeField] private Image _frame;
         private bool _initialized;

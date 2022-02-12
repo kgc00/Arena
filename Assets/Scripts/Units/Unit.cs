@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
-using Common;
 using Components;
 using Controls;
+using Data.Items;
 using Data.Types;
 using Data.UnitData;
-using JetBrains.Annotations;
 using State;
 using UnityEngine;
 using Utils;
@@ -19,6 +18,7 @@ using UnityEngine.Serialization;
 namespace Units
 {
     public partial class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser {
+        public List<ItemType> PurchasedItems;
         public static Action<Unit> OnDeath = delegate {  };
         public List<Renderer> Renderers { get; protected set; }
         public Player Owner { get; private set; }
@@ -39,6 +39,10 @@ namespace Units
         public FundsComponent FundsComponent { get; private set; }
         public UnitData UnitData;
         public bool Initialized { get; private set; } = false;
+
+        private void Awake() {
+            PurchasedItems = new List<ItemType>();
+        }
 
         public Unit Initialize (Player owner, UnitData data) {
             // properties & fields
@@ -85,7 +89,7 @@ namespace Units
                                                      
             // State
             state = StateHelper.StateFromEnum(data.state, this);
-
+            
             Initialized = true;
             state.Enter ();
             return this;

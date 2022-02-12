@@ -15,13 +15,16 @@ namespace UI.InGameShop.StatScreen {
         private StatsComponent _statsComponent;
         private int _baseValue;
         private int _newValue;
+        public bool _shouldUpdateTextInEditor;
 
         private void OnValidate() {
-            UpdateText();
+            if (_shouldUpdateTextInEditor) {
+                UpdateText();
+            }
         }
-        
+
         private void OnEnable() {
-            var purchasingUnit = InGameShopManager.Instance.PurchasingUnit; 
+            var purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
             _statsComponent = purchasingUnit ? purchasingUnit.StatsComponent : null;
             if (_statsComponent != null) {
                 _baseValue = _statsComponent.StatFromEnum(StatType).Value;

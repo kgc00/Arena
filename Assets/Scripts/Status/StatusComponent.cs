@@ -1,24 +1,30 @@
 ﻿using System.Collections.Generic;
 using Abilities;
+using Data.Items;
 using Data.Types;
 using Units;
 using UnityEngine;
+using Utils;
+using Utils.NotificationCenter;
 
-namespace Status
-{
+namespace Status {
     public class StatusComponent : MonoBehaviour {
         public Unit Owner { get; private set; }
         public StatusType StatusType { get; private set; } = 0;
         private Dictionary<StatusType, MonoStatus> currentStatusEffects;
         private Dictionary<StatusType, bool> canReapplyEffect;
-        public StatusComponent Initialize (Unit owner) {
+
+        public StatusComponent Initialize(Unit owner) {
             Owner = owner;
             currentStatusEffects = new Dictionary<StatusType, MonoStatus>();
+            var closestPlayerUnit = Locator.GetClosestPlayerUnit(transform.position);
+            var canReapplyMark = closestPlayerUnit != null && closestPlayerUnit.gameObject.GetUnitComponent()
+                .PurchasedItems.Contains(ItemType.StackableMark);
             canReapplyEffect = new Dictionary<StatusType, bool> {
                 {StatusType.Fragile, false},
                 {StatusType.Healthy, false},
                 {StatusType.Hidden, false},
-                {StatusType.Marked, FindObjectOfType<UpdgradedMarkComponent>() != null},
+                {StatusType.Marked, canReapplyMark},
                 {StatusType.Rooted, false},
                 {StatusType.Slowed, true},
                 {StatusType.Silenced, false},
@@ -28,43 +34,65 @@ namespace Status
             return this;
         }
 
+        private void OnEnable() {
+            this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
+        }
+
+        private void OnDisable() {
+            this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
+        }
+
+        private void HandlePurchase(object sender, object args) {
+            var closestPlayerUnit = Locator.GetClosestPlayerUnit(transform.position);
+            var canReapplyMark = closestPlayerUnit != null && closestPlayerUnit.gameObject.GetUnitComponent()
+                .PurchasedItems.Contains(ItemType.StackableMark);
+            if (canReapplyMark) {
+                EnableReapplyEffect(StatusType.Marked);
+            }
+        }
+
         public void EnableReapplyEffect(StatusType statusType) {
             canReapplyEffect[statusType] = true;
         }
-        
+
         public void AddStatus(StatusType statusType, float duration, int amount) {
             if (StatusType.HasFlag(statusType)) {
                 if (canReapplyEffect[statusType]) {
                     ReapplyTimedStatus(statusType, duration, amount);
                 }
-            } else {
+            }
+            else {
                 AddTimedStatus(statusType, duration, amount);
             }
+
             StatusType |= statusType;
         }
 
 
         public void AddStatus(StatusType statusType, int amount) {
             if (StatusType.HasFlag(statusType)) {
-                if(canReapplyEffect[statusType]) {
+                if (canReapplyEffect[statusType]) {
                     ReapplyUntimedStatus(statusType, amount);
                 }
-            }else {
+            }
+            else {
                 AddUntimedStatus(statusType, amount);
             }
+
             StatusType |= statusType;
         }
 
         private void AddUntimedStatus(StatusType statusType, int amount) {
             switch (statusType) {
                 case StatusType.Marked:
-                    currentStatusEffects.Add(StatusType.Marked, gameObject.AddComponent<Marked>().Initialize(Owner, false, amount));
+                    currentStatusEffects.Add(StatusType.Marked,
+                        gameObject.AddComponent<Marked>().Initialize(Owner, false, amount));
                     break;
                 case StatusType.Hidden:
                     break;
             }
         }
-        
+
         private void ReapplyUntimedStatus(StatusType statusType, int amount) {
             switch (statusType) {
                 case StatusType.Marked:
@@ -76,12 +104,13 @@ namespace Status
         private void AddTimedStatus(StatusType statusType, float duration, int amount) {
             switch (statusType) {
                 case StatusType.Stunned:
-                    currentStatusEffects.Add(StatusType.Stunned, gameObject.AddComponent<Stunned>().Initialize(Owner, duration, amount));
+                    currentStatusEffects.Add(StatusType.Stunned,
+                        gameObject.AddComponent<Stunned>().Initialize(Owner, duration, amount));
                     break;
             }
         }
 
-        private void ReapplyTimedStatus(StatusType statusType, float duration, int amount) { 
+        private void ReapplyTimedStatus(StatusType statusType, float duration, int amount) {
             switch (statusType) {
                 case StatusType.Stunned:
                     currentStatusEffects[StatusType.Stunned].ReapplyStatus(duration, amount);
@@ -99,10 +128,11 @@ namespace Status
         public void RemoveStatus(StatusType statusType) {
             if (!StatusType.HasFlag(statusType)) return;
             // some legacy effects dont use the monostatus system
-            if(currentStatusEffects.ContainsKey(statusType)) {
+            if (currentStatusEffects.ContainsKey(statusType)) {
                 currentStatusEffects[statusType].DisableEffect();
                 currentStatusEffects.Remove(statusType);
             }
+
             StatusType &= ~statusType;
         }
 

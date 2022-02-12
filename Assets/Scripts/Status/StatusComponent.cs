@@ -31,7 +31,7 @@ namespace Status
             canReapplyEffect[statusType] = true;
         }
         
-        public void AddStatus(StatusType statusType, float duration, float amount) {
+        public void AddStatus(StatusType statusType, float duration, int amount) {
             if (StatusType.HasFlag(statusType)) {
                 if (canReapplyEffect[statusType]) {
                     ReapplyTimedStatus(statusType, duration, amount);
@@ -43,7 +43,7 @@ namespace Status
         }
 
 
-        public void AddStatus(StatusType statusType, float amount) {
+        public void AddStatus(StatusType statusType, int amount) {
             if (StatusType.HasFlag(statusType)) {
                 if(canReapplyEffect[statusType]) {
                     ReapplyUntimedStatus(statusType, amount);
@@ -54,7 +54,7 @@ namespace Status
             StatusType |= statusType;
         }
 
-        private void AddUntimedStatus(StatusType statusType, float amount) {
+        private void AddUntimedStatus(StatusType statusType, int amount) {
             switch (statusType) {
                 case StatusType.Marked:
                     currentStatusEffects.Add(StatusType.Marked, gameObject.AddComponent<Marked>().Initialize(Owner, false, amount));
@@ -64,7 +64,7 @@ namespace Status
             }
         }
         
-        private void ReapplyUntimedStatus(StatusType statusType, float amount) {
+        private void ReapplyUntimedStatus(StatusType statusType, int amount) {
             switch (statusType) {
                 case StatusType.Marked:
                     currentStatusEffects[StatusType.Marked].ReapplyStatus(amount);
@@ -72,7 +72,7 @@ namespace Status
             }
         }
 
-        private void AddTimedStatus(StatusType statusType, float duration, float amount) {
+        private void AddTimedStatus(StatusType statusType, float duration, int amount) {
             switch (statusType) {
                 case StatusType.Stunned:
                     currentStatusEffects.Add(StatusType.Stunned, gameObject.AddComponent<Stunned>().Initialize(Owner, duration, amount));
@@ -80,7 +80,7 @@ namespace Status
             }
         }
 
-        private void ReapplyTimedStatus(StatusType statusType, float duration, float amount) { 
+        private void ReapplyTimedStatus(StatusType statusType, float duration, int amount) { 
             switch (statusType) {
                 case StatusType.Stunned:
                     currentStatusEffects[StatusType.Stunned].ReapplyStatus(duration, amount);

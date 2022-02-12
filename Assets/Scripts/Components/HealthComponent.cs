@@ -20,7 +20,7 @@ namespace Components
 
         public HealthComponent Initialize(Unit owner, HealthData healthData, StatsComponent statsComponent) {
             Owner = owner;
-            MaxHp = statsComponent.GetMaxHealth(healthData.maxHp);
+            MaxHp = StatHelpers.GetMaxHealth(healthData.maxHp, statsComponent.Stats);
             CurrentHp = MaxHp;
 
             Invulnerable = healthData.invulnerable;
@@ -31,7 +31,7 @@ namespace Components
 
         public void UpdateModel(HealthData data, StatsComponent statsComponent) {
             var healthPercentage = Math.Min(CurrentHp / MaxHp, 1);
-            MaxHp = statsComponent.GetMaxHealth(data.maxHp);
+            MaxHp = StatHelpers.GetMaxHealth(data.maxHp, statsComponent.Stats);
             CurrentHp = MaxHp * healthPercentage;
         }
 

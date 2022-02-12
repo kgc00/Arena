@@ -6,11 +6,11 @@ namespace Data.StatData
     [Serializable]
     public class StatsData 
     {
-        [SerializeField] public float agility;
-        [SerializeField] public float strength;
-        [SerializeField] public float intelligence;
-        [SerializeField] public float endurance;
-        [SerializeField] public float movementSpeed;
+        [SerializeField] public int agility;
+        [SerializeField] public int strength;
+        [SerializeField] public int intelligence;
+        [SerializeField] public int endurance;
+        [SerializeField] public int movementSpeed;
 
         public StatsData(StatsData data) {
             agility = data.agility;

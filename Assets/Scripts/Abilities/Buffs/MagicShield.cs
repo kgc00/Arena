@@ -41,7 +41,7 @@ namespace Abilities.Buffs {
             }
 
             // will need to hook up damage modifier from stats
-            Owner.gameObject.AddComponent<DragonFury>().Initialize(Owner, 5, damageRemembered);
+            Owner.gameObject.AddComponent<DragonFury>().Initialize(Owner, 5, (int)damageRemembered);
 
             ResetState();
             Owner.HealthComponent.SetVulnerable();

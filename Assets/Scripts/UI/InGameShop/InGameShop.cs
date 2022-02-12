@@ -13,6 +13,11 @@ namespace UI.InGameShop {
         [SerializeField] private ShopScreen ItemsWindow;
         private Dictionary<WindowType, ShopScreen> _windows;
 
+        private void Start() {
+            _activeWindow = WindowType.Abilities;
+            ToggleActiveWindow(_activeWindow.ToString());
+        }
+
         private void OnEnable() {
             _windows ??= new Dictionary<WindowType, ShopScreen> {
                 {WindowType.Abilities, AbilityWindow},

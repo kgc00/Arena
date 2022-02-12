@@ -8,7 +8,7 @@ namespace Modifiers.SpawnModifiers {
         public override UnitModifierType ModifierType { get; protected set; } = UnitModifierType.StrengthIncreaseSmall;
 
         public override void Handle() {
-            Model.statsData.strength += 0.25f;
+            Model.statsData.strength += 5;
             base.Handle();
         }
     }

@@ -23,7 +23,7 @@ namespace Abilities
         public virtual AttackAbility Initialize(AttackAbilityData data, Unit owner, StatsComponent statsComponent) {
             base.Initialize(data, owner, statsComponent);
             Model = data;
-            Damage = StatsComponent.GetDamage(data.Damage);
+            Damage = Utils.StatHelpers.GetDamage(data.Damage, statsComponent.Stats);
             AffectedFactions = data.AffectedFactions;
             OnAbilityConnection = new List<Action<GameObject, GameObject>>() {AbilityConnected};
             Modifiers = new List<AbilityModifier>();

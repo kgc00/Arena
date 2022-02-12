@@ -20,7 +20,7 @@ namespace Abilities.Buffs {
         private Sequence _seq;
         private static readonly int FresnelPower = Shader.PropertyToID("_FresnelPower");
         private bool _doubleMovementSpeed;
-        private float _startingMoveSpeed;      
+        private int _startingMoveSpeed;      
         private bool _concealed;
         private bool _persistentAddMarkOnHitModifier;
         private MarkOnHitModifier _currentMarkModifier;

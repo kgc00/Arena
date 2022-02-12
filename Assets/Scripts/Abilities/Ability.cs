@@ -56,11 +56,11 @@ namespace Abilities {
             Force = data.force;
             Icon = data.icon;
             Duration = data.duration;
-            AreaOfEffectRadius = StatsComponent.GetAoERadius(data.areaOfEffectRadius);
+            AreaOfEffectRadius = StatHelpers.GetAoERadius(data.areaOfEffectRadius, statsComponent.Stats);
             IndicatorType = data.indicatorType;
             var currentTimeLeft = Cooldown?.TimeLeft ?? Cooldown.DefaultTimeLeft;
             var cooldownIsFrozen = Cooldown?.IsFrozen ?? default;
-            var reducedCooldown = StatsComponent.GetAbilityCooldown( data.cooldown,data.minimumCooldown);
+            var reducedCooldown = StatHelpers.GetAbilityCooldown( data.cooldown, statsComponent.Stats, data.minimumCooldown);
             Cooldown = new Cooldown(reducedCooldown, currentTimeLeft, cooldownIsFrozen);
             StartupTime = data.startupTime;
             ProjectileSpeed = data.projectileSpeed;

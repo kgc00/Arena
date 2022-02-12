@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Abilities {
     public interface IMovementUser {
-        [SerializeField]  float MovementSpeedModifier { get; }
+        [SerializeField]  int MovementSpeedModifier { get; }
         [SerializeField] Action<Unit, Ability> DestinationReached { get; }
     }
 }

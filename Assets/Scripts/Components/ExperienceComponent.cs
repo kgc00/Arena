@@ -13,7 +13,7 @@ namespace Components
         public int CurrentExp { get; private set; }
         public int Bounty;
         public int Level { get; private set; }
-        public int SkillPoints { get; private set; }
+        public int SkillPoints;
 
         private const float EXP_CURVE_MODIFIER = 0.75f;
         private const int SKILL_POINTS_PER_LEVEL = 1;

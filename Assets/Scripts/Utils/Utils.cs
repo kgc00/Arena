@@ -10,6 +10,7 @@ using Common;
 using Components;
 using Data.AbilityData;
 using Data.Modifiers;
+using Data.Stats;
 using Data.Types;
 using State;
 using Units;
@@ -17,6 +18,83 @@ using UnityEngine;
 using Players;
 
 namespace Utils {
+    public static class StatHelpers {
+        public static int CapForStat(StatType type) {
+            switch (type) {
+                case StatType.Strength:
+                case StatType.Endurance:
+                case StatType.Agility:
+                    return 100;
+                case StatType.MovementSpeed:
+                case StatType.Intelligence:
+                    return 150;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        } 
+        
+        public static string GetDescription(StatType type, int newValue) {
+            switch (type) {
+                case StatType.Agility:
+                    return $"TBD";
+                case StatType.Endurance:
+                    return $"Increases max health by {Math.Round(GetHealthIncreaseModifier(newValue) * 100, 2)}%";
+                case StatType.Intelligence:
+                    return $"Increases AoE radius by {Math.Round(GetAoERadiusModifier(newValue) * 100, 2)}% and reduces ability cooldowns by {Math.Round((1 - GetAbilityCooldownModifier(newValue)) * 100, 2)}%";
+                case StatType.Strength:
+                    return $"Increases global damage by {Math.Round(GetDamageIncreaseModifier(newValue) * 100, 2)}%";
+                case StatType.MovementSpeed:
+                    return $"Sets movement speed to {newValue} units / second";
+                default:
+                    return "Unable to find stat";
+            }
+        }
+
+        public static float GetAbilityCooldown(float baseCooldown, Stats stats, float minimumAbilityCooldown = 0f) {
+            var cooldownModifier = Mathf.Max(stats.Intelligence.Value, 1) - 1;
+            var cooldownReduction = GetAbilityCooldownModifier(cooldownModifier);
+            return Mathf.Max(minimumAbilityCooldown, baseCooldown * cooldownReduction);
+        }
+
+        private static float GetAbilityCooldownModifier(float baseValue) {
+            var aoeRadiusIncrease =  1 - baseValue / CapForStat(StatType.Intelligence); // intel of 150 = no cooldown
+            return aoeRadiusIncrease;
+        }
+        
+        public static int GetMaxHealth(float baseMaxHp, Stats stats) {
+            var healthModifier = Mathf.Max(stats.Endurance.Value, 1) - 1;
+            var healthIncrease = GetHealthIncreaseModifier(healthModifier);
+            return (int) (baseMaxHp + baseMaxHp  * healthIncrease);
+        }
+
+        private static float GetHealthIncreaseModifier(float baseValue) {
+            var healthIncrease = baseValue / CapForStat(StatType.Endurance); // Endurance of 100 = double hp
+            return healthIncrease;
+        }
+
+        public static float GetAoERadius(int baseAreaOfEffectRadius, Stats stats) {
+            var aoeRadiusModifier = Mathf.Max(stats.Intelligence.Value, 1) - 1;
+            var aoeRadiusIncrease = GetAoERadiusModifier(aoeRadiusModifier);
+            return baseAreaOfEffectRadius + baseAreaOfEffectRadius  * aoeRadiusIncrease;
+        }
+
+        private static float GetAoERadiusModifier(float baseValue) {
+            var aoeRadiusIncrease = baseValue / CapForStat(StatType.Intelligence); // intel of 150 = 150% radius
+            return aoeRadiusIncrease;
+        }
+
+        public static float GetDamage(float baseDamage, Stats stats) {
+            var damageModifier = Mathf.Max(stats.Strength.Value, 1) - 1;
+            var damageIncrease = GetDamageIncreaseModifier(damageModifier);
+            return baseDamage + baseDamage  * damageIncrease;
+        }
+
+        private static float GetDamageIncreaseModifier(float baseValue) {
+            var damageIncrease = baseValue / CapForStat(StatType.Strength); // strength of 100 = double damage
+            return damageIncrease;
+        }
+    }
+    
     public static class MathHelpers {
         public static T Clamp<T>(T val, T min, T max) where T : IComparable<T> {
             if (val.CompareTo(min) < 0) return min;

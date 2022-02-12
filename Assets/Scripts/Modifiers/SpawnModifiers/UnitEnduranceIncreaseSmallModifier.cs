@@ -8,7 +8,7 @@ namespace Modifiers.SpawnModifiers {
         public override UnitModifierType ModifierType { get; protected set; } = UnitModifierType.EnduranceIncreaseSmall;
 
         public override void Handle() {
-            Model.statsData.endurance += 0.25f;
+            Model.statsData.endurance += 5;
             base.Handle();
         }
     }

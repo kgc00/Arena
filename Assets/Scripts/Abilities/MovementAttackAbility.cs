@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Abilities {
     public abstract class MovementAttackAbility : Ability, IDamageDealer, IMovementUser {
         private new MovementAttackAbilityData Model { get; set; }
-        public float MovementSpeedModifier { get; set; }
+        public int MovementSpeedModifier { get; set; }
 
         public Action<Unit, Ability> DestinationReached { get; set; }
         public List<Action<Unit, Ability>> OnDestinationReached { get; set; }
@@ -25,7 +25,7 @@ namespace Abilities {
             StatsComponent statsComponent) {
             base.Initialize(data, owner, statsComponent);
             Model = data;
-            Damage = StatsComponent.GetDamage(data.Damage);
+            Damage = Utils.StatHelpers.GetDamage(data.Damage, statsComponent.Stats);
             MovementSpeedModifier = data.MovementSpeedModifier;
             AffectedFactions = data.AffectedFactions;
             OnAbilityConnection = new List<Action<GameObject, GameObject>> { AbilityConnected };

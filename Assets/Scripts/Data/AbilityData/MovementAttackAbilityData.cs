@@ -11,7 +11,7 @@ namespace Data.AbilityData {
         [SerializeField] private List<ControlType> affectedFactions;
         [SerializeField] private float damage;
 
-        [SerializeField] private float movementSpeedModifier;
+        [SerializeField] private int movementSpeedModifier;
 
         public float Damage {
             get => damage;
@@ -23,7 +23,7 @@ namespace Data.AbilityData {
             set => affectedFactions = value;
         }
 
-        public float MovementSpeedModifier {
+        public int MovementSpeedModifier {
             get => movementSpeedModifier;
             set => movementSpeedModifier = value;
         }

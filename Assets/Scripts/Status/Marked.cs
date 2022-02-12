@@ -9,12 +9,12 @@ namespace Status {
     public class Marked : MonoStatus {
         private Material _fresnel;
         public override StatusType Type { get; protected set; } = StatusType.Marked;
-        public override MonoStatus Initialize(Unit owner, bool isTimed, float amount) {
+        public override MonoStatus Initialize(Unit owner, bool isTimed, int amount) {
             _fresnel = MonoHelper.LoadMaterial(MaterialType.MarkOutline);
             return base.Initialize(owner, isTimed, amount);
         }
 
-        public override MonoStatus Initialize(Unit owner, float duration, float amount) {
+        public override MonoStatus Initialize(Unit owner, float duration, int amount) {
             _fresnel = MonoHelper.LoadMaterial(MaterialType.MarkOutline);
             return base.Initialize(owner, duration, amount);
         }
@@ -46,7 +46,7 @@ namespace Status {
             base.TriggerEffect(catalyst);
         }
 
-        public override void ReapplyStatus(float amount) {
+        public override void ReapplyStatus(int amount) {
             var vfx = MonoHelper.SpawnVfx(VfxType.Mark, Owner.transform.position);
             vfx.transform.SetParent(Owner.transform);
             base.ReapplyStatus(amount);

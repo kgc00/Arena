@@ -20,7 +20,7 @@ namespace Abilities.Modifiers {
         private void AddFragile(GameObject target, GameObject projectile = null)
         {
             if (target.transform.root.TryGetComponent<Unit>(out var unit)) {
-                unit.gameObject.AddComponent<Fragile>().Initialize(unit, 5f, Ability.Damage);
+                unit.gameObject.AddComponent<Fragile>().Initialize(unit, 5f, (int)Ability.Damage);
             }
         }
 

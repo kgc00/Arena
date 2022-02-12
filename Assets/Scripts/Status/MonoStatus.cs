@@ -10,11 +10,11 @@ namespace Status {
         protected Unit Owner;
         public float Duration { get; protected set; }
         public float TimeLeft { get;protected set; }
-        public float Amount { get; protected set; }
+        public int Amount { get; protected set; }
         public bool IsTimed { get; set; }
         public bool Initialized { get; set; }
         public abstract StatusType Type {  get; protected set; }
-        public virtual MonoStatus Initialize(Unit owner, float duration, float amount) {
+        public virtual MonoStatus Initialize(Unit owner, float duration, int amount) {
             Owner = owner;
             Duration = duration;
             IsTimed = true;
@@ -25,7 +25,7 @@ namespace Status {
             return this;
         }
 
-        public virtual MonoStatus Initialize(Unit owner, bool isTimed, float amount) {
+        public virtual MonoStatus Initialize(Unit owner, bool isTimed, int amount) {
             Owner = owner;
             IsTimed = isTimed;
             Amount = amount;
@@ -45,12 +45,12 @@ namespace Status {
             DisableEffect();
         }
 
-        public virtual void ReapplyStatus(float amount) {
+        public virtual void ReapplyStatus(int amount) {
             IsTimed = false;
             Amount += amount;
         }
         
-        public virtual void ReapplyStatus(float duration, float amount) {
+        public virtual void ReapplyStatus(float duration, int amount) {
             Duration = duration;
             TimeLeft = Duration - TimeLeft;
             Amount += amount;

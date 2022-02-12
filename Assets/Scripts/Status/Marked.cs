@@ -38,10 +38,14 @@ namespace Status {
         }
 
         public override void DisableEffect() {
-            var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
-            var materials = rend.materials;
-            var withoutFresnel = materials.ToList().Where(m => m.shader.name != _fresnel.shader.name).ToArray();
-            rend.materials = withoutFresnel;
+            var rend = Owner.transform.root.GetComponentInChildren<Renderer>( );
+            // will be null when unit dies to triggering the marked effect
+            if (rend != null) {
+                var materials = rend.materials;
+                var withoutFresnel = materials.ToList().Where(m => m.shader.name != _fresnel.shader.name).ToArray();
+                rend.materials = withoutFresnel;
+            }
+
             base.DisableEffect();
         }
 

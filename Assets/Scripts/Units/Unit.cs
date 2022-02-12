@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
@@ -37,6 +38,7 @@ namespace Units
         public CoroutineHelper CoroutineHelper { get; private set; }
         public StatsComponent StatsComponent { get; private set; }
         public FundsComponent FundsComponent { get; private set; }
+        public ItemDropComponent ItemDropComponent { get; private set; }
         public UnitData UnitData;
         public bool Initialized { get; private set; } = false;
 
@@ -85,7 +87,11 @@ namespace Units
             // Funds
             if (FundsComponent == null) FundsComponent = gameObject.AddComponent<FundsComponent>().Initialize(this, data.fundsData);
 
+            // Targeting HUD 
             if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>().Initialize(this);
+
+            // Item drops
+            if (ItemDropComponent == null) ItemDropComponent = gameObject.AddComponent<ItemDropComponent>().Initialize(this);
                                                      
             // State
             state = StateHelper.StateFromEnum(data.state, this);
@@ -126,10 +132,15 @@ namespace Units
             state?.HandleCollisionEnter(other);
         }
 
-        public void UnitDeath()
-        {
+        public void UnitDeath() {
+            StartCoroutine(UnitDeathCrt());
+        }
+
+        private IEnumerator UnitDeathCrt() {
             OnDeath(this);
             Owner.RemoveUnit(this);
+            Animator.gameObject.SetActive(false);
+            yield return StartCoroutine(ItemDropComponent.SpawnDrops());
             Destroy(gameObject);
         }
 

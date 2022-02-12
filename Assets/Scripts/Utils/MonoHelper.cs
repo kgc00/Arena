@@ -2,15 +2,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using Common;
+using Data.Pickups;
 using Data.Types;
 using Projectiles;
 using Status;
 using UI;
 using Units;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Utils {
     public class MonoHelper : MonoBehaviour {
+        #region Drops
+        public static GameObject SpawnDrop(DropType dropType, Vector3 pos) {
+            var path = "";
+            switch (dropType) {
+                case DropType.HealthPickupSmall:
+                    path = $"{Constants.PrefabsPath}Health Pickup Small";
+                    break;
+                case DropType.HealthPickupLarge:
+                    path = $"{Constants.PrefabsPath}Health Pickup Large";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dropType), dropType, null);
+            }
+            
+            return Instantiate(Resources.Load<GameObject>(path), pos, Quaternion.identity);
+        }
+        #endregion 
+        
         #region VFX
         public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, bool identityRot = false) =>
             Instantiate(TypeToVfx(vfxType), pos, identityRot ? Quaternion.identity : Quaternion.Euler(-90, 0, 0));
@@ -88,6 +108,12 @@ namespace Utils {
                     break;
                 case VfxType.Roar:
                     s = $"{Constants.PrefabsPath}Roar VFX";
+                    break;
+                case VfxType.DropSpawn:
+                    s = $"{Constants.PrefabsPath}DropSpawnVFX";
+                    break;
+                case VfxType.HealPickup:
+                    s = $"{Constants.PrefabsPath}HealPickupVFX";
                     break;
             }
 

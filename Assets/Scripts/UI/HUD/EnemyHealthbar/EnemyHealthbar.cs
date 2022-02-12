@@ -26,6 +26,8 @@ namespace UI.HUD.EnemyHealthbar {
 
         private void Cleanup(Unit unit) {
             if (unit != _owner) return;
+            HealthComponent.OnHealthChanged -= UpdateHealthValue;
+            Unit.OnDeath -= Cleanup;
             Destroy(gameObject);
         }
 

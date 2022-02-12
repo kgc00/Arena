@@ -2,8 +2,8 @@
 
 namespace Spawner {
     
-    public class TimerInterval : Interval, ITimerInterval
-    {
+    public class TimerInterval : Interval, ITimerInterval {
+        public bool withRandomOffset;
         public override void Enable() => Enabled = true;
         public override void Disable() => Enabled = false;
 

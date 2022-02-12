@@ -18,6 +18,8 @@
         PlayerImpact,
         RainImpact,
         PiercePullImpact,
-        Roar
+        Roar,
+        DropSpawn,
+        HealPickup
     }
 }

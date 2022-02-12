@@ -14,16 +14,17 @@ namespace Status
         public StatusComponent Initialize (Unit owner) {
             Owner = owner;
             currentStatusEffects = new Dictionary<StatusType, MonoStatus>();
-            canReapplyEffect = new Dictionary<StatusType, bool>();
-            canReapplyEffect.Add(StatusType.Fragile, false);
-            canReapplyEffect.Add(StatusType.Healthy, false);
-            canReapplyEffect.Add(StatusType.Hidden, false);
-            canReapplyEffect.Add(StatusType.Marked, false);
-            canReapplyEffect.Add(StatusType.Rooted, false);
-            canReapplyEffect.Add(StatusType.Slowed, false);
-            canReapplyEffect.Add(StatusType.Silenced, false);
-            canReapplyEffect.Add(StatusType.Stunned, false);
-            canReapplyEffect.Add(StatusType.DragonFury, false);
+            canReapplyEffect = new Dictionary<StatusType, bool> {
+                {StatusType.Fragile, false},
+                {StatusType.Healthy, false},
+                {StatusType.Hidden, false},
+                {StatusType.Marked, FindObjectOfType<UpdgradedMarkComponent>() != null},
+                {StatusType.Rooted, false},
+                {StatusType.Slowed, true},
+                {StatusType.Silenced, false},
+                {StatusType.Stunned, true},
+                {StatusType.DragonFury, false}
+            };
             return this;
         }
 
@@ -109,5 +110,4 @@ namespace Status
         public bool IsStunned() => StatusType.HasFlag(StatusType.Stunned);
         public bool IsMarked() => StatusType.HasFlag(StatusType.Marked);
     }
- 
 }

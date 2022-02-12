@@ -47,7 +47,9 @@ namespace Status {
         }
 
         public override void ReapplyStatus(int amount) {
-            var vfx = MonoHelper.SpawnVfx(VfxType.Mark, Owner.transform.position);
+            var spawnPos = Owner.transform.position;
+            spawnPos.y += 1.5f;
+            var vfx = MonoHelper.SpawnVfx(VfxType.Mark, spawnPos);
             vfx.transform.SetParent(Owner.transform);
             base.ReapplyStatus(amount);
         }

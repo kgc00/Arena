@@ -18,8 +18,7 @@ using UnityEngine.Serialization;
 
 namespace Units
 {
-    public class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser
-    {
+    public partial class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser {
         public static Action<Unit> OnDeath = delegate {  };
         public List<Renderer> Renderers { get; protected set; }
         public Player Owner { get; private set; }
@@ -86,7 +85,7 @@ namespace Units
                                                      
             // State
             state = StateHelper.StateFromEnum(data.state, this);
-            
+
             Initialized = true;
             state.Enter ();
             return this;

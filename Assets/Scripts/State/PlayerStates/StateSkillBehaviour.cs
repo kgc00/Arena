@@ -65,7 +65,6 @@ namespace State.PlayerStates {
                     targetLocation = RotationHelper.GetUnitForward(Owner);
                     break;
                 default:
-                    Debug.Log("updating for neither");
                     break;
             }
 

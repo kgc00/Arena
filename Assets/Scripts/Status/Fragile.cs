@@ -14,7 +14,6 @@ namespace Status {
             if (TryGetComponent<Unit>(out var unit)) {
                 var amount = Mathf.Max(Amount, 1);
                 unit.HealthComponent.DamageOwner(amount);
-                Debug.Log($"Fragile - dealing ${amount} damage to ${unit.name}");
                 Destroy(this);
             }
             

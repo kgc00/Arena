@@ -58,8 +58,6 @@ namespace Abilities.Buffs {
         {
             if (_concealed) yield break;
             _concealed = true;
-            Debug.Log("Handling activation of Conceal");
-            Debug.Log("Concealed!");
             float timeLeft = Duration;
             _brokenConcealment = false;
             _seq.Restart();

@@ -10,7 +10,7 @@ namespace Components
         public static System.Action<Unit, float, float> onExperienceChanged = delegate { };
         public static System.Action<Unit, int, int> onLevelUp = delegate { };
         public Unit Owner;
-        public int CurrentExp { get; private set; }
+        [field:SerializeField]public int CurrentExp { get; private set; }
         public int Bounty;
         public int Level { get; private set; }
         public int SkillPoints;
@@ -35,7 +35,6 @@ namespace Components
             var prevLevel = Level;
             CurrentExp += amount;
             onExperienceChanged(Owner, CurrentExp, prevExp);
-            Debug.Log($"Current EXP is {CurrentExp} EXP");
             Level = LevelFromExp(CurrentExp);
             if (Level == prevLevel) return;
             SkillPoints += 1 * SKILL_POINTS_PER_LEVEL;
@@ -49,7 +48,6 @@ namespace Components
             
             if (ownerIsAi) return;
             
-            Debug.Log($"Awarding {amount} EXP");
             AdjustExperience(Mathf.Abs(amount));
         }
         
@@ -62,7 +60,6 @@ namespace Components
             
             if (unitWasNotAi || ownerIsAi || unitWasSelf) return;
             
-            Debug.Log($"Awarding {unit.ExperienceComponent.Bounty} EXP");
             AdjustExperience(Mathf.Abs(unit.ExperienceComponent.Bounty));
         }
     }

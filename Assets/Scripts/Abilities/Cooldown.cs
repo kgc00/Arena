@@ -27,7 +27,6 @@ namespace Abilities
         public float UpdateCooldown(float deltaTime)
         {
             if (IsFrozen || !IsOnCooldown) return TimeLeft;
-            // Debug.Log($"Cooldown time left: {TimeLeft}");
             TimeLeft = Clamp(TimeLeft -= deltaTime, 0, CooldownTime);
             return TimeLeft;
         }

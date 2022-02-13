@@ -12,7 +12,6 @@ namespace Abilities.Modifiers
         public override void Handle()
         {
             Ability.Damage *= 2;
-            Debug.Log($"Calling {ToString()} to double damage.  Damage is now {Ability.Damage}");
             base.Handle();
         }
     }

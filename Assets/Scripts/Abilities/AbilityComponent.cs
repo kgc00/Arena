@@ -43,7 +43,9 @@ namespace Abilities
 
         public void UpdateModel(List<AbilityData> abilities) {
             // TODO - confirm global ability modifiers should be reset / not reset
-            Debug.Assert(State == AbilityComponentState.Idle);
+            
+            // component state can be non-idle if a level up occurs while an ability is firing
+            // may need to set state to idle manually
             Debug.Assert(Owner != null);
             
             GlobalAbilityModifiers = new List<AbilityModifier>();

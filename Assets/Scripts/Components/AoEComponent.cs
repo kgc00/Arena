@@ -118,7 +118,6 @@ namespace Common
 
             rigidBody = other.transform.root.GetComponent<Rigidbody>();
             if (rigidBody == null) {
-                Debug.Log($"Unable to affect {unit.name} because they do not posses a rigidbody");
                 return false;
             }
 

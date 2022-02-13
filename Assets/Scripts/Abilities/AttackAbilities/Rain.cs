@@ -75,7 +75,6 @@ namespace Abilities.AttackAbilities {
             MonoHelper.SpawnVfx(VfxType.RainImpact, unit.transform.position).transform.SetParent(unit.transform);
             while (_affectedUnits.Contains(unit) && unit != null) {
                 var damage = Damage * Time.deltaTime;
-                Debug.Log($"Rain has connected with a unit: {unit.name}. Base damage is {damage}.");
                 unit.HealthComponent.DamageOwner(damage, this, Owner);
                 yield return new WaitForEndOfFrame();
             }

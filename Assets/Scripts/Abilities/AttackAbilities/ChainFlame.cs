@@ -98,8 +98,6 @@ namespace Abilities.AttackAbilities {
                     force: 0,
                     duration: Duration)
                 .gameObject;
-
-            Debug.Log("spawned AoE for Chain Flame");
         }
 
 

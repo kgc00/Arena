@@ -14,7 +14,6 @@ namespace Tests
             var Stats = new Stats();
             var ms = Stats.StatFromEnum(StatType.MovementSpeed);
 
-            Debug.Log("ms = " + ms);
             Assert.AreSame(ms, Stats.MovementSpeed);
         }
     }

@@ -23,7 +23,6 @@ namespace State.PlayerStates
         }
 
         private void ActivateAbility() {
-            Debug.Log("Activate ability = " + _hasActivated);
             Owner.AbilityComponent.Activate(ref _ability, _targetLocation);
             _hasActivated = true;
         }

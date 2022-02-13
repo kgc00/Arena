@@ -45,7 +45,6 @@ namespace Utils {
             var path = ResourcePathFromType(vfxType) ??
                        throw new Exception($"Unable to location {vfxType} in ResourcePathFromType");
 
-            Debug.Log(path);
             return Resources.Load<GameObject>(path);
         }
 

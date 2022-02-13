@@ -23,8 +23,7 @@ namespace Tests.Play_Mode {
         public bool IsTestFinished { get; private set; }
 
         [UnityTest]
-        public IEnumerator SandboxWithEnumeratorPasses() {            
-            Debug.Log($"targetLocation {targetLocation}");
+        public IEnumerator SandboxWithEnumeratorPasses() {
             Vector3 heading = targetLocation - startLocation;
             Debug.Log($"heading {heading}");
             heading.y = 0;        

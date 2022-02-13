@@ -15,7 +15,6 @@ namespace Abilities.Modifiers {
         public override bool ShouldConsume() => false;
 
         public override void Handle() {
-            Debug.Log($"Calling handle on {ToString()}.");
             Ability.OnActivation.Insert(0, AddModifier);
             base.Handle();
         }

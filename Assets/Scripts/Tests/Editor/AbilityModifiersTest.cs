@@ -16,8 +16,6 @@ namespace Tests
             Modifiers.Add(modifier);
             Modifiers.Add(ddMod);
 
-            Debug.Log($"Count: {Modifiers.Count}");
-
             Assert.Contains(modifier, Modifiers);
             Assert.AreSame(modifier, Modifiers[0]);
 
@@ -28,7 +26,6 @@ namespace Tests
 
             Modifiers.RemoveAll(x => x.ShouldConsume());
             
-            Debug.Log($"Count: {Modifiers.Count}");
             Assert.AreEqual(0, Modifiers.Count);
         }
     }

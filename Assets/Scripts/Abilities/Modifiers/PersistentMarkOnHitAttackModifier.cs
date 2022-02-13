@@ -14,7 +14,6 @@ namespace Abilities.Modifiers
         public override bool ShouldConsume() => false;
         public override void Handle()
         {
-            Debug.Log($"Calling {ToString()} to add a mark on collision.");
             Ability.OnAbilityConnection.Insert(0, AddMark);
             base.Handle();
         }

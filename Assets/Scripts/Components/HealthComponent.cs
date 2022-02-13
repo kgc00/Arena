@@ -24,8 +24,7 @@ namespace Components
             CurrentHp = MaxHp;
 
             Invulnerable = healthData.invulnerable;
-
-            Debug.Log($"Spawning: {Owner.name} with a max HP of {MaxHp}");
+            
             return this;
         }
 

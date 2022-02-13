@@ -12,7 +12,6 @@ namespace Abilities.Modifiers {
         
         public override void Handle()
         {
-            Debug.Log($"Calling {ToString()} to add fragile status.");
             Ability.OnAbilityConnection.Insert(0, AddFragile);
             base.Handle();
         }

@@ -19,7 +19,6 @@ namespace Abilities.Modifiers
         
         public virtual bool ShouldConsume()
         {
-            Debug.Log($"Consuming: Some Modifier");
             return true;
         }
 

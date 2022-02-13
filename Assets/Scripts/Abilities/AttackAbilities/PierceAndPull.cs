@@ -105,11 +105,7 @@ namespace Abilities.AttackAbilities {
             if (unit == null || unit.Owner == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
-            var totalDamage = Damage;
             var isMarked = unit.StatusComponent.StatusType.HasFlag(StatusType.Marked);
-            
-            Debug.Log($"Pierce has connected with a unit: {unit.name}.  The unit has a marked status of {isMarked}.\n" +
-                      $"Base damage is {Damage}. Total Damage is {totalDamage}");
             
             if (isMarked) {
                 unit.StatusComponent.TriggerStatus(StatusType.Marked, this);

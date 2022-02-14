@@ -18,7 +18,12 @@ namespace UI.InGameShop.AbilitiesScreen {
         [SerializeField] private TextMeshProUGUI _descriptionText;
         [SerializeField] private GameObject _canPurchaseText;
         [SerializeField] private GameObject _hasPurchasedText;
+        private InGameShopManager _inGameShopManager;
+
         private void OnEnable() {
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
@@ -47,7 +52,7 @@ namespace UI.InGameShop.AbilitiesScreen {
 
         private void UpdateCostText(bool isPurchased) {
             if (!isPurchased) {
-                var player = InGameShopManager.Instance.PurchasingUnit;
+                var player = _inGameShopManager.PurchasingUnit;
                 if (player == null) return;
                 var operation = player.FundsComponent.ContainsEnoughFunds(AbilityModifierShopData.Cost);
                 if (operation.containsEnoughFunds) {

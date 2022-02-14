@@ -29,6 +29,7 @@ namespace UI.InGameShop.AbilitiesScreen {
                 this.PostNotification(NotificationType.SkillScrollViewToggleToggledOn,
                     new SkillScrollViewToggleEvent(AbilityModel, ModifierShopData, IsPurchased));
                 _frame.enabled = true;
+                this.PostNotification(NotificationType.DidClickShopButton);
             }
             else {
                 _frame.enabled = false;

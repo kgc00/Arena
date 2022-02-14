@@ -6,12 +6,14 @@ using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 using static Utils.MathHelpers;
 
 namespace Abilities.AttackAbilities {
     public class Roar : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastRoar);
             OnAbilityActivationFinished(Owner, this);
             Destroy(MonoHelper.SpawnVfx(VfxType.Roar, gameObject.transform.position), Duration - StartupTime);
             var colliderParams = new SphereParams(AreaOfEffectRadius);
@@ -44,6 +46,7 @@ namespace Abilities.AttackAbilities {
         }
 
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
+            this.PostNotification(NotificationType.DidConnectRoar);
             target.GetUnitComponent().HealthComponent.DamageOwner(Damage, this, Owner);
         }
     }

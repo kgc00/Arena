@@ -9,7 +9,6 @@ namespace Data.SpawnData
     public class WaveSpawnData : ScriptableObject
     {
         [SerializeField] public List<UnitSpawnData> wave;
-        [HideInInspector] public int number;
         [SerializeField] public List<WaveModifierType> modifiers;
     }
 }

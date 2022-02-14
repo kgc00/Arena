@@ -86,6 +86,7 @@ namespace Abilities.AttackAbilities {
         }
         private Collision _other;
         protected override void AbilityConnected(GameObject target, GameObject projectile = null) {
+            this.PostNotification(NotificationType.UnitDidCollide);
             // checking for null is done in the collision enter method
             var unit = target.gameObject.GetComponent<Unit>();
             if (AffectedFactions.Contains(unit.Owner.ControlType)) {

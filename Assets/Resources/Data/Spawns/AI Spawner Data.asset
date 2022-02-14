@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AI Spawner Data
   m_EditorClassIdentifier: 
   spawnStartupTime: 2
-  delayBetweenSpawns: 1
-  delayBetweenWaves: 6
+  delayBetweenUnits: 1
+  delayBetweenUnitGroupings: 1

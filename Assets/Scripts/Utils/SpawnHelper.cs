@@ -39,19 +39,5 @@ namespace Utils {
 
             return Resources.Load<GameObject>(s);
         }
-
-        public static Interval IntervalFromType(Intervals interval, GameObject go)
-        {
-            switch (interval)
-            {
-                case Intervals.Timer:
-                    return go.AddComponent<TimerInterval>();
-                case  Intervals.WaveLastEnemyAlive:
-                    return go.AddComponent<ContinuousInterval>();
-                default:
-                    Debug.LogError($"NO TYPE FOUND!");
-                    return null;
-            }
-        }
     }
 }

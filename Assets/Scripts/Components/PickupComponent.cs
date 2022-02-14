@@ -3,6 +3,7 @@ using Data.Pickups;
 using Data.Types;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Components {
     [RequireComponent(typeof(BoxCollider))]
@@ -17,10 +18,12 @@ namespace Components {
             switch (Type) {
                 case DropType.HealthPickupSmall:
                     unit.HealthComponent.HealOwner(unit.HealthComponent.MaxHp * 0.1f);
+                    this.PostNotification(NotificationType.DidPickupHealth);
                     MonoHelper.SpawnVfx(VfxType.HealPickup, _vfxSpawnTransform.position);
                     break;
                 case DropType.HealthPickupLarge:
                     unit.HealthComponent.HealOwner(unit.HealthComponent.MaxHp * 0.3f);
+                    this.PostNotification(NotificationType.DidPickupHealth);
                     MonoHelper.SpawnVfx(VfxType.HealPickup, _vfxSpawnTransform.position);
                     break;
                 default:

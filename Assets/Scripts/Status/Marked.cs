@@ -38,7 +38,7 @@ namespace Status {
         }
 
         public override void DisableEffect() {
-            var rend = Owner.transform.root.GetComponentInChildren<Renderer>( );
+            var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
             // will be null when unit dies to triggering the marked effect
             if (rend != null) {
                 var materials = rend.materials;
@@ -51,29 +51,31 @@ namespace Status {
 
         public override void TriggerEffect(Ability catalyst) {
             if (catalyst is AttackAbility attackAbility) {
+                var hasExplosionUpgrade = catalyst.Owner.PurchasedItems.Contains(ItemType.ExplosiveMark);
                 var totalDamage = attackAbility.Damage + Amount;
                 Owner.HealthComponent.DamageOwner(totalDamage);
-                if (Owner.HealthComponent.CurrentHp - totalDamage <= 0) {
-                    if (catalyst.Owner.PurchasedItems.Contains(ItemType.ExplosiveMark)) {
-                        _mostRecentCatalyst = attackAbility;
-                        var colliderParams = new SphereParams(3);
-                        var _ = new GameObject("Mark Explosive Force")
-                            .AddComponent<AoEComponent>()
-                            .Initialize(colliderParams,
-                                transform.position,
-                                transform.position,
-                                HandleEnterStrategy,
-                                null,
-                                null,
-                                new List<ControlType> {ControlType.Ai},
-                                default,
-                                0.1f)
-                            .gameObject;
-                    }
+                if (Owner.HealthComponent.CurrentHp - totalDamage <= 0 && hasExplosionUpgrade) {
+                    _mostRecentCatalyst = attackAbility;
+                    var colliderParams = new SphereParams(3);
+                    var _ = new GameObject("Mark Explosive Force")
+                        .AddComponent<AoEComponent>()
+                        .Initialize(colliderParams,
+                            transform.position,
+                            transform.position,
+                            HandleEnterStrategy,
+                            null,
+                            null,
+                            new List<ControlType> {ControlType.Ai},
+                            default,
+                            0.1f)
+                        .gameObject;
+                    MonoHelper.SpawnVfx(VfxType.MarkExplosion, Owner.transform.position);
+                }
+                else {
+                    MonoHelper.SpawnVfx(VfxType.MarkTriggered, Owner.transform.position);
                 }
             }
 
-            MonoHelper.SpawnVfx(VfxType.MarkExplosion, Owner.transform.position);
             base.TriggerEffect(catalyst);
         }
 

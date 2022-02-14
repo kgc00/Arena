@@ -8,6 +8,7 @@ using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class PierceAndPull : AttackAbility {
@@ -21,9 +22,12 @@ namespace Abilities.AttackAbilities {
                 StartupTime + preFireDelay);
             Owner.InputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastPierceAndPull);
+
 
             var pullGo = HandlePullEffect(targetLocation);
             yield return new WaitForSeconds(preFireDelay);
+            this.PostNotification(NotificationType.DidLaunchPierceAndPull);
 
             Destroy(pullGo);
             MonoHelper.SpawnVfx(VfxType.PiercePullLaunch, weaponTransform.position, lookRotation);
@@ -105,6 +109,7 @@ namespace Abilities.AttackAbilities {
             if (unit == null || unit.Owner == null) return;
             if (!AffectedFactions.Contains(unit.Owner.ControlType)) return;
 
+            this.PostNotification(NotificationType.DidConnectPierceAndPull);
             var isMarked = unit.StatusComponent.StatusType.HasFlag(StatusType.Marked);
             
             if (isMarked) {

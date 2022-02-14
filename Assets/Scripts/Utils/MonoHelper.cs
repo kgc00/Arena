@@ -114,6 +114,9 @@ namespace Utils {
                 case VfxType.HealPickup:
                     s = $"{Constants.PrefabsPath}HealPickupVFX";
                     break;
+                case VfxType.MarkTriggered:
+                    s = $"{Constants.PrefabsPath}Mark Triggered VFX";
+                    break;
             }
 
             return s;

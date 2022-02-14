@@ -6,7 +6,6 @@ namespace Data.SpawnData {
         public static WaveSpawnData CreateInstance(this WaveSpawnData data) {
             var instance = ScriptableObject.CreateInstance<WaveSpawnData>();
             instance.wave = data.wave.ConvertAll(x => x.CreateInstance()).ToList();
-            instance.number = default;
             var mods = data.modifiers.ConvertAll(x => x).ToList();
             instance.modifiers = mods;
             return instance;

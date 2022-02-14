@@ -1,7 +1,7 @@
-﻿namespace Levels {
+﻿namespace Common.Levels {
     public enum LevelIndex {
-        Drafting = 0,
+        Main = 0,
         Arena = 1,
-        Upgrades = 2
+        Win = 2,
     }
 }

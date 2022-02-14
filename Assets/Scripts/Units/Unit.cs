@@ -13,8 +13,10 @@ using UnityEngine;
 using Utils;
 using Players;
 using Status;
+using UI.InGameShop;
 using UI.Targeting;
 using UnityEngine.Serialization;
+using Utils.NotificationCenter;
 
 namespace Units
 {
@@ -40,6 +42,7 @@ namespace Units
         public FundsComponent FundsComponent { get; private set; }
         public ItemDropComponent ItemDropComponent { get; private set; }
         public UnitData UnitData;
+        public InGameShopManager InGameShopManager { get; private set; }
         public bool Initialized { get; private set; } = false;
 
         private void Awake() {
@@ -96,6 +99,11 @@ namespace Units
             // State
             state = StateHelper.StateFromEnum(data.state, this);
             
+            
+            if (InGameShopManager == null) {
+                InGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
+            
             Initialized = true;
             state.Enter ();
             return this;
@@ -147,6 +155,7 @@ namespace Units
         public virtual void OnLevelUp() {
             var spawnPos = new Vector3(transform.position.x, 0, transform.position.z);
             MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos).transform.SetParent(transform);
+            this.PostNotification(NotificationType.DidLevelUp);
             StatsComponent.IncrementStat(StatType.Agility, 2);
             StatsComponent.IncrementStat(StatType.Endurance, 2);
             StatsComponent.IncrementStat(StatType.Intelligence, 2);
@@ -165,11 +174,10 @@ namespace Units
             if (!Initialized) return;
             
             if (Owner.ControlType == ControlType.Local) {
-                if (GUILayout.Button("Add Exp"))
-                {
-                    ExperienceComponent.AwardBounty(10);
-                }
-                GUILayout.Box($"stats: {StatsComponent.Stats.Intelligence.Value.ToString()}");
+                // if (GUILayout.Button("Add Exp"))
+                // {
+                //     ExperienceComponent.AwardBounty(10);
+                // }
                 // GUILayout.Box($"State: {state}");
                 // GUILayout.Box($"AbilityComponent State: {AbilityComponent.State}");
                 // GUILayout.Box($"Input Values Forward: {Controller.InputValues.Forward}");

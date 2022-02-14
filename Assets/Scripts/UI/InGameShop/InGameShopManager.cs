@@ -4,11 +4,12 @@ using Units;
 using UnityEngine;
 
 namespace UI.InGameShop {
-    public class InGameShopManager : Singleton<InGameShopManager> {
+    public class InGameShopManager : MonoBehaviour {
         public InGameShop ShopUI { get; private set; }
         public bool IsPurchasingUnitWithinProximity { get; private set; }
         public Unit PurchasingUnit { get; private set; }
         public Action<bool, Unit> OnShopVisibilityToggled = delegate { };
+        public bool isShopVisible => ShopUI != null && ShopUI.gameObject.activeInHierarchy;
 
         private void Start() {
             try {
@@ -40,17 +41,6 @@ namespace UI.InGameShop {
         public void PlayerEnteredOrExitedProximity(bool withinProximity, Unit unit) {
             IsPurchasingUnitWithinProximity = withinProximity;
             PurchasingUnit = unit;
-            if (IsPurchasingUnitWithinProximity) {
-                ShopUI.Initialize();
-                ShopUI.ArrowObject.Initialize(PurchasingUnit); 
-                ShopUI.ArrowObject.gameObject.SetActive(true);
-            }
-            else {
-                ShopUI.ArrowObject.gameObject.SetActive(false);
-                if (ShopUI.gameObject.activeInHierarchy) {
-                    ToggleVisibility();
-                }
-            }
         }
     }
 }

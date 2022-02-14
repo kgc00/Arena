@@ -2,6 +2,7 @@
 using System.Linq;
 using Abilities;
 using Abilities.AttackAbilities;
+using Common;
 using Controls;
 using Data.Types;
 using JetBrains.Annotations;
@@ -19,16 +20,17 @@ namespace State.PlayerStates {
 
         protected PlayerState(Unit owner) : base(owner) {
             skillBehaviour = new StateSkillBehaviour(owner);
-            _ownerPlayerController = Owner.Controller as PlayerController 
+            _ownerPlayerController = Owner.Controller as PlayerController
                                      ?? throw new Exception("Cannot cast controller to player controller");
         }
-
+        
         public override UnitState HandleUpdate(InputValues input) {
+            if (!Constants.IsDebug) return null;
             if (!input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) return null;
-            if (!InGameShopManager.Instance.IsPurchasingUnitWithinProximity) return null;
-                
-            InGameShopManager.Instance.ToggleVisibility();
-            if (InGameShopManager.Instance.ShopUI.gameObject.activeInHierarchy) {
+            if (!Owner.InGameShopManager.IsPurchasingUnitWithinProximity) return null;
+
+            Owner.InGameShopManager.ToggleVisibility();
+            if (Owner.InGameShopManager.ShopUI.gameObject.activeInHierarchy) {
                 _ownerPlayerController.EnableUISchema();
             }
             else {
@@ -62,7 +64,7 @@ namespace State.PlayerStates {
             var right = Owner.transform.right;
             var dotForward = Vector3.Dot(forward, motion);
             var dotRight = Vector3.Dot(right, motion);
-            
+
             Owner.Animator.SetFloat("VerticalMotion", dotForward);
             Owner.Animator.SetFloat("HorizontalMotion", dotRight);
         }
@@ -136,9 +138,7 @@ namespace State.PlayerStates {
 
 
 #if UNITY_EDITOR
-        public override void HandleDrawGizmos() {
-            
-        }
+        public override void HandleDrawGizmos() { }
 #endif
     }
 }

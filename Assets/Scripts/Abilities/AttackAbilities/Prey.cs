@@ -6,15 +6,17 @@ using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Prey : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
+            yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastPrey);
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
             OnAbilityActivationFinished(Owner, this);
             ExecuteOnAbilityFinished();
-            yield break;
         }
 
 
@@ -49,6 +51,7 @@ namespace Abilities.AttackAbilities {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
 
+            this.PostNotification(NotificationType.DidConnectPrey);
 
             if (hitGeometry) {
                 Destroy(projectile);

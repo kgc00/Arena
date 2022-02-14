@@ -20,6 +20,7 @@
         PiercePullImpact,
         Roar,
         DropSpawn,
-        HealPickup
+        HealPickup,
+        MarkTriggered
     }
 }

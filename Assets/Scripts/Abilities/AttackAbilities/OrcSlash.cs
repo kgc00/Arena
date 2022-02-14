@@ -4,6 +4,7 @@ using Data.Types;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class OrcSlash : AttackAbility {
@@ -30,6 +31,7 @@ namespace Abilities.AttackAbilities {
             if (objectAsUnit.Owner.ControlType == ControlType.Ai) return;
 
             if (impactedUnits.Contains(objectAsUnit)) return; // this triggers on the same unit multiple times per hit, only allow the first to deal damage
+            this.PostNotification(NotificationType.AttackDidCollide);
             objectAsUnit.HealthComponent.DamageOwner(Damage, this, Owner);
             impactedUnits.Add(objectAsUnit);
             MonoHelper.SpawnVfx(VfxType.PlayerImpact, objectAsUnit.transform.position);

@@ -3,18 +3,32 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Common {
-    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
-        /// <summary>
-        /// Access singleton instance through this propriety.
-        /// </summary>
-        public static T Instance { get; private set; }
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+    {
+        private static T _instance;
 
-        protected virtual void Awake() {
-            if (Instance != null && Instance != this) {
-                Destroy(gameObject);
+        public static T Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                }
+
+                return _instance;
             }
-            else {
-                Instance = this as T;
+        }
+
+
+        private void Awake ()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+            } else
+            {
+                _instance = this as T;
                 DontDestroyOnLoad(gameObject);
             }
         }

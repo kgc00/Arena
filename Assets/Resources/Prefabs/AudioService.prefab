@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7961025869268686110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4518013089442643251}
+  - component: {fileID: 1292905578334579072}
+  m_Layer: 0
+  m_Name: AudioService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4518013089442643251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7961025869268686110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 470.5, y: 264.5, z: -4.668242}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1292905578334579072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7961025869268686110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6d6fde40bca39488b8b5a0555d30e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixer: {fileID: 24100000, guid: 532736212270662438de66dd7ca2a322, type: 2}
+  _playBGM: 1
+  _bgm: {fileID: 8300000, guid: 694455df97216194cacc32ed84d62082, type: 3}
+  PurchaseComplete: {fileID: 8300000, guid: 2950feeacfa584e41bdca8b73d77fa24, type: 3}
+  DidCastBurst: {fileID: 8300000, guid: 3fe1a4645587b484a897451e9411c44e, type: 3}
+  DidCastPierceAndPull: {fileID: 8300000, guid: d0ec60a5dbfe4a345887303a3767dd36,
+    type: 3}
+  DidLaunchPierceAndPull: {fileID: 8300000, guid: c62ef9ef9de0ec94c88f91078d1981a6,
+    type: 3}
+  DidCastConceal: {fileID: 8300000, guid: 94a7cb960678c944bae4a0f8a709d8a9, type: 3}
+  DidCastPrey: {fileID: 8300000, guid: d205afd0954c0de43a6aa7ee124084cc, type: 3}
+  DidCastMark: {fileID: 8300000, guid: d205afd0954c0de43a6aa7ee124084cc, type: 3}
+  DidCastRain: {fileID: 8300000, guid: 1bb8d9268d5a8a1449afd9fb09dbaa82, type: 3}
+  DidConnectBurst: {fileID: 8300000, guid: 269ad6b3c1384dc4da3bfb2041a0ffb5, type: 3}
+  DidConnectPierceAndPull: {fileID: 8300000, guid: 9c4086ab1a6c4814389b1e7388c5ef8c,
+    type: 3}
+  DidConnectPrey: {fileID: 8300000, guid: 9e1558cb91685cc49af15d2523e8e750, type: 3}
+  DidConnectMark: {fileID: 8300000, guid: 9e1558cb91685cc49af15d2523e8e750, type: 3}
+  DidApplyMark: {fileID: 8300000, guid: ab2802510a8241443969f41dcdbb37e9, type: 3}
+  DidTriggerMark: {fileID: 8300000, guid: 9de8619192d3c8f428ab74049631a0eb, type: 3}
+  DidConnectCharge: {fileID: 8300000, guid: 5d49d5f8206b1334cbf64bcf4864c90c, type: 3}
+  DidCastChainFlame: {fileID: 8300000, guid: b5123d4f1792ed84d81ee04fdaef7e87, type: 3}
+  DidConnectChainFlame: {fileID: 8300000, guid: 1ebf5ce2d3dd66d46b7994910983c932,
+    type: 3}
+  DidCastIceBolt: {fileID: 8300000, guid: df5ce513aafe3824bbe719fe5058dd48, type: 3}
+  DidConnectIceBolt: {fileID: 8300000, guid: 0b927f0412a738c4b95723f5a0a68f64, type: 3}
+  DidCastRoar: {fileID: 8300000, guid: 7925955ce42c660469b40689d35a2bf3, type: 3}
+  DidConnectRoar: {fileID: 8300000, guid: 5c4768e44cbcd0b4c8b0764c7bb13331, type: 3}
+  DidToggleShopTab: {fileID: 8300000, guid: 484311f86ebe35b4c9e40b0cd8b2651a, type: 3}
+  DidClickShopButton: {fileID: 8300000, guid: b6dc7ca5ca8ec934784820061d52b9f3, type: 3}
+  AttackDidCollide: {fileID: 8300000, guid: 455ea7ed3b282f04ba8528053715f50e, type: 3}
+  DidPickupHealth: {fileID: 8300000, guid: 33aefa21109aa9a4d9397ca1d83ff461, type: 3}
+  DidLevelUp: {fileID: 8300000, guid: 5dd197a12d21602419e36d3f41e6e092, type: 3}

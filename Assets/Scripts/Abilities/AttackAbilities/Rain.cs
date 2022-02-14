@@ -6,12 +6,14 @@ using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Rain : AttackAbility {
         private readonly HashSet<Unit> _affectedUnits = new HashSet<Unit>();
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastRain);
             OnAbilityActivationFinished(Owner, this);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             _affectedUnits.Clear();

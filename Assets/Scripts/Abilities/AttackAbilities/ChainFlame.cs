@@ -17,6 +17,7 @@ namespace Abilities.AttackAbilities {
         private float delayBetweenProjectiles = 0.5f;
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastChainFlame);
             OnAbilityActivationFinished(Owner, this);
 
             Vector3? updatedTargetLocation = targetLocation;
@@ -138,6 +139,7 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile = null) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
+            this.PostNotification(NotificationType.DidConnectChainFlame);
 
 
             if (hitGeometry) {

@@ -23,6 +23,7 @@ namespace UI.InGameShop.ItemScreen {
         private Unit _purchasingUnit;
         private bool _isPurchased;
         public bool _shouldUpdateTextInEditor;
+        private InGameShopManager _inGameShopManager;
 
         private void OnValidate() {
             if (_shouldUpdateTextInEditor) {
@@ -80,7 +81,10 @@ namespace UI.InGameShop.ItemScreen {
         }
 
         private void OnEnable() {
-            _purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
+            _purchasingUnit = _inGameShopManager.PurchasingUnit;
             _isPurchased = _purchasingUnit.PurchasedItems.Contains(model.ItemType);
             AssignText();
         }

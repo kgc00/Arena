@@ -5,11 +5,13 @@ using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Burst : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastBurst);
             var updatedTargetLocation = MouseHelper.GetWorldPosition();
             SpawnGrenade(updatedTargetLocation);
             OnAbilityActivationFinished(Owner, this);
@@ -51,6 +53,7 @@ namespace Abilities.AttackAbilities {
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.BurstImpact, centerLocation);
             vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
+            this.PostNotification(NotificationType.DidConnectBurst);
             Destroy(projectile);
         }
 

@@ -6,11 +6,13 @@ using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class IceBolt : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastIceBolt);
             var projectile = SpawnProjectile();
             InitializeProjectile(targetLocation, projectile);
 
@@ -50,6 +52,7 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
+            this.PostNotification(NotificationType.DidConnectIceBolt);
 
 
             if (hitGeometry) {

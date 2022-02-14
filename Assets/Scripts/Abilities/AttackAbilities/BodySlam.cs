@@ -3,6 +3,7 @@ using Data.Types;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class BodySlam : AttackAbility {
@@ -18,6 +19,7 @@ namespace Abilities.AttackAbilities {
             if (!targetedUnit.gameObject.TryGetComponent(out Unit objectAsUnit)) return;
             if (objectAsUnit.Owner.ControlType == ControlType.Ai) return;
 
+            this.PostNotification(NotificationType.AttackDidCollide);
             objectAsUnit.HealthComponent.DamageOwner(Damage, this, Owner);
             MonoHelper.SpawnVfx(VfxType.PlayerImpact, objectAsUnit.transform.position);
         }

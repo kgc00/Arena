@@ -6,6 +6,7 @@ using Data.Types;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Mark : AttackAbility {
@@ -18,6 +19,7 @@ namespace Abilities.AttackAbilities {
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.DidCastMark);
             var proj = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, 10f);
             var renderer = proj.transform.root.GetComponentInChildren<Renderer>();
             var withFresnel = renderer.materials.ToList();
@@ -31,6 +33,7 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
+            this.PostNotification(NotificationType.DidConnectMark);
 
             if (hitGeometry) {
                 Destroy(projectile);

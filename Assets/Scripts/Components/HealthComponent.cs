@@ -15,7 +15,7 @@ namespace Components
         public Unit Owner { get; private set; }
         public int MaxHp { get; private set; }
         public float CurrentHp { get; private set; }
-        public bool IsDead => CurrentHp <= 0;
+        public bool IsDead;
         public bool Invulnerable { get; private set; }
 
         public HealthComponent Initialize(Unit owner, HealthData healthData, StatsComponent statsComponent) {
@@ -74,10 +74,11 @@ namespace Components
 
             OnHealthChanged(Owner, prevAmount);
             
-            if (CurrentHp <= 0) {
+            // can be triggered multiple times if multiple damage sources proc while the unit is deleting
+            if (CurrentHp <= 0 && !IsDead) {
                 // Debug.Log($"{Owner} died");
+                IsDead = true;
                 Owner.UnitDeath();
-                
             }
         }
 

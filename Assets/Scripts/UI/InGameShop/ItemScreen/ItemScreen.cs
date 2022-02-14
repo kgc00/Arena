@@ -7,9 +7,13 @@ using Utils.NotificationCenter;
 namespace UI.InGameShop.ItemScreen {
     public class ItemScreen : ShopScreen {
         private Unit _purchasingUnit;
+        private InGameShopManager _inGameShopManager;
 
         private void OnEnable() {
-            _purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
+            _purchasingUnit = _inGameShopManager.PurchasingUnit;
         }
 
         public void HandlePurchase(ItemData model) {
@@ -21,7 +25,7 @@ namespace UI.InGameShop.ItemScreen {
             }
             _purchasingUnit.FundsComponent.SetBalance(remainder);
             _purchasingUnit.PurchasedItems.Add(model.ItemType);
-            this.PostNotification(NotificationType.PurchaseComplete);
+            this.PostNotification(NotificationType.PurchaseComplete, new PurchaseEvent(model.Cost, model.ItemType.ToString()));
         }
     }
 }

@@ -5,8 +5,12 @@ using Utils.NotificationCenter;
 namespace UI.InGameShop.AbilitiesScreen {
     public class SkillPurchaseOption : MonoBehaviour {
         [SerializeField] private GameObject button;
+        private InGameShopManager _inGameShopManager;
 
         private void OnEnable() {
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
@@ -22,7 +26,7 @@ namespace UI.InGameShop.AbilitiesScreen {
 
         private void HandleSkillScrollViewToggleToggledOn(object sender, object args) {
             if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
-            var player = InGameShopManager.Instance.PurchasingUnit;
+            var player = _inGameShopManager.PurchasingUnit;
             if (player == null) return;
             button.SetActive(!toggleEvent.IsPurchased);
         }

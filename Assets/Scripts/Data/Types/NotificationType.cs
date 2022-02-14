@@ -37,5 +37,37 @@
 
         public const string
             ChargeDidImpactWall = "ChargeDidImpactWall";
+        
+        // sfx
+        public const string
+            // player
+            DidCastBurst = "DidCastBurst",
+            DidCastPierceAndPull = "DidCastPierceAndPull",
+            DidCastConceal = "DidCastConceal",
+            DidCastPrey = "DidCastPrey",
+            DidCastMark = "DidCastMark",
+            DidCastRain = "DidCastRain",
+            DidConnectBurst = "DidConnectBurst",
+            DidConnectPierceAndPull = "DidConnectPierceAndPull",
+            DidLaunchPierceAndPull = "DidLaunchPierceAndPull",
+            DidConnectPrey = "DidConnectPrey",
+            DidConnectMark = "DidConnectMark",
+            DidApplyMark = "DidApplyMark",
+            DidTriggerMark = "DidTriggerMark",
+            DidLevelUp = "DidLevelUp",
+            // monsters
+            DidConnectCharge = "DidConnectCharge",
+            DidCastChainFlame = "DidCastChainFlame",
+            DidConnectChainFlame = "DidConnectChainFlame",
+            DidCastIceBolt = "DidCastIceBolt",
+            DidConnectIceBolt = "DidConnectIceBolt",
+            DidCastRoar = "DidCastRoar",
+            DidConnectRoar = "DidConnectRoar",
+            AttackDidCollide = "AttackDidCollide",
+            // UI
+            DidToggleShopTab = "DidToggleShopTab",
+            DidClickShopButton = "DidClickShopButton",
+            // Items
+            DidPickupHealth = "DidPickupHealth";
     }
 }

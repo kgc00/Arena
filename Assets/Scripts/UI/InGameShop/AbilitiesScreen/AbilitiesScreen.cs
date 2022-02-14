@@ -9,8 +9,12 @@ namespace UI.InGameShop.AbilitiesScreen {
     public class AbilitiesScreen : ShopScreen {
         private AbilityData _selectedAbilityData;
         private AbilityModifierShopData _selectedModifierData;
-        [SerializeField] private GameObject SkillInspectorWrapper;
+        private InGameShopManager _inGameShopManager;
+
         private void OnEnable() {
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
         }
 
@@ -22,11 +26,10 @@ namespace UI.InGameShop.AbilitiesScreen {
             if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
             _selectedAbilityData = toggleEvent.AbilityModel;
             _selectedModifierData = toggleEvent.AbilityModifierShopData;
-            ToggleRenderInformation(true);
         }
 
         public void HandlePurchase() {
-            var purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
+            var purchasingUnit = _inGameShopManager.PurchasingUnit;
             Debug.Assert(purchasingUnit != null);
             var (containsEnoughFunds, remainder) =
                 purchasingUnit.FundsComponent.ContainsEnoughFunds(_selectedModifierData.Cost);
@@ -42,16 +45,7 @@ namespace UI.InGameShop.AbilitiesScreen {
                 .Values
                 .First(x => x.Type == _selectedAbilityData.type)
                 .AddModifier(_selectedModifierData.Type);
-            this.PostNotification(NotificationType.PurchaseComplete);
-        }
-
-        private void ToggleRenderInformation(bool visibility) {
-            for (int i = 0; i < SkillInspectorWrapper.transform.childCount; i++) {
-                for (int j = 0; j < SkillInspectorWrapper.transform.GetChild(i).childCount; j++) {
-                    SkillInspectorWrapper.transform.GetChild(i).GetChild(j)
-                        .gameObject.SetActive(visibility);
-                }
-            }
+            this.PostNotification(NotificationType.PurchaseComplete, new PurchaseEvent(_selectedModifierData.Cost, _selectedModifierData.Type.ToString()));
         }
     }
 }

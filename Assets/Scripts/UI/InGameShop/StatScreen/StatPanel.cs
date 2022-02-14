@@ -4,6 +4,7 @@ using Data.Types;
 using TMPro;
 using Units;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace UI.InGameShop.StatScreen {
     public class StatPanel : MonoBehaviour {
@@ -16,6 +17,7 @@ namespace UI.InGameShop.StatScreen {
         private int _baseValue;
         private int _newValue;
         public bool _shouldUpdateTextInEditor;
+        private InGameShopManager _inGameShopManager;
 
         private void OnValidate() {
             if (_shouldUpdateTextInEditor) {
@@ -24,7 +26,10 @@ namespace UI.InGameShop.StatScreen {
         }
 
         private void OnEnable() {
-            var purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
+            var purchasingUnit = _inGameShopManager.PurchasingUnit;
             _statsComponent = purchasingUnit ? purchasingUnit.StatsComponent : null;
             if (_statsComponent != null) {
                 _baseValue = _statsComponent.StatFromEnum(StatType).Value;
@@ -54,6 +59,7 @@ namespace UI.InGameShop.StatScreen {
             _newValue -= StatType == StatType.MovementSpeed ? 5 : 1;
             StatScreen.IncrementSkillBank();
             UpdateText();
+            this.PostNotification(NotificationType.DidClickShopButton);
         }
 
         public void HandleIncrement() {
@@ -62,6 +68,7 @@ namespace UI.InGameShop.StatScreen {
             _newValue += StatType == StatType.MovementSpeed ? 5 : 1;
             StatScreen.DecrementSkillBank();
             UpdateText();
+            this.PostNotification(NotificationType.DidClickShopButton);
         }
 
         public void HandlePurchase(Unit purchasingUnit) {

@@ -398,6 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99db38d539150549afe946c94e12fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PurchasedItems: 
   unitType: 1
   UnitData: {fileID: 0}
 --- !u!54 &-1309334750830225620
@@ -473,7 +474,7 @@ MonoBehaviour:
   autoRepath:
     mode: 2
     interval: 0.5
-    sensitivity: 10
+    sensitivity: 3
     maximumInterval: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}

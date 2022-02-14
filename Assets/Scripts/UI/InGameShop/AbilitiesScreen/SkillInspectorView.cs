@@ -49,9 +49,5 @@ namespace UI.InGameShop.AbilitiesScreen {
                 _damageText.SetText(attackAbilityData.Damage.ToString());
             }
         }
-
-        public void HandlePurchase() {
-            // todo
-        }
     }
 }

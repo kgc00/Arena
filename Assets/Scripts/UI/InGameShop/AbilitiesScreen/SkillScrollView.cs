@@ -12,7 +12,12 @@ namespace UI.InGameShop.AbilitiesScreen {
         public static ToggleGroup ToggleGroup;
         [SerializeField] private List<SkillScrollViewPanel> SkillScrollViewPanels;
         [SerializeField] private ScrollRect _scrollRect;
+        private InGameShopManager _inGameShopManager;
+
         private void OnEnable() {
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
             SkillScrollViewPanels = new List<SkillScrollViewPanel>();
             ToggleGroup = _toggleGroup;
             UpdateSkillScrollView();
@@ -32,7 +37,7 @@ namespace UI.InGameShop.AbilitiesScreen {
         }
         
         void UpdateSkillScrollView() {
-            var player = InGameShopManager.Instance.PurchasingUnit;
+            var player = _inGameShopManager.PurchasingUnit;
             if (player == null) return;
 
             foreach (var panel in SkillScrollViewPanels) {

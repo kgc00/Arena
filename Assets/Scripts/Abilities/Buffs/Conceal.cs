@@ -63,7 +63,7 @@ namespace Abilities.Buffs {
             _seq.Restart();
 
             NotificationCenter.instance.AddObserver(BreakConcealment, NotificationType.AbilityDidActivate);
-
+            this.PostNotification(NotificationType.DidCastConceal);
             Owner.StatusComponent.AddStatus(StatusType.Hidden, Duration, 1);
 
             OnAbilityActivationFinished(Owner, this);

@@ -12,9 +12,13 @@ namespace UI.InGameShop.StatScreen {
     public class StatScreen : ShopScreen {
         [SerializeField] private TextMeshProUGUI _availableSkillPointsText;
         private Dictionary<StatType, StatPanel> _panels;
+        private InGameShopManager _inGameShopManager;
         public int SkillPointBank { get; private set; }
 
         private void OnEnable() {
+            if (_inGameShopManager == null) {
+                _inGameShopManager = FindObjectOfType<InGameShopManager>();
+            }
             var statPanels = GetComponentsInChildren<StatPanel>();
             if (statPanels != null) {
                 _panels = statPanels.ToDictionary(x => x.StatType);
@@ -27,7 +31,7 @@ namespace UI.InGameShop.StatScreen {
         }
 
         private void UpdateSkillBank() {
-            var purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
+            var purchasingUnit = _inGameShopManager.PurchasingUnit;
             Debug.Assert(purchasingUnit != null);
             SkillPointBank = purchasingUnit ? purchasingUnit.ExperienceComponent.SkillPoints : 0;
             _availableSkillPointsText.text = SkillPointBank.ToString();
@@ -43,7 +47,7 @@ namespace UI.InGameShop.StatScreen {
         }
 
         public void HandlePurchase() {
-            var purchasingUnit = InGameShopManager.Instance.PurchasingUnit;
+            var purchasingUnit = _inGameShopManager.PurchasingUnit;
             Debug.Assert(purchasingUnit != null);
             purchasingUnit.ExperienceComponent.SkillPoints = SkillPointBank;
             _panels.ForEach(x => x.Value.HandlePurchase(purchasingUnit));

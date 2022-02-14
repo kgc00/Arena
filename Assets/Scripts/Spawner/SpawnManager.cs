@@ -9,6 +9,7 @@ using Players;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Spawner {
     public class SpawnManager : MonoBehaviour {
@@ -80,7 +81,8 @@ namespace Spawner {
         private IEnumerator EnemySpawnCoroutine(float delay, GameObject spawnVfx, Func<Unit> spawnUnit) {
             yield return new WaitForSeconds(delay);
             Destroy(spawnVfx);
-            spawnUnit();
+            var unit = spawnUnit();
+            this.PostNotification(NotificationType.UnitDidSpawn, unit);
         }
 
         public void HandleWavesCleared() {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using Common;
+﻿using Common;
 using Common.Saving;
 using Data.Types;
 using UI.InGameShop;
@@ -13,7 +11,9 @@ namespace UI {
         public int EnemiesKilled;
         public int GoldSpent;
         public int TimeTaken => Mathf.RoundToInt(Time.time);
-        public int Score => (GoldSpent + EnemiesKilled) * TimeTaken;
+        private int ScoreWithoutPenalty => GoldSpent + EnemiesKilled * 100 + TimeTaken;
+        public int Score => Mathf.Max(_didDie ? ScoreWithoutPenalty / 2 : ScoreWithoutPenalty, 0);
+        private bool _didDie;
 
         void Start() {
             Unit.OnDeath += HandleUnitDeath;
@@ -25,7 +25,8 @@ namespace UI {
             this.RemoveObserver(HandlePurchaseComplete, NotificationType.PurchaseComplete);
         }
 
-        public void SaveScore() {
+        public void SaveScore(bool didDie = false) {
+            _didDie = didDie;
             var scoreData = new ScoreData {
                 score = Score, enemiesKilled = EnemiesKilled, timeTaken = TimeTaken, goldSpent = GoldSpent
             };

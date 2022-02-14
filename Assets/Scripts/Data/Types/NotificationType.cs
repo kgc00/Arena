@@ -69,5 +69,7 @@
             DidClickShopButton = "DidClickShopButton",
             // Items
             DidPickupHealth = "DidPickupHealth";
+
+        public static string UnitDidSpawn = "UnitDidSpawn";
     }
 }

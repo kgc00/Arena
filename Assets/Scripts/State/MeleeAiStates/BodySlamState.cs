@@ -37,6 +37,7 @@ namespace State.MeleeAiStates {
 
         public override UnitState HandleUpdate(InputValues input) {
             UnitState state = null;
+           if ( _playerTransform == null) return new IdleUnitState(Owner);
             var distanceToUnit = Vector3.Distance(Owner.transform.position, _playerTransform.position);
             var isWithinAttackRange = distanceToUnit <= Ability.Range;
             if (ShouldEnterAttack(ref state, isWithinAttackRange)) {

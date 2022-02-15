@@ -4,6 +4,7 @@ namespace Data.AbilityData {
     public static class MovementAbilityDataExtensions {
         public static MovementAttackAbilityData CreateInstance(this MovementAttackAbilityData data) {
             var instance = ScriptableObject.CreateInstance<MovementAttackAbilityData>();
+            instance.unlocked = data.unlocked;
             instance.cooldown = data.cooldown;
             instance.description = data.description;
             instance.duration = data.duration;

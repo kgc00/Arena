@@ -4,6 +4,7 @@ namespace Data.AbilityData {
     public static class BuffAbilityDataExtensions {
         public static BuffAbilityData CreateInstance(this BuffAbilityData data) {
             var instance = ScriptableObject.CreateInstance<BuffAbilityData>();
+            instance.unlocked = data.unlocked;
             instance.cooldown = data.cooldown;
             instance.description = data.description;
             instance.duration = data.duration;

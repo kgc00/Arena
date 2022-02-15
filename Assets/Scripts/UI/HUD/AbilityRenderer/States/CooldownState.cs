@@ -1,15 +1,14 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using UnityEngine;
 
-namespace UI.HUD {
+namespace UI.HUD.AbilityRenderer.States {
     public class CooldownState :State {
         private readonly int _verticalOffset;
         private CanvasGroup _canvasGroup;
 
-        public CooldownState(AbilityRenderer.AbilityRenderer abilityRenderer) : base(abilityRenderer) {
+        public CooldownState(HUD.AbilityRenderer.AbilityRenderer abilityRenderer) : base(abilityRenderer) {
             _verticalOffset = abilityRenderer.cooldownVerticalOffset;
-            _canvasGroup = abilityRenderer._canvasGroup;
+            _canvasGroup = abilityRenderer._keyAndIconCanvasGroup;
         }
 
         public override void Enter() {

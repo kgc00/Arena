@@ -1,11 +1,11 @@
-﻿namespace UI.HUD {
+﻿namespace UI.HUD.AbilityRenderer.States {
     public abstract class State {
-        protected AbilityRenderer.AbilityRenderer abilityRenderer;
+        protected HUD.AbilityRenderer.AbilityRenderer abilityRenderer;
         public virtual void Enter () { }
         public virtual void Exit () { }
         public virtual State HandleUpdate () { return null; }
 
-        public State(AbilityRenderer.AbilityRenderer AbilityRenderer) {
+        public State(HUD.AbilityRenderer.AbilityRenderer AbilityRenderer) {
             abilityRenderer = AbilityRenderer;
         }
     }

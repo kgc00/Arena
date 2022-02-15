@@ -74,7 +74,7 @@ namespace State.PlayerStates {
         private UnitIntent HandleSkillActivation(Vector3 targetLocation, ButtonType buttonType) {
             Owner.AbilityComponent.equippedAbilitiesByButton.TryGetValue(buttonType, out var ability);
 
-            if (ability == null || ability.Cooldown.IsOnCooldown)
+            if (ability == null || ability.Cooldown.IsOnCooldown || !ability.Unlocked)
                 return new UnitIntent(null, new TargetingData(TargetingBehavior.CursorLocation, Vector3.zero), Owner);
 
             return new UnitIntent(ability, new TargetingData(TargetingBehavior.CursorLocation, targetLocation), Owner);

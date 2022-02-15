@@ -640,6 +640,7 @@ GameObject:
   - component: {fileID: 9154541733503287097}
   - component: {fileID: 6379050007727967747}
   - component: {fileID: 5162330423311537529}
+  - component: {fileID: 4984640162523738897}
   m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
@@ -694,7 +695,8 @@ MonoBehaviour:
   iconRadialFillGo: {fileID: 3874016884774041802}
   VerticalLayoutGroup: {fileID: 0}
   cooldownVerticalOffset: 30
-  _canvasGroup: {fileID: 2039507329226127171}
+  _keyAndIconCanvasGroup: {fileID: 2039507329226127171}
+  _overallCanvasGroup: {fileID: 4984640162523738897}
 --- !u!114 &5162330423311537529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,6 +723,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &4984640162523738897
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598068905952051679}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8624246264245755700
 GameObject:
   m_ObjectHideFlags: 0

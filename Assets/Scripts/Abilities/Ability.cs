@@ -19,6 +19,7 @@ namespace Abilities {
         protected StatsComponent StatsComponent;
         public AbilityType Type { get; protected set; }
         public AbilityData Model { get; private set; }
+        public bool Unlocked { get;  protected set; }
         public float EnergyCost { get; protected set; }
         public string Description { get; protected set; }
         public string DisplayName { get; protected set; }
@@ -52,6 +53,7 @@ namespace Abilities {
             Owner = owner;
             Model = data;
             StatsComponent = statsComponent;
+            Unlocked = data.unlocked;
             Range = data.range;
             Force = data.force;
             Icon = data.icon;
@@ -78,7 +80,7 @@ namespace Abilities {
             Initialized = true;
             return this;
         }
-
+        
         protected void ExecuteOnAbilityFinished() {
             Cooldown.SetOnCooldown();
             Owner.AbilityComponent.SetAbilityComponentOnCooldown();

@@ -20,7 +20,7 @@ using Utils.NotificationCenter;
 
 namespace Units
 {
-    public partial class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser {
+    public sealed class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser {
         public List<ItemType> PurchasedItems;
         public static Action<Unit> OnDeath = delegate {  };
         public List<Renderer> Renderers { get; protected set; }
@@ -152,7 +152,7 @@ namespace Units
             Destroy(gameObject);
         }
 
-        public virtual void OnLevelUp() {
+        public void OnLevelUp() {
             var spawnPos = new Vector3(transform.position.x, 0, transform.position.z);
             MonoHelper.SpawnVfx(VfxType.LevelUp, spawnPos).transform.SetParent(transform);
             this.PostNotification(NotificationType.DidLevelUp);

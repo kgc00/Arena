@@ -2,6 +2,7 @@
 using Abilities;
 using Data.Types;
 using TMPro;
+using UI.HUD.AbilityRenderer.States;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +14,14 @@ namespace UI.HUD.AbilityRenderer {
        [SerializeField] public GameObject iconRadialFillGo;
        [HideInInspector]public VerticalLayoutGroup VerticalLayoutGroup;
        public int cooldownVerticalOffset;
-       public CanvasGroup _canvasGroup;
+       public CanvasGroup _keyAndIconCanvasGroup;
+       public CanvasGroup _overallCanvasGroup;
        public TextMeshProUGUI key {get; set; }
        public TextMeshProUGUI timer {get; set; }
        public Image icon { get; set; }
        public Image iconRadialFill { get; set; }
        public Ability ability { get; private set; }
-       private State state;
+       private States.State state;
         public AbilityRenderer Initialize(KeyValuePair<ButtonType, Ability> kvp) {
             VerticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
             key = keyGo.GetComponent<TextMeshProUGUI>();
@@ -32,8 +34,14 @@ namespace UI.HUD.AbilityRenderer {
             icon.sprite = kvp.Value.Icon;
             iconRadialFill.sprite = kvp.Value.Icon;
             
-            state = new IdleState(this);
+            if (ability.Unlocked) {
+                state = new IdleState(this);
+            }
+            else {
+                state = new LockedState(this);
+            }
             
+            state.Enter();
             return this;
         }
 

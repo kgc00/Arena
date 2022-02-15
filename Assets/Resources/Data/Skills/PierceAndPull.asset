@@ -21,7 +21,7 @@ MonoBehaviour:
   duration: 0.5
   energyCost: 0
   force: -185
-  icon: {fileID: 21300000, guid: 29076f0ae297d3c428eb9f5b479115e9, type: 3}
+  icon: {fileID: 21300000, guid: b4e3d6066ca49c84b9042ec3abce8e7d, type: 3}
   indicatorType: 10
   projectileSpeed: 20
   range: 5

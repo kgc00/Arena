@@ -34,7 +34,7 @@ namespace UI.HUD {
             
             foreach (var kvp in equippedAbilities) {
                 _ = Instantiate(AbilityPanel, gameObject.transform)
-                    .GetComponent<AbilityRenderer>()
+                    .GetComponent<AbilityRenderer.AbilityRenderer>()
                     .Initialize(kvp);
             }
         }

@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Abilities;
-using Controls;
 using Data.Types;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.HUD {
+namespace UI.HUD.AbilityRenderer {
     public class AbilityRenderer : MonoBehaviour {
        [SerializeField] public GameObject timerGo;
        [SerializeField] public GameObject keyGo;
        [SerializeField] public GameObject iconGo;
        [SerializeField] public GameObject iconRadialFillGo;
        [HideInInspector]public VerticalLayoutGroup VerticalLayoutGroup;
+       public int cooldownVerticalOffset;
+       public CanvasGroup _canvasGroup;
        public TextMeshProUGUI key {get; set; }
        public TextMeshProUGUI timer {get; set; }
        public Image icon { get; set; }

@@ -70,9 +70,10 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
 
             if (panel == null) return;
             SkillScrollViewPanels.Remove(oldPanel);
-            Destroy(oldPanel);
+            Destroy(oldPanel.gameObject);
             SkillScrollViewPanels.Insert(index, panel);
             panel.transform.SetSiblingIndex(index);
+            panel.InspectAbility();
         }
 
         void UpdateSkillScrollView() {

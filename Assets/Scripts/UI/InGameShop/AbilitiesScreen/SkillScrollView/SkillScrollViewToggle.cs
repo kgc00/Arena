@@ -18,10 +18,18 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
 
         private void OnEnable() {
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
+            this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
+        }
+
+        private void HandleLockedSkillInspected(object sender, object args) {
+            if (_toggle.isOn) {
+                _toggle.isOn = false;
+            }
         }
 
         private void OnDisable() {
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
+            this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
         }
 
         public void HandleToggle(bool toggleValue) {

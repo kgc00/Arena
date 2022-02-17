@@ -19,7 +19,7 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
         [SerializeField] private TextMeshProUGUI _cooldownText;
         [SerializeField] private TextMeshProUGUI _damageText;
 
-        
+        [SerializeField] private GameObject _enhancesSkillText;        
         [SerializeField] private Material canPuchaseCostDifferenceMaterial;
         [SerializeField] private Material cannotPuchaseCostDifferenceMaterial;
         [SerializeField] private GameObject _costView;
@@ -32,21 +32,15 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
                 _inGameShopManager = FindObjectOfType<InGameShopManager>();
             }
             
-            this.AddObserver(HandleSkillScrollViewToggleToggledOn,
-                NotificationType.SkillScrollViewToggleToggledOn);
-            
-            this.AddObserver(HandleLockedSkillInspected,
-                NotificationType.LockedSkillInspected);
+            this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
+            this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
         
 
         private void OnDisable() {
-            this.RemoveObserver(HandleSkillScrollViewToggleToggledOn,
-                NotificationType.SkillScrollViewToggleToggledOn);
-            
-            this.RemoveObserver(HandleLockedSkillInspected,
-                NotificationType.LockedSkillInspected);
+            this.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
+            this.RemoveObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 
@@ -58,6 +52,7 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
 
         private void HandleLockedSkillInspected(object sender, object args) {
             if (args is LockedSkillInspectedEvent lockedSkillInspectedEvent) {
+                _enhancesSkillText.SetActive(false);
                 UpdateAbilityInspectorShopData(lockedSkillInspectedEvent.Model);
                 UpdateCostText(lockedSkillInspectedEvent.Model.unlocked);
             }
@@ -66,6 +61,7 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
         void HandleSkillScrollViewToggleToggledOn(object sender, object args) {
             if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
 
+            _enhancesSkillText.SetActive(true);
             UpdateAbilityInspectorShopData(toggleEvent.AbilityModel);
             UpdateCostText(true);
         }
@@ -99,6 +95,7 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
                     _costDifferenceText.fontMaterial = cannotPuchaseCostDifferenceMaterial;
                     _costDifferenceText.SetText($"(-{operation.remainder})");
                 }
+                _costText.SetText(AbilityData.unlockCost.ToString());
                 _costView.SetActive(true);
             }
             else {

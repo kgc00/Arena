@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common;
 using Data.Types;
+using TMPro;
 using Units;
 using UnityEngine;
 using Utils.NotificationCenter;
@@ -12,6 +13,7 @@ namespace UI.InGameShop {
         [SerializeField] private ShopScreen AbilityWindow;
         [SerializeField] private ShopScreen StatsWindow;
         [SerializeField] private ShopScreen ItemsWindow;
+        [SerializeField] private TextMeshProUGUI _currentGoldText;
         private Dictionary<WindowType, ShopScreen> _windows;
         private InGameShopManager _inGameShopManager;
 
@@ -24,7 +26,9 @@ namespace UI.InGameShop {
                 {WindowType.Stats, StatsWindow},
                 {WindowType.Items, ItemsWindow},
             };
+            _currentGoldText.SetText(_inGameShopManager.PurchasingUnit.FundsComponent.Balance.ToString());
             _inGameShopManager.OnShopVisibilityToggled += HandleVisibilityToggled;
+            this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
         
         private void Start() {
@@ -36,6 +40,11 @@ namespace UI.InGameShop {
 
         private void OnDisable() {
             _inGameShopManager.OnShopVisibilityToggled -= HandleVisibilityToggled;
+            this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
+        }
+
+        private void HandlePurchase(object sender, object args) {
+            _currentGoldText.SetText(_inGameShopManager.PurchasingUnit.FundsComponent.Balance.ToString());
         }
 
         public void ToggleActiveWindow(string typeAsString) {

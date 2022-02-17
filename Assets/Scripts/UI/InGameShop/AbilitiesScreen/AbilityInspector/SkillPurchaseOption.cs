@@ -12,13 +12,21 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
             if (_inGameShopManager == null) {
                 _inGameShopManager = FindObjectOfType<InGameShopManager>();
             }
+            this.AddObserver(HandleLockedSkillScrollViewInspected, NotificationType.LockedSkillInspected);
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 
         private void OnDisable() {
+            this.AddObserver(HandleLockedSkillScrollViewInspected, NotificationType.LockedSkillInspected);
             this.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
+        }
+
+        private void HandleLockedSkillScrollViewInspected(object sender, object args) {
+            if (args is LockedSkillInspectedEvent lockedSkillInspectedEvent) {
+                button.SetActive(!lockedSkillInspectedEvent.Model.unlocked);
+            }
         }
 
         private void HandlePurchase(object sender, object args) {

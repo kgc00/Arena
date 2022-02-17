@@ -1,4 +1,6 @@
+using System;
 using Abilities.Modifiers.AbilityModifierShopData;
+using Data.Modifiers;
 using Data.Types;
 using TMPro;
 using UI.InGameShop.AbilitiesScreen.SkillScrollView;
@@ -26,13 +28,10 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
             if (_inGameShopManager == null) {
                 _inGameShopManager = FindObjectOfType<InGameShopManager>();
             }
+
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
             this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
-        }
-
-        private void HandleLockedSkillInspected(object sender, object args) {
-            graphicalElements.SetActive(false);
         }
 
         private void OnDisable() {
@@ -44,8 +43,8 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
         private void HandleSkillScrollViewToggleToggledOn(object sender, object args) {
             if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
 
-            graphicalElements.SetActive(true);
             UpdateAbilityModifierShopData(toggleEvent.AbilityModifierShopData, toggleEvent.IsPurchased);
+            graphicalElements.SetActive(true);
         }
 
         void UpdateAbilityModifierShopData(AbilityModifierShopData abilityModifierShopData, bool isPurchased) {
@@ -58,6 +57,9 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
             UpdateCostText(isPurchased);
         }
 
+        private void HandleLockedSkillInspected(object sender, object args) {
+            graphicalElements.SetActive(false);
+        }
 
         private void UpdateCostText(bool isPurchased) {
             if (!isPurchased) {
@@ -72,6 +74,7 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
                     _costDifferenceText.fontMaterial = cannotPuchaseCostDifferenceMaterial;
                     _costDifferenceText.SetText($"(-{operation.remainder})");
                 }
+
                 _hasPurchasedText.SetActive(false);
                 _canPurchaseText.SetActive(true);
             }
@@ -82,7 +85,12 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
         }
 
         public void HandlePurchase(object sender, object args) {
-            UpdateCostText(true);
+            if (!(args is PurchaseEvent purchaseEvent)) return;
+            if (purchaseEvent.Type != PurchaseEvent.PurchaseType.Modifier) return;
+            if (!Enum.TryParse(purchaseEvent.Name, out AbilityModifierType type)) return;
+            if (type == AbilityModifierShopData.Type) {
+                UpdateCostText(true);
+            }
         }
     }
 }

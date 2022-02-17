@@ -17,6 +17,10 @@ namespace UI.Targeting {
             _size = size;
             image.size = Vector3.one * (size * 2);
             _targetingData = targetingData;
+            if (_startTransform == null) _startTransform = transform.root;
+            _endPos = _targetingData._behavior == TargetingBehavior.CursorLocation
+                ? MouseHelper.GetWorldPosition()
+                : _targetingData._location;
         }
 
         private void Update() {

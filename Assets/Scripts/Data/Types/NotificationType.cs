@@ -33,7 +33,8 @@
             SkillScrollViewToggleToggledOn = "SkillScrollViewToggleToggledOn",
             SkillScrollViewToggleToggledOff = "SkillScrollViewToggleToggledOff",
             InsufficientFundsForPurchase = "InsufficientFundsForPurchase",
-            PurchaseComplete = "PurchaseComplete";
+            PurchaseComplete = "PurchaseComplete",
+            LockedSkillInspected = "LockedSkillInspected";
 
         public const string
             ChargeDidImpactWall = "ChargeDidImpactWall";

@@ -1,7 +1,7 @@
 ﻿using Abilities.Modifiers.AbilityModifierShopData;
 using Data.AbilityData;
 
-namespace UI.InGameShop.AbilitiesScreen {
+namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
     public class SkillScrollViewToggleEvent {
         public readonly AbilityData AbilityModel;
         public readonly AbilityModifierShopData AbilityModifierShopData;

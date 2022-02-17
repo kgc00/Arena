@@ -1,41 +1,48 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Abilities;
 using Data.Types;
 using Players;
+using Sirenix.Utilities;
+using UI.InGameShop;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace UI.HUD {
     public class AbilityPanelRenderer : MonoBehaviour {
         
-        private Player localPlayer;
+        private Player _localPlayer;
         [SerializeField] private GameObject AbilityPanel;
-        
-        private void OnEnable() {
+        private List<AbilityRenderer.AbilityRenderer> _renderers;
+
+        private void Start() {
             StartCoroutine(Initialize());
         }
 
         IEnumerator Initialize() {
-            localPlayer = FindObjectsOfType<Player>()?.Where(x => x.ControlType == ControlType.Local).FirstOrDefault();
+            _renderers = new List<AbilityRenderer.AbilityRenderer>();
+            _localPlayer = FindObjectsOfType<Player>()?.Where(x => x.ControlType == ControlType.Local).FirstOrDefault();
             
             yield return new WaitUntil(() => {
-                if (localPlayer == null) return false;
-                if (localPlayer.Units.Count == 0) return false;
+                if (_localPlayer == null) return false;
+                if (_localPlayer.Units.Count == 0) return false;
 
-                var ac = localPlayer.Units[0].AbilityComponent;
+                var ac = _localPlayer.Units[0].AbilityComponent;
                 if(ac == null) return false;
-                if (ac.State == AbilityComponentState.Idle) return true;
-                
-                return false;
+                return ac.State == AbilityComponentState.Idle;
             });
-            
-            var abilityComponent = localPlayer.Units[0].AbilityComponent;
+
+            Debug.Assert(_localPlayer != null, nameof(_localPlayer) + " != null");
+            var abilityComponent = _localPlayer.Units[0].AbilityComponent;
             var equippedAbilities = abilityComponent.equippedAbilitiesByButton;
             
             foreach (var kvp in equippedAbilities) {
-                _ = Instantiate(AbilityPanel, gameObject.transform)
+               var renderer = Instantiate(AbilityPanel, gameObject.transform)
                     .GetComponent<AbilityRenderer.AbilityRenderer>()
                     .Initialize(kvp);
+               _renderers.Add(renderer);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.HUD.AbilityRenderer.States {
     public class LockedState : State {
@@ -11,19 +12,21 @@ namespace UI.HUD.AbilityRenderer.States {
         }
 
         public override State HandleUpdate() {
-            return abilityRenderer.ability.Unlocked ? new IdleState(abilityRenderer) : null;
+            if (abilityRenderer.ability.Unlocked)
+                return new IdleState(abilityRenderer);
+            else
+                return null;
         }
 
         public override void Enter() {
-            base.Enter();
             abilityRenderer.VerticalLayoutGroup.padding.top = _verticalOffset;
             _overallCanvasGroup.alpha = 0.5f;
         }
 
         public override void Exit() {
-            base.Exit();
             abilityRenderer.VerticalLayoutGroup.padding.top = 0;
             _overallCanvasGroup.alpha = 1f;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(abilityRenderer._RectTransform);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Abilities {
         protected StatsComponent StatsComponent;
         public AbilityType Type { get; protected set; }
         public AbilityData Model { get; private set; }
+        public int UnlockCost { get; protected set; }
         public bool Unlocked { get;  protected set; }
         public float EnergyCost { get; protected set; }
         public string Description { get; protected set; }
@@ -53,6 +54,7 @@ namespace Abilities {
             Owner = owner;
             Model = data;
             StatsComponent = statsComponent;
+            UnlockCost = data.unlockCost;
             Unlocked = data.unlocked;
             Range = data.range;
             Force = data.force;

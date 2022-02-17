@@ -55,12 +55,12 @@ namespace UI.Targeting {
             if (!(eventData is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(true);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) {
-                _circle.gameObject.SetActive(true);
                 _circle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
+                _circle.gameObject.SetActive(true);
             }
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) {
-                _rectangle.gameObject.SetActive(true);
                 _rectangle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
+                _rectangle.gameObject.SetActive(true);
             }
         }
 

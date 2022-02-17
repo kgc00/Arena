@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils.NotificationCenter;
 
-namespace UI.InGameShop.AbilitiesScreen {
+namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
     public class SkillScrollViewToggle : MonoBehaviour {
         public AbilityData AbilityModel { get; private set; }
         public AbilityModifierShopData ModifierShopData { get; private set; }

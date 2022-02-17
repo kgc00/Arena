@@ -8,6 +8,7 @@ namespace Data.AbilityData {
     [CreateAssetMenu(fileName = "Ability Data", menuName = "ScriptableObjects/Abilities/Ability Data", order = 0),
      Serializable]
     public class AbilityData : ScriptableObject {
+        [SerializeField] public int unlockCost; // price of unlocking the ability in the shop
         [SerializeField] public bool unlocked; // if toggled off, ability is unusable
         [SerializeField] public int areaOfEffectRadius; // 0 (none), 100f, 200f
         [SerializeField] public float cooldown; // time between uses

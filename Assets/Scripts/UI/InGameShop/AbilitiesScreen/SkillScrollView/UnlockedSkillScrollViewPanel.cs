@@ -4,13 +4,12 @@ using Abilities;
 using TMPro;
 using UnityEngine;
 
-namespace UI.InGameShop.AbilitiesScreen {
-    public class SkillScrollViewPanel : MonoBehaviour {
+namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
+    public class UnlockedSkillScrollViewPanel : SkillScrollViewPanel {
         [SerializeField] private TextMeshProUGUI skillName;
         [SerializeField] private SkillScrollViewToggle togglePrefab;
         [SerializeField] private GameObject toggleSelections;
         private List<SkillScrollViewToggle> _toggles;
-        public Ability associatedAbility { get; private set; }
 
         private void OnEnable() {
             _toggles = new List<SkillScrollViewToggle>();
@@ -23,17 +22,17 @@ namespace UI.InGameShop.AbilitiesScreen {
             _toggles = null;
         }
 
-        public void InspectAbility() {
-            if (associatedAbility == null) return;
+        public override void InspectAbility() {
+            if (AssociatedAbility == null) return;
             _toggles[0]._toggle.isOn = true;
         }
 
-        public void UpdateSkillScrollViewPanel(Ability ability) {
+        public override void UpdateSkillScrollViewPanel(Ability ability) {
             foreach (var toggle in _toggles) {
                 Destroy(toggle);
             }
             _toggles.Clear();
-            associatedAbility = ability;
+            AssociatedAbility = ability;
             skillName.SetText(ability.DisplayName);
             ability.EquipableModifiers.ForEach(equipableModifierType => {
                 var isPurchased = ability.Modifiers

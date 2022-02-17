@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.HUD.AbilityRenderer {
+    [RequireComponent(typeof(RectTransform))]
     public class AbilityRenderer : MonoBehaviour {
        [SerializeField] public GameObject timerGo;
        [SerializeField] public GameObject keyGo;
@@ -22,7 +23,9 @@ namespace UI.HUD.AbilityRenderer {
        public Image iconRadialFill { get; set; }
        public Ability ability { get; private set; }
        private States.State state;
+       public RectTransform _RectTransform;
         public AbilityRenderer Initialize(KeyValuePair<ButtonType, Ability> kvp) {
+            _RectTransform = GetComponent<RectTransform>();
             VerticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
             key = keyGo.GetComponent<TextMeshProUGUI>();
             timer = timerGo.GetComponent<TextMeshProUGUI>();
@@ -40,7 +43,7 @@ namespace UI.HUD.AbilityRenderer {
             else {
                 state = new LockedState(this);
             }
-            
+
             state.Enter();
             return this;
         }
@@ -60,6 +63,12 @@ namespace UI.HUD.AbilityRenderer {
             if (newState == null) return;
             state.Exit();
             state = newState;
+            state.Enter();
+        }
+
+        public void SetIdle() {
+            state.Exit();
+            state = new IdleState(this);
             state.Enter();
         }
     }

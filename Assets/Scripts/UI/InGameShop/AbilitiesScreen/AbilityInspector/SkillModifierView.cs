@@ -1,11 +1,12 @@
 using Abilities.Modifiers.AbilityModifierShopData;
 using Data.Types;
 using TMPro;
+using UI.InGameShop.AbilitiesScreen.SkillScrollView;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils.NotificationCenter;
 
-namespace UI.InGameShop.AbilitiesScreen {
+namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
     public class SkillModifierView : MonoBehaviour {
         public AbilityModifierShopData AbilityModifierShopData;
 
@@ -19,6 +20,7 @@ namespace UI.InGameShop.AbilitiesScreen {
         [SerializeField] private GameObject _canPurchaseText;
         [SerializeField] private GameObject _hasPurchasedText;
         private InGameShopManager _inGameShopManager;
+        [SerializeField] private GameObject graphicalElements;
 
         private void OnEnable() {
             if (_inGameShopManager == null) {
@@ -26,16 +28,23 @@ namespace UI.InGameShop.AbilitiesScreen {
             }
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
+            this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
+        }
+
+        private void HandleLockedSkillInspected(object sender, object args) {
+            graphicalElements.SetActive(false);
         }
 
         private void OnDisable() {
             this.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
+            this.RemoveObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
         }
 
         private void HandleSkillScrollViewToggleToggledOn(object sender, object args) {
             if (!(args is SkillScrollViewToggleEvent toggleEvent)) return;
 
+            graphicalElements.SetActive(true);
             UpdateAbilityModifierShopData(toggleEvent.AbilityModifierShopData, toggleEvent.IsPurchased);
         }
 

@@ -25,7 +25,7 @@ namespace UI.InGameShop.ItemScreen {
             }
             _purchasingUnit.FundsComponent.SetBalance(remainder);
             _purchasingUnit.PurchasedItems.Add(model.ItemType);
-            this.PostNotification(NotificationType.PurchaseComplete, new PurchaseEvent(model.Cost, model.ItemType.ToString()));
+            this.PostNotification(NotificationType.PurchaseComplete, new PurchaseEvent(model.Cost, model.ItemType.ToString(), PurchaseEvent.PurchaseType.Item));
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Data.Types;
+using UI.InGameShop.AbilitiesScreen.SkillScrollView;
 using UnityEngine;
 using Utils.NotificationCenter;
 
-namespace UI.InGameShop.AbilitiesScreen {
+namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
     public class SkillPurchaseOption : MonoBehaviour {
         [SerializeField] private GameObject button;
         private InGameShopManager _inGameShopManager;

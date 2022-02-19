@@ -7,6 +7,7 @@ using Components;
 using Data.AbilityData;
 using Data.Types;
 using JetBrains.Annotations;
+using Sirenix.Utilities;
 using Units;
 using UnityEngine;
 
@@ -41,23 +42,8 @@ namespace Abilities
             return this;
         }
 
-        public void UpdateModel(List<AbilityData> abilities) {
-            // TODO - confirm global ability modifiers should be reset / not reset
-            
-            // component state can be non-idle if a level up occurs while an ability is firing
-            // may need to set state to idle manually
-            Debug.Assert(Owner != null);
-            
-            GlobalAbilityModifiers = new List<AbilityModifier>();
-
-            if (equippedAbilitiesByType == null) equippedAbilitiesByType = new Dictionary<AbilityType, Ability>();
-            equippedAbilitiesByButton = Utils.AbilityFactory.CreateAbilitiesFromData(abilities, Owner, _statsComponent);
-            CreateEquippedAbilitiesByType(equippedAbilitiesByButton);
-            
-            if (equippedAbilitiesByButton.Count > 0 && equippedAbilitiesByButton.Values.Any((a) => a is AttackAbility))
-                longestRangeAbility = equippedAbilitiesByButton.Where(a => a.Value is AttackAbility)
-                    .OrderByDescending(a => a.Value.Range)
-                    .First().Value;
+        public void ReinitializeAbilities() {
+            equippedAbilitiesByType.ForEach(x => x.Value.ResetInstanceValuesExcludingSpentModifiers());
         }
         
         public Coroutine Activate(ref Ability ability, Vector3 targetLocation) {

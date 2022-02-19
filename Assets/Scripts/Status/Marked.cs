@@ -53,7 +53,7 @@ namespace Status {
         public override void TriggerEffect(Ability catalyst) {
             if (catalyst is AttackAbility attackAbility) {
                 var hasExplosionUpgrade = catalyst.Owner.PurchasedItems.Contains(ItemType.ExplosiveMark);
-                var totalDamage = attackAbility.Damage + Amount;
+                var totalDamage = attackAbility.Damage + (Amount * 5);
                 Owner.HealthComponent.DamageOwner(totalDamage);
                 if (Owner.HealthComponent.CurrentHp - totalDamage <= 0 && hasExplosionUpgrade) {
                     _mostRecentCatalyst = attackAbility;

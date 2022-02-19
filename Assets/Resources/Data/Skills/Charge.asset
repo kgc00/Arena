@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d70541e314148a4f550f0bd451de7, type: 3}
   m_Name: Charge
   m_EditorClassIdentifier: 
+  unlockCost: 0
+  unlocked: 0
   areaOfEffectRadius: 0
   cooldown: 6
+  minimumCooldown: 0
   description: 
   displayName: Charge
   duration: 3
@@ -28,5 +31,5 @@ MonoBehaviour:
   modifiers: 
   equipableModifiers: 
   affectedFactions: 0000000001000000
-  damage: 1
+  damage: 10
   movementSpeedModifier: 300

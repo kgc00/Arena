@@ -57,7 +57,7 @@ namespace UI.InGameShop.AbilitiesScreen {
                     .equippedAbilitiesByButton
                     .Values
                     .First(x => x.Type == _selectedAbilityData.type)
-                    .AddModifier(_selectedModifierData.Type);
+                    .AddModifier(_selectedModifierData.Type); // todo fix this so it is persistent on levevl up
                 purchaseEvent = new PurchaseEvent(_selectedModifierData.Cost, _selectedModifierData.Type.ToString(), PurchaseEvent.PurchaseType.Modifier);
             }
             else {

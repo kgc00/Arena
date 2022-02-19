@@ -20,8 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b7da0981a89e444594ed4cab28f8330, type: 2}
   - {fileID: 11400000, guid: ed75c5b1d3af50d4c837283e531b1169, type: 2}
   health:
-    maxHp: 3
-    invulnerable: 0
+    maxHp: 30
+    invulnerable: 1
     currentHp: 3
   experience:
     currentExp: 0

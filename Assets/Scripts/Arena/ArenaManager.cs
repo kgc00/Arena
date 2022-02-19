@@ -50,7 +50,7 @@ namespace Arena {
                 _arenaData = FindObjectOfType<ArenaData>();
             }
 
-            var wasFinalHorde = _arenaData.EnemyWaves.Count - 1 <= _arenaData.CurIndex;
+            var wasFinalHorde = _arenaData.EnemyWaves.Count - 1 == _arenaData.CurIndex;
             if (wasFinalHorde) {
                 if (_scoreKeeper == null) {
                     _scoreKeeper = FindObjectOfType<ScoreKeeper>();
@@ -74,7 +74,7 @@ namespace Arena {
                 yield return new WaitUntil(() => !_inGameShopManager.isShopVisible);
                 _playerController.EnablePlayerSchema();
                 _arenaData.IncrementWaveModel();
-                _spawnManager.StartSpawn();
+                _spawnManager.StartSpawn(_arenaData.CurrentWaveModel[ControlType.Ai]);
             }
         }
     }

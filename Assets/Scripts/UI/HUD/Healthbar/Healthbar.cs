@@ -74,7 +74,7 @@ namespace UI.HUD.Healthbar {
         void UpdateHealthValue() {
             _healthFill.fillAmount = _unit.HealthComponent.CurrentHp / _unit.HealthComponent.MaxHp;
             _healthText.SetText(
-                $"{_unit.HealthComponent.CurrentHp.ToString(CultureInfo.InvariantCulture)}/{_unit.HealthComponent.MaxHp.ToString(CultureInfo.InvariantCulture)}");
+                $"{Mathf.RoundToInt(_unit.HealthComponent.CurrentHp)}/{Mathf.RoundToInt(_unit.HealthComponent.MaxHp)}");
         }
     }
 }

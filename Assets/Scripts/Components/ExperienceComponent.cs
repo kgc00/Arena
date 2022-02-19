@@ -15,7 +15,7 @@ namespace Components
         public int Level { get; private set; }
         public int SkillPoints;
 
-        private const float EXP_CURVE_MODIFIER = 2.75f;
+        private const float EXP_CURVE_MODIFIER = 1f;
         private const int SKILL_POINTS_PER_LEVEL = 1;
         private const int MAX_LEVEL = 50;
         // https://www.transum.org/Maths/Activity/Graph/Desmos.asp

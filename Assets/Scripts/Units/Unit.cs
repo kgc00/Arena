@@ -119,8 +119,8 @@ namespace Units {
         public Unit UpdateComponents() {
             Debug.Assert(Initialized);
             // stats component not updated to keep gains from level ups
-            AbilityComponent.UpdateModel(UnitData.abilities);
-            HealthComponent.UpdateModel(UnitData.health, StatsComponent);
+            AbilityComponent.ReinitializeAbilities();
+            HealthComponent.ReinitializeAbilities();
             this.PostNotification(NotificationType.ComponentsDidUpdate);
             return this;
         }

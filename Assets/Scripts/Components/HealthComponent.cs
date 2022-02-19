@@ -17,20 +17,22 @@ namespace Components
         public float CurrentHp { get; private set; }
         public bool IsDead;
         public bool Invulnerable { get; private set; }
+        private StatsComponent _statsComponent;
 
         public HealthComponent Initialize(Unit owner, HealthData healthData, StatsComponent statsComponent) {
             Owner = owner;
             MaxHp = StatHelpers.GetMaxHealth(healthData.maxHp, statsComponent.Stats);
             CurrentHp = MaxHp;
+            _statsComponent = statsComponent;
 
             Invulnerable = healthData.invulnerable;
             
             return this;
         }
 
-        public void UpdateModel(HealthData data, StatsComponent statsComponent) {
+        public void ReinitializeAbilities() {
             var healthPercentage = Math.Min(CurrentHp / MaxHp, 1);
-            MaxHp = StatHelpers.GetMaxHealth(data.maxHp, statsComponent.Stats);
+            MaxHp = StatHelpers.GetMaxHealth(MaxHp, _statsComponent.Stats);
             CurrentHp = MaxHp * healthPercentage;
         }
 

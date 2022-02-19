@@ -34,26 +34,21 @@ namespace Spawner {
         [SerializeField] private SpawnerData model;
 
         #endregion
+
         private Coroutine _spawnCrt;
         private ArenaManager _arenaManager;
+        private Coroutine _checkWavesClearedCRT;
 
         private void OnEnable() {
-            Unit.OnDeath += HandleUnitDeath;
+            if (owningPlayer.ControlType == ControlType.Ai) {
+                Unit.OnDeath += HandleUnitDeath;
+            }
         }
 
         private void OnDisable() {
-            Unit.OnDeath -= HandleUnitDeath;
-        }
-
-        private void HandleUnitDeath(Unit unit) {
-            if (unit.Owner.ControlType != ControlType.Ai) return;
-            StartCoroutine(CheckWaveClearedCRT(unit.Owner));
-        }
-
-        private IEnumerator CheckWaveClearedCRT(Player player) {
-            yield return new WaitForSeconds(.2f);
-            if (player.Units.Count > 0 || _spawnCrt != null) yield break;
-            HandleWavesCleared();
+            if (owningPlayer.ControlType == ControlType.Ai) {
+                Unit.OnDeath -= HandleUnitDeath;
+            }
         }
 
         private void Start() {
@@ -61,20 +56,33 @@ namespace Spawner {
             Bounds = new Vector3(size + xModifier, .1f, size + zModifier);
 
             WaveSpawner ??= new WaveSpawner(this);
-            StartSpawn();
-        }
-
-        public void StartSpawn() {
-            Debug.Assert(_spawnCrt == null);
             waveSpawnData = FindObjectOfType<ArenaData>().CurrentWaveModel[owningPlayer.ControlType];
-            _spawnCrt = StartCoroutine(SpawnWave());
+
+            StartSpawn(waveSpawnData);
         }
 
-        private IEnumerator SpawnWave() {
+        private IEnumerator CheckWaveClearedCRT() {
+            yield return new WaitForSeconds(.5f);
+            if (owningPlayer.Units.Count > 0) yield break;
+            HandleWavesCleared();
+        }
+
+        private void HandleUnitDeath(Unit unit) {
+            if (unit.Owner.ControlType != ControlType.Ai || _checkWavesClearedCRT != null || _spawnCrt != null) return;
+            _checkWavesClearedCRT = StartCoroutine(CheckWaveClearedCRT());
+        }
+
+        public void StartSpawn(WaveSpawnData spawnData) {
+            Debug.Assert(_spawnCrt == null);
+            _spawnCrt = StartCoroutine(SpawnWave(spawnData));
+        }
+
+        private IEnumerator SpawnWave(WaveSpawnData spawnData) {
             yield return StartCoroutine
-            (WaveSpawner.Spawn(waveSpawnData, model.spawnStartupTime,
+            (WaveSpawner.Spawn(spawnData, model.spawnStartupTime,
                 model.delayBetweenUnits,
                 (delay, spawnVfx, spawnUnit) => StartCoroutine(EnemySpawnCoroutine(delay, spawnVfx, spawnUnit))));
+            // yield return new WaitForSeconds(2f);
             _spawnCrt = null;
         }
 
@@ -89,10 +97,15 @@ namespace Spawner {
             if (_arenaManager == null) {
                 _arenaManager = FindObjectOfType<ArenaManager>();
             }
-            
+
             if (owningPlayer.ControlType == ControlType.Ai) {
+                _checkWavesClearedCRT = null;
                 _arenaManager.WavesCleared();
             }
+        }
+
+        private void OnGUI() {
+            GUILayout.Box((_checkWavesClearedCRT == null).ToString());
         }
 
 #if UNITY_EDITOR

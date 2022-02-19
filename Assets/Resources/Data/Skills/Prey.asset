@@ -32,4 +32,4 @@ MonoBehaviour:
   modifiers: 
   equipableModifiers: 04000000
   affectedFactions: 02000000
-  damage: 1
+  damage: 10

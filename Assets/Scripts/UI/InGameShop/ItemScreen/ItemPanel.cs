@@ -50,28 +50,30 @@ namespace UI.InGameShop.ItemScreen {
                 itemImage.sprite = model.ItemImage;
             }
 
-            if (_purchasingUnit != null && costDifferenceText != null && canPuchaseCostDifferenceMaterial != null &&
+            if (costDifferenceText != null && canPuchaseCostDifferenceMaterial != null &&
                 cannotPuchaseCostDifferenceMaterial != null
                 && hasPurchasedTextObject != null && canPurchaseTextObject != null) {
-                // todo replace this with a real check
-                if (!_isPurchased) {
-                    var (containsEnoughFunds, remainder) =
-                        _purchasingUnit.FundsComponent.ContainsEnoughFunds(model.Cost);
-                    if (containsEnoughFunds) {
-                        costDifferenceText.fontMaterial = canPuchaseCostDifferenceMaterial;
-                        costDifferenceText.SetText($"(+{remainder})");
+                if (_purchasingUnit != null) {
+                    // todo replace this with a real check
+                    if (!_isPurchased) {
+                        var (containsEnoughFunds, remainder) =
+                            _purchasingUnit.FundsComponent.ContainsEnoughFunds(model.Cost);
+                        if (containsEnoughFunds) {
+                            costDifferenceText.fontMaterial = canPuchaseCostDifferenceMaterial;
+                            costDifferenceText.SetText($"(+{remainder})");
+                        }
+                        else {
+                            costDifferenceText.fontMaterial = cannotPuchaseCostDifferenceMaterial;
+                            costDifferenceText.SetText($"(-{remainder})");
+                        }
+
+                        hasPurchasedTextObject.SetActive(false);
+                        canPurchaseTextObject.SetActive(true);
                     }
                     else {
-                        costDifferenceText.fontMaterial = cannotPuchaseCostDifferenceMaterial;
-                        costDifferenceText.SetText($"(-{remainder})");
+                        canPurchaseTextObject.SetActive(false);
+                        hasPurchasedTextObject.SetActive(true);
                     }
-
-                    hasPurchasedTextObject.SetActive(false);
-                    canPurchaseTextObject.SetActive(true);
-                }
-                else {
-                    canPurchaseTextObject.SetActive(false);
-                    hasPurchasedTextObject.SetActive(true);
                 }
             }
 
@@ -84,13 +86,19 @@ namespace UI.InGameShop.ItemScreen {
             if (_inGameShopManager == null) {
                 _inGameShopManager = FindObjectOfType<InGameShopManager>();
             }
+
             _purchasingUnit = _inGameShopManager.PurchasingUnit;
             _isPurchased = _purchasingUnit.PurchasedItems.Contains(model.ItemType);
             AssignText();
+
+            this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 
-        public void HandlePurchase() {
+        public void HandlePurchaseOptionClicked() {
             ItemScreen.HandlePurchase(model);
+        }
+
+        public void HandlePurchase(object sender, object args) {
             _isPurchased = _purchasingUnit.PurchasedItems.Contains(model.ItemType);
             AssignText();
         }

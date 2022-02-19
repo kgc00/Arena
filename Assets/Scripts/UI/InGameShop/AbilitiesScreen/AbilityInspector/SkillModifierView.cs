@@ -32,6 +32,10 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
             this.AddObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
             this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
+
+            // if (AbilityModifierShopData != null) {
+            //     UpdateCostText();
+            // }
         }
 
         private void OnDisable() {

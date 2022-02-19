@@ -62,13 +62,16 @@ namespace Spawner {
         }
 
         private IEnumerator CheckWaveClearedCRT() {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(1.5f);
             if (owningPlayer.Units.Count > 0) yield break;
             HandleWavesCleared();
         }
 
         private void HandleUnitDeath(Unit unit) {
-            if (unit.Owner.ControlType != ControlType.Ai || _checkWavesClearedCRT != null || _spawnCrt != null) return;
+            if (unit.Owner.ControlType != ControlType.Ai || _spawnCrt != null) return;
+            if (_checkWavesClearedCRT != null) {
+                StopCoroutine(_checkWavesClearedCRT);
+            }
             _checkWavesClearedCRT = StartCoroutine(CheckWaveClearedCRT());
         }
 
@@ -105,6 +108,7 @@ namespace Spawner {
         }
 
         private void OnGUI() {
+            if (owningPlayer.ControlType == ControlType.Ai)
             GUILayout.Box((_checkWavesClearedCRT == null).ToString());
         }
 

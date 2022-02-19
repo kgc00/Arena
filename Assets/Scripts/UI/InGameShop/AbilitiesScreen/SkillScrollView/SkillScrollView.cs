@@ -29,9 +29,7 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
             UpdateSkillScrollView();
             
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
-        }
-
-        private void Start() {
+            
             StartCoroutine(DelayInspectToggle());
         }
 

@@ -7,10 +7,10 @@ using Utils.NotificationCenter;
 
 namespace Controls
 {
-    public partial class PlayerController : Controller, PlayerInputMappings.IPlayerActions, PlayerInputMappings.IUIActions {
+    public partial class PlayerController : Controller, Generated.PlayerInputMappings.IPlayerActions, Generated.PlayerInputMappings.IUIActions {
 
         [SerializeField] private Rigidbody body; 
-        [SerializeField] private PlayerInputMappings playerInput;
+        [SerializeField] private Generated.PlayerInputMappings playerInput;
 
         public ControlSchemeEnum ControlScheme { get; private set; }
 
@@ -21,7 +21,7 @@ namespace Controls
         
             if (playerInput == null)
             {
-                playerInput = new PlayerInputMappings();
+                playerInput = new Generated.PlayerInputMappings();
                 playerInput.Player.SetCallbacks(this);
                 playerInput.UI.SetCallbacks(this);
             }

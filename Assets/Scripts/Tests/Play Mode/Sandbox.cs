@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using NUnit.Framework;
-using Projectiles;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Utils;

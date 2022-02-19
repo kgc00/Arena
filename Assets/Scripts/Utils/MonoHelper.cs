@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Common;
 using Data.Pickups;
 using Data.Types;
-using Projectiles;
 using Status;
 using UI;
 using Units;

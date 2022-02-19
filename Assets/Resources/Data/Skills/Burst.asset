@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
   m_Name: Burst
   m_EditorClassIdentifier: 
-  unlocked: 1
+  unlockCost: 100
+  unlocked: 0
   areaOfEffectRadius: 5
   cooldown: 4
   minimumCooldown: 0
@@ -21,7 +22,7 @@ MonoBehaviour:
   duration: 0.15
   energyCost: 0
   force: 185
-  icon: {fileID: 21300000, guid: 7a484c0a00a9f1a4bb0e2f048166c6b3, type: 3}
+  icon: {fileID: 21300000, guid: e0c684769d46f6f42b18c9d961663cfa, type: 3}
   indicatorType: 6
   projectileSpeed: 10
   range: 8

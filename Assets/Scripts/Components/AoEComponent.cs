@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Params;
 using Data.Types;
 using JetBrains.Annotations;
-using Projectiles;
 using UnityEngine;
 using Utils;
 
-namespace Common
+namespace Components
 {
     public class AoEComponent : MonoBehaviour
     {

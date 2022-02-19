@@ -25,6 +25,7 @@ MonoBehaviour:
     bounty: 24
   fundsData:
     balance: 0
+    bounty: 60
   state: 5
   visualAssets:
     portrait: {fileID: 0}

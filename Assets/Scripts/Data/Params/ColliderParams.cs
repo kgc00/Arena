@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Projectiles {
+namespace Data.Params {
     public abstract class ColliderParams { }
     
     public class BoxParams : ColliderParams {

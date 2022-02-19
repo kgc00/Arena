@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32cf815ded0f47c5ab9ef5f0fe29be7d, type: 3}
   m_Name: ConcealMarkOnHitAbilityModifierShopData
   m_EditorClassIdentifier: 
-  Title: Subsequent Ability Adds Mark
+  Title: Mark On Next Attack
   Description: Adds the 'Mark on Hit' modifier to the next ability used during conceal.
     Marked units take additional damage when hit with certain abilities.
   Cost: 100

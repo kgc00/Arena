@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Common;
 using UnityEngine;
 
-namespace UI.Drafting {
+namespace Common {
     // Owner of child must be this- ergo we use the Modeled List definition in place of the Owner field
     // in the IInitializable type definion of the child.
     public abstract class ModeledList<TListModel, TItemModel, TItem> : MonoBehaviour

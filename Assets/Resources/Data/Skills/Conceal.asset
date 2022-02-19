@@ -12,20 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3cf7231cd8a465b91738e63f0d1e85a, type: 3}
   m_Name: Conceal
   m_EditorClassIdentifier: 
+  unlockCost: 100
+  unlocked: 0
   areaOfEffectRadius: 0
   cooldown: 8
+  minimumCooldown: 0
   description: Turns unit invisible until the duration runs out or another action
     is performed.
   displayName: Conceal
   duration: 3
   energyCost: 0
   force: 0
-  icon: {fileID: 21300000, guid: b9326a8e8184d324f886cc9a12c25e2a, type: 3}
+  icon: {fileID: 21300000, guid: 488677515596639408a558094df11e8d, type: 3}
   indicatorType: 0
   projectileSpeed: 0
   range: 11
   startupTime: 0
   type: 7
-  modifiers: 07000000
+  modifiers: 
   equipableModifiers: 010000000500000007000000
   affectedFactions: 02000000

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Common;
+using Components;
+using Data.Params;
 using Data.Types;
-using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;

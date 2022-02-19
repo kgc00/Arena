@@ -21,7 +21,7 @@ namespace UI.HUD.AbilityRenderer {
        public TextMeshProUGUI timer {get; set; }
        public Image icon { get; set; }
        public Image iconRadialFill { get; set; }
-       public Ability ability { get; private set; }
+       public Ability Ability { get; private set; }
        private States.State state;
        public RectTransform _RectTransform;
         public AbilityRenderer Initialize(KeyValuePair<ButtonType, Ability> kvp) {
@@ -31,13 +31,13 @@ namespace UI.HUD.AbilityRenderer {
             timer = timerGo.GetComponent<TextMeshProUGUI>();
             icon = iconGo.GetComponent<Image>();
             iconRadialFill = iconRadialFillGo.GetComponent<Image>();
-            ability = kvp.Value;
+            Ability = kvp.Value;
             
             key.SetText(NameMap(kvp.Key.ToString()));
             icon.sprite = kvp.Value.Icon;
             iconRadialFill.sprite = kvp.Value.Icon;
             
-            if (ability.Unlocked) {
+            if (Ability.Unlocked) {
                 state = new IdleState(this);
             }
             else {
@@ -66,10 +66,8 @@ namespace UI.HUD.AbilityRenderer {
             state.Enter();
         }
 
-        public void SetIdle() {
-            state.Exit();
-            state = new IdleState(this);
-            state.Enter();
+        public void UpdateAbility(Ability ability) {
+            Ability = ability;
         }
     }
 }

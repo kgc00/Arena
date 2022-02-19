@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Abilities.Modifiers;
 using NUnit.Framework;
-using UnityEngine;
 
-namespace Tests
+namespace Tests.Editor
 {
     public class AbilityModifiersTest
     {

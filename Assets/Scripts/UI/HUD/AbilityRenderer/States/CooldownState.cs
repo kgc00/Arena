@@ -29,7 +29,7 @@ namespace UI.HUD.AbilityRenderer.States {
         }
 
         public override State HandleUpdate() {
-            if (!abilityRenderer.ability.Cooldown.IsOnCooldown) 
+            if (!abilityRenderer.Ability.Cooldown.IsOnCooldown) 
                 return new IdleState(abilityRenderer);
             
             abilityRenderer.timer.SetText(TimeLeft());
@@ -38,13 +38,13 @@ namespace UI.HUD.AbilityRenderer.States {
         }
 
         private string TimeLeft() {
-            var rounded = Mathf.Round(abilityRenderer.ability.Cooldown.TimeLeft * 10) / 10;
+            var rounded = Mathf.Round(abilityRenderer.Ability.Cooldown.TimeLeft * 10) / 10;
             return rounded.ToString(CultureInfo.InvariantCulture);
         }
 
         private float FillAmount() {
-            var timeLeft = abilityRenderer.ability.Cooldown.TimeLeft;
-            var cooldownTime = abilityRenderer.ability.Cooldown.CooldownTime;
+            var timeLeft = abilityRenderer.Ability.Cooldown.TimeLeft;
+            var cooldownTime = abilityRenderer.Ability.Cooldown.CooldownTime;
             var fill =  1 - timeLeft / cooldownTime;
             return fill;
         }

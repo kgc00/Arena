@@ -1,12 +1,11 @@
-﻿namespace UI.HUD.AbilityRenderer.States {
+﻿using UnityEngine;
+
+namespace UI.HUD.AbilityRenderer.States {
     public class IdleState : State {
-        public IdleState(HUD.AbilityRenderer.AbilityRenderer AbilityRenderer) : base(AbilityRenderer) { }
+        public IdleState(AbilityRenderer abilityRenderer) : base(abilityRenderer) { }
 
         public override State HandleUpdate() {
-            if (abilityRenderer.ability.Cooldown.IsOnCooldown)
-                return new CooldownState(abilityRenderer);
-
-            return null;
+            return abilityRenderer.Ability.Cooldown.IsOnCooldown ? new CooldownState(abilityRenderer) : null;
         }
     }
 }

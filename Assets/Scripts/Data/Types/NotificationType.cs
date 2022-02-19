@@ -71,6 +71,6 @@
             // Items
             DidPickupHealth = "DidPickupHealth";
 
-        public static string UnitDidSpawn = "UnitDidSpawn";
+        public static string UnitDidSpawn = "UnitDidSpawn", ComponentsDidUpdate = "ComponentsDidUpdate";
     }
 }

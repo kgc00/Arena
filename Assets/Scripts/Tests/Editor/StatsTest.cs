@@ -1,10 +1,8 @@
-﻿using Components;
-using Data.Stats;
+﻿using Data.Stats;
 using Data.Types;
 using NUnit.Framework;
-using UnityEngine;
 
-namespace Tests
+namespace Tests.Editor
 {
     public class StatsTest
     {

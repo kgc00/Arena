@@ -29,7 +29,7 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
 
         private void OnDisable() {
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
-            this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
+            this.RemoveObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
         }
 
         public void HandleToggle(bool toggleValue) {

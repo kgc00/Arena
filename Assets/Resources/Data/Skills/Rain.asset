@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549751084ec9489a8efde82a6ad6fb1a, type: 3}
   m_Name: Rain
   m_EditorClassIdentifier: 
+  unlockCost: 100
+  unlocked: 0
   areaOfEffectRadius: 5
   cooldown: 7
+  minimumCooldown: 0
   description: Launches a volley of arrows at the target location, dealing persistent
     damage over time.
   displayName: Rain
   duration: 3
   energyCost: 0
   force: 0
-  icon: {fileID: 21300000, guid: 589c08213b79484439e2dd7ecfaba896, type: 3}
+  icon: {fileID: 21300000, guid: 2ad262ac7b591c84ca28c07fe0f6a115, type: 3}
   indicatorType: 4
   projectileSpeed: 0
   range: 8

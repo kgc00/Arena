@@ -12,7 +12,7 @@ namespace UI.HUD.AbilityRenderer.States {
         }
 
         public override State HandleUpdate() {
-            if (abilityRenderer.ability.Unlocked)
+            if (abilityRenderer.Ability.Unlocked)
                 return new IdleState(abilityRenderer);
             else
                 return null;

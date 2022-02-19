@@ -2,7 +2,6 @@
 using Data.Types;
 using Units;
 using UnityEngine;
-using Utils.NotificationCenter;
 
 namespace Components
 {
@@ -24,12 +23,17 @@ namespace Components
         private int ExpFromLevel(int level) => Mathf.RoundToInt(EXP_CURVE_MODIFIER * (Mathf.Max(level, 1) * Mathf.Max(level, 1)));
         
         public ExperienceComponent Initialize (Unit owner, ExperienceData data) {
-            this.Owner = owner;
+            Owner = owner;
             CurrentExp = data.currentExp;
-            this.Bounty = data.bounty;
+            Bounty = data.bounty;
             Unit.OnDeath += AwardBounty;
             return this;
         }
+
+        private void OnDestroy() {
+            Unit.OnDeath -= AwardBounty;
+        }
+
 
         void AdjustExperience(int amount) {
             var prevExp = amount;

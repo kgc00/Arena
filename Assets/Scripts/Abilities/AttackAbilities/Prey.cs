@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Common;
 using Data.Types;
-using Projectiles;
 using Units;
 using UnityEngine;
 using Utils;

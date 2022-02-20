@@ -21,13 +21,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed75c5b1d3af50d4c837283e531b1169, type: 2}
   health:
     maxHp: 30
-    invulnerable: 1
+    invulnerable: 0
     currentHp: 3
   experience:
     currentExp: 0
     bounty: 3
   fundsData:
-    balance: 100
+    balance: 300
     bounty: 0
   state: 1
   visualAssets:

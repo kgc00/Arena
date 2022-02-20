@@ -16,6 +16,8 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
         private bool _initialized;
         public bool IsPurchased;
 
+        [SerializeField] private Color purchasedFrameColor;
+        [SerializeField] private Color purchasedBackgroundColor;
         private void OnEnable() {
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
             this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
@@ -52,8 +54,20 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
             Debug.Assert(SkillScrollView.ToggleGroup != null);
             _toggle.group = SkillScrollView.ToggleGroup;
             IsPurchased = isPurchased;
+            UpdateTogglePurchasedRendering();
             _initialized = true;
             return this;
+        }
+
+        private void UpdateTogglePurchasedRendering() {
+            if (IsPurchased) {
+                _background.color = purchasedBackgroundColor;
+                _frame.color = purchasedFrameColor;
+            }
+            else {
+                _background.color = Color.white;
+                _frame.color = Color.white;
+            }
         }
 
         public void HandlePurchase(object sender, object args) {
@@ -61,7 +75,7 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
 
             // _toggle.interactable = false;
             IsPurchased = true;
-            _toggle.isOn = false;
+            UpdateTogglePurchasedRendering();
         }
     }
 }

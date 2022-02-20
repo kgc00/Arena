@@ -8,6 +8,7 @@ using UI;
 using UI.InGameShop;
 using Units;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace Arena {
     public class ArenaManager : MonoBehaviour {
@@ -30,13 +31,18 @@ namespace Arena {
         }
 
         private void HandleUnitDeath(Unit unit) {
-            if (unit.Owner.ControlType == ControlType.Local) {
-                if (_scoreKeeper == null) {
-                    _scoreKeeper = FindObjectOfType<ScoreKeeper>();
-                }
-                _scoreKeeper.SaveScore(true);
-                LevelDirector.Instance.LoadLose();
+            if (unit.Owner.ControlType != ControlType.Local) return;
+            if (_scoreKeeper == null) {
+                _scoreKeeper = FindObjectOfType<ScoreKeeper>();
             }
+            StartCoroutine(HandleLoseCrt());
+        }
+
+        private IEnumerator HandleLoseCrt() {
+            this.PostNotification(NotificationType.GameOver);
+            _scoreKeeper.SaveScore(true);
+            yield return new WaitForSeconds(4f);
+            LevelDirector.Instance.LoadLose();
         }
 
         public void WavesCleared() {

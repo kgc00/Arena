@@ -21,6 +21,7 @@
         Roar,
         DropSpawn,
         HealPickup,
-        MarkTriggered
+        MarkTriggered,
+        PlayerDeath
     }
 }

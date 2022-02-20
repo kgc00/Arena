@@ -154,6 +154,9 @@ namespace Units {
             OnDeath(this);
             Owner.RemoveUnit(this);
             Animator.gameObject.SetActive(false);
+            if (Owner.ControlType == ControlType.Local) {
+                MonoHelper.SpawnVfx(VfxType.PlayerDeath, transform.position);
+            }
             yield return StartCoroutine(ItemDropComponent.SpawnDrops());
             Destroy(gameObject);
         }

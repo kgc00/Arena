@@ -204,6 +204,9 @@ MonoBehaviour:
   _toggle: {fileID: 5323644172403968852}
   _background: {fileID: 241672014306528995}
   _frame: {fileID: 3691592143086913821}
+  IsPurchased: 0
+  purchasedFrameColor: {r: 0.3262365, g: 1, b: 0, a: 1}
+  purchasedBackgroundColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
 --- !u!114 &5323644172403968852
 MonoBehaviour:
   m_ObjectHideFlags: 0

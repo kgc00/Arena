@@ -18,7 +18,7 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
         }
 
         private void OnDisable() {
-            this.AddObserver(HandleLockedSkillScrollViewInspected, NotificationType.LockedSkillInspected);
+            this.RemoveObserver(HandleLockedSkillScrollViewInspected, NotificationType.LockedSkillInspected);
             this.RemoveObserver(HandleSkillScrollViewToggleToggledOn, NotificationType.SkillScrollViewToggleToggledOn);
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data.Types;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 using Utils.NotificationCenter;
@@ -13,8 +15,7 @@ namespace Audio {
         [Header("BGM")] [SerializeField] private bool _playBGM;
         [SerializeField] private AudioClip _bgm;
 
-        [Header("Sfx")]
-        [SerializeField] private AudioClip PurchaseComplete;
+        [Header("Sfx")] [SerializeField] private AudioClip PurchaseComplete;
         [SerializeField] private AudioClip DidCastBurst;
         [SerializeField] private AudioClip DidCastPierceAndPull;
         [SerializeField] private AudioClip DidLaunchPierceAndPull;
@@ -40,12 +41,16 @@ namespace Audio {
         [SerializeField] private AudioClip AttackDidCollide;
         [SerializeField] private AudioClip DidPickupHealth;
         [SerializeField] private AudioClip DidLevelUp;
-        
+        [SerializeField] private AudioClip GameOver;
+        [SerializeField] private AudioClip RainLoop;
+
         private Dictionary<AudioSourceType, AudioSource> _audioSources;
+        private Sequence _rainFadeOutSequence;
 
         private enum AudioSourceType {
             BGM,
-            SFX
+            SFX,
+            Rain
         }
 
         private void InitializeAudioSources() {
@@ -53,18 +58,18 @@ namespace Audio {
             bgmSource.outputAudioMixerGroup = _mixer.FindMatchingGroups(AudioSourceType.BGM.ToString()).First();
             var sfxSource = gameObject.AddComponent<AudioSource>();
             sfxSource.outputAudioMixerGroup = _mixer.FindMatchingGroups(AudioSourceType.SFX.ToString()).First();
+            var rainSource = gameObject.AddComponent<AudioSource>(); // non-PlayOneShot clips need their own source
+            rainSource.outputAudioMixerGroup = _mixer.FindMatchingGroups(AudioSourceType.SFX.ToString()).First();
 
             _audioSources = new Dictionary<AudioSourceType, AudioSource> {
                 {AudioSourceType.BGM, bgmSource},
-                {AudioSourceType.SFX, sfxSource}
+                {AudioSourceType.SFX, sfxSource},
+                {AudioSourceType.Rain, rainSource},
             };
         }
 
         public void PlaySFX(AudioClip clip) {
             var audioSource = _audioSources[AudioSourceType.SFX];
-            if (audioSource == null) {
-                Debug.Log("null");
-            }
             audioSource.PlayOneShot(clip);
         }
 
@@ -75,8 +80,23 @@ namespace Audio {
             audioSource.loop = true;
             audioSource.Play();
         }
-        
+
+        private void PlayRain() {
+            var audioSource = _audioSources[AudioSourceType.Rain];
+            audioSource.volume = 0.8F;
+            audioSource.clip = RainLoop;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
+        private void StopPlayingRain() {
+            if (_rainFadeOutSequence.IsPlaying()) return;
+            
+            _rainFadeOutSequence.Restart();
+        }
+
         private void OnDestroy() {
+            _rainFadeOutSequence.Kill();
             _audioSources.Clear();
             this.RemoveObserver(HandleDidLevelUp, NotificationType.DidLevelUp);
             this.RemoveObserver(HandleAttackDidCollide, NotificationType.AttackDidCollide);
@@ -104,10 +124,20 @@ namespace Audio {
             this.RemoveObserver(HandleDidConnectRoar, NotificationType.DidConnectRoar);
             this.RemoveObserver(HandleDidToggleShopTab, NotificationType.DidToggleShopTab);
             this.RemoveObserver(HandleDidClickShopButton, NotificationType.DidClickShopButton);
+            this.RemoveObserver(HandleRainDidFinish, NotificationType.RainDidFinish);
+            this.RemoveObserver(HandleGameOver, NotificationType.GameOver);
         }
-        
+
         private void Start() {
             InitializeAudioSources();
+
+            var rainAudioSource = _audioSources[AudioSourceType.Rain];
+            _rainFadeOutSequence = DOTween.Sequence()
+                .Append(rainAudioSource.DOFade(0, 0.5f)).AppendCallback(() => {
+                    rainAudioSource.Stop();
+                    rainAudioSource.time = 0;
+                }).SetAutoKill(false); 
+
             if (_playBGM) StartBGM();
             this.AddObserver(HandleDidLevelUp, NotificationType.DidLevelUp);
             this.AddObserver(HandleAttackDidCollide, NotificationType.AttackDidCollide);
@@ -135,6 +165,16 @@ namespace Audio {
             this.AddObserver(HandleDidConnectRoar, NotificationType.DidConnectRoar);
             this.AddObserver(HandleDidToggleShopTab, NotificationType.DidToggleShopTab);
             this.AddObserver(HandleDidClickShopButton, NotificationType.DidClickShopButton);
+            this.AddObserver(HandleRainDidFinish, NotificationType.RainDidFinish);
+            this.AddObserver(HandleGameOver, NotificationType.GameOver);
+        }
+
+        private void HandleRainDidFinish(object arg1, object arg2) {
+            StopPlayingRain();
+        }
+
+        private void HandleGameOver(object arg1, object arg2) {
+            PlaySFX(GameOver);
         }
 
         private void HandleDidLevelUp(object arg1, object arg2) {
@@ -156,7 +196,7 @@ namespace Audio {
         private void HandlePurchase(object arg1, object arg2) {
             PlaySFX(PurchaseComplete);
         }
-        
+
         private void HandleDidClickShopButton(object arg1, object arg2) {
             PlaySFX(DidClickShopButton);
         }
@@ -215,6 +255,7 @@ namespace Audio {
 
         private void HandleDidCastRain(object arg1, object arg2) {
             PlaySFX(DidCastRain);
+            PlayRain();
         }
 
         private void HandleDidCastMark(object arg1, object arg2) {

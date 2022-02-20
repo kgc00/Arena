@@ -116,6 +116,9 @@ namespace Utils {
                 case VfxType.MarkTriggered:
                     s = $"{Constants.PrefabsPath}Mark Triggered VFX";
                     break;
+                case VfxType.PlayerDeath:
+                    s = $"{Constants.PrefabsPath}player_death_vfx";
+                    break;
             }
 
             return s;

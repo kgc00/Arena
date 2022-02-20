@@ -56,6 +56,7 @@
             DidApplyMark = "DidApplyMark",
             DidTriggerMark = "DidTriggerMark",
             DidLevelUp = "DidLevelUp",
+            RainDidFinish = "RainDidFinish",
             // monsters
             DidConnectCharge = "DidConnectCharge",
             DidCastChainFlame = "DidCastChainFlame",
@@ -71,6 +72,8 @@
             // Items
             DidPickupHealth = "DidPickupHealth";
 
-        public static string UnitDidSpawn = "UnitDidSpawn", ComponentsDidUpdate = "ComponentsDidUpdate";
+        public static string UnitDidSpawn = "UnitDidSpawn",
+            ComponentsDidUpdate = "ComponentsDidUpdate",
+            GameOver = "GameOver";
     }
 }

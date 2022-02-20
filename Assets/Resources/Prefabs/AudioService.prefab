@@ -76,3 +76,5 @@ MonoBehaviour:
   AttackDidCollide: {fileID: 8300000, guid: 455ea7ed3b282f04ba8528053715f50e, type: 3}
   DidPickupHealth: {fileID: 8300000, guid: 33aefa21109aa9a4d9397ca1d83ff461, type: 3}
   DidLevelUp: {fileID: 8300000, guid: 5dd197a12d21602419e36d3f41e6e092, type: 3}
+  GameOver: {fileID: 8300000, guid: 36dc968cb4cc2084d900f24f3892c65c, type: 3}
+  RainLoop: {fileID: 8300000, guid: e623ff035fc947e4a9a19f6c360828c6, type: 3}

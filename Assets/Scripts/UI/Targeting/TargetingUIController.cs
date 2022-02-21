@@ -1,10 +1,9 @@
 ﻿using Common;
 using Data.Types;
 using State;
-using State.PlayerStates;
+using UI.InGameShop;
 using Units;
 using UnityEngine;
-using Utils;
 using Utils.NotificationCenter;
 
 namespace UI.Targeting {
@@ -22,6 +21,7 @@ namespace UI.Targeting {
             this.AddObserver(EnableTargeting, NotificationType.AbilityWillActivate);
             this.AddObserver(DisableTargeting, NotificationType.AbilityDidActivate);
         }
+
 
         private void OnDestroy() {
             this.RemoveObserver(EnableTargeting, NotificationType.AbilityWillActivate);
@@ -50,9 +50,9 @@ namespace UI.Targeting {
             return this;
         }
 
-        private void EnableTargeting(object notificationName, object eventData) {
+        private void EnableTargeting(object sender, object args) {
             if (!_initialized) return;
-            if (!(eventData is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
+            if (!(args is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(true);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) {
                 _circle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
@@ -64,12 +64,18 @@ namespace UI.Targeting {
             }
         }
 
-        private void DisableTargeting(object notificationName, object eventData) {
+        private void DisableTargeting(object sender, object args) {
             if (!_initialized) return;
-            if (!(eventData is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
+            if (!(args is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(false);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) _circle.gameObject.SetActive(false);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) _rectangle.gameObject.SetActive(false);
+        }
+
+        public void DisableTargetingUI() {
+            _arrow.SetActive(false);
+            _circle.gameObject.SetActive(false);
+            _rectangle.gameObject.SetActive(false);
         }
     }
 }

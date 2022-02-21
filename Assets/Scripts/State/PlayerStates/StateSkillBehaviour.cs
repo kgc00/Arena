@@ -3,6 +3,7 @@ using Controls;
 using Data;
 using Data.Types;
 using JetBrains.Annotations;
+using UI.InGameShop;
 using Units;
 using UnityEngine;
 using Utils;
@@ -11,9 +12,19 @@ using Utils.NotificationCenter;
 namespace State.PlayerStates {
     public class StateSkillBehaviour {
         public Unit Owner { get; private set; }
+        private bool isShopVisible;
 
         public StateSkillBehaviour(Unit owner) {
             Owner = owner;
+            InGameShopManager.OnShopVisibilityToggled += HandleVisibilityToggled;
+        }
+
+        ~StateSkillBehaviour() {
+            InGameShopManager.OnShopVisibilityToggled -= HandleVisibilityToggled;
+        }
+
+        private void HandleVisibilityToggled(bool isVisible, Unit purchasingUnit) {
+            isShopVisible = isVisible;
         }
 
         public bool ShouldActivateSkill(InputValues input, out UnitState unitState) {

@@ -27,7 +27,7 @@ namespace UI.InGameShop {
                 {WindowType.Items, ItemsWindow},
             };
             _currentGoldText.SetText(_inGameShopManager.PurchasingUnit.FundsComponent.Balance.ToString());
-            _inGameShopManager.OnShopVisibilityToggled += HandleVisibilityToggled;
+            InGameShopManager.OnShopVisibilityToggled += HandleVisibilityToggled;
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
         
@@ -39,7 +39,7 @@ namespace UI.InGameShop {
         }
 
         private void OnDisable() {
-            _inGameShopManager.OnShopVisibilityToggled -= HandleVisibilityToggled;
+            InGameShopManager.OnShopVisibilityToggled -= HandleVisibilityToggled;
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 

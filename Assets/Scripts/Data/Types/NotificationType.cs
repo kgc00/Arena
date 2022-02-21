@@ -6,6 +6,7 @@
         public const string 
             AbilityWillActivate = "AbilityWillActivate",
             AbilityDidActivate = "AbilityDidActivate",
+            AbilityDidCancel = "AbilityDidCancel",
             AbilityDidConnect = "AbilityDidConnect",
             AbilityCompleted = "AbilityCompleted";
 

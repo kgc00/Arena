@@ -31,10 +31,15 @@ namespace State.PlayerStates {
 
             Owner.InGameShopManager.ToggleVisibility();
             if (Owner.InGameShopManager.ShopUI.gameObject.activeInHierarchy) {
+                _ownerPlayerController.InputValues.ResetButtonValues();
+                Owner.Controller.PreviousPress = null;
+                Owner.UIController.DisableTargetingUI();
                 _ownerPlayerController.EnableUISchema();
             }
             else {
                 _ownerPlayerController.EnablePlayerSchema();
+                _ownerPlayerController.InputValues.ResetButtonValues();
+                Owner.Controller.PreviousPress = null;
             }
 
             return null;

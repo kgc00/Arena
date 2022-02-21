@@ -8,7 +8,7 @@ namespace UI.InGameShop {
         public InGameShop ShopUI { get; private set; }
         public bool IsPurchasingUnitWithinProximity { get; private set; }
         public Unit PurchasingUnit { get; private set; }
-        public Action<bool, Unit> OnShopVisibilityToggled = delegate { };
+        public static Action<bool, Unit> OnShopVisibilityToggled = delegate { };
         public bool isShopVisible => ShopUI != null && ShopUI.gameObject.activeInHierarchy;
 
         private void Start() {

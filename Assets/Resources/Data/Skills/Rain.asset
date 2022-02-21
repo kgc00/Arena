@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rain
   m_EditorClassIdentifier: 
   unlockCost: 100
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 5
   cooldown: 7
   minimumCooldown: 0

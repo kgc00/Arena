@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Burst
   m_EditorClassIdentifier: 
   unlockCost: 100
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 5
   cooldown: 4
   minimumCooldown: 0
@@ -26,9 +26,9 @@ MonoBehaviour:
   indicatorType: 6
   projectileSpeed: 10
   range: 8
-  startupTime: 0.5
+  startupTime: 0
   type: 9
   modifiers: 
   equipableModifiers: 0400000006000000
   affectedFactions: 02000000
-  damage: 15
+  damage: 10

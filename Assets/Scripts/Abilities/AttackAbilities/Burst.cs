@@ -60,16 +60,18 @@ namespace Abilities.AttackAbilities {
 
         private IEnumerator HandleEnterStrategy(Collider arg1, Rigidbody arg2, float arg3, Transform arg4) {
             yield return StartCoroutine(AoEAddMarkAndDealDamage(arg1, arg2, arg3, arg4));
-            yield return StartCoroutine(ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading](arg1, arg2, arg3, arg4));
+            yield return StartCoroutine(
+                ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading](arg1, arg2, arg3, arg4));
         }
 
         private IEnumerator AoEAddMarkAndDealDamage(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-            unit.HealthComponent.DamageOwner(Damage);
             if (unit != null) {
+                unit.HealthComponent.DamageOwner(Damage);
                 unit.StatusComponent.AddStatus(StatusType.Marked, 1);
             }
+
             yield break;
         }
     }

@@ -16,9 +16,8 @@ namespace Abilities.AttackAbilities {
             yield return new WaitForSeconds(StartupTime);
             this.PostNotification(NotificationType.DidCastRain);
             OnAbilityActivationFinished(Owner, this);
-            var updatedTargetLocation = MouseHelper.GetWorldPosition();
             _affectedUnits.Clear();
-            SpawnAoEEffect(updatedTargetLocation);
+            SpawnAoEEffect(targetLocation);
             ExecuteOnAbilityFinished();
         }
 

@@ -20,11 +20,24 @@ namespace Components {
                 UnitType.Melee => new List<DropData> {new DropData(DropType.HealthPickupSmall, 1)},
                 UnitType.Charging => new List<DropData> {new DropData(DropType.HealthPickupLarge, 1)},
                 UnitType.Ranged => new List<DropData> {new DropData(DropType.HealthPickupSmall, 3)},
+                UnitType.BombThrowing => new List<DropData> {new DropData(DropType.HealthPickupSmall, 5)},
                 UnitType.Boss => new List<DropData> {new DropData(DropType.HealthPickupLarge, 3)},
                 _ => new List<DropData>()
             };
+            Unit.OnDeath += StartSpawnDropsCrt;
 
             return this;
+        }
+
+        private void OnDestroy() {
+            Unit.OnDeath -= StartSpawnDropsCrt;
+        }
+
+        public void StartSpawnDropsCrt(Unit unit){
+            bool unitWasNotSelf = Owner == null || unit != Owner; 
+            
+            if (unitWasNotSelf) return;
+            StartCoroutine(SpawnDrops());
         }
 
         public IEnumerator SpawnDrops() {
@@ -35,7 +48,6 @@ namespace Components {
                     select drop.dropType).ToList();
             if (typesToSpawn.Count == 0) yield break;
             MonoHelper.SpawnVfx(VfxType.DropSpawn, transform.position);
-            yield return new WaitForSeconds(1f); // hardcoded for now
             typesToSpawn.ForEach(type => MonoHelper.SpawnDrop(type, transform.position));
         }
     }

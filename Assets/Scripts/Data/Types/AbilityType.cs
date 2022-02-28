@@ -18,6 +18,9 @@
         BreatheFire,
         ChainFlame,
         TailSwipe,
-        Roar
+        Roar,
+        // other
+        Disrupt,
+        MissileStorm
     }
 }

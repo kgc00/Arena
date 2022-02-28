@@ -25,7 +25,9 @@ namespace Data.UnitData {
         }
 
         private static void AssignAbilities(UnitData data, UnitData instance) {
-            instance.abilities = data.abilities.ConvertAll(x => x).ToList();
+            // todo - handle case where there are no abilities
+            instance.abilities = data.abilities.ConvertAll(x => x)?.ToList();
+
             // maybe i'll use later
             // instance.abilities = new List<AbilityData.AbilityData>();
             // foreach (var abilityData in data.abilities) {

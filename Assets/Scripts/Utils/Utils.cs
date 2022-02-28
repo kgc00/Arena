@@ -232,6 +232,16 @@ namespace Utils {
                             .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
                         equippedAbilities.Add(type, abilityInstance);
                         break;
+                    case AbilityType.Disrupt:
+                        abilityInstance = owner.gameObject.AddComponent<Disrupt>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
+                        equippedAbilities.Add(type, abilityInstance);
+                        break;
+                    case AbilityType.MissileStorm:
+                        abilityInstance = owner.gameObject.AddComponent<MissileStorm>()
+                            .Initialize((data[i] as AttackAbilityData).CreateInstance(), owner, statsComponent);
+                        equippedAbilities.Add(type, abilityInstance);
+                        break;
                     // hunter
                     case AbilityType.Mark:
                         abilityInstance = owner.gameObject.AddComponent<Mark>()
@@ -357,6 +367,8 @@ namespace Utils {
                     return new State.RangedAiStates.IdleUnitState(owner);
                 case UnitStateType.ChargingAi:
                     return new State.ChargingAiStates.IdleUnitState(owner);
+                case UnitStateType.BombThrowingAi:
+                    return new State.BombThrowingAiStates.IdleUnitState(owner);
                 case UnitStateType.BossAi:
                     return new State.BossAiStates.IdleUnitState(owner);
                 default:

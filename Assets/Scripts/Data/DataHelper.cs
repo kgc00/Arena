@@ -23,6 +23,9 @@ namespace Data {
                 case UnitType.Charging:
                     s = "Data/Beastiary/Charging Ai Data";
                     break;
+                case UnitType.BombThrowing:
+                    s = "Data/Beastiary/Bomb Throwing Ai Data";
+                    break;
                 case UnitType.Boss:
                     s = "Data/Beastiary/Boss Ai Data";
                     break;

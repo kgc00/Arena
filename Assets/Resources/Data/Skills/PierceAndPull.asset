@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PierceAndPull
   m_EditorClassIdentifier: 
   unlockCost: 100
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 20
   cooldown: 4
   minimumCooldown: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Roar
   m_EditorClassIdentifier: 
   unlockCost: 0
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 13
   cooldown: 5.5
   minimumCooldown: 0

@@ -119,6 +119,12 @@ namespace Utils {
                 case VfxType.PlayerDeath:
                     s = $"{Constants.PrefabsPath}player_death_vfx";
                     break;
+                case VfxType.DisruptStartup:
+                    s = $"{Constants.PrefabsPath}Disrupt Startup VFX";
+                    break;
+                case VfxType.DisruptTrigger:
+                    s = $"{Constants.PrefabsPath}Disrupt Explosion VFX";
+                    break;
             }
 
             return s;

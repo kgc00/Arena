@@ -8,9 +8,9 @@
         Melee,
         Charging,
         Ranged,
-        // BombThrowing,
         // SuicideBomber,
         Boss,
-        TrainingDummy
+        TrainingDummy,
+        BombThrowing,
     }
 }

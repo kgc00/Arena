@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OrcSlash
   m_EditorClassIdentifier: 
   unlockCost: 0
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 0
   cooldown: 0.5
   minimumCooldown: 0

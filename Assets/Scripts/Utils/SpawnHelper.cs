@@ -25,6 +25,9 @@ namespace Utils {
                 case UnitType.Charging:
                     s = "Units/Enemies/Grunt/Charging AI";
                     break;
+                case UnitType.BombThrowing:
+                    s = "Units/Enemies/Beholder/Bomb Throwing AI";
+                    break;
                 case UnitType.Boss:
                     s = "Units/Enemies/Dragon/Boss AI";
                     break;

@@ -67,6 +67,8 @@
             DidCastRoar = "DidCastRoar",
             DidConnectRoar = "DidConnectRoar",
             AttackDidCollide = "AttackDidCollide",
+            DidCastDisrupt = "DidCastDisrupt",
+            DidSpawnDisrupt = "DidSpawnDisrupt",
             // UI
             DidToggleShopTab = "DidToggleShopTab",
             DidClickShopButton = "DidClickShopButton",

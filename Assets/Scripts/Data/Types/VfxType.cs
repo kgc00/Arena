@@ -22,6 +22,8 @@
         DropSpawn,
         HealPickup,
         MarkTriggered,
-        PlayerDeath
+        PlayerDeath,
+        DisruptStartup,
+        DisruptTrigger
     }
 }

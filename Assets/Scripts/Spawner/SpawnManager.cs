@@ -107,11 +107,6 @@ namespace Spawner {
             }
         }
 
-        private void OnGUI() {
-            if (owningPlayer.ControlType == ControlType.Ai)
-            GUILayout.Box((_checkWavesClearedCRT == null).ToString());
-        }
-
 #if UNITY_EDITOR
         private void OnDrawGizmos() {
             Gizmos.color = Color.red;

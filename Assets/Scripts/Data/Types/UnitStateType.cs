@@ -9,6 +9,7 @@
         ChargingAi,
         // SuicideAi,
         BossAi,
-        TrainingDummy
+        TrainingDummy,
+        BombThrowingAi
     }
 }

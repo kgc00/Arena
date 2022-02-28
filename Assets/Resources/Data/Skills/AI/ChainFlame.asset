@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChainFlame
   m_EditorClassIdentifier: 
   unlockCost: 0
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 3
   cooldown: 4
   minimumCooldown: 0

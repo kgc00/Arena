@@ -153,12 +153,12 @@ namespace Units {
         private IEnumerator UnitDeathCrt() {
             OnDeath(this);
             Owner.RemoveUnit(this);
-            Animator.gameObject.SetActive(false);
             if (Owner.ControlType == ControlType.Local) {
                 MonoHelper.SpawnVfx(VfxType.PlayerDeath, transform.position);
             }
-            yield return StartCoroutine(ItemDropComponent.SpawnDrops());
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            Destroy(gameObject, 1f);
+            yield break;
         }
 
         public void OnLevelUp() {

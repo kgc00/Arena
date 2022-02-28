@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BodySlam
   m_EditorClassIdentifier: 
   unlockCost: 0
-  unlocked: 0
+  unlocked: 1
   areaOfEffectRadius: 0
   cooldown: 0.85
   minimumCooldown: 0

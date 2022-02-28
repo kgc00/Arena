@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e299bbfc1057413ca68d6bd1b6d2649b, type: 3}
+  m_Name: Bomb Throwing Ai Data
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: cddcd413941e84430ab8bef70dc422dd, type: 2}
+  - {fileID: 11400000, guid: b89abd45b9b604848b41b78cce466c7c, type: 2}
+  health:
+    maxHp: 40
+    invulnerable: 0
+    currentHp: 4
+  experience:
+    currentExp: 0
+    bounty: 6
+  fundsData:
+    balance: 0
+    bounty: 20
+  state: 7
+  visualAssets:
+    portrait: {fileID: 0}
+  statsData:
+    agility: 1
+    strength: 1
+    intelligence: 1
+    endurance: 1
+    movementSpeed: 3

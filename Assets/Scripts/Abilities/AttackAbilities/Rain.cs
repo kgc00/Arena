@@ -42,7 +42,7 @@ namespace Abilities.AttackAbilities {
         }
 
         private void HandleAoEComponentDestroyed() {
-this.PostNotification(NotificationType.RainDidFinish);
+            this.PostNotification(NotificationType.RainDidFinish);
             foreach (var unit in _affectedUnits) {
                 if (unit == null) continue;
                 var vfx = unit.GetComponentInChildren<ModifyPositionAndTagVFX>();

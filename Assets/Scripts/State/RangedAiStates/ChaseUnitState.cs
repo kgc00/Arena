@@ -12,11 +12,13 @@ namespace State.RangedAiStates {
         private static readonly int Moving = Animator.StringToHash("Moving");
         private readonly float attackRange;
         private IAstarAI astarAI;
+        private float chaseTimer;
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner) {
             this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range - aqcuisitionRangeMargin;
+            chaseTimer = UnityEngine.Random.Range(5,15f);
         }
 
         public override void Enter() {
@@ -46,6 +48,7 @@ namespace State.RangedAiStates {
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
             if (ShouldEnterIdle(ref nextState, invalidTarget)) return nextState;
             if (ShouldEnterAttack(ref nextState, dist)) return nextState;
+            if (ShouldEnterRelocate(ref nextState)) return nextState;
 
             astarAI.destination = targetUnit.transform.position;
             return nextState;
@@ -58,12 +61,21 @@ namespace State.RangedAiStates {
             return true;
         }
 
+        private bool ShouldEnterRelocate(ref UnitState unitState) {
+            var distToPlayer = Vector3.Distance(playerTransform.position, Owner.transform.position);
+            chaseTimer -= Time.deltaTime;
+            if (chaseTimer > 0) return false;
+            if (distToPlayer <= 4.5f) return false;
+            unitState = new RelocateUnitState(Owner, playerTransform);
+            return true;
+        }
+
+
         private bool ShouldEnterAttack(ref UnitState unitState, float dist) {
             if (dist > attackRange) return false;
 
             unitState = new IceBoltState(Owner, playerTransform);
             return true;
         }
-
     }
 }

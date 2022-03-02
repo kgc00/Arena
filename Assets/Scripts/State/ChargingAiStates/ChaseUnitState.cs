@@ -16,6 +16,7 @@ namespace State.ChargingAiStates
         private OrcSlash slash;
         private static readonly int Moving = Animator.StringToHash("Moving");
         private IAstarAI astarAI;
+        private float chaseTimer;
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
@@ -23,6 +24,7 @@ namespace State.ChargingAiStates
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             charge = Owner.AbilityComponent.GetEquippedAbility<Charge>();
             slash = Owner.AbilityComponent.GetEquippedAbility<OrcSlash>();
+            chaseTimer = UnityEngine.Random.Range(5,15f);
         }
 
         public override void Enter()
@@ -55,6 +57,7 @@ namespace State.ChargingAiStates
             var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
             if (ShouldEnterAttack(ref nextState, dist)) return nextState;
             if (ShouldEnterCharge(ref nextState, dist)) return nextState;
+            if (ShouldEnterRelocate(ref nextState)) return nextState;
 
             astarAI.destination = targetUnit.transform.position;
             return nextState;
@@ -75,6 +78,14 @@ namespace State.ChargingAiStates
             if (abilityWillNotReach || abilityCoolingDown) return false;
 
             unitState = new ChargeUnitState(Owner, playerTransform);
+            return true;
+        }
+        private bool ShouldEnterRelocate(ref UnitState unitState) {
+            var distToPlayer = Vector3.Distance(playerTransform.position, Owner.transform.position);
+            chaseTimer -= Time.deltaTime;
+            if (chaseTimer > 0) return false;
+            if (distToPlayer <= 4.5f) return false;
+            unitState = new RelocateUnitState(Owner, playerTransform);
             return true;
         }
     }

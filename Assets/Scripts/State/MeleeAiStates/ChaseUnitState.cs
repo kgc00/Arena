@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Pathfinding;
 using Units;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace State.MeleeAiStates
 {
@@ -15,12 +16,14 @@ namespace State.MeleeAiStates
         private static readonly int Moving = Animator.StringToHash("Moving");
         private readonly float attackRange;
         private IAstarAI astarAI;
+        private float chaseTimer;
 
         public ChaseUnitState(Unit owner, Transform playerTransform) : base(owner)
         {
             this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
+            chaseTimer = Random.Range(3,8f);
         }
 
         public override void Enter()
@@ -50,9 +53,19 @@ namespace State.MeleeAiStates
             if (invalidTarget) return new IdleUnitState(Owner);
             
             if (ShouldEnterAttack(out var unitState)) return unitState;
+            if (ShouldEnterRelocate(ref unitState)) return unitState;
 
             astarAI.destination = targetUnit.transform.position;
             return null;
+        }
+
+        private bool ShouldEnterRelocate(ref UnitState unitState) {
+            var distToPlayer = Vector3.Distance(playerTransform.position, Owner.transform.position);
+            chaseTimer -= Time.deltaTime;
+            if (chaseTimer > 0) return false;
+            if (distToPlayer <= 4.5f) return false;
+            unitState = new RelocateUnitState(Owner, playerTransform);
+            return true;
         }
 
         private bool ShouldEnterAttack([CanBeNull] out UnitState unitState)

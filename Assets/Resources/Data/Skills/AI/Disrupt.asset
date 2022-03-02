@@ -25,7 +25,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   indicatorType: 4
   projectileSpeed: 0
-  range: 18
+  range: 99
   startupTime: 1
   type: 16
   modifiers: 

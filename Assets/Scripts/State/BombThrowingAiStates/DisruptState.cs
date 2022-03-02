@@ -11,8 +11,9 @@ namespace State.BombThrowingAiStates {
     public class DisruptState : AbilityUnitState<Disrupt> {
         private readonly Transform _playerTransform;
         private static readonly int Disrupt = Animator.StringToHash("Disrupt");
-        private Unit _targetUnit;
-        float disruptRate = 75;
+        private readonly Unit _targetUnit;
+        private const float DisruptRecastRate = 75;
+
         public DisruptState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
             _playerTransform.TryGetComponent(out Unit unit);
@@ -51,6 +52,8 @@ namespace State.BombThrowingAiStates {
             var distanceToUnit = Vector3.Distance(Owner.transform.position, _playerTransform.position);
             var isWithinAttackRange = distanceToUnit <= Ability.Range;
             
+            // if there is a max distance for the ability, the unit could just sit here until the play walks into it
+            
             if (!AbilityFinished){
                 return null;
             }
@@ -59,11 +62,11 @@ namespace State.BombThrowingAiStates {
                 return new RelocateUnitState(Owner, _playerTransform);
             }
 
-            if (Random.Range(0,100f) >= disruptRate){
+            if (Random.Range(0,100f) >= DisruptRecastRate){
                 return new DisruptState(Owner, _playerTransform);
-            } else {
-                return new RelocateUnitState(Owner, _playerTransform);
             }
+
+            return new RelocateUnitState(Owner, _playerTransform);
         }
 
 

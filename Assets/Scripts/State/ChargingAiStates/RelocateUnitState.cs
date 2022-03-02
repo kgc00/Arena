@@ -29,6 +29,10 @@ namespace State.ChargingAiStates {
             HealthComponent.OnDamageStarted += DrawAggro;
         }
 
+        ~RelocateUnitState() {
+            HealthComponent.OnDamageStarted -= DrawAggro;
+        }
+
         private void DrawAggro(Unit owner, Unit damageDealer, float damage) {
             if (owner != Owner) return;
 

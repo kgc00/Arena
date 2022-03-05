@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using Controls;
 using JetBrains.Annotations;
 using Pathfinding;
@@ -23,7 +24,7 @@ namespace State.MeleeAiStates
             this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range;
-            chaseTimer = Random.Range(3,8f);
+            chaseTimer = Random.Range(0,1f) >= Constants.PermaChaseRate ? Random.Range(3, 8f) : float.MaxValue;
         }
 
         public override void Enter()

@@ -6,6 +6,7 @@ namespace Common {
         public static string UIPath = "UI/";
         public static string AbilityModifierShopDataPath = "Data/Skills/AbilityModifierShopData/";
         public static string SavePath = "test.json";
+        public static float PermaChaseRate = 0.20f;
 
     }
 }

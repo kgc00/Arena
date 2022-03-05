@@ -120,7 +120,7 @@ namespace Units {
             Debug.Assert(Initialized);
             // stats component not updated to keep gains from level ups
             AbilityComponent.ReinitializeAbilities();
-            HealthComponent.ReinitializeAbilities();
+            HealthComponent.ReinitializeHealth();
             this.PostNotification(NotificationType.ComponentsDidUpdate);
             return this;
         }

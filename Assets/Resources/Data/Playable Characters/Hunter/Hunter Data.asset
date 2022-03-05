@@ -27,7 +27,7 @@ MonoBehaviour:
     currentExp: 0
     bounty: 3
   fundsData:
-    balance: 300
+    balance: 100
     bounty: 0
   state: 1
   visualAssets:

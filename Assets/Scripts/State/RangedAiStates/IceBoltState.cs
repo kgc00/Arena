@@ -42,13 +42,13 @@ namespace State.RangedAiStates {
             var isNotVisible = _targetUnit == null || !_targetUnit.StatusComponent.IsVisible();
             var invalidTarget = _playerTransform == null ||
                                 isNotVisible;
-            var distanceToUnit = Vector3.Distance(Owner.transform.position, _playerTransform.position);
-            var isWithinAttackRange = distanceToUnit <= Ability.Range;
             
             if (ShouldEnterIdle(ref state, invalidTarget)) {
                 return state;
             }
             
+            var distanceToUnit = Vector3.Distance(Owner.transform.position, _playerTransform.position);
+            var isWithinAttackRange = distanceToUnit <= Ability.Range;
             if (ShouldEnterAttack(ref state, isWithinAttackRange)) {
                 return state;
             }

@@ -70,6 +70,7 @@ namespace Abilities.AttackAbilities {
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) yield break;
+            if(_affectedUnits.Contains(unit)) yield break;
             
             _affectedUnits.Add(unit);
             foreach (var cb in OnAbilityConnection)

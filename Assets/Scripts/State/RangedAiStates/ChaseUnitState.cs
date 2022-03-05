@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using Controls;
 using Pathfinding;
 using Units;
@@ -18,7 +19,7 @@ namespace State.RangedAiStates {
             this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             attackRange = Owner.AbilityComponent.longestRangeAbility.Range - aqcuisitionRangeMargin;
-            chaseTimer = UnityEngine.Random.Range(5,15f);
+            chaseTimer = UnityEngine.Random.Range(0,1f) >= Constants.PermaChaseRate ?  UnityEngine.Random.Range(5,15f) : float.MaxValue;
         }
 
         public override void Enter() {
@@ -43,10 +44,10 @@ namespace State.RangedAiStates {
             UnitState nextState = null;
             var invalidTarget = playerTransform == null ||
                                 !targetUnit.StatusComponent.IsVisible();
-            
-            
-            var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
+
+
             if (ShouldEnterIdle(ref nextState, invalidTarget)) return nextState;
+            var dist = Vector3.Distance(playerTransform.position, Owner.transform.position);
             if (ShouldEnterAttack(ref nextState, dist)) return nextState;
             if (ShouldEnterRelocate(ref nextState)) return nextState;
 

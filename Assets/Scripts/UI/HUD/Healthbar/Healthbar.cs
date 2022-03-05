@@ -20,7 +20,8 @@ namespace UI.HUD.Healthbar {
 
         private void OnEnable() {
             this.AddObserver(HandleDidSpawn, NotificationType.UnitDidSpawn);
-            this.AddObserver(HandleLevelUp, NotificationType.DidLevelUp);
+            this.AddObserver(HandleStatUpdate, NotificationType.DidLevelUp);
+            this.AddObserver(HandleStatUpdate, NotificationType.PurchaseComplete);
             HealthComponent.OnHealthChanged += UpdateHealthValue;
         }
 
@@ -33,7 +34,8 @@ namespace UI.HUD.Healthbar {
 
         private void OnDisable() {
             this.RemoveObserver(HandleDidSpawn, NotificationType.UnitDidSpawn);
-            this.RemoveObserver(HandleLevelUp, NotificationType.DidLevelUp);
+            this.RemoveObserver(HandleStatUpdate, NotificationType.DidLevelUp);
+            this.RemoveObserver(HandleStatUpdate, NotificationType.PurchaseComplete);
             HealthComponent.OnHealthChanged -= UpdateHealthValue;
         }
 
@@ -58,10 +60,13 @@ namespace UI.HUD.Healthbar {
             }
         }
 
-        private void HandleLevelUp(object arg1, object arg2) {
+        private void HandleStatUpdate(object arg1, object arg2) {
             EnsureUnitAssigned();
 
+            if (_unit == null) return;
+            
             levelText.SetText($"Level - {_unit.ExperienceComponent.Level}");
+            UpdateHealthValue();
         }
 
         private void UpdateHealthValue(Unit u, float arg2) {

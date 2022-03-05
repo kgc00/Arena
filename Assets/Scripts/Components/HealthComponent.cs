@@ -18,21 +18,21 @@ namespace Components
         public bool IsDead;
         public bool Invulnerable { get; private set; }
         private StatsComponent _statsComponent;
+        private HealthData _model;
 
         public HealthComponent Initialize(Unit owner, HealthData healthData, StatsComponent statsComponent) {
             Owner = owner;
             MaxHp = StatHelpers.GetMaxHealth(healthData.maxHp, statsComponent.Stats);
             CurrentHp = MaxHp;
             _statsComponent = statsComponent;
-
+            _model = healthData;
             Invulnerable = healthData.invulnerable;
-            
             return this;
         }
 
-        public void ReinitializeAbilities() {
+        public void ReinitializeHealth() {
             var healthPercentage = Math.Min(CurrentHp / MaxHp, 1);
-            MaxHp = StatHelpers.GetMaxHealth(MaxHp, _statsComponent.Stats);
+            MaxHp = StatHelpers.GetMaxHealth(_model.maxHp, _statsComponent.Stats);
             CurrentHp = MaxHp * healthPercentage;
         }
 

@@ -22,7 +22,7 @@ namespace Abilities.AttackAbilities {
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) {
             if (projectile == null) return;
 
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
+            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, ProjectileSpeed);
         }
 
         private GameObject SpawnProjectile() {

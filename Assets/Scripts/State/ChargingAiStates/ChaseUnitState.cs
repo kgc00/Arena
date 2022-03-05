@@ -1,5 +1,6 @@
 ﻿using System;
 using Abilities.AttackAbilities;
+using Common;
 using Controls;
 using JetBrains.Annotations;
 using Pathfinding;
@@ -24,7 +25,8 @@ namespace State.ChargingAiStates
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             charge = Owner.AbilityComponent.GetEquippedAbility<Charge>();
             slash = Owner.AbilityComponent.GetEquippedAbility<OrcSlash>();
-            chaseTimer = UnityEngine.Random.Range(5,15f);
+            
+            chaseTimer = UnityEngine.Random.Range(0,1f) >= Constants.PermaChaseRate ? UnityEngine.Random.Range(5,15f) : float.MaxValue;
         }
 
         public override void Enter()

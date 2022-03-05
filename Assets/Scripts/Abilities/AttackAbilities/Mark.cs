@@ -20,7 +20,7 @@ namespace Abilities.AttackAbilities {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
             this.PostNotification(NotificationType.DidCastMark);
-            var proj = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, 10f);
+            var proj = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
             var renderer = proj.transform.root.GetComponentInChildren<Renderer>();
             var withFresnel = renderer.materials.ToList();
             withFresnel.Add(_fresnel);
@@ -45,6 +45,7 @@ namespace Abilities.AttackAbilities {
 
 
             unit.StatusComponent.AddStatus(StatusType.Marked, 1);
+            unit.StatusComponent.AddStatus(StatusType.Stunned, 1, 1); // todo - add param to skill ability data
             var heading = other.transform.position - projectile.transform.position;
             heading.y = 0;
             heading = heading.normalized;

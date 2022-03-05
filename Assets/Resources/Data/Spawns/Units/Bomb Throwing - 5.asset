@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 197cc9a3fcb24cb39899456fe9eb7090, type: 3}
-  m_Name: Bomb Throwing - 4
+  m_Name: Bomb Throwing - 5
   m_EditorClassIdentifier: 
   Unit: 6
   Amount: 5

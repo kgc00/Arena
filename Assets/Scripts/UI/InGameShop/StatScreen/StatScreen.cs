@@ -51,6 +51,7 @@ namespace UI.InGameShop.StatScreen {
             Debug.Assert(purchasingUnit != null);
             purchasingUnit.ExperienceComponent.SkillPoints = SkillPointBank;
             _panels.ForEach(x => x.Value.HandlePurchase(purchasingUnit));
+            purchasingUnit.UpdateComponents();
             this.PostNotification(NotificationType.PurchaseComplete);
         }
     }

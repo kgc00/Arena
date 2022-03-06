@@ -14,6 +14,8 @@ namespace UI.InGameShop {
         [SerializeField] private ShopScreen StatsWindow;
         [SerializeField] private ShopScreen ItemsWindow;
         [SerializeField] private TextMeshProUGUI _currentGoldText;
+        [SerializeField] private TextMeshProUGUI _currentSkillPointsText;
+        [SerializeField] private GameObject purchasesAvailableIcon_StatsScreen;
         private Dictionary<WindowType, ShopScreen> _windows;
         private InGameShopManager _inGameShopManager;
 
@@ -27,6 +29,7 @@ namespace UI.InGameShop {
                 {WindowType.Items, ItemsWindow},
             };
             _currentGoldText.SetText(_inGameShopManager.PurchasingUnit.FundsComponent.Balance.ToString());
+            _currentSkillPointsText.SetText(_inGameShopManager.PurchasingUnit.ExperienceComponent.SkillPoints.ToString());
             InGameShopManager.OnShopVisibilityToggled += HandleVisibilityToggled;
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
@@ -38,6 +41,16 @@ namespace UI.InGameShop {
             }
         }
 
+        private void SetSkillPointReminderVisibility() {
+            if (_inGameShopManager.PurchasingUnit == null) return;
+            if (_inGameShopManager.PurchasingUnit.ExperienceComponent.SkillPoints > 0 && _activeWindow != WindowType.Stats) {
+                purchasesAvailableIcon_StatsScreen.SetActive(true);
+            }
+            else {
+                purchasesAvailableIcon_StatsScreen.SetActive(false);
+            }
+        }
+
         private void OnDisable() {
             InGameShopManager.OnShopVisibilityToggled -= HandleVisibilityToggled;
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
@@ -45,6 +58,8 @@ namespace UI.InGameShop {
 
         private void HandlePurchase(object sender, object args) {
             _currentGoldText.SetText(_inGameShopManager.PurchasingUnit.FundsComponent.Balance.ToString());
+            _currentSkillPointsText.SetText(_inGameShopManager.PurchasingUnit.ExperienceComponent.SkillPoints.ToString());
+            SetSkillPointReminderVisibility();
         }
 
         public void ToggleActiveWindow(string typeAsString) {
@@ -54,12 +69,14 @@ namespace UI.InGameShop {
             }
 
             _activeWindow = windowType;
+            SetSkillPointReminderVisibility();
             this.PostNotification(NotificationType.DidToggleShopTab);
         }
 
         private void HandleVisibilityToggled(bool currentVisibility, Unit purchasingUnit) {
             if (!currentVisibility) return;
             _windows[_activeWindow].gameObject.SetActive(true);
+            SetSkillPointReminderVisibility();
         }
 
         public void CloseShop() {

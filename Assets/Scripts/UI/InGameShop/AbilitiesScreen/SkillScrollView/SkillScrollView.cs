@@ -35,7 +35,7 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
 
         private IEnumerator DelayInspectToggle() {
             yield return new WaitForEndOfFrame();
-            SkillScrollViewPanels[0].InspectAbility();
+            SkillScrollViewPanels[0].InspectAbility(true);
         }
 
         private void OnDisable() {

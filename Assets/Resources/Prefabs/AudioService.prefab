@@ -78,3 +78,11 @@ MonoBehaviour:
   DidLevelUp: {fileID: 8300000, guid: 5dd197a12d21602419e36d3f41e6e092, type: 3}
   GameOver: {fileID: 8300000, guid: 36dc968cb4cc2084d900f24f3892c65c, type: 3}
   RainLoop: {fileID: 8300000, guid: e623ff035fc947e4a9a19f6c360828c6, type: 3}
+  WaveCleared: {fileID: 8300000, guid: c75abffb6808e1b44b598ca571b8d159, type: 3}
+  InsufficientFundsForPurchase: {fileID: 8300000, guid: 639fc174de34d074f956fffb71cfbf5a,
+    type: 3}
+  ClickIncrement: {fileID: 8300000, guid: 2ec6d12990f9dda4daf821647029cbcd, type: 3}
+  ClickDecrement: {fileID: 8300000, guid: c137d6258eaffba46b5c729364c1debc, type: 3}
+  UISoftWarning: {fileID: 8300000, guid: 380808402d108e540affff1877fb463c, type: 3}
+  DidClickCloseShopButton: {fileID: 8300000, guid: d79cfc80517e81546a38232d55b82e65,
+    type: 3}

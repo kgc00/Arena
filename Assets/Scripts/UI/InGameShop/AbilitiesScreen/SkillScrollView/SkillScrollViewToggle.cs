@@ -18,6 +18,8 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
 
         [SerializeField] private Color purchasedFrameColor;
         [SerializeField] private Color purchasedBackgroundColor;
+        private bool _isSilent;
+
         private void OnEnable() {
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
             this.AddObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
@@ -34,12 +36,21 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
             this.RemoveObserver(HandleLockedSkillInspected, NotificationType.LockedSkillInspected);
         }
 
+        public void SilenceNextToggle() {
+            _isSilent = true;
+        }
+
         public void HandleToggle(bool toggleValue) {
             if (toggleValue) {
                 this.PostNotification(NotificationType.SkillScrollViewToggleToggledOn,
                     new SkillScrollViewToggleEvent(AbilityModel, ModifierShopData, IsPurchased));
                 _frame.enabled = true;
-                this.PostNotification(NotificationType.DidClickShopButton);
+                if (_isSilent) {
+                    _isSilent = false;
+                }
+                else {
+                    this.PostNotification(NotificationType.DidClickShopButton);
+                }
             }
             else {
                 _frame.enabled = false;

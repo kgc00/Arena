@@ -43,7 +43,13 @@ namespace Audio {
         [SerializeField] private AudioClip DidLevelUp;
         [SerializeField] private AudioClip GameOver;
         [SerializeField] private AudioClip RainLoop;
-
+        [SerializeField] private AudioClip WaveCleared;
+        [SerializeField] private AudioClip InsufficientFundsForPurchase;
+        [SerializeField] private AudioClip ClickIncrement;
+        [SerializeField] private AudioClip ClickDecrement;
+        [SerializeField] private AudioClip UISoftWarning;
+        [SerializeField] private AudioClip DidClickCloseShopButton;
+        
         private Dictionary<AudioSourceType, AudioSource> _audioSources;
         private Sequence _rainFadeOutSequence;
 
@@ -126,7 +132,14 @@ namespace Audio {
             this.RemoveObserver(HandleDidClickShopButton, NotificationType.DidClickShopButton);
             this.RemoveObserver(HandleRainDidFinish, NotificationType.RainDidFinish);
             this.RemoveObserver(HandleGameOver, NotificationType.GameOver);
+            this.RemoveObserver(HandleWaveCleared, NotificationType.WaveCleared);
+            this.RemoveObserver(HandleInsufficientFundsForPurchase, NotificationType.InsufficientFundsForPurchase);
+            this.RemoveObserver(HandleClickIncrement, NotificationType.ClickIncrement);
+            this.RemoveObserver(HandleClickDecrement, NotificationType.ClickDecrement);
+            this.RemoveObserver(HandleUISoftWarning, NotificationType.UISoftWarning);
+            this.RemoveObserver(HandleDidClickCloseShopButton, NotificationType.DidClickCloseShopButton);
         }
+        
 
         private void Start() {
             InitializeAudioSources();
@@ -167,8 +180,27 @@ namespace Audio {
             this.AddObserver(HandleDidClickShopButton, NotificationType.DidClickShopButton);
             this.AddObserver(HandleRainDidFinish, NotificationType.RainDidFinish);
             this.AddObserver(HandleGameOver, NotificationType.GameOver);
+            this.AddObserver(HandleWaveCleared, NotificationType.WaveCleared);
+            this.AddObserver(HandleInsufficientFundsForPurchase, NotificationType.InsufficientFundsForPurchase);
+            this.AddObserver(HandleClickIncrement, NotificationType.ClickIncrement);
+            this.AddObserver(HandleClickDecrement, NotificationType.ClickDecrement);
+            this.AddObserver(HandleUISoftWarning, NotificationType.UISoftWarning);
+            this.AddObserver(HandleDidClickCloseShopButton, NotificationType.DidClickCloseShopButton);
         }
 
+        private void HandleDidClickCloseShopButton(object arg1, object arg2) {PlaySFX(DidClickCloseShopButton); }
+
+        private void HandleUISoftWarning(object arg1, object arg2) {PlaySFX(UISoftWarning); }
+        private void HandleClickIncrement(object arg1, object arg2) {PlaySFX(ClickIncrement); }
+        private void HandleClickDecrement(object arg1, object arg2) {PlaySFX(ClickDecrement); }
+
+        private void HandleInsufficientFundsForPurchase(object arg1, object arg2) {
+            PlaySFX(InsufficientFundsForPurchase); }
+
+        private void HandleWaveCleared(object arg1, object arg2) {
+            PlaySFX(WaveCleared);
+        }
+        
         private void HandleRainDidFinish(object arg1, object arg2) {
             StopPlayingRain();
         }

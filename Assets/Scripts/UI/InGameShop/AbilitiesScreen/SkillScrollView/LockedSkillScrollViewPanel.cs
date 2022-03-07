@@ -9,9 +9,18 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
     public class LockedSkillScrollViewPanel : SkillScrollViewPanel {
         [SerializeField] private TextMeshProUGUI skillName;
 
-        public override void InspectAbility() {
-            // send some event
+        public void InspectAbility() {
             this.PostNotification(NotificationType.DidClickShopButton);
+            this.PostNotification(NotificationType.LockedSkillInspected,
+                new LockedSkillInspectedEvent(AssociatedAbility.Model));
+        }
+        
+        public override void InspectAbility(bool isSilent = false) {
+            // send some event
+            if (!isSilent) {
+                this.PostNotification(NotificationType.DidClickShopButton);
+            }
+
             this.PostNotification(NotificationType.LockedSkillInspected,
                 new LockedSkillInspectedEvent(AssociatedAbility.Model));
         }

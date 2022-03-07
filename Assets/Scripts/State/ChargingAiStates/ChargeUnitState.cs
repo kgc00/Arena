@@ -5,6 +5,7 @@ using Controls;
 using Data.Types;
 using JetBrains.Annotations;
 using State.MeleeAiStates;
+using State.TrainingDummy;
 using Status;
 using Units;
 using UnityEngine;
@@ -63,6 +64,8 @@ namespace State.ChargingAiStates {
             
             if (!AbilityFinished) return state;
 
+            if (_playerTransform == null) return new IdleUnitState(Owner);
+            
             var distanceToUnit = Vector3.Distance(_playerTransform.position, Owner.transform.position);
             var isWithinSlashRange = distanceToUnit <= orcSlash.Range;
 

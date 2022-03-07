@@ -55,20 +55,26 @@ namespace UI.InGameShop.StatScreen {
 
         public void HandleDecrement() {
             // this.PostNotification(NotificationType.InsufficientFundsForPurchase);
-            if (_baseValue > _newValue - 1) return;
+            if (_baseValue > _newValue - 1) {
+                this.PostNotification(NotificationType.UISoftWarning);
+                return;
+            }
             _newValue -= StatType == StatType.MovementSpeed ? 5 : 1;
             StatScreen.IncrementSkillBank();
             UpdateText();
-            this.PostNotification(NotificationType.DidClickShopButton);
+            this.PostNotification(NotificationType.ClickDecrement);
         }
 
         public void HandleIncrement() {
             // this.PostNotification(NotificationType.InsufficientFundsForPurchase);
-            if (StatScreen.SkillPointBank <= 0 || Utils.StatHelpers.CapForStat(StatType) <= _newValue) return;
+            if (StatScreen.SkillPointBank <= 0 || Utils.StatHelpers.CapForStat(StatType) <= _newValue) {
+                this.PostNotification(NotificationType.UISoftWarning);
+                return;
+            }
             _newValue += StatType == StatType.MovementSpeed ? 5 : 1;
             StatScreen.DecrementSkillBank();
             UpdateText();
-            this.PostNotification(NotificationType.DidClickShopButton);
+            this.PostNotification(NotificationType.ClickIncrement);
         }
 
         public void HandlePurchase(Unit purchasingUnit) {

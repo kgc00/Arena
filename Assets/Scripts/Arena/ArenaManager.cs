@@ -50,13 +50,13 @@ namespace Arena {
         }
 
         private IEnumerator HandleWavesCleared() {
-            yield return new WaitForSeconds(delayBeforeLoad);
-
             if (_arenaData == null) {
                 _arenaData = FindObjectOfType<ArenaData>();
             }
 
             var wasFinalHorde = _arenaData.EnemyWaves.Count - 1 == _arenaData.CurIndex;
+            this.PostNotification(NotificationType.WaveCleared);
+            yield return new WaitForSeconds(delayBeforeLoad);
             if (wasFinalHorde) {
                 if (_scoreKeeper == null) {
                     _scoreKeeper = FindObjectOfType<ScoreKeeper>();

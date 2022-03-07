@@ -22,8 +22,11 @@ namespace UI.InGameShop.AbilitiesScreen.SkillScrollView {
             _toggles = null;
         }
 
-        public override void InspectAbility() {
+        public override void InspectAbility(bool isSilent = false) {
             if (AssociatedAbility == null) return;
+            if (isSilent) {
+                _toggles[0].SilenceNextToggle();
+            }
             _toggles[0]._toggle.isOn = true;
         }
 

@@ -78,5 +78,11 @@
         public static string UnitDidSpawn = "UnitDidSpawn",
             ComponentsDidUpdate = "ComponentsDidUpdate",
             GameOver = "GameOver";
+
+        public static string WaveCleared = "WaveCleared";
+        public static string ClickIncrement = "ClickIncrement";
+        public static string ClickDecrement = "ClickDecrement";
+        public static string UISoftWarning = "UISoftWarning";
+        public static string DidClickCloseShopButton = "DidClickCloseShopButton";
     }
 }

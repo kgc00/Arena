@@ -13,7 +13,9 @@ namespace State.BossAiStates {
 
         public ChainFlameUnitState(Unit owner, Transform playerTransform) : base(owner) {
             this.playerTransform = playerTransform;
-            _targetUnit = playerTransform.gameObject.GetUnitComponent();
+            if (playerTransform != null) {
+                _targetUnit = playerTransform.gameObject.GetUnitComponent();
+            }
         }
 
         public override void Exit() {

@@ -80,7 +80,7 @@ namespace UI.InGameShop {
         }
 
         public void CloseShop() {
-            this.PostNotification(NotificationType.DidClickShopButton);
+            this.PostNotification(NotificationType.DidClickCloseShopButton);
             _inGameShopManager.ToggleVisibility();
         }
     }

@@ -17,7 +17,11 @@ namespace Common {
             List<Action<GameObject, GameObject>> callbacks,
             float projectileSpeed = default,
             float range = Int16.MaxValue,
-            float triggerWidthOverride = -1) {
+            float triggerWidthOverride = -1, 
+            bool overrideForwardDir = false) {
+            if (overrideForwardDir) {
+                gameObject.transform.LookAt(dir);
+            }
             var forward = gameObject.transform.forward;
             Direction = new Vector3(forward.x, 0, forward.z);
             onConnected = callbacks;

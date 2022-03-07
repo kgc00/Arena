@@ -50,7 +50,8 @@ namespace Abilities.AttackAbilities {
         private void InitializeAoEProjectile(Vector3 targetLocation, GameObject aoeProjectile) {
             void OnConnected(GameObject other, GameObject projectile) {
                 if (other.gameObject.CompareTag("Board")) {
-                    Destroy(projectile.gameObject);
+                    SpawnAoEEffect(projectile.transform.position);
+                    Destroy(projectile);
                     return;
                 }
                 
@@ -63,13 +64,15 @@ namespace Abilities.AttackAbilities {
                 if (!proximityComponent.IsLive) return;
                 SpawnAoEEffect(projectile.transform.position);
                 proximityComponent.SetInactive();
+                Destroy(projectile);
             }
 
             var onConnectedCallback = new List<Action<GameObject, GameObject>> { OnConnected };
             var aoeCallback = new List<Action<Vector3>> { SpawnAoEEffect };
 
             aoeProjectile.GetComponent<ProjectileComponent>()
-                .Initialize(targetLocation, onConnectedCallback, 10f);
+                .Initialize(targetLocation, onConnectedCallback, 10f, Single.MaxValue, -1, true);
+                
 
             aoeProjectile.AddComponent<ProximityComponent>().Initialize(targetLocation, aoeCallback);
         }
@@ -100,6 +103,8 @@ namespace Abilities.AttackAbilities {
                     force: 0,
                     duration: Duration)
                 .gameObject;
+            var vfx = MonoHelper.SpawnVfx(VfxType.ChainFlameExplosion, updatedTargetLocation);
+            vfx.GetComponent<SetParticleData>().Initialize(AreaOfEffectRadius);
         }
 
 
@@ -115,7 +120,7 @@ namespace Abilities.AttackAbilities {
         }
 
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) => projectile
-            .GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f);
+            .GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f, Single.MaxValue, -1, true);
 
         private GameObject SpawnProjectile() {
             var position = gameObject.transform.position;

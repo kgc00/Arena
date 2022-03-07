@@ -24,6 +24,7 @@
         MarkTriggered,
         PlayerDeath,
         DisruptStartup,
-        DisruptTrigger
+        DisruptTrigger,
+        ChainFlameExplosion
     }
 }

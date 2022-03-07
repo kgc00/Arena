@@ -316,17 +316,13 @@ namespace Utils {
         public static Vector3 GetWorldPosition() {
             if (cam == null) cam = Camera.main;
 
-            if (cam != null) {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-                if (plane.Raycast(ray, out float distanceToPlane)) {
-                    var mouseLocation = ray.GetPoint(distanceToPlane);
-                    mouseLocation.y = 0;
-                    return mouseLocation;
-                }
-            }
-
-            return Vector3.zero;
+            if (cam == null) return Vector3.zero;
+            
+            var ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (!plane.Raycast(ray, out var distanceToPlane)) return Vector3.zero;
+            var mouseLocation = ray.GetPoint(distanceToPlane);
+            mouseLocation.y = 0;
+            return mouseLocation;
         }
     }
 

@@ -11,7 +11,7 @@ namespace UI.Targeting {
         private GameObject _arrowPrefab;
         private GameObject _circlePrefab;
         private GameObject _rectanglePrefab;
-        private GameObject _arrow;
+        private ScaleAndPositionArrowUI _arrow;
         private ScaleAndPositionCircleUI _circle;
         private ScaleAndPositionRectangleUI _rectangle;
         private bool _initialized;
@@ -40,8 +40,8 @@ namespace UI.Targeting {
                 _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle");
                 _rectanglePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_square");
             }
-            _arrow = Instantiate(_arrowPrefab, transform, true);
-            _arrow.SetActive(false);
+            _arrow = Instantiate(_arrowPrefab, transform, true).GetComponent<ScaleAndPositionArrowUI>();
+            _arrow.gameObject.SetActive(false);
             _circle = Instantiate(_circlePrefab, transform, true).GetComponent<ScaleAndPositionCircleUI>();
             _circle.gameObject.SetActive(false);
             _rectangle = Instantiate(_rectanglePrefab, transform, true).GetComponent<ScaleAndPositionRectangleUI>();
@@ -53,7 +53,10 @@ namespace UI.Targeting {
         private void EnableTargeting(object sender, object args) {
             if (!_initialized) return;
             if (!(args is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
-            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(true);
+            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) {
+                _arrow.SetTargetLocation(intent.targetingData, intent.unit.Owner.ControlType == ControlType.Ai);
+                _arrow.gameObject.SetActive(true);
+            }
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) {
                 _circle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
                 _circle.gameObject.SetActive(true);
@@ -67,13 +70,13 @@ namespace UI.Targeting {
         private void DisableTargeting(object sender, object args) {
             if (!_initialized) return;
             if (!(args is UnitIntent intent) || !Equals(intent.unit, Owner)) return;
-            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.SetActive(false);
+            if (intent.ability.IndicatorType.HasFlag(IndicatorType.Arrow)) _arrow.gameObject.SetActive(false);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) _circle.gameObject.SetActive(false);
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) _rectangle.gameObject.SetActive(false);
         }
 
         public void DisableTargetingUI() {
-            _arrow.SetActive(false);
+            _arrow.gameObject.SetActive(false);
             _circle.gameObject.SetActive(false);
             _rectangle.gameObject.SetActive(false);
         }

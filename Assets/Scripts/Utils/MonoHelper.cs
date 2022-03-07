@@ -125,6 +125,9 @@ namespace Utils {
                 case VfxType.DisruptTrigger:
                     s = $"{Constants.PrefabsPath}Disrupt Explosion VFX";
                     break;
+                case VfxType.ChainFlameExplosion:
+                    s = $"{Constants.PrefabsPath}ChainFlameExplosionVFX";
+                    break;
             }
 
             return s;

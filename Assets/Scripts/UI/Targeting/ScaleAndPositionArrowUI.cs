@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Data;
+using UnityEngine;
 using Utils;
 
 namespace UI.Targeting {
@@ -9,12 +10,18 @@ namespace UI.Targeting {
         private Vector3 _midpoint;
         private Vector3 _heading;
         private Transform _startTransform;
+        private Vector3? _overrideEndLocation;
 
+        public void SetTargetLocation(TargetingData intentTargetingData, bool isAiSkill) {
+            if (!isAiSkill) return; // quick hack to have the player's arrow always set to mouse pos and the AI set to a static v3
+            _overrideEndLocation = intentTargetingData._location;
+        }
+        
         private void Update() {
             if (_startTransform == null) _startTransform = transform.root;
             _startPos = _startTransform.position;
             _startPos.y = 0;
-            _endPos = MouseHelper.GetWorldPosition();
+            _endPos = _overrideEndLocation ?? MouseHelper.GetWorldPosition();
             _endPos.y = 0;
             _midpoint = (_startPos + _endPos) / 2;
             _midpoint.y = 0;
@@ -25,6 +32,10 @@ namespace UI.Targeting {
 
             Quaternion rotation = Quaternion.LookRotation(Vector3.up, _heading);
             image.transform.rotation = rotation;
+        }
+
+        private void OnDisable() {
+            _overrideEndLocation = null;
         }
     }
 }

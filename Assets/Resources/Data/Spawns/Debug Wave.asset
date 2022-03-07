@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Debug Wave
   m_EditorClassIdentifier: 
   wave:
-  - {fileID: 11400000, guid: 61d90600f0404fb4ab2b2f3e2429d0b1, type: 2}
   - {fileID: 11400000, guid: 18788657901ab064e98bb983fd576ccd, type: 2}
-  - {fileID: 11400000, guid: 18788657901ab064e98bb983fd576ccd, type: 2}
+  - {fileID: 11400000, guid: 86264f0f4145a04428adc7d9e1e44454, type: 2}
   modifiers: 

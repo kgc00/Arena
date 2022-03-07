@@ -105,6 +105,7 @@ namespace Abilities.AttackAbilities {
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.ChainFlameExplosion, updatedTargetLocation);
             vfx.GetComponent<SetParticleData>().Initialize(AreaOfEffectRadius);
+            this.PostNotification(NotificationType.DidConnectChainFlame);
         }
 
 
@@ -145,8 +146,6 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile = null) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-            this.PostNotification(NotificationType.DidConnectChainFlame);
-
 
             if (hitGeometry) {
                 Destroy(projectile);

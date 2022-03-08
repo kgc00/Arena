@@ -2,8 +2,10 @@
 using System.Linq;
 using Common;
 using Components;
+using Data;
 using Data.Params;
 using Data.Types;
+using State;
 using Units;
 using UnityEngine;
 using Utils;
@@ -13,21 +15,24 @@ using static Utils.MathHelpers;
 namespace Abilities.AttackAbilities {
     public class Roar : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
+            var ownerPos = Owner.transform.position;
+            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, ownerPos), Owner));
             yield return new WaitForSeconds(StartupTime);
+            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, ownerPos), Owner));
             this.PostNotification(NotificationType.DidCastRoar);
             OnAbilityActivationFinished(Owner, this);
-            Destroy(MonoHelper.SpawnVfx(VfxType.Roar, gameObject.transform.position), Duration - StartupTime);
+            Destroy(MonoHelper.SpawnVfx(VfxType.Roar, ownerPos), Duration - StartupTime);
             var colliderParams = new SphereParams(AreaOfEffectRadius);
             var _ = new GameObject("Pull Force").AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
-                    Owner.transform.position,
-                    Owner.transform.position,
+                    ownerPos,
+                    ownerPos,
                     HandleEnterEnterEffect,
                     null,
                     null,
                     AffectedFactions,
                     Force, 
-                    Duration - StartupTime)
+                    0.25f)
                 .gameObject;
             yield return new WaitForSeconds(Duration);
             ExecuteOnAbilityFinished();

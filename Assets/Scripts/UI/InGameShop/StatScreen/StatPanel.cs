@@ -4,6 +4,7 @@ using Data.Types;
 using TMPro;
 using Units;
 using UnityEngine;
+using Utils;
 using Utils.NotificationCenter;
 
 namespace UI.InGameShop.StatScreen {
@@ -13,6 +14,8 @@ namespace UI.InGameShop.StatScreen {
         [SerializeField] private TextMeshProUGUI StatNameText;
         [SerializeField] private TextMeshProUGUI StatDescriptionText;
         [SerializeField] private TextMeshProUGUI StatValueText;
+        [SerializeField] private GameObject incrementButton;
+        [SerializeField] private GameObject decrementButton;
         private StatsComponent _statsComponent;
         private int _baseValue;
         private int _newValue;
@@ -45,11 +48,20 @@ namespace UI.InGameShop.StatScreen {
             }
 
             if (StatDescriptionText != null) {
-                StatDescriptionText.text = Utils.StatHelpers.GetDescription(StatType, _newValue);
+                StatDescriptionText.text = StatHelpers.GetDescription(StatType, _newValue);
             }
 
             if (StatValueText != null && _statsComponent != null) {
                 StatValueText.text = _newValue.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if ( _statsComponent.StatFromEnum(StatType).Value >= StatHelpers.CapForStat(StatType)) {
+                incrementButton.SetActive(false);
+                decrementButton.SetActive(false);
+            }
+            else {
+                incrementButton.SetActive(true);
+                decrementButton.SetActive(true);
             }
         }
 
@@ -67,7 +79,7 @@ namespace UI.InGameShop.StatScreen {
 
         public void HandleIncrement() {
             // this.PostNotification(NotificationType.InsufficientFundsForPurchase);
-            if (StatScreen.SkillPointBank <= 0 || Utils.StatHelpers.CapForStat(StatType) <= _newValue) {
+            if (StatScreen.SkillPointBank <= 0 || StatHelpers.CapForStat(StatType) <= _newValue) {
                 this.PostNotification(NotificationType.UISoftWarning);
                 return;
             }

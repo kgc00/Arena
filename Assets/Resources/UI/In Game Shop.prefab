@@ -1242,6 +1242,8 @@ MonoBehaviour:
   StatNameText: {fileID: 419791660954016789}
   StatDescriptionText: {fileID: 8625138549116186891}
   StatValueText: {fileID: 744483011610667775}
+  incrementButton: {fileID: 3816908879884599568}
+  decrementButton: {fileID: 5090661115371625395}
   _shouldUpdateTextInEditor: 0
 --- !u!1 &1116411022852131216
 GameObject:
@@ -7397,6 +7399,8 @@ MonoBehaviour:
   StatNameText: {fileID: 7468422799178185161}
   StatDescriptionText: {fileID: 4253411476532515847}
   StatValueText: {fileID: 1279466299397319405}
+  incrementButton: {fileID: 8159879695804247493}
+  decrementButton: {fileID: 8155741531896222333}
   _shouldUpdateTextInEditor: 0
 --- !u!1 &4911721662614351530
 GameObject:
@@ -8227,6 +8231,8 @@ MonoBehaviour:
   StatNameText: {fileID: 5238152833991391235}
   StatDescriptionText: {fileID: 2070559606395521335}
   StatValueText: {fileID: 2619550818922590486}
+  incrementButton: {fileID: 7759558889436923298}
+  decrementButton: {fileID: 5296329525285268893}
   _shouldUpdateTextInEditor: 0
 --- !u!1 &5518447298197198888
 GameObject:
@@ -11375,6 +11381,8 @@ MonoBehaviour:
   StatNameText: {fileID: 4231024495513583235}
   StatDescriptionText: {fileID: 2941179798801000318}
   StatValueText: {fileID: 739913587059663667}
+  incrementButton: {fileID: 7348889939835571138}
+  decrementButton: {fileID: 4894513268089643188}
   _shouldUpdateTextInEditor: 0
 --- !u!1 &7348889939835571138
 GameObject:
@@ -12698,6 +12706,8 @@ MonoBehaviour:
   StatNameText: {fileID: 1236342488488810843}
   StatDescriptionText: {fileID: 1992658463920584789}
   StatValueText: {fileID: 2493469348041699260}
+  incrementButton: {fileID: 5971412373518588454}
+  decrementButton: {fileID: 3132563756929335893}
   _shouldUpdateTextInEditor: 0
 --- !u!1 &8059824076418207260
 GameObject:

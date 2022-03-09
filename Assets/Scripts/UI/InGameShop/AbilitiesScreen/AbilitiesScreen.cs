@@ -66,7 +66,7 @@ namespace UI.InGameShop.AbilitiesScreen {
                     .Values
                     .First(x => x.Type == _selectedAbilityData.type);
                 ability.Model.unlocked = true;
-                ability.ResetInstanceValuesExcludingSpentModifiers();
+                ability.ReinitializeDataWhileRetainingNewModifiers();
                 purchaseEvent =
                     new PurchaseEvent(_selectedAbilityData.unlockCost, _selectedAbilityData.type.ToString(), PurchaseEvent.PurchaseType.SkillUnlock);
             }

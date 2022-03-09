@@ -33,7 +33,7 @@ namespace Abilities {
             return this;
         }
 
-        public override void ResetInstanceValuesExcludingSpentModifiers()
+        public override void ReinitializeDataWhileRetainingNewModifiers()
         {
             if (Model == null || Owner == null)
             {
@@ -41,7 +41,9 @@ namespace Abilities {
                 return;
             }
 
+            var previousMods = Modifiers;
             Initialize(Model, Owner, StatsComponent);
+            Modifiers = previousMods;
         }
 
         public override string ToString() => string.Format($"Movement Attack Ability {DisplayName} is equipped by {Owner}");

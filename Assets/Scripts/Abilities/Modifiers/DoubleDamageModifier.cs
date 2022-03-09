@@ -14,5 +14,7 @@ namespace Abilities.Modifiers
             Ability.Damage *= 2;
             base.Handle();
         }
+
+        public override bool ShouldConsume() => false;
     }
 }

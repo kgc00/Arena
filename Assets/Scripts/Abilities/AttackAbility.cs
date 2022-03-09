@@ -31,7 +31,7 @@ namespace Abilities
             return this;
         }
 
-        public override void ResetInstanceValuesExcludingSpentModifiers()
+        public override void ReinitializeDataWhileRetainingNewModifiers()
         {
             if (Model == null || Owner == null)
             {
@@ -39,9 +39,13 @@ namespace Abilities
                 return;
             }
 
+            
             var previousMods = Modifiers;
             Initialize(Model, Owner, StatsComponent);
-            Modifiers = previousMods.Intersect(Modifiers).ToList();
+            Modifiers = previousMods;
+            // Modifiers = previousMods.Intersect(Modifiers).ToList();
+            // bug- intersecting modifiers causes leveling to removes purchased modifiers
+            // its kind of unnecessary to do so just commenting out for now
         }
 
         public override string ToString()

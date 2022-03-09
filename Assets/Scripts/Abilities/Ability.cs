@@ -102,6 +102,7 @@ namespace Abilities {
             Modifiers.Add(AbilityFactory.AbilityModifierFromEnum(this, modifierType));
         }
         
-        public abstract void ResetInstanceValuesExcludingSpentModifiers();
+        // if we want to clear modifiers obtained during the course of the game, we can add a new method
+        public abstract void ReinitializeDataWhileRetainingNewModifiers();
     }
 }

@@ -23,15 +23,17 @@ namespace Abilities
             return this;
         }
         
-        public override void ResetInstanceValuesExcludingSpentModifiers()
+        public override void ReinitializeDataWhileRetainingNewModifiers()
         {
             if (Model == null || Owner == null)
             {
                 Debug.Log("Model or Owner are not set and we cannot reset instance values");
                 return;
             }
-
+            
+            var previousMods = Modifiers;
             Initialize(Model, Owner, StatsComponent);
+            Modifiers = previousMods;
         }
     }
 }

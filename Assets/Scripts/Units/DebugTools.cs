@@ -7,7 +7,6 @@ using UI;
 
 namespace Units {
     public class DebugTools : MonoBehaviour {
-
         public void KillEnemies() {
             var units = FindObjectsOfType<Unit>();
             foreach (var u in units) {
@@ -23,6 +22,7 @@ namespace Units {
                     u.HealthComponent.Refill();
             }
         }
+
         public void AddExperience() {
             var units = FindObjectsOfType<Unit>();
             foreach (var u in units) {
@@ -31,21 +31,38 @@ namespace Units {
             }
         }
 
-        private void OnGUI() {
-            GUILayout.BeginArea(new Rect(new Vector2(250, 15), new Vector2(150, 300)));
-            if (GUILayout.RepeatButton("kill enemies")) {
-                KillEnemies();
-            };
-            if (GUILayout.RepeatButton("heal player")) {
-                HealPlayer();
-            };
-            if (GUILayout.RepeatButton("award xp")) {
-                AddExperience();
-            };
-            GUILayout.EndArea();
-
+        private void AddGold() {
+            var units = FindObjectsOfType<Unit>();
+            foreach (var u in units) {
+                if (u.Owner.ControlType == ControlType.Local)
+                    u.FundsComponent.AddFunds(300);
+            }
         }
 
+        private void OnGUI() {
+            GUILayout.BeginArea(new Rect(new Vector2(Screen.width - 185, 15), new Vector2(150, 300)));
+            if (GUILayout.RepeatButton("kill enemies")) {
+                KillEnemies();
+            }
+
+            ;
+            if (GUILayout.RepeatButton("heal player")) {
+                HealPlayer();
+            }
+
+            ;
+            if (GUILayout.RepeatButton("award xp")) {
+                AddExperience();
+            }
+
+            ;
+            if (GUILayout.RepeatButton("award money")) {
+                AddGold();
+            }
+
+            ;
+            GUILayout.EndArea();
+        }
     }
 }
 

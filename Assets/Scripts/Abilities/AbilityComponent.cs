@@ -43,7 +43,7 @@ namespace Abilities
         }
 
         public void ReinitializeAbilities() {
-            equippedAbilitiesByType.ForEach(x => x.Value.ResetInstanceValuesExcludingSpentModifiers());
+            equippedAbilitiesByType.ForEach(x => x.Value.ReinitializeDataWhileRetainingNewModifiers());
         }
         
         public Coroutine Activate(ref Ability ability, Vector3 targetLocation) {
@@ -88,7 +88,7 @@ namespace Abilities
              * MAY introduce bugs due to concurrent ability executions but probably fine
              * but here because we need to remove old modifiers after ability execution. 
              */
-            ability.ResetInstanceValuesExcludingSpentModifiers(); 
+            ability.ReinitializeDataWhileRetainingNewModifiers(); 
         }
 
         private void CreateEquippedAbilitiesByType(Dictionary<ButtonType, Ability> initializedAbilities) {

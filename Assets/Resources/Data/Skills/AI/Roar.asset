@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlockCost: 0
   unlocked: 1
-  areaOfEffectRadius: 13
+  areaOfEffectRadius: 10
   cooldown: 5.5
   minimumCooldown: 0
   description: 
   displayName: Roar
-  duration: 1.5
+  duration: 2
   energyCost: 0
   force: 500
   icon: {fileID: 0}
-  indicatorType: 0
+  indicatorType: 4
   projectileSpeed: 0
-  range: 9
-  startupTime: 0.5
+  range: 8
+  startupTime: 1
   type: 15
   modifiers: 
   equipableModifiers: 
   affectedFactions: 0000000001000000
-  damage: 10
+  damage: 7

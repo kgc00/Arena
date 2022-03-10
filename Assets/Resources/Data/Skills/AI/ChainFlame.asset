@@ -23,7 +23,7 @@ MonoBehaviour:
   energyCost: 0
   force: 120
   icon: {fileID: 0}
-  indicatorType: 4
+  indicatorType: 6
   projectileSpeed: 10
   range: 0
   startupTime: 0.5
@@ -31,4 +31,4 @@ MonoBehaviour:
   modifiers: 
   equipableModifiers: 
   affectedFactions: 0000000001000000
-  damage: 15
+  damage: 5

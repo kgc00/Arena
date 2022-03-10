@@ -59,7 +59,9 @@ namespace Abilities.AttackAbilities {
         }
 
         private IEnumerator HandleEnterStrategy(Collider arg1, Rigidbody arg2, float arg3, Transform arg4) {
+            if (Owner.gameObject == null) yield break;
             yield return StartCoroutine(AoEAddMarkAndDealDamage(arg1, arg2, arg3, arg4));
+            if (Owner.gameObject == null) yield break;
             yield return StartCoroutine(
                 ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading](arg1, arg2, arg3, arg4));
         }

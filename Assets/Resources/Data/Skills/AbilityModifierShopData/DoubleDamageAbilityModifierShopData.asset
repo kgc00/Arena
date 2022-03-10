@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Double Damage
   Description: Grants 2x ability base damage.
-  Cost: 100
+  Cost: 250
   Image: {fileID: 21300000, guid: 3438f3a734a5e6d408783d28bd4aa2be, type: 3}
   Type: 4

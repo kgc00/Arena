@@ -33,7 +33,7 @@ namespace Status {
             };
             return this;
         }
-
+        
         public void Subscribe() {
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }

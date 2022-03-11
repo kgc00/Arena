@@ -48,7 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerspawndata: {fileID: 11400000, guid: 1b801ba917641b84da1e097989e40bf8, type: 2}
   _enemyWaves:
-  - {fileID: 11400000, guid: aa4165fa64651fa42a90fff697a01cbe, type: 2}
+  - {fileID: 11400000, guid: ebb7e025a7edfeb48b679e87079190a7, type: 2}
+  - {fileID: 11400000, guid: bfc7a5a3de954f94980c9c0a11afd1e4, type: 2}
+  - {fileID: 11400000, guid: 282b050c18eeff043961cb209530bcf2, type: 2}
+  - {fileID: 11400000, guid: 74a96ba8d7bc6874b8151a1d0b191e90, type: 2}
+  - {fileID: 11400000, guid: 5e8cfa94227e6c645b3068ca8c1ad53c, type: 2}
+  - {fileID: 11400000, guid: 45fd35d05270e6e49a72331b1bdbc272, type: 2}
   - {fileID: 11400000, guid: aa4165fa64651fa42a90fff697a01cbe, type: 2}
   curIndex: 0
 --- !u!114 &3622167240462521227

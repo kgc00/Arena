@@ -50,13 +50,14 @@ namespace Units {
         public string poolKey { get; set; }
 
         public Unit Initialize(Player owner, UnitData data) {
-            PurchasedItems ??= new List<ItemType>();
+            if (Initialized) return this;
             
             // properties & fields
             UnitData = data;
             Owner = owner;
             Portrait = data.visualAssets.portrait;
             Renderers = GetComponentsInChildren<Renderer>().ToList();
+            PurchasedItems ??= new List<ItemType>();
 
             // Controller
             if (Controller == null) Controller = GetComponentInChildren<Controller>();
@@ -113,31 +114,47 @@ namespace Units {
 
             if (InGameShopManager == null) InGameShopManager = FindObjectOfType<InGameShopManager>();
             
-            ExperienceComponent.Subscribe();
-            StatusComponent.Subscribe();
-            FundsComponent.Subscribe();
-            UIController.Subscribe();
-            ItemDropComponent.Subscribe();
+            Subscribe();
             Initialized = true;
             state.Enter();
             return this;
         }
 
+        private void Subscribe() {
+            ExperienceComponent.Subscribe();
+            StatusComponent.Subscribe();
+            FundsComponent.Subscribe();
+            UIController.Subscribe();
+            ItemDropComponent.Subscribe();
+        }
+
         public void HandleExitFromPool() {
-            // todo subscribe to events
+            // reinitialize (do not just call initialize again because it will delete
+            // and recreate some resources (e.g. abilitie scripts)
+            if (!Initialized) return;
+            PurchasedItems = new List<ItemType>();
+            FundsComponent.Initialize(this, UnitData.fundsData);
+            StatsComponent.Initialize(this, UnitData.statsData);
+            ExperienceComponent.Initialize(this, UnitData.experience);
+            AbilityComponent.ReinitializeAbilities();
+            HealthComponent.ReinitializeHealth();
+            StatusComponent.Initialize(this);
+            state = StateHelper.StateFromEnum(UnitData.state, this);
+            InGameShopManager = FindObjectOfType<InGameShopManager>();
+            Subscribe();
         }
 
         public void HandleReturnToPool() {
-            // todo unsubscribe to events
+            Unsubscribe();
+        }
+
+        private void Unsubscribe() {
             if (!Initialized) return;
             ExperienceComponent.Unsubscribe();
             StatusComponent.Unsubscribe();
             FundsComponent.Unsubscribe();
             UIController.Unsubscribe();
             ItemDropComponent.Unsubscribe();
-
-            // todo keep initialized true, create reinitialize method
-            Initialized = false;
         }
 
         private void OnDestroy() {

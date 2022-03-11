@@ -23,7 +23,7 @@ namespace UI.Targeting {
                 : _targetingData._location;
         }
 
-        private void Update() {
+        private void LateUpdate() {
             if (_startTransform == null) _startTransform = transform.root;
             _startPos = _startTransform.position;
             _startPos.y = 0;

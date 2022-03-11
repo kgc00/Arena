@@ -49,7 +49,7 @@ namespace UI.InGameShop.StatScreen {
         public void HandlePurchase() {
             var purchasingUnit = _inGameShopManager.PurchasingUnit;
             Debug.Assert(purchasingUnit != null);
-            if (purchasingUnit.ExperienceComponent.SkillPoints == 0) {
+            if (purchasingUnit.ExperienceComponent.SkillPoints == SkillPointBank) {
                 this.PostNotification(NotificationType.InsufficientFundsForPurchase);
                 return;
             }

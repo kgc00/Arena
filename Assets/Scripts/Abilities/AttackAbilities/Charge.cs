@@ -11,8 +11,11 @@ using Utils.NotificationCenter;
 
 namespace Abilities.AttackAbilities {
     public class Charge : MovementAttackAbility {
-        private Vector3 startLocation = new Vector3(-999, -999, -999);
-        private Vector3 targetLocation = new Vector3(-999, -999, -999);
+        private Vector3 _debugStartLocation = new Vector3(-999, -999, -999);
+        private Vector3 _debugTargetLocation = new Vector3(-999, -999, -999);
+        private Vector3 _debugHeading = new Vector3(-999, -999, -999);
+        private bool _debugMode = false;
+
         public bool ImpactedWall { get; private set; }
         // should parameterize this on the model/data
         public float WallImpactStunDuration { get; private set; } = 3f;
@@ -25,13 +28,15 @@ namespace Abilities.AttackAbilities {
             if (rb == null) {
                 rb = Owner.GetComponent<Rigidbody>();
             }
-            startLocation = Owner.transform.position;
-            this.targetLocation = targetLocation;
+            var startLocation = Owner.transform.position;
             heading = targetLocation - startLocation;
             heading.y = 0f;
             heading = heading.normalized;
             distanceTraveled = 0f;
             ImpactedWall = false;
+            _debugStartLocation = startLocation;
+            _debugTargetLocation = targetLocation;
+            _debugHeading = heading;
             this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, targetLocation), Owner));
 
             yield return new WaitForSeconds(StartupTime);
@@ -97,5 +102,17 @@ namespace Abilities.AttackAbilities {
                 }
             }
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos() {
+            if (!_debugMode) return;
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(_debugStartLocation, 1f);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(_debugTargetLocation, 1f);
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(_debugHeading, 1f);
+        }
+#endif
     }
 }

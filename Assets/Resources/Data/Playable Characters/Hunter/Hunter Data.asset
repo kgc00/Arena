@@ -38,3 +38,4 @@ MonoBehaviour:
     intelligence: 1
     endurance: 1
     movementSpeed: 100
+  poolKey: Hunter

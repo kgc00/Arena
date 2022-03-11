@@ -27,14 +27,8 @@ namespace Components
             CurrentExp = Mathf.Max(data.currentExp, 1);
             Level = Mathf.Max(LevelFromExp(CurrentExp), 1);
             Bounty = data.bounty;
-            Unit.OnDeath += AwardBounty;
             return this;
         }
-
-        private void OnDestroy() {
-            Unit.OnDeath -= AwardBounty;
-        }
-
 
         void AdjustExperience(int amount) {
             var prevExp = CurrentExp;
@@ -68,6 +62,14 @@ namespace Components
             if (unitWasNotAi || ownerIsAi || unitWasSelf) return;
             
             AdjustExperience(Mathf.Abs(unit.ExperienceComponent.Bounty));
+        }
+
+        public void Subscribe() {
+            Unit.OnDeath += AwardBounty;
+        }
+        
+        public void Unsubscribe() {
+            Unit.OnDeath -= AwardBounty;
         }
     }
 }

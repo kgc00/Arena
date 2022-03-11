@@ -33,3 +33,4 @@ MonoBehaviour:
     intelligence: 1
     endurance: 1
     movementSpeed: 3
+  poolKey: Melee

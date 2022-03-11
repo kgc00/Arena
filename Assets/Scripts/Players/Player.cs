@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Data.Types;
 using Data.UnitData;
+using Pooling;
 using Units;
 using UnityEngine;
 using Utils;
@@ -34,9 +35,10 @@ namespace Players
             }
         }
 
-        public Unit InstantiateUnit(GameObject instance, UnitData unitData, Vector3 pos)
-        {
-            var unit = Instantiate(instance, pos, Quaternion.identity)?.GetComponent<Unit>()?.Initialize(this, unitData);
+        public Unit InstantiateUnit(GameObject prefab, UnitData unitData, Vector3 pos) {
+            var poolable = ObjectPool.GetInstanceFromPool(unitData.poolKey);
+            var unit = poolable.Owner.GetComponent<Unit>().Initialize(this, unitData);
+            unit.transform.SetPositionAndRotation(pos, Quaternion.identity);
             units.Add(unit);
             return unit;
         }

@@ -34,11 +34,11 @@ namespace Status {
             return this;
         }
 
-        private void OnEnable() {
+        public void Subscribe() {
             this.AddObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 
-        private void OnDisable() {
+        public void Unsubscribe() {
             this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
         }
 

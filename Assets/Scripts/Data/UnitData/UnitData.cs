@@ -23,5 +23,6 @@ namespace Data.UnitData
         [SerializeField] public VisualAssets visualAssets;
         // Stats
         [SerializeField] public StatsData statsData;
+        [SerializeField] public string poolKey;
     }
 }

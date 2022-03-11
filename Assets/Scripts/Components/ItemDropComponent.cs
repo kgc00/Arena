@@ -24,12 +24,15 @@ namespace Components {
                 UnitType.Boss => new List<DropData> {new DropData(DropType.HealthPickupLarge, 3)},
                 _ => new List<DropData>()
             };
-            Unit.OnDeath += StartSpawnDropsCrt;
 
             return this;
         }
 
-        private void OnDestroy() {
+        public void Subscribe() {
+            Unit.OnDeath += StartSpawnDropsCrt;
+        }
+
+        public void Unsubscribe() {
             Unit.OnDeath -= StartSpawnDropsCrt;
         }
 

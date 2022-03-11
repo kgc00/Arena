@@ -14,11 +14,14 @@ namespace Components {
             Balance = fundsData.balance;
             Bounty = fundsData.bounty;
             Owner = owner;
-            Unit.OnDeath += AwardBounty;
             return this;
         }
 
-        private void OnDestroy() {
+        public void Subscribe() {
+            Unit.OnDeath += AwardBounty;
+        }
+
+        public void Unsubscribe() {
             Unit.OnDeath -= AwardBounty;
         }
 

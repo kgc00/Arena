@@ -12,6 +12,7 @@ using State;
 using UnityEngine;
 using Utils;
 using Players;
+using Pooling;
 using Status;
 using UI.InGameShop;
 using UI.Targeting;
@@ -19,7 +20,7 @@ using UnityEngine.Serialization;
 using Utils.NotificationCenter;
 
 namespace Units {
-    public sealed class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser {
+    public sealed class Unit : MonoBehaviour, IDamageable, IAbilityUser, IExperienceUser, IPoolable {
         public List<ItemType> PurchasedItems;
         public static Action<Unit> OnDeath = delegate { };
         public List<Renderer> Renderers { get; protected set; }
@@ -41,14 +42,16 @@ namespace Units {
         public FundsComponent FundsComponent { get; private set; }
         public ItemDropComponent ItemDropComponent { get; private set; }
         public UnitData UnitData;
+        private GameObject _owner;
         public InGameShopManager InGameShopManager { get; private set; }
         public bool Initialized { get; private set; } = false;
-
-        private void Awake() {
-            PurchasedItems = new List<ItemType>();
-        }
+        public bool inUse { get; set; }
+        GameObject IPoolable.Owner => gameObject;
+        public string poolKey { get; set; }
 
         public Unit Initialize(Player owner, UnitData data) {
+            PurchasedItems ??= new List<ItemType>();
+            
             // properties & fields
             UnitData = data;
             Owner = owner;
@@ -56,11 +59,12 @@ namespace Units {
             Renderers = GetComponentsInChildren<Renderer>().ToList();
 
             // Controller
-            if (Controller == null) Controller = GetComponentInChildren<Controller>().Initialize(this);
+            if (Controller == null) Controller = GetComponentInChildren<Controller>();
+            Controller.Initialize(this);
 
             // Input Modifiers
-            if (InputModifierComponent == null)
-                InputModifierComponent = gameObject.AddComponent<InputModifierComponent>().Initialize(this);
+            if (InputModifierComponent == null) InputModifierComponent = gameObject.AddComponent<InputModifierComponent>();
+            InputModifierComponent  .Initialize(this);
 
             // RigidBody
             if (Rigidbody == null) Rigidbody = GetComponentInChildren<Rigidbody>();
@@ -69,51 +73,80 @@ namespace Units {
             if (Animator == null) Animator = GetComponentInChildren<Animator>();
 
             // Stats -- must occur before abilities & health
-            if (StatsComponent == null)
-                StatsComponent = gameObject.AddComponent<StatsComponent>().Initialize(this, data.statsData);
+            if (StatsComponent == null)  StatsComponent = gameObject.AddComponent<StatsComponent>();
+            StatsComponent.Initialize(this, data.statsData);
 
             // Health
-            if (HealthComponent == null)
-                HealthComponent = gameObject.AddComponent<HealthComponent>()
-                    .Initialize(this, data.health, StatsComponent);
+            if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>();
+            HealthComponent.Initialize(this, data.health, StatsComponent);
 
             // Abilities
-            if (AbilityComponent == null)
-                AbilityComponent = gameObject.AddComponent<AbilityComponent>()
-                    .Initialize(this, data.abilities, StatsComponent);
+            if (AbilityComponent == null) AbilityComponent = gameObject.AddComponent<AbilityComponent>();
+            AbilityComponent.Initialize(this, data.abilities, StatsComponent);
 
             // Experience
-            if (ExperienceComponent == null)
-                ExperienceComponent = gameObject.AddComponent<ExperienceComponent>().Initialize(this, data.experience);
+            if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>();
+            ExperienceComponent.Initialize(this, data.experience);
 
             // CoroutineHelper
-            if (CoroutineHelper == null) CoroutineHelper = gameObject.AddComponent<CoroutineHelper>().Initialize(this);
+            if (CoroutineHelper == null) CoroutineHelper = gameObject.AddComponent<CoroutineHelper>();
+            CoroutineHelper.Initialize(this);
 
             // Status 
-            if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>().Initialize(this);
+            if (StatusComponent == null) StatusComponent = gameObject.AddComponent<StatusComponent>();
+            StatusComponent.Initialize(this);
 
             // Funds
-            if (FundsComponent == null)
-                FundsComponent = gameObject.AddComponent<FundsComponent>().Initialize(this, data.fundsData);
+            if (FundsComponent == null) FundsComponent = gameObject.AddComponent<FundsComponent>();
+            FundsComponent.Initialize(this, data.fundsData);
 
             // Targeting HUD 
-            if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>().Initialize(this);
+            if (UIController == null) UIController = gameObject.AddComponent<TargetingUIController>();
+            UIController.Initialize(this);
 
             // Item drops
-            if (ItemDropComponent == null)
-                ItemDropComponent = gameObject.AddComponent<ItemDropComponent>().Initialize(this);
+            if (ItemDropComponent == null) ItemDropComponent = gameObject.AddComponent<ItemDropComponent>();
+            ItemDropComponent.Initialize(this);
 
             // State
             state = StateHelper.StateFromEnum(data.state, this);
 
-
-            if (InGameShopManager == null) {
-                InGameShopManager = FindObjectOfType<InGameShopManager>();
-            }
-
+            if (InGameShopManager == null) InGameShopManager = FindObjectOfType<InGameShopManager>();
+            
+            ExperienceComponent.Subscribe();
+            StatusComponent.Subscribe();
+            FundsComponent.Subscribe();
+            UIController.Subscribe();
+            ItemDropComponent.Subscribe();
             Initialized = true;
             state.Enter();
             return this;
+        }
+
+        public void HandleExitFromPool() {
+            // todo subscribe to events
+        }
+
+        public void HandleReturnToPool() {
+            // todo unsubscribe to events
+            if (!Initialized) return;
+            ExperienceComponent.Unsubscribe();
+            StatusComponent.Unsubscribe();
+            FundsComponent.Unsubscribe();
+            UIController.Unsubscribe();
+            ItemDropComponent.Unsubscribe();
+
+            // todo keep initialized true, create reinitialize method
+            Initialized = false;
+        }
+
+        private void OnDestroy() {
+            if (!Initialized) return;
+            ExperienceComponent.Unsubscribe();
+            StatusComponent.Unsubscribe();
+            FundsComponent.Unsubscribe();
+            UIController.Unsubscribe();
+            ItemDropComponent.Unsubscribe();
         }
 
         public Unit UpdateComponents() {
@@ -157,8 +190,8 @@ namespace Units {
                 MonoHelper.SpawnVfx(VfxType.PlayerDeath, transform.position);
             }
             gameObject.SetActive(false);
-            Destroy(gameObject, 1f);
-            yield break;
+            yield return new WaitForSeconds(1f);
+            ObjectPool.AddOrReturnInstanceToPool(poolKey,this);
         }
 
         public void OnLevelUp() {

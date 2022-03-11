@@ -37,6 +37,7 @@ namespace UI.HUD.EnemyHealthbar {
         }
 
         void UpdateHealthValue() {
+            if (_owner == null) return;
             var fillAmount = _owner.HealthComponent.CurrentHp / _owner.HealthComponent.MaxHp;
             healthbar.SetActive(fillAmount < 1);
             _healthFill.fillAmount = fillAmount;

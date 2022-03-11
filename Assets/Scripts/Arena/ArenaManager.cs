@@ -1,8 +1,11 @@
 ﻿using System.Collections;
+using System.Linq;
 using Common.Levels;
 using Controls;
 using Data;
 using Data.Types;
+using Pooling;
+using Sirenix.Utilities;
 using Spawner;
 using UI;
 using UI.InGameShop;
@@ -42,6 +45,7 @@ namespace Arena {
             this.PostNotification(NotificationType.GameOver);
             _scoreKeeper.SaveScore(true);
             yield return new WaitForSeconds(4f);
+            ReturnAllObjectsToPool();
             LevelDirector.Instance.LoadLose();
         }
 
@@ -62,6 +66,7 @@ namespace Arena {
                     _scoreKeeper = FindObjectOfType<ScoreKeeper>();
                 }
                 _scoreKeeper.SaveScore();
+                ReturnAllObjectsToPool();
                 LevelDirector.Instance.LoadWin();
             }
             else {
@@ -70,7 +75,7 @@ namespace Arena {
                 }
 
                 if (_spawnManager == null) {
-                    _spawnManager = FindObjectOfType<SpawnManager>();
+                    _spawnManager = FindObjectsOfType<SpawnManager>().FirstOrDefault(x => x.owningPlayer.ControlType== ControlType.Ai);
                 }
 
                 Debug.Assert(_playerController != null);
@@ -82,6 +87,10 @@ namespace Arena {
                 _arenaData.IncrementWaveModel();
                 _spawnManager.StartSpawn(_arenaData.CurrentWaveModel[ControlType.Ai]);
             }
+        }
+
+        private void ReturnAllObjectsToPool() {
+            FindObjectsOfType<Unit>(false).ForEach(x => ObjectPool.AddOrReturnInstanceToPool(x.poolKey, x));
         }
     }
 }

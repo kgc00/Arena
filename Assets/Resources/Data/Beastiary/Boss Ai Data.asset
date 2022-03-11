@@ -35,3 +35,4 @@ MonoBehaviour:
     intelligence: 1
     endurance: 1
     movementSpeed: 6
+  poolKey: Boss

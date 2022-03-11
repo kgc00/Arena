@@ -20,6 +20,9 @@ MonoBehaviour:
   experience:
     currentExp: 0
     bounty: 2
+  fundsData:
+    balance: 0
+    bounty: 0
   state: 6
   visualAssets:
     portrait: {fileID: 0}
@@ -29,3 +32,4 @@ MonoBehaviour:
     intelligence: 0
     endurance: 0
     movementSpeed: 0
+  poolKey: TrainingDummy

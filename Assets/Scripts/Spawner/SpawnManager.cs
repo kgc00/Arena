@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using Arena;
+using Common;
 using Data;
 using Data.SpawnData;
 using Data.Types;
@@ -57,7 +58,11 @@ namespace Spawner {
 
             WaveSpawner ??= new WaveSpawner(this);
             waveSpawnData = FindObjectOfType<ArenaData>().CurrentWaveModel[owningPlayer.ControlType];
-
+            if (model == null) {
+                var suffix = owningPlayer.ControlType == ControlType.Ai ? "AI Spawner Data" : "Player/Player Spawner";
+                model = Resources.Load<SpawnerData>($"{Constants.SpawnsPath}${suffix}");
+            }
+            
             StartSpawn(waveSpawnData);
         }
 

@@ -48,6 +48,6 @@ MonoBehaviour:
   xModifier: 0
   zModifier: 0
   size: 48
-  interval: 1
-  hordeSpawnData: {fileID: 0}
+  waveSpawnData: {fileID: 0}
+  owningPlayer: {fileID: 0}
   model: {fileID: 11400000, guid: b86570bbe00fd6b46b13ce80cce32177, type: 2}

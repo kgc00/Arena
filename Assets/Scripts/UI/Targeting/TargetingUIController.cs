@@ -17,13 +17,13 @@ namespace UI.Targeting {
         private bool _initialized;
         public Unit Owner { get; private set; }
 
-        private void Awake() {
+        public void Subscribe() {
             this.AddObserver(EnableTargeting, NotificationType.AbilityWillActivate);
             this.AddObserver(DisableTargeting, NotificationType.AbilityDidActivate);
         }
 
 
-        private void OnDestroy() {
+        public void Unsubscribe() {
             this.RemoveObserver(EnableTargeting, NotificationType.AbilityWillActivate);
             this.RemoveObserver(DisableTargeting, NotificationType.AbilityDidActivate);
         }

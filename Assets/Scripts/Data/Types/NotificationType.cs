@@ -84,5 +84,9 @@
         public static string ClickDecrement = "ClickDecrement";
         public static string UISoftWarning = "UISoftWarning";
         public static string DidClickCloseShopButton = "DidClickCloseShopButton";
+        public static string DidLose = "DidLose";
+        public static string DidWin = "DidWin";
+        public static string DidStartGame = "DidStartGame";
+        public static string DidClearArena = "DidClearArena";
     }
 }

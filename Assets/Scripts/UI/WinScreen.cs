@@ -1,8 +1,12 @@
-﻿using Common;
+﻿using System.Collections;
+using Audio;
+using Common;
 using Common.Levels;
 using Common.Saving;
+using Data.Types;
 using TMPro;
 using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace UI {
     public class WinScreen : MonoBehaviour {
@@ -10,7 +14,9 @@ namespace UI {
         [SerializeField] private TextMeshProUGUI _enemiesKilledTMP;
         [SerializeField] private TextMeshProUGUI _timeTakenTMP;
         [SerializeField] private TextMeshProUGUI _scoreTMP;
-        private void OnEnable() {
+
+        private void Start() {
+            StartCoroutine(HandleAudio());
             if (FileManager.LoadFromFile(Constants.SavePath, out var scoreDataString)) {
                 var scoreData = new ScoreData().LoadFromJson(scoreDataString);
 
@@ -21,7 +27,14 @@ namespace UI {
             }
         }
 
+        private IEnumerator HandleAudio() {
+            this.PostNotification(NotificationType.DidWin);
+            yield return new WaitForSeconds(4);
+            AudioService.Instance.RequestBGM();
+        }
+
         public void HandleContinue() {
+            this.PostNotification(NotificationType.DidClickShopButton);
             LevelDirector.Instance.LoadMain();
         }
 

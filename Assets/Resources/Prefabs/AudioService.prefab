@@ -45,7 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mixer: {fileID: 24100000, guid: 532736212270662438de66dd7ca2a322, type: 2}
   _playBGM: 1
-  _bgm: {fileID: 8300000, guid: b674dfafe5ac388419918dcea66402ac, type: 3}
+  _arenaBGM: {fileID: 8300000, guid: b674dfafe5ac388419918dcea66402ac, type: 3}
+  _menuBGM: {fileID: 8300000, guid: 98e8d5780f215ec469e4940f69cbc3af, type: 3}
   PurchaseComplete: {fileID: 8300000, guid: 2950feeacfa584e41bdca8b73d77fa24, type: 3}
   DidCastBurst: {fileID: 8300000, guid: 3fe1a4645587b484a897451e9411c44e, type: 3}
   DidCastPierceAndPull: {fileID: 8300000, guid: d0ec60a5dbfe4a345887303a3767dd36,
@@ -86,3 +87,6 @@ MonoBehaviour:
   UISoftWarning: {fileID: 8300000, guid: 380808402d108e540affff1877fb463c, type: 3}
   DidClickCloseShopButton: {fileID: 8300000, guid: d79cfc80517e81546a38232d55b82e65,
     type: 3}
+  DidLose: {fileID: 8300000, guid: 76588f16a58053a4ab46b3aabeb13c8b, type: 3}
+  DidWin: {fileID: 8300000, guid: ce99ee126d565b144b340813a4b9a880, type: 3}
+  DidStartGame: {fileID: 8300000, guid: 2f40f909b0b0dd849bf67db6ebf2815b, type: 3}

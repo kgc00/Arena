@@ -19,9 +19,9 @@ namespace Components {
             _drops = Owner.unitType switch {
                 UnitType.Melee => new List<DropData> {new DropData(DropType.HealthPickupSmall, 1)},
                 UnitType.Charging => new List<DropData> {new DropData(DropType.HealthPickupLarge, 1)},
-                UnitType.Ranged => new List<DropData> {new DropData(DropType.HealthPickupSmall, 3)},
-                UnitType.BombThrowing => new List<DropData> {new DropData(DropType.HealthPickupSmall, 5)},
-                UnitType.Boss => new List<DropData> {new DropData(DropType.HealthPickupLarge, 3)},
+                UnitType.Ranged => new List<DropData> {new DropData(DropType.HealthPickupSmall, 5)},
+                UnitType.BombThrowing => new List<DropData> {new DropData(DropType.HealthPickupSmall, 50)},
+                UnitType.Boss => new List<DropData> {new DropData(DropType.HealthPickupLarge, 100)},
                 _ => new List<DropData>()
             };
 

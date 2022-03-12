@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using Audio;
 using Common.Levels;
 using Controls;
 using Data;
@@ -27,6 +28,8 @@ namespace Arena {
             if (_inGameShopManager == null) {
                 _inGameShopManager = FindObjectOfType<InGameShopManager>();
             }
+
+            AudioService.Instance.RequestBGM();
         }
 
         private void OnDestroy() {
@@ -38,6 +41,7 @@ namespace Arena {
             if (_scoreKeeper == null) {
                 _scoreKeeper = FindObjectOfType<ScoreKeeper>();
             }
+
             StartCoroutine(HandleLoseCrt());
         }
 
@@ -62,31 +66,43 @@ namespace Arena {
             this.PostNotification(NotificationType.WaveCleared);
             yield return new WaitForSeconds(delayBeforeLoad);
             if (wasFinalHorde) {
-                if (_scoreKeeper == null) {
-                    _scoreKeeper = FindObjectOfType<ScoreKeeper>();
-                }
-                _scoreKeeper.SaveScore();
-                ReturnAllObjectsToPool();
-                LevelDirector.Instance.LoadWin();
+                yield return StartCoroutine(HandleWin());
             }
             else {
-                if (_playerController == null) {
-                    _playerController = FindObjectOfType<PlayerController>();
-                }
-
-                if (_spawnManager == null) {
-                    _spawnManager = FindObjectsOfType<SpawnManager>().FirstOrDefault(x => x.owningPlayer.ControlType== ControlType.Ai);
-                }
-
-                Debug.Assert(_playerController != null);
-                Debug.Assert(_spawnManager != null);
-                _playerController.EnableUISchema();
-                _inGameShopManager.ToggleVisibility();
-                yield return new WaitUntil(() => !_inGameShopManager.isShopVisible);
-                _playerController.EnablePlayerSchema();
-                _arenaData.IncrementWaveModel();
-                _spawnManager.StartSpawn(_arenaData.CurrentWaveModel[ControlType.Ai]);
+                yield return StartCoroutine(HandleWaveClearedLogic());
             }
+        }
+
+        private IEnumerator HandleWaveClearedLogic() {
+            if (_playerController == null) {
+                _playerController = FindObjectOfType<PlayerController>();
+            }
+
+            if (_spawnManager == null) {
+                _spawnManager = FindObjectsOfType<SpawnManager>()
+                    .FirstOrDefault(x => x.owningPlayer.ControlType == ControlType.Ai);
+            }
+
+            Debug.Assert(_playerController != null);
+            Debug.Assert(_spawnManager != null);
+            _playerController.EnableUISchema();
+            _inGameShopManager.ToggleVisibility();
+            yield return new WaitUntil(() => !_inGameShopManager.isShopVisible);
+            _playerController.EnablePlayerSchema();
+            _arenaData.IncrementWaveModel();
+            _spawnManager.StartSpawn(_arenaData.CurrentWaveModel[ControlType.Ai]);
+        }
+
+        public IEnumerator HandleWin() {
+            if (_scoreKeeper == null) {
+                _scoreKeeper = FindObjectOfType<ScoreKeeper>();
+            }
+            _scoreKeeper.SaveScore();
+            AudioService.Instance.RequestFadeOutBGM();
+            yield return new WaitForSeconds(1);
+            ReturnAllObjectsToPool();
+            yield return new WaitForEndOfFrame();
+            LevelDirector.Instance.LoadWin();
         }
 
         private void ReturnAllObjectsToPool() {

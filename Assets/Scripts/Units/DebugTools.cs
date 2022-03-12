@@ -3,7 +3,9 @@ using System.Linq;
 using Data.Types;
 using Players;
 using System.Collections.Generic;
+using Arena;
 using UI;
+using Utils.NotificationCenter;
 
 namespace Units {
     public class DebugTools : MonoBehaviour {
@@ -40,6 +42,9 @@ namespace Units {
                     u.FundsComponent.AddFunds(300);
             }
         }
+        private void WinGame() {
+            StartCoroutine(FindObjectOfType<ArenaManager>().HandleWin());
+        }
 
         private void OnGUI() {
             GUILayout.BeginArea(new Rect(new Vector2(Screen.width - 185, 15), new Vector2(150, 300)));
@@ -61,8 +66,9 @@ namespace Units {
             if (GUILayout.RepeatButton("award money")) {
                 AddGold();
             }
-
-            ;
+            if (GUILayout.RepeatButton("win")) {
+                WinGame();
+            }
             GUILayout.EndArea();
         }
     }

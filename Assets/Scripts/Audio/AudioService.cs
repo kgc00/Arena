@@ -2,18 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 using Data.Types;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using Utils.NotificationCenter;
 
 namespace Audio {
-    public class AudioService : MonoBehaviour {
+    public class AudioService : Singleton<AudioService> {
         [Header("Settings")] [SerializeField] private AudioMixer _mixer;
 
         [Header("BGM")] [SerializeField] private bool _playBGM;
-        [SerializeField] private AudioClip _bgm;
+        [SerializeField] private AudioClip _arenaBGM;
+        [SerializeField] private AudioClip _menuBGM;
 
         [Header("Sfx")] [SerializeField] private AudioClip PurchaseComplete;
         [SerializeField] private AudioClip DidCastBurst;
@@ -49,9 +52,13 @@ namespace Audio {
         [SerializeField] private AudioClip ClickDecrement;
         [SerializeField] private AudioClip UISoftWarning;
         [SerializeField] private AudioClip DidClickCloseShopButton;
-        
+        [SerializeField] private AudioClip DidLose;
+        [SerializeField] private AudioClip DidWin;
+        [SerializeField] private AudioClip DidStartGame;
+
         private Dictionary<AudioSourceType, AudioSource> _audioSources;
         private Sequence _rainFadeOutSequence;
+        private Sequence _bgmFadeOutSequence;
 
         private enum AudioSourceType {
             BGM,
@@ -82,9 +89,21 @@ namespace Audio {
         private void StartBGM() {
             var audioSource = _audioSources[AudioSourceType.BGM];
             Debug.Assert(audioSource.outputAudioMixerGroup != null);
-            audioSource.clip = _bgm;
+            var nextClip = SceneManager.GetActiveScene().name == "Arena" ? _arenaBGM : _menuBGM;
+            if (nextClip == audioSource.clip) return;
+            audioSource.clip = nextClip;
             audioSource.loop = true;
             audioSource.Play();
+        }
+
+        public void RequestBGM() {
+            if (_playBGM) StartBGM();
+        }
+        
+        public void RequestFadeOutBGM() {
+            if (_playBGM) {
+                _bgmFadeOutSequence.Restart();
+            }
         }
 
         private void PlayRain() {
@@ -97,51 +116,19 @@ namespace Audio {
 
         private void StopPlayingRain() {
             if (_rainFadeOutSequence.IsPlaying()) return;
-            
+
             _rainFadeOutSequence.Restart();
         }
 
-        private void OnDestroy() {
-            _rainFadeOutSequence.Kill();
-            _audioSources.Clear();
-            this.RemoveObserver(HandleDidLevelUp, NotificationType.DidLevelUp);
-            this.RemoveObserver(HandleAttackDidCollide, NotificationType.AttackDidCollide);
-            this.RemoveObserver(HandleDidPickupHealth, NotificationType.DidPickupHealth);
-            this.RemoveObserver(HandleDidLaunchPierceAndPull, NotificationType.DidLaunchPierceAndPull);
-            this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
-            this.RemoveObserver(HandleDidCastBurst, NotificationType.DidCastBurst);
-            this.RemoveObserver(HandleDidCastPierceAndPull, NotificationType.DidCastPierceAndPull);
-            this.RemoveObserver(HandleDidCastConceal, NotificationType.DidCastConceal);
-            this.RemoveObserver(HandleDidCastPrey, NotificationType.DidCastPrey);
-            this.RemoveObserver(HandleDidCastMark, NotificationType.DidCastMark);
-            this.RemoveObserver(HandleDidCastRain, NotificationType.DidCastRain);
-            this.RemoveObserver(HandleDidConnectBurst, NotificationType.DidConnectBurst);
-            this.RemoveObserver(HandleDidConnectPierceAndPull, NotificationType.DidConnectPierceAndPull);
-            this.RemoveObserver(HandleDidConnectPrey, NotificationType.DidConnectPrey);
-            this.RemoveObserver(HandleDidConnectMark, NotificationType.DidConnectMark);
-            this.RemoveObserver(HandleDidApplyMark, NotificationType.DidApplyMark);
-            this.RemoveObserver(HandleDidTriggerMark, NotificationType.DidTriggerMark);
-            this.RemoveObserver(HandleDidConnectCharge, NotificationType.DidConnectCharge);
-            this.RemoveObserver(HandleDidCastChainFlame, NotificationType.DidCastChainFlame);
-            this.RemoveObserver(HandleDidConnectChainFlame, NotificationType.DidConnectChainFlame);
-            this.RemoveObserver(HandleDidCastIceBolt, NotificationType.DidCastIceBolt);
-            this.RemoveObserver(HandleDidConnectIceBolt, NotificationType.DidConnectIceBolt);
-            this.RemoveObserver(HandleDidCastRoar, NotificationType.DidCastRoar);
-            this.RemoveObserver(HandleDidConnectRoar, NotificationType.DidConnectRoar);
-            this.RemoveObserver(HandleDidToggleShopTab, NotificationType.DidToggleShopTab);
-            this.RemoveObserver(HandleDidClickShopButton, NotificationType.DidClickShopButton);
-            this.RemoveObserver(HandleRainDidFinish, NotificationType.RainDidFinish);
-            this.RemoveObserver(HandleGameOver, NotificationType.GameOver);
-            this.RemoveObserver(HandleWaveCleared, NotificationType.WaveCleared);
-            this.RemoveObserver(HandleInsufficientFundsForPurchase, NotificationType.InsufficientFundsForPurchase);
-            this.RemoveObserver(HandleClickIncrement, NotificationType.ClickIncrement);
-            this.RemoveObserver(HandleClickDecrement, NotificationType.ClickDecrement);
-            this.RemoveObserver(HandleUISoftWarning, NotificationType.UISoftWarning);
-            this.RemoveObserver(HandleDidClickCloseShopButton, NotificationType.DidClickCloseShopButton);
+        private void OnDisable() {
+            Cleanup();
         }
-        
 
-        private void Start() {
+        private void OnDestroy() {
+            Cleanup();
+        }
+
+        private void OnEnable() {
             InitializeAudioSources();
 
             var rainAudioSource = _audioSources[AudioSourceType.Rain];
@@ -149,9 +136,17 @@ namespace Audio {
                 .Append(rainAudioSource.DOFade(0, 0.5f)).AppendCallback(() => {
                     rainAudioSource.Stop();
                     rainAudioSource.time = 0;
-                }).SetAutoKill(false); 
+                }).SetAutoKill(false);
+            var bgmAudioSource = _audioSources[AudioSourceType.BGM];
+            _bgmFadeOutSequence = DOTween.Sequence()
+                .Append(bgmAudioSource.DOFade(0, 1f)).AppendCallback(() => {
+                    bgmAudioSource.Stop();
+                    bgmAudioSource.time = 0;
+                    bgmAudioSource.volume = 1;
+                }).SetAutoKill(false).Pause();
 
             if (_playBGM) StartBGM();
+            SceneManager.activeSceneChanged += HandleSceneChanged;
             this.AddObserver(HandleDidLevelUp, NotificationType.DidLevelUp);
             this.AddObserver(HandleAttackDidCollide, NotificationType.AttackDidCollide);
             this.AddObserver(HandleDidPickupHealth, NotificationType.DidPickupHealth);
@@ -186,26 +181,107 @@ namespace Audio {
             this.AddObserver(HandleClickDecrement, NotificationType.ClickDecrement);
             this.AddObserver(HandleUISoftWarning, NotificationType.UISoftWarning);
             this.AddObserver(HandleDidClickCloseShopButton, NotificationType.DidClickCloseShopButton);
+            this.AddObserver(HandleDidWin, NotificationType.DidWin);
+            this.AddObserver(HandleDidLose, NotificationType.DidLose);
+            this.AddObserver(HandleDidStartGame, NotificationType.DidStartGame);
         }
 
-        private void HandleDidClickCloseShopButton(object arg1, object arg2) {PlaySFX(DidClickCloseShopButton); }
+        private void Cleanup() {
+            _bgmFadeOutSequence?.Kill();
+            _rainFadeOutSequence?.Kill();
+            _audioSources?.Clear();
+            SceneManager.activeSceneChanged -= HandleSceneChanged;
+            this.RemoveObserver(HandleDidLevelUp, NotificationType.DidLevelUp);
+            this.RemoveObserver(HandleAttackDidCollide, NotificationType.AttackDidCollide);
+            this.RemoveObserver(HandleDidPickupHealth, NotificationType.DidPickupHealth);
+            this.RemoveObserver(HandleDidLaunchPierceAndPull, NotificationType.DidLaunchPierceAndPull);
+            this.RemoveObserver(HandlePurchase, NotificationType.PurchaseComplete);
+            this.RemoveObserver(HandleDidCastBurst, NotificationType.DidCastBurst);
+            this.RemoveObserver(HandleDidCastPierceAndPull, NotificationType.DidCastPierceAndPull);
+            this.RemoveObserver(HandleDidCastConceal, NotificationType.DidCastConceal);
+            this.RemoveObserver(HandleDidCastPrey, NotificationType.DidCastPrey);
+            this.RemoveObserver(HandleDidCastMark, NotificationType.DidCastMark);
+            this.RemoveObserver(HandleDidCastRain, NotificationType.DidCastRain);
+            this.RemoveObserver(HandleDidConnectBurst, NotificationType.DidConnectBurst);
+            this.RemoveObserver(HandleDidConnectPierceAndPull, NotificationType.DidConnectPierceAndPull);
+            this.RemoveObserver(HandleDidConnectPrey, NotificationType.DidConnectPrey);
+            this.RemoveObserver(HandleDidConnectMark, NotificationType.DidConnectMark);
+            this.RemoveObserver(HandleDidApplyMark, NotificationType.DidApplyMark);
+            this.RemoveObserver(HandleDidTriggerMark, NotificationType.DidTriggerMark);
+            this.RemoveObserver(HandleDidConnectCharge, NotificationType.DidConnectCharge);
+            this.RemoveObserver(HandleDidCastChainFlame, NotificationType.DidCastChainFlame);
+            this.RemoveObserver(HandleDidConnectChainFlame, NotificationType.DidConnectChainFlame);
+            this.RemoveObserver(HandleDidCastIceBolt, NotificationType.DidCastIceBolt);
+            this.RemoveObserver(HandleDidConnectIceBolt, NotificationType.DidConnectIceBolt);
+            this.RemoveObserver(HandleDidCastRoar, NotificationType.DidCastRoar);
+            this.RemoveObserver(HandleDidConnectRoar, NotificationType.DidConnectRoar);
+            this.RemoveObserver(HandleDidToggleShopTab, NotificationType.DidToggleShopTab);
+            this.RemoveObserver(HandleDidClickShopButton, NotificationType.DidClickShopButton);
+            this.RemoveObserver(HandleRainDidFinish, NotificationType.RainDidFinish);
+            this.RemoveObserver(HandleGameOver, NotificationType.GameOver);
+            this.RemoveObserver(HandleWaveCleared, NotificationType.WaveCleared);
+            this.RemoveObserver(HandleInsufficientFundsForPurchase, NotificationType.InsufficientFundsForPurchase);
+            this.RemoveObserver(HandleClickIncrement, NotificationType.ClickIncrement);
+            this.RemoveObserver(HandleClickDecrement, NotificationType.ClickDecrement);
+            this.RemoveObserver(HandleUISoftWarning, NotificationType.UISoftWarning);
+            this.RemoveObserver(HandleDidClickCloseShopButton, NotificationType.DidClickCloseShopButton);
+            this.RemoveObserver(HandleDidWin, NotificationType.DidWin);
+            this.RemoveObserver(HandleDidLose, NotificationType.DidLose);
+            this.RemoveObserver(HandleDidStartGame, NotificationType.DidStartGame);
+        }
+        private void HandleSceneChanged(Scene currentScene, Scene nextScene) {
+            _audioSources[AudioSourceType.SFX]?.Stop();
+        }
 
-        private void HandleUISoftWarning(object arg1, object arg2) {PlaySFX(UISoftWarning); }
-        private void HandleClickIncrement(object arg1, object arg2) {PlaySFX(ClickIncrement); }
-        private void HandleClickDecrement(object arg1, object arg2) {PlaySFX(ClickDecrement); }
+        private void HandleDidStartGame(object arg1, object arg2) {
+            if (_playBGM) {
+                _bgmFadeOutSequence.Restart();
+            }
+
+            PlaySFX(DidStartGame);
+        }
+
+        private void HandleDidLose(object arg1, object arg2) {
+            PlaySFX(DidLose);
+        }
+
+        private void HandleDidWin(object arg1, object arg2) {
+            PlaySFX(DidWin);
+        }
+
+        private void HandleDidClickCloseShopButton(object arg1, object arg2) {
+            PlaySFX(DidClickCloseShopButton);
+        }
+
+        private void HandleUISoftWarning(object arg1, object arg2) {
+            PlaySFX(UISoftWarning);
+        }
+
+        private void HandleClickIncrement(object arg1, object arg2) {
+            PlaySFX(ClickIncrement);
+        }
+
+        private void HandleClickDecrement(object arg1, object arg2) {
+            PlaySFX(ClickDecrement);
+        }
 
         private void HandleInsufficientFundsForPurchase(object arg1, object arg2) {
-            PlaySFX(InsufficientFundsForPurchase); }
+            PlaySFX(InsufficientFundsForPurchase);
+        }
 
         private void HandleWaveCleared(object arg1, object arg2) {
             PlaySFX(WaveCleared);
         }
-        
+
         private void HandleRainDidFinish(object arg1, object arg2) {
             StopPlayingRain();
         }
 
         private void HandleGameOver(object arg1, object arg2) {
+            if (_playBGM) {
+                _bgmFadeOutSequence.Restart();
+            }
+
             PlaySFX(GameOver);
         }
 

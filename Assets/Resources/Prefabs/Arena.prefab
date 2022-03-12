@@ -54,7 +54,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 74a96ba8d7bc6874b8151a1d0b191e90, type: 2}
   - {fileID: 11400000, guid: 5e8cfa94227e6c645b3068ca8c1ad53c, type: 2}
   - {fileID: 11400000, guid: 45fd35d05270e6e49a72331b1bdbc272, type: 2}
-  - {fileID: 11400000, guid: aa4165fa64651fa42a90fff697a01cbe, type: 2}
   curIndex: 0
 --- !u!114 &3622167240462521227
 MonoBehaviour:

@@ -19,32 +19,20 @@ namespace UI.HUD.Healthbar {
         [SerializeField] private TextMeshProUGUI _healthText;
         [SerializeField] private Image _levelFill;
 
-        private void OnEnable() {
-            this.AddObserver(HandleDidSpawn, NotificationType.UnitDidSpawn);
-            this.AddObserver(HandleStatUpdate, NotificationType.DidLevelUp);
-            this.AddObserver(HandleStatUpdate, NotificationType.PurchaseComplete);
-            HealthComponent.OnHealthChanged += UpdateHealthValue;
-            ExperienceComponent.onExperienceChanged += UpdateExperienceValue;
-            // ExperienceComponent.onLevelUp += UpdateExperienceFromLevelValue;
-        }
-
-        private void HandleDidSpawn(object arg1, object arg2) {
-            if (_unit != null || !(arg2 is Unit u)) return;
-            if (u.Owner.ControlType == ControlType.Local) {
-                Initialize();
-            }
-        }
-
         private void OnDisable() {
             this.RemoveObserver(HandleDidSpawn, NotificationType.UnitDidSpawn);
             this.RemoveObserver(HandleStatUpdate, NotificationType.DidLevelUp);
             this.RemoveObserver(HandleStatUpdate, NotificationType.PurchaseComplete);
             HealthComponent.OnHealthChanged -= UpdateHealthValue;
             ExperienceComponent.onExperienceChanged -= UpdateExperienceValue;
-            // ExperienceComponent.onLevelUp -= UpdateExperienceFromLevelValue;
         }
 
-        private void Start() {
+        private void OnEnable() {
+            this.AddObserver(HandleDidSpawn, NotificationType.UnitDidSpawn);
+            this.AddObserver(HandleStatUpdate, NotificationType.DidLevelUp);
+            this.AddObserver(HandleStatUpdate, NotificationType.PurchaseComplete);
+            HealthComponent.OnHealthChanged += UpdateHealthValue;
+            ExperienceComponent.onExperienceChanged += UpdateExperienceValue;
             Initialize();
         }
 
@@ -56,6 +44,13 @@ namespace UI.HUD.Healthbar {
             }
 
             UpdateHealthValue();
+        }
+
+        private void HandleDidSpawn(object arg1, object arg2) {
+            if (_unit != null || !(arg2 is Unit u)) return;
+            if (u.Owner.ControlType == ControlType.Local) {
+                Initialize();
+            }
         }
 
         private void EnsureUnitAssigned() {

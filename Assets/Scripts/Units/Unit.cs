@@ -50,7 +50,11 @@ namespace Units {
         public string poolKey { get; set; }
 
         public Unit Initialize(Player owner, UnitData data) {
-            if (Initialized) return this;
+            if (Initialized) {
+                Owner = owner;
+                UnitData = data;
+                return this;
+            }
             
             // properties & fields
             UnitData = data;

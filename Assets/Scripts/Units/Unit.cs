@@ -209,12 +209,16 @@ namespace Units {
         private IEnumerator UnitDeathCrt() {
             OnDeath(this);
             Owner.RemoveUnit(this);
+            var positionWithOffset = transform.position;
+            positionWithOffset += Vector3.up*.5f;
             if (Owner.ControlType != ControlType.Ai) {
-                MonoHelper.SpawnVfx(VfxType.PlayerDeath, transform.position);
+                MonoHelper.SpawnVfx(VfxType.PlayerDeath, positionWithOffset);
+                var vfx = MonoHelper.SpawnVfx(VfxType.EnemyDeath, positionWithOffset);
+                vfx.GetComponent<SetParticleData>().Initialize(_collider.radius);
             }
             else {
                 this.PostNotification(NotificationType.DidKillEnemy);
-                var vfx = MonoHelper.SpawnVfx(VfxType.EnemyDeath, transform.position);
+                var vfx = MonoHelper.SpawnVfx(VfxType.EnemyDeath, positionWithOffset);
                 vfx.GetComponent<SetParticleData>().Initialize(_collider.radius);
             }
             gameObject.SetActive(false);

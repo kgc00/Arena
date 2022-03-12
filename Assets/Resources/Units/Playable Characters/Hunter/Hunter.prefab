@@ -1296,8 +1296,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99db38d539150549afe946c94e12fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PurchasedItems: 
   unitType: 0
   UnitData: {fileID: 11400000, guid: 9562cdadcc043ab40927ad6f8abcf3df, type: 2}
+  _collider: {fileID: 2637915664189274567}
 --- !u!54 &2637915664189274566
 Rigidbody:
   m_ObjectHideFlags: 0

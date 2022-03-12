@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Common;
 using Components;
 using Controls;
 using Data.Items;
@@ -48,6 +49,7 @@ namespace Units {
         public bool inUse { get; set; }
         GameObject IPoolable.Owner => gameObject;
         public string poolKey { get; set; }
+        [SerializeField] private CapsuleCollider _collider;
 
         public Unit Initialize(Player owner, UnitData data) {
             if (Initialized) {
@@ -207,8 +209,13 @@ namespace Units {
         private IEnumerator UnitDeathCrt() {
             OnDeath(this);
             Owner.RemoveUnit(this);
-            if (Owner.ControlType == ControlType.Local) {
+            if (Owner.ControlType != ControlType.Ai) {
                 MonoHelper.SpawnVfx(VfxType.PlayerDeath, transform.position);
+            }
+            else {
+                this.PostNotification(NotificationType.DidKillEnemy);
+                var vfx = MonoHelper.SpawnVfx(VfxType.EnemyDeath, transform.position);
+                vfx.GetComponent<SetParticleData>().Initialize(_collider.radius);
             }
             gameObject.SetActive(false);
             yield return new WaitForSeconds(1f);

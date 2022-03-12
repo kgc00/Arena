@@ -506,7 +506,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PurchasedItems: 
   unitType: 2
-  UnitData: {fileID: 0}
+  UnitData: {fileID: 11400000, guid: 2af1f9c115075514c84b5a8a33662d40, type: 2}
+  _collider: {fileID: 6905701817308456777}
 --- !u!136 &6905701817308456777
 CapsuleCollider:
   m_ObjectHideFlags: 0

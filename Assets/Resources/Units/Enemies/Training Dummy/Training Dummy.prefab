@@ -74,8 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99db38d539150549afe946c94e12fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PurchasedItems: 
   unitType: 5
-  UnitData: {fileID: 0}
+  UnitData: {fileID: 11400000, guid: e2f9cd274d6bf28408dd21ff4e6f6013, type: 2}
+  _collider: {fileID: 3640983152312934082}
 --- !u!54 &-1309334750830225620
 Rigidbody:
   m_ObjectHideFlags: 0

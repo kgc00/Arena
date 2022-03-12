@@ -400,7 +400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PurchasedItems: 
   unitType: 1
-  UnitData: {fileID: 0}
+  UnitData: {fileID: 11400000, guid: ce66f2f5154b75948b77f7f59bb34775, type: 2}
+  _collider: {fileID: 3640983152312934082}
 --- !u!54 &-1309334750830225620
 Rigidbody:
   m_ObjectHideFlags: 0

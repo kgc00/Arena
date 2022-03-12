@@ -55,6 +55,7 @@ namespace Audio {
         [SerializeField] private AudioClip DidLose;
         [SerializeField] private AudioClip DidWin;
         [SerializeField] private AudioClip DidStartGame;
+        [SerializeField] private AudioClip DidKillEnemy;
 
         private Dictionary<AudioSourceType, AudioSource> _audioSources;
         private Sequence _rainFadeOutSequence;
@@ -184,8 +185,9 @@ namespace Audio {
             this.AddObserver(HandleDidWin, NotificationType.DidWin);
             this.AddObserver(HandleDidLose, NotificationType.DidLose);
             this.AddObserver(HandleDidStartGame, NotificationType.DidStartGame);
+            this.AddObserver(HandleDidKillEnemy, NotificationType.DidKillEnemy);
         }
-
+        
         private void Cleanup() {
             _bgmFadeOutSequence?.Kill();
             _rainFadeOutSequence?.Kill();
@@ -228,10 +230,16 @@ namespace Audio {
             this.RemoveObserver(HandleDidWin, NotificationType.DidWin);
             this.RemoveObserver(HandleDidLose, NotificationType.DidLose);
             this.RemoveObserver(HandleDidStartGame, NotificationType.DidStartGame);
+            this.RemoveObserver(HandleDidKillEnemy, NotificationType.DidKillEnemy);
         }
         private void HandleSceneChanged(Scene currentScene, Scene nextScene) {
             _audioSources[AudioSourceType.SFX]?.Stop();
         }
+
+        private void HandleDidKillEnemy(object arg1, object arg2) {
+            PlaySFX(DidKillEnemy);
+        }
+        
 
         private void HandleDidStartGame(object arg1, object arg2) {
             if (_playBGM) {

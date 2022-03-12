@@ -128,6 +128,9 @@ namespace Utils {
                 case VfxType.ChainFlameExplosion:
                     s = $"{Constants.PrefabsPath}ChainFlameExplosionVFX";
                     break;
+                case VfxType.EnemyDeath:
+                    s = $"{Constants.PrefabsPath}Enemy_Killed_VFX";
+                    break;
             }
 
             return s;

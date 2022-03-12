@@ -90,3 +90,4 @@ MonoBehaviour:
   DidLose: {fileID: 8300000, guid: 76588f16a58053a4ab46b3aabeb13c8b, type: 3}
   DidWin: {fileID: 8300000, guid: ce99ee126d565b144b340813a4b9a880, type: 3}
   DidStartGame: {fileID: 8300000, guid: 2f40f909b0b0dd849bf67db6ebf2815b, type: 3}
+  DidKillEnemy: {fileID: 8300000, guid: 05e5bdc09d7587e47a725f575fb49946, type: 3}

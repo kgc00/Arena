@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 4962293764892747482}
   - component: {fileID: 4962293764892747485}
   - component: {fileID: 4962293764892747484}
-  - component: {fileID: 7583254701785833415}
   - component: {fileID: 3132755073016329724}
   - component: {fileID: 2773481022770625165}
   m_Layer: 8
@@ -154,7 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PurchasedItems: 
   unitType: 3
-  UnitData: {fileID: 0}
+  UnitData: {fileID: 11400000, guid: dae012b2be4cb4142910bb0fd6181d63, type: 2}
+  _collider: {fileID: 4962293765137935756}
 --- !u!54 &4962293764892747484
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,20 +171,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!136 &7583254701785833415
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4962293764892747487}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3132755073016329724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,6 +665,12 @@ PrefabInstance:
 --- !u!4 &4962293764745480110 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400048, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4962293764745616670}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &4962293765137935756 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 1759703186, guid: 7ed3e345f07e89940ae0c1e00eeb7d1d,
     type: 3}
   m_PrefabInstance: {fileID: 4962293764745616670}
   m_PrefabAsset: {fileID: 0}

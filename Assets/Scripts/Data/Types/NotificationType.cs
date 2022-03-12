@@ -87,6 +87,6 @@
         public static string DidLose = "DidLose";
         public static string DidWin = "DidWin";
         public static string DidStartGame = "DidStartGame";
-        public static string DidClearArena = "DidClearArena";
+        public static string DidKillEnemy = "DidKillEnemy";
     }
 }

@@ -301,6 +301,7 @@ MonoBehaviour:
   PurchasedItems: 
   unitType: 4
   UnitData: {fileID: 0}
+  _collider: {fileID: 3793309328275552996}
 --- !u!54 &3364660583109602418
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -327,10 +328,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2
-  m_Height: 8
+  m_Radius: 1.5
+  m_Height: 6
   m_Direction: 2
-  m_Center: {x: 0, y: 1, z: -1}
+  m_Center: {x: 0, y: 1.25, z: -0.5}
 --- !u!114 &5058399527084593337
 MonoBehaviour:
   m_ObjectHideFlags: 0

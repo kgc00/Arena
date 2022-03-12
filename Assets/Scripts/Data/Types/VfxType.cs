@@ -25,6 +25,7 @@
         PlayerDeath,
         DisruptStartup,
         DisruptTrigger,
-        ChainFlameExplosion
+        ChainFlameExplosion,
+        EnemyDeath
     }
 }

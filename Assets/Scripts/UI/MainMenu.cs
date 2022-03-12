@@ -3,16 +3,22 @@ using Audio;
 using Common.Levels;
 using Data.Types;
 using UnityEngine;
+using UnityEngine.UI;
 using Utils.NotificationCenter;
 
 namespace UI {
     public class MainMenu : MonoBehaviour {
         [SerializeField] private GameObject MainMenuGameObject;
         [SerializeField] private GameObject TutorialGameObject;
+        [SerializeField] private Toggle _soundToggle;
+        [SerializeField] private Image _soundToggleImage;
+        [SerializeField] private Sprite _soundToggleImageOn;
+        [SerializeField] private Sprite _soundToggleImageOff;
         private Coroutine _startCRT;
         private bool isTransitioningScenes => _startCRT != null;
 
         private void Start() {
+            _soundToggle.isOn = !AudioService.Instance.IsSoundDisabled;
             AudioService.Instance.RequestBGM();
         }
 
@@ -35,6 +41,17 @@ namespace UI {
             TutorialGameObject.SetActive(true);
         }
 
+        public void HandleSoundToggle() {
+            if (_soundToggle.isOn) {
+                _soundToggleImage.sprite = _soundToggleImageOn;
+                AudioService.Instance.SetSoundEnabled(true);
+            }
+            else {
+                _soundToggleImage.sprite = _soundToggleImageOff;
+                AudioService.Instance.SetSoundEnabled(false);
+            }
+        }
+        
         public void HandleReturn() {
             if (isTransitioningScenes) return;
             this.PostNotification(NotificationType.DidClickShopButton);

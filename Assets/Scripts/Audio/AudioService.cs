@@ -5,6 +5,7 @@ using System.Linq;
 using Common;
 using Data.Types;
 using DG.Tweening;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,8 @@ using Utils.NotificationCenter;
 
 namespace Audio {
     public class AudioService : Singleton<AudioService> {
+        public bool IsSoundDisabled { get; private set; }
+
         [Header("Settings")] [SerializeField] private AudioMixer _mixer;
 
         [Header("BGM")] [SerializeField] private bool _playBGM;
@@ -83,6 +86,7 @@ namespace Audio {
         }
 
         public void PlaySFX(AudioClip clip) {
+            if (IsSoundDisabled) return;
             var audioSource = _audioSources[AudioSourceType.SFX];
             audioSource.PlayOneShot(clip);
         }
@@ -94,20 +98,22 @@ namespace Audio {
             if (nextClip == audioSource.clip) return;
             audioSource.clip = nextClip;
             audioSource.loop = true;
+            if (IsSoundDisabled) return;
             audioSource.Play();
         }
 
         public void RequestBGM() {
             if (_playBGM) StartBGM();
         }
-        
+
         public void RequestFadeOutBGM() {
-            if (_playBGM) {
+            if (_playBGM && !IsSoundDisabled) {
                 _bgmFadeOutSequence.Restart();
             }
         }
 
         private void PlayRain() {
+            if (IsSoundDisabled) return;
             var audioSource = _audioSources[AudioSourceType.Rain];
             audioSource.volume = 0.8F;
             audioSource.clip = RainLoop;
@@ -187,7 +193,7 @@ namespace Audio {
             this.AddObserver(HandleDidStartGame, NotificationType.DidStartGame);
             this.AddObserver(HandleDidKillEnemy, NotificationType.DidKillEnemy);
         }
-        
+
         private void Cleanup() {
             _bgmFadeOutSequence?.Kill();
             _rainFadeOutSequence?.Kill();
@@ -232,6 +238,7 @@ namespace Audio {
             this.RemoveObserver(HandleDidStartGame, NotificationType.DidStartGame);
             this.RemoveObserver(HandleDidKillEnemy, NotificationType.DidKillEnemy);
         }
+
         private void HandleSceneChanged(Scene currentScene, Scene nextScene) {
             _audioSources[AudioSourceType.SFX]?.Stop();
         }
@@ -239,7 +246,7 @@ namespace Audio {
         private void HandleDidKillEnemy(object arg1, object arg2) {
             PlaySFX(DidKillEnemy);
         }
-        
+
 
         private void HandleDidStartGame(object arg1, object arg2) {
             if (_playBGM) {
@@ -396,6 +403,14 @@ namespace Audio {
 
         private void HandleDidApplyMark(object arg1, object arg2) {
             PlaySFX(DidApplyMark);
+        }
+
+        public void SetSoundEnabled(bool isEnabled) {
+            IsSoundDisabled = !isEnabled;
+            var newVolume = isEnabled ? 1 : 0;
+            if (_audioSources == null) return;
+            _audioSources.ForEach(x => x.Value.volume = newVolume);
+            RequestBGM();
         }
     }
 }

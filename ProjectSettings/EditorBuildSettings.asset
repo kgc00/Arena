@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Arena.unity
     guid: 56113e0d696e06e45919498b542a49f9
   - enabled: 1
-    path: Assets/Scenes/Lose.unity
-    guid: c0dfa78c86f98e6458abbbe855c3c4d3
-  - enabled: 1
     path: Assets/Scenes/Win.unity
     guid: 17071a1e4525a3d4da7f620f718aa87d
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: c0dfa78c86f98e6458abbbe855c3c4d3
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e90137d784f54f23b4b4ba931cce3745,
       type: 2}

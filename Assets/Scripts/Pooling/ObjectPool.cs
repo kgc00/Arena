@@ -66,13 +66,5 @@ namespace Pooling {
             poolable.Owner.SetActive(true);
             return poolable;
         }
-
-        // public static void ReturnInstanceToPool(IPoolable poolable) {
-        //     if (pools == null || pools.Count == 0) return;
-        //     if (poolable == null || !pools.ContainsKey(poolable.poolKey)) return;
-        //     var pool = pools[poolable.poolKey];
-        //     add
-        //     }
-        // }
     }
 }

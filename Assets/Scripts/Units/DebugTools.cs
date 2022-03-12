@@ -71,6 +71,6 @@ namespace Units {
             }
             GUILayout.EndArea();
         }
-    }
 #endif
+    }
 }

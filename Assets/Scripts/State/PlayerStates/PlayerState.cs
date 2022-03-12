@@ -38,8 +38,6 @@ namespace State.PlayerStates {
             }
             else {
                 _ownerPlayerController.EnablePlayerSchema();
-                _ownerPlayerController.InputValues.ResetButtonValues();
-                Owner.Controller.PreviousPress = null;
             }
 
             return null;
@@ -55,13 +53,6 @@ namespace State.PlayerStates {
             UpdatePlayerRotation(input, motion, movementSpeed.Value);
             UpdatePlayerPositionForce(input, motion, movementSpeed.Value);
             UpdateAnimations(motion); // must occur after rotation has been updated
-        }
-
-        private Vector3 ObtainLookTarget(InputValues input, Vector3 motion) {
-            if (input.ActiveControl == ControllerType.Delta)
-                return LookTargetForKeyboard(input, motion);
-            // TODO else if (input.ActiveControl == ControllerType.GamePad) 
-            return default;
         }
 
         private void UpdateAnimations(Vector3 motion) {

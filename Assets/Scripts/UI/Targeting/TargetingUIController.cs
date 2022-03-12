@@ -20,12 +20,14 @@ namespace UI.Targeting {
         public void Subscribe() {
             this.AddObserver(EnableTargeting, NotificationType.AbilityWillActivate);
             this.AddObserver(DisableTargeting, NotificationType.AbilityDidActivate);
+            InGameShopManager.OnShopVisibilityToggled += HandleShopToggle;
         }
 
 
         public void Unsubscribe() {
             this.RemoveObserver(EnableTargeting, NotificationType.AbilityWillActivate);
             this.RemoveObserver(DisableTargeting, NotificationType.AbilityDidActivate);
+            InGameShopManager.OnShopVisibilityToggled -= HandleShopToggle;
         }
 
         public TargetingUIController Initialize(Unit unit) {
@@ -75,6 +77,10 @@ namespace UI.Targeting {
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) _rectangle.gameObject.SetActive(false);
         }
 
+        private void HandleShopToggle(bool isVisible, Unit purchasingUnit) {
+            DisableTargetingUI();
+        }
+        
         public void DisableTargetingUI() {
             _arrow.gameObject.SetActive(false);
             _circle.gameObject.SetActive(false);

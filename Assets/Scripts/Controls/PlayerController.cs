@@ -45,6 +45,8 @@ namespace Controls
             playerInput.Player.Enable();
             ControlScheme = ControlSchemeEnum.Player;
             InputValues.ControlSchema = ControlScheme;
+            InputValues.ResetButtonValues();
+            PreviousPress = null;
         }
         
         public void EnableUISchema(){
@@ -52,6 +54,8 @@ namespace Controls
             playerInput.UI.Enable();
             ControlScheme = ControlSchemeEnum.UI;
             InputValues.ControlSchema = ControlScheme;
+            InputValues.ResetButtonValues();
+            PreviousPress = null;
         }
 
         // Player

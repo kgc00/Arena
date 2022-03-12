@@ -49,9 +49,7 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-
-            this.PostNotification(NotificationType.DidConnectPrey);
-
+            
             if (hitGeometry) {
                 Destroy(projectile);
                 return;
@@ -66,6 +64,7 @@ namespace Abilities.AttackAbilities {
             } else {
                 unit.HealthComponent.DamageOwner(Damage, this, Owner);
             }
+            this.PostNotification(NotificationType.DidConnectPrey);
             MonoHelper.SpawnVfx(VfxType.EnemyImpact, projectile.transform.position);
             Destroy(projectile);
         }

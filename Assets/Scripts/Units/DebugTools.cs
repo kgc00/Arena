@@ -7,6 +7,8 @@ using UI;
 
 namespace Units {
     public class DebugTools : MonoBehaviour {
+#if UNITY_EDITOR
+        
         public void KillEnemies() {
             var units = FindObjectsOfType<Unit>();
             foreach (var u in units) {
@@ -64,21 +66,5 @@ namespace Units {
             GUILayout.EndArea();
         }
     }
+#endif
 }
-
-/*
-Serialization depth limit 10 exceeded at 'Common::ScriptableObjectModifier`1.Model'. There may be an object composition cycle in one or more of your serialized classes.
-
-Serialization hierarchy:
-11: Common::ScriptableObjectModifier`1.Model
-10: Common::ScriptableObjectModifier`1.Next
-9: Common::ScriptableObjectModifier`1.Next
-8: Common::ScriptableObjectModifier`1.Next
-7: Common::ScriptableObjectModifier`1.Next
-6: Common::ScriptableObjectModifier`1.Next
-5: Common::ScriptableObjectModifier`1.Next
-4: Common::ScriptableObjectModifier`1.Next
-3: Common::ScriptableObjectModifier`1.Next
-2: Common::ScriptableObjectModifier`1.Next
-1: Common::ScriptableObjectModifier`1.Next
-*/

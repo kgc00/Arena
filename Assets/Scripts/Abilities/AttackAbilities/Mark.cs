@@ -33,7 +33,6 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-            this.PostNotification(NotificationType.DidConnectMark);
 
             if (hitGeometry) {
                 Destroy(projectile);
@@ -50,6 +49,7 @@ namespace Abilities.AttackAbilities {
             heading.y = 0;
             heading = heading.normalized;
             other.GetComponentInParent<Rigidbody>()?.AddForce(heading * Force, ForceMode.Impulse);
+            this.PostNotification(NotificationType.DidConnectMark);
             MonoHelper.SpawnVfx(VfxType.EnemyImpact, projectile.transform.position);
             Destroy(projectile);
         }

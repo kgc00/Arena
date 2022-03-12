@@ -1859,7 +1859,7 @@ GameObject:
   - component: {fileID: 385386725}
   - component: {fileID: 385386724}
   m_Layer: 0
-  m_Name: debug
+  m_Name: Debug tools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7626,17 +7626,17 @@ PrefabInstance:
     - target: {fileID: 4456598920616780801, guid: c7217d5a11055e54186b044e3ea8d8fa,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 470.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4456598920616780801, guid: c7217d5a11055e54186b044e3ea8d8fa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 264.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4456598920616780801, guid: c7217d5a11055e54186b044e3ea8d8fa,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.668242
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4456598920616780801, guid: c7217d5a11055e54186b044e3ea8d8fa,
         type: 3}
@@ -7678,53 +7678,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arena
       objectReference: {fileID: 0}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: ebb7e025a7edfeb48b679e87079190a7,
-        type: 2}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: bfc7a5a3de954f94980c9c0a11afd1e4,
-        type: 2}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 282b050c18eeff043961cb209530bcf2,
-        type: 2}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 74a96ba8d7bc6874b8151a1d0b191e90,
-        type: 2}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 5e8cfa94227e6c645b3068ca8c1ad53c,
-        type: 2}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: 45fd35d05270e6e49a72331b1bdbc272,
-        type: 2}
-    - target: {fileID: 4456598920616780806, guid: c7217d5a11055e54186b044e3ea8d8fa,
-        type: 3}
-      propertyPath: _enemyWaves.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: aa4165fa64651fa42a90fff697a01cbe,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7217d5a11055e54186b044e3ea8d8fa, type: 3}
 --- !u!1001 &5686109483726420515
@@ -7886,17 +7839,17 @@ PrefabInstance:
     - target: {fileID: 4518013089442643251, guid: 2486ff4cd26e83e46984b394199317ae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 470.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4518013089442643251, guid: 2486ff4cd26e83e46984b394199317ae,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 264.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4518013089442643251, guid: 2486ff4cd26e83e46984b394199317ae,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.668242
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4518013089442643251, guid: 2486ff4cd26e83e46984b394199317ae,
         type: 3}

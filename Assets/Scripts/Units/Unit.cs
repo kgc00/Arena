@@ -52,18 +52,12 @@ namespace Units {
         [SerializeField] private CapsuleCollider _collider;
 
         public Unit Initialize(Player owner, UnitData data) {
-            if (Initialized) {
-                Owner = owner;
-                UnitData = data;
-                return this;
-            }
-            
             // properties & fields
             UnitData = data;
             Owner = owner;
             Portrait = data.visualAssets.portrait;
             Renderers = GetComponentsInChildren<Renderer>().ToList();
-            PurchasedItems ??= new List<ItemType>();
+            PurchasedItems = new List<ItemType>();
 
             // Controller
             if (Controller == null) Controller = GetComponentInChildren<Controller>();
@@ -84,13 +78,22 @@ namespace Units {
             StatsComponent.Initialize(this, data.statsData);
 
             // Health
-            if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>();
-            HealthComponent.Initialize(this, data.health, StatsComponent);
-
+            if (HealthComponent == null) {
+                HealthComponent = gameObject.AddComponent<HealthComponent>();
+                HealthComponent.Initialize(this, data.health, StatsComponent);
+            }else{
+                HealthComponent.ReinitializeHealth();
+            }
+            
             // Abilities
-            if (AbilityComponent == null) AbilityComponent = gameObject.AddComponent<AbilityComponent>();
-            AbilityComponent.Initialize(this, data.abilities, StatsComponent);
-
+            if (AbilityComponent == null) {
+                AbilityComponent = gameObject.AddComponent<AbilityComponent>();
+                AbilityComponent.Initialize(this, data.abilities, StatsComponent);
+            }
+            else {
+                AbilityComponent.ReinitializeAbilities();
+            }
+            
             // Experience
             if (ExperienceComponent == null) ExperienceComponent = gameObject.AddComponent<ExperienceComponent>();
             ExperienceComponent.Initialize(this, data.experience);
@@ -137,21 +140,24 @@ namespace Units {
         public void HandleExitFromPool() {
             // reinitialize (do not just call initialize again because it will delete
             // and recreate some resources (e.g. abilitie scripts)
-            if (!Initialized) return;
-            PurchasedItems = new List<ItemType>();
-            FundsComponent.Initialize(this, UnitData.fundsData);
-            StatsComponent.Initialize(this, UnitData.statsData);
-            ExperienceComponent.Initialize(this, UnitData.experience);
-            AbilityComponent.ReinitializeAbilities();
-            HealthComponent.ReinitializeHealth();
-            StatusComponent.Initialize(this);
-            state = StateHelper.StateFromEnum(UnitData.state, this);
-            InGameShopManager = FindObjectOfType<InGameShopManager>();
-            Subscribe();
+            // if (!Initialized) return;
+            // PurchasedItems = new List<ItemType>();
+            // FundsComponent.Initialize(this, UnitData.fundsData);
+            // StatsComponent.Initialize(this, UnitData.statsData);
+            // ExperienceComponent.Initialize(this, UnitData.experience);
+            // AbilityComponent.ReinitializeAbilities();
+            // HealthComponent.ReinitializeHealth();
+            // StatusComponent.Initialize(this);
+            // state = StateHelper.StateFromEnum(UnitData.state, this);
+            // InGameShopManager = FindObjectOfType<InGameShopManager>();
+            // Subscribe();
         }
 
         public void HandleReturnToPool() {
             Unsubscribe();
+            Initialized = false;
+            Owner = null;
+            UnitData = null;
         }
 
         private void Unsubscribe() {

@@ -4,9 +4,6 @@ using Abilities.AttackAbilities;
 using Controls;
 using Data.Types;
 using JetBrains.Annotations;
-using State.MeleeAiStates;
-using State.TrainingDummy;
-using Status;
 using Units;
 using UnityEngine;
 using Utils.NotificationCenter;
@@ -16,6 +13,8 @@ namespace State.ChargingAiStates {
         private readonly Transform _playerTransform;
         private static readonly int Charging = Animator.StringToHash("Charging");
         OrcSlash orcSlash;
+        private Vector3 _chargeTargetPosition;
+
         public ChargeUnitState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
             orcSlash = Owner.AbilityComponent.GetEquippedAbility<OrcSlash>();
@@ -36,7 +35,8 @@ namespace State.ChargingAiStates {
             }
 
             Owner.Animator.SetTrigger(Charging);
-            yield return Owner.AbilityComponent.Activate(ref Ability, _playerTransform.position);
+            _chargeTargetPosition = _playerTransform.position;
+            yield return Owner.AbilityComponent.Activate(ref Ability, _chargeTargetPosition);
         }
 
         protected override void HandleAbilityFinished(Unit u, Ability a) {
@@ -109,6 +109,20 @@ namespace State.ChargingAiStates {
             if (isWithinAttackRange) return false;
             unitState = new ChaseUnitState(Owner, _playerTransform);
             return true;
+        }
+
+
+        public override void HandleFixedUpdate(InputValues input) {
+            if (_playerTransform == null || Owner.transform == null || AbilityFinished) return;
+            UpdateUnitRotation();
+        }
+
+        private void UpdateUnitRotation() {
+            var transform = Owner.transform;
+            var heading = (_chargeTargetPosition - transform.position).normalized;
+            Owner.transform.rotation = Quaternion.Slerp(transform.rotation,
+                Quaternion.LookRotation(heading),
+                Time.deltaTime * 20f);
         }
     }
 }

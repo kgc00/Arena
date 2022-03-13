@@ -13,27 +13,27 @@ MonoBehaviour:
   m_Name: PoolModelSO
   m_EditorClassIdentifier: 
   models:
-  - maxItemsInPool: 20
+  - maxItemsInPool: 10
     prefab: {fileID: 7487410016656624447, guid: c106d22f226b149d5911bf0b16813334,
       type: 3}
     key: BombThrower
-  - maxItemsInPool: 150
+  - maxItemsInPool: 50
     prefab: {fileID: 3640983151590248203, guid: 0d0b3aeef1472cc46884d42cf29387f5,
       type: 3}
     key: Melee
-  - maxItemsInPool: 10
+  - maxItemsInPool: 5
     prefab: {fileID: 3640983151590248203, guid: 7270a2a8058b9d44f85b9752583133ae,
       type: 3}
     key: TrainingDummy
-  - maxItemsInPool: 50
+  - maxItemsInPool: 10
     prefab: {fileID: 4962293764892747487, guid: 8b01ff040715f644a97ce88edfdb11bd,
       type: 3}
     key: Ranged
-  - maxItemsInPool: 50
+  - maxItemsInPool: 10
     prefab: {fileID: 8667097628580047777, guid: 4531ac3d2c6326d42a19e8552002b42e,
       type: 3}
     key: Charging
-  - maxItemsInPool: 10
+  - maxItemsInPool: 5
     prefab: {fileID: 4806919056127631331, guid: 9a0d4dc1662bccf4bb4de0599c1aeb17,
       type: 3}
     key: Boss

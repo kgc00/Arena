@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthFillGo: {fileID: 1572899118070345697}
-  healthbar: {fileID: 3236358028341272783}
+  healthbar: {fileID: 1572899118070345697}
   rotationOffset: {x: 66, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 1}
   yOffset: 0.1
@@ -402,6 +402,7 @@ MonoBehaviour:
   unitType: 1
   UnitData: {fileID: 11400000, guid: ce66f2f5154b75948b77f7f59bb34775, type: 2}
   _collider: {fileID: 3640983152312934082}
+  _enemyHealthbar: {fileID: 7054529665077966986}
 --- !u!54 &-1309334750830225620
 Rigidbody:
   m_ObjectHideFlags: 0

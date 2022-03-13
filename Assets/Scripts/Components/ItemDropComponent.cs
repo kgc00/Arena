@@ -24,7 +24,7 @@ namespace Components {
                 UnitType.Boss => new List<DropData> {new DropData(DropType.HealthPickupLarge, 100)},
                 _ => new List<DropData>()
             };
-
+            Subscribe();
             return this;
         }
 

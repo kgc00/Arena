@@ -48,6 +48,7 @@ namespace UI.Targeting {
             _circle.gameObject.SetActive(false);
             _rectangle = Instantiate(_rectanglePrefab, transform, true).GetComponent<ScaleAndPositionRectangleUI>();
             _rectangle.gameObject.SetActive(false);
+            Subscribe();
             _initialized = true;
             return this;
         }

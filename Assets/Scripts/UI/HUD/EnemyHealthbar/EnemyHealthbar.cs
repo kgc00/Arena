@@ -13,22 +13,17 @@ namespace UI.HUD.EnemyHealthbar {
         [SerializeField] Vector3 offset = Vector3.forward;
         private Quaternion _originalRotation;
         [SerializeField] private float yOffset = .1f;
-
-        private void Start() {
+        
+        public void Initialize() {
             _originalRotation = Quaternion.Euler(rotationOffset);
             _owner = transform.root.GetComponent<Unit>();
             _healthFill = healthFillGo.GetComponent<Image>();
             UpdateHealthValue();
-
             HealthComponent.OnHealthChanged += UpdateHealthValue;
-            Unit.OnDeath += Cleanup;
         }
 
-        private void Cleanup(Unit unit) {
-            if (unit != _owner) return;
+        public void Unsubscribe() {
             HealthComponent.OnHealthChanged -= UpdateHealthValue;
-            Unit.OnDeath -= Cleanup;
-            Destroy(gameObject);
         }
 
         private void UpdateHealthValue(Unit u, float arg2) {
@@ -37,7 +32,7 @@ namespace UI.HUD.EnemyHealthbar {
         }
 
         void UpdateHealthValue() {
-            if (_owner == null) return;
+            if (_owner == null || _owner.HealthComponent == null) return;
             var fillAmount = _owner.HealthComponent.CurrentHp / _owner.HealthComponent.MaxHp;
             healthbar.SetActive(fillAmount < 1);
             _healthFill.fillAmount = fillAmount;

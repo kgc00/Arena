@@ -27,6 +27,7 @@ namespace Components
             CurrentExp = Mathf.Max(data.currentExp, 1);
             Level = Mathf.Max(LevelFromExp(CurrentExp), 1);
             Bounty = data.bounty;
+            Subscribe();
             return this;
         }
 

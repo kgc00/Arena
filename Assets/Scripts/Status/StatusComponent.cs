@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Abilities;
 using Data.Items;
 using Data.Types;
@@ -31,6 +32,7 @@ namespace Status {
                 {StatusType.Stunned, true},
                 {StatusType.DragonFury, false}
             };
+            Subscribe();
             return this;
         }
         
@@ -139,5 +141,10 @@ namespace Status {
         public bool IsVisible() => !StatusType.HasFlag(StatusType.Hidden);
         public bool IsStunned() => StatusType.HasFlag(StatusType.Stunned);
         public bool IsMarked() => StatusType.HasFlag(StatusType.Marked);
+        public void RemoveAllStatuses() {
+            foreach (StatusType value in Enum.GetValues(StatusType.GetType())) {
+                RemoveStatus(value);
+            }
+        }
     }
 }

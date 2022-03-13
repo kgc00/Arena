@@ -17,8 +17,8 @@ MonoBehaviour:
   areaOfEffectRadius: 20
   cooldown: 4
   minimumCooldown: 0
-  description: Fires a strong projectile at the target location, dealing damage to
-    all enemies in it's path. Pulls enemies into the center of the affected area.
+  description: '''s path. Pulls enemies into the center of the affected area.mage
+    to all enemies in it''s path. Pulls enemies into the center of the affected area.'
   displayName: Pierce And Pull
   duration: 0.5
   energyCost: 0

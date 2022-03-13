@@ -155,6 +155,7 @@ MonoBehaviour:
   unitType: 3
   UnitData: {fileID: 11400000, guid: dae012b2be4cb4142910bb0fd6181d63, type: 2}
   _collider: {fileID: 4962293765137935756}
+  _enemyHealthbar: {fileID: 4906334013938335363}
 --- !u!54 &4962293764892747484
 Rigidbody:
   m_ObjectHideFlags: 0

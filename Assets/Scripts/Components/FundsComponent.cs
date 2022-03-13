@@ -14,6 +14,7 @@ namespace Components {
             Balance = fundsData.balance;
             Bounty = fundsData.bounty;
             Owner = owner;
+            Subscribe();
             return this;
         }
 

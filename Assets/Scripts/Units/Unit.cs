@@ -15,6 +15,7 @@ using Utils;
 using Players;
 using Pooling;
 using Status;
+using UI.HUD.EnemyHealthbar;
 using UI.InGameShop;
 using UI.Targeting;
 using UnityEngine.Serialization;
@@ -50,6 +51,7 @@ namespace Units {
         GameObject IPoolable.Owner => gameObject;
         public string poolKey { get; set; }
         [SerializeField] private CapsuleCollider _collider;
+        [SerializeField] private EnemyHealthbar _enemyHealthbar;
 
         public Unit Initialize(Player owner, UnitData data) {
             // properties & fields
@@ -80,6 +82,8 @@ namespace Units {
             // Health
             if (HealthComponent == null) HealthComponent = gameObject.AddComponent<HealthComponent>();
             HealthComponent.Initialize(this, data.health, StatsComponent);
+
+            if (_enemyHealthbar != null) _enemyHealthbar.Initialize();
 
             // Abilities
             if (AbilityComponent == null) AbilityComponent = gameObject.AddComponent<AbilityComponent>();
@@ -113,25 +117,22 @@ namespace Units {
             State = StateHelper.StateFromEnum(data.state, this);
 
             if (InGameShopManager == null) InGameShopManager = FindObjectOfType<InGameShopManager>();
-            
-            Subscribe();
+
             Initialized = true;
             State.Enter();
             return this;
-        }
-
-        private void Subscribe() {
-            ExperienceComponent.Subscribe();
-            StatusComponent.Subscribe();
-            FundsComponent.Subscribe();
-            UIController.Subscribe();
-            ItemDropComponent.Subscribe();
         }
 
         public void HandleExitFromPool() { }
 
         public void HandleReturnToPool() {
             Unsubscribe();
+            if (StatsComponent != null) {
+                StatusComponent.RemoveAllStatuses();
+            }
+            if (HealthComponent != null) {
+                HealthComponent.ReinitializeHealth();
+            }
             Initialized = false;
             Owner = null;
             UnitData = null;
@@ -144,6 +145,9 @@ namespace Units {
             FundsComponent.Unsubscribe();
             UIController.Unsubscribe();
             ItemDropComponent.Unsubscribe();
+            if (_enemyHealthbar != null) {
+                _enemyHealthbar.Unsubscribe();
+            }
         }
 
         private void OnDestroy() {

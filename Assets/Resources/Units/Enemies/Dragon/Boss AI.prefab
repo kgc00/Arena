@@ -302,6 +302,7 @@ MonoBehaviour:
   unitType: 4
   UnitData: {fileID: 0}
   _collider: {fileID: 3793309328275552996}
+  _enemyHealthbar: {fileID: 1538426433172826478}
 --- !u!54 &3364660583109602418
 Rigidbody:
   m_ObjectHideFlags: 0

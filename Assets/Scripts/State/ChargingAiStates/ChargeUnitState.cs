@@ -13,7 +13,7 @@ namespace State.ChargingAiStates {
         private readonly Transform _playerTransform;
         private static readonly int Charging = Animator.StringToHash("Charging");
         OrcSlash orcSlash;
-        private Vector3 _chargeTargetPosition;
+        private Vector3? _chargeTargetPosition;
 
         public ChargeUnitState(Unit owner, Transform targetTransform) : base(owner) {
             _playerTransform = targetTransform;
@@ -36,7 +36,7 @@ namespace State.ChargingAiStates {
 
             Owner.Animator.SetTrigger(Charging);
             _chargeTargetPosition = _playerTransform.position;
-            yield return Owner.AbilityComponent.Activate(ref Ability, _chargeTargetPosition);
+            yield return Owner.AbilityComponent.Activate(ref Ability, _chargeTargetPosition.Value);
         }
 
         protected override void HandleAbilityFinished(Unit u, Ability a) {
@@ -119,7 +119,7 @@ namespace State.ChargingAiStates {
 
         private void UpdateUnitRotation() {
             var transform = Owner.transform;
-            var heading = (_chargeTargetPosition - transform.position).normalized;
+            var heading = (_chargeTargetPosition.HasValue ? _chargeTargetPosition.Value : _playerTransform.position - transform.position).normalized;
             Owner.transform.rotation = Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(heading),
                 Time.deltaTime * 20f);

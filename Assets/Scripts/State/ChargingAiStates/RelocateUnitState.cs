@@ -9,7 +9,7 @@ using static Utils.MathHelpers;
 using Random = UnityEngine.Random;
 
 namespace State.ChargingAiStates {
-    public class RelocateUnitState : ChargeUnitState {
+    public class RelocateUnitState : ChargeAiState {
         readonly Transform playerTransform;
         private readonly Unit targetUnit;
         private Charge charge;
@@ -19,7 +19,7 @@ namespace State.ChargingAiStates {
         private Vector3 destination;
         private bool enterChaseOverride;
 
-        public RelocateUnitState(Unit owner, Transform playerTransform) : base(owner, playerTransform) {
+        public RelocateUnitState(Unit owner, Transform playerTransform) : base(owner) {
             this.playerTransform = playerTransform;
             targetUnit = playerTransform.GetComponentInChildren<Unit>();
             charge = Owner.AbilityComponent.GetEquippedAbility<Charge>();

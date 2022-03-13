@@ -75,7 +75,7 @@ namespace State.ChargingAiStates
         }
 
         private bool ShouldEnterCharge(ref UnitState unitState, float dist) {
-            var abilityWillNotReach = dist > charge.Range;
+            var abilityWillNotReach = dist > charge.Range + 1;
             var abilityCoolingDown = charge.Cooldown.IsOnCooldown;
             if (abilityWillNotReach || abilityCoolingDown) return false;
 

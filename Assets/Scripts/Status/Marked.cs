@@ -10,6 +10,7 @@ using Data.Types;
 using Units;
 using UnityEngine;
 using Utils;
+using Utils.NotificationCenter;
 
 namespace Status {
     public class Marked : MonoStatus {
@@ -31,6 +32,7 @@ namespace Status {
             var spawnPos = Owner.transform.position;
             spawnPos.y += 1.5f;
             var vfx = MonoHelper.SpawnVfx(VfxType.Mark, spawnPos);
+            this.PostNotification(NotificationType.DidApplyMark);
             vfx.transform.SetParent(Owner.transform);
             var rend = Owner.transform.root.GetComponentInChildren<Renderer>();
             var materials = rend.materials.ToList();
@@ -77,6 +79,7 @@ namespace Status {
                 }
             }
 
+            this.PostNotification(NotificationType.DidTriggerMark);
             base.TriggerEffect(catalyst);
         }
 

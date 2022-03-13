@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Data.Types;
+using UnityEngine;
+using Utils.NotificationCenter;
 
 namespace UI {
     public class TutorialScreen : MonoBehaviour {
@@ -19,6 +21,7 @@ namespace UI {
                 NextChevron.SetActive(false);
                 return;
             }
+            this.PostNotification(NotificationType.DidClickShopButton);
             PreviousChevron.SetActive(true);
             UpdateActiveScreen(_activeScreen + 1);
             if (_activeScreen == _numberOfScreens - 1) {
@@ -31,6 +34,7 @@ namespace UI {
                 PreviousChevron.SetActive(false);
                 return;
             }
+            this.PostNotification(NotificationType.DidClickShopButton);
             NextChevron.SetActive(true);
             UpdateActiveScreen(_activeScreen - 1);
             if (_activeScreen == 0) {

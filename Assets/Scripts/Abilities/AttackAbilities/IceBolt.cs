@@ -51,8 +51,6 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-            this.PostNotification(NotificationType.DidConnectIceBolt);
-
 
             if (hitGeometry) {
                 Destroy(projectile);
@@ -66,6 +64,7 @@ namespace Abilities.AttackAbilities {
             var offset = (other.transform.position - projPos) / 2;
             var spawnPos = projPos + offset;
             spawnPos.y = projPos.y;
+            this.PostNotification(NotificationType.DidConnectIceBolt);
             MonoHelper.SpawnVfx(VfxType.PlayerImpact, spawnPos);
             Destroy(projectile);
         }

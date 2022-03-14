@@ -66,6 +66,15 @@ namespace Abilities.AttackAbilities {
             _affectedUnits.Remove(unit);
         }
 
+        // private IEnumerator HandleEnter(Collider other, Rigidbody rigidBody, float Force,
+        //     Transform forceComponentTransform) {
+        //     if (Owner.gameObject == null) yield break;
+        //     yield return StartCoroutine(AoEAddMarkAndDealDamage(other, rigidBody, Force, forceComponentTransform));
+        //     if (Owner.gameObject == null) yield break;
+        //     yield return StartCoroutine(ApplyDamageOverTime(other, rigidBody, Force, forceComponentTransform));
+        //
+        // }
+        
         private IEnumerator ApplyDamageOverTime(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
@@ -78,7 +87,7 @@ namespace Abilities.AttackAbilities {
 
             MonoHelper.SpawnVfx(VfxType.RainImpact, unit.transform.position).transform.SetParent(unit.transform);
             while (_affectedUnits.Contains(unit) && unit != null) {
-                var damage = Damage * Time.deltaTime;
+                var damage = Damage / Duration * Time.deltaTime;
                 unit.HealthComponent.DamageOwner(damage, this, Owner);
                 yield return new WaitForEndOfFrame();
             }

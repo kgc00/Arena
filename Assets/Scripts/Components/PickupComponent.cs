@@ -17,11 +17,13 @@ namespace Components {
 
             switch (Type) {
                 case DropType.HealthPickupSmall:
+                    if (unit.HealthComponent.IsFullHealth) return;
                     unit.HealthComponent.HealOwner(unit.HealthComponent.MaxHp * 0.1f);
                     this.PostNotification(NotificationType.DidPickupHealth);
                     MonoHelper.SpawnVfx(VfxType.HealPickup, _vfxSpawnTransform.position);
                     break;
                 case DropType.HealthPickupLarge:
+                    if (unit.HealthComponent.IsFullHealth) return;
                     unit.HealthComponent.HealOwner(unit.HealthComponent.MaxHp * 0.3f);
                     this.PostNotification(NotificationType.DidPickupHealth);
                     MonoHelper.SpawnVfx(VfxType.HealPickup, _vfxSpawnTransform.position);

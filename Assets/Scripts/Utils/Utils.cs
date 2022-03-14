@@ -38,11 +38,11 @@ namespace Utils {
                 case StatType.Agility:
                     return $"TBD";
                 case StatType.Endurance:
-                    return $"Increases max health by {Math.Round(GetHealthIncreaseModifier(newValue) * 100, 2)}%";
+                    return $"Sets max health to {Math.Round(GetHealthIncreaseModifier(newValue) * 100, 2)}%";
                 case StatType.Intelligence:
-                    return $"Increases AoE radius by {Math.Round(GetAoERadiusModifier(newValue) * 100, 2)}% and reduces ability cooldowns by {Math.Round((1 - GetAbilityCooldownModifier(newValue)) * 100, 2)}%";
+                    return $"Sets AoE radius to {Math.Round(GetAoERadiusModifier(newValue) * 100, 2)}% and lower ability cooldowns by {Math.Round((1 - GetAbilityCooldownModifier(newValue)) * 100, 2)}%";
                 case StatType.Strength:
-                    return $"Increases global damage by {Math.Round(GetDamageIncreaseModifier(newValue) * 100, 2)}%";
+                    return $"Sets global damage to {Math.Round(GetDamageIncreaseModifier(newValue) * 100, 2)}%";
                 case StatType.MovementSpeed:
                     return $"Sets movement speed to {newValue} units / second";
                 default:

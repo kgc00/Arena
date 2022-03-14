@@ -25,7 +25,7 @@ namespace State.PlayerStates {
         }
         
         public override UnitState HandleUpdate(InputValues input) {
-            var isVisibleOrDebug = Constants.IsDebug || !Constants.IsDebug && !Owner.InGameShopManager.isShopVisible;
+            var isVisibleOrDebug = !Constants.IsDebug && !Owner.InGameShopManager.isShopVisible;
             if (!input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) return null;
             if (!Owner.InGameShopManager.IsPurchasingUnitWithinProximity || isVisibleOrDebug) return null;
 

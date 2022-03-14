@@ -19,7 +19,9 @@ namespace Abilities.Modifiers
         }
         
         private void AddMark(GameObject target, GameObject projectile = null) {
-            if (!target.TryGetComponent<Unit>(out var unit)) return;
+            if (target == null) return;
+            var unit = target.GetUnitComponent();
+            if (unit == null) return;
             unit.StatusComponent.AddStatus(StatusType.Marked, 1);
         }
     }

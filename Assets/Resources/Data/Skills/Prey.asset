@@ -15,7 +15,7 @@ MonoBehaviour:
   unlockCost: 0
   unlocked: 1
   areaOfEffectRadius: 0
-  cooldown: 1
+  cooldown: 0.5
   minimumCooldown: 0
   description: Fires a projectile at the target location, dealing additional damage
     to marked units.
@@ -32,4 +32,4 @@ MonoBehaviour:
   modifiers: 
   equipableModifiers: 04000000
   affectedFactions: 02000000
-  damage: 10
+  damage: 5

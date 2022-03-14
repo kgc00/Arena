@@ -19,6 +19,7 @@ namespace Components
         public bool Invulnerable { get; private set; }
         private StatsComponent _statsComponent;
         private HealthData _model;
+        public bool IsFullHealth => CurrentHp == MaxHp;
 
         public HealthComponent Initialize(Unit owner, HealthData healthData, StatsComponent statsComponent) {
             Owner = owner;

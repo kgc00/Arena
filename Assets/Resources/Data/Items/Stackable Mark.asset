@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stackable Mark
   m_EditorClassIdentifier: 
   Name: Stackable Mark
-  Cost: 250
+  Cost: 200
   Description: Allows for the 'Marked' status effect to be re-applyed when a marked
     target is hit with an ability that applies mark.
   ItemImage: {fileID: 21300000, guid: 8a5f9829a049c704fa992203bfc451f2, type: 3}

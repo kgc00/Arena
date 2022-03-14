@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Explosive Mark
   m_EditorClassIdentifier: 
   Name: Explosive Mark
-  Cost: 250
+  Cost: 200
   Description: When a unit is killed by triggering the 'Marked' status effect, they
     explode and deal damage to nearby units. If that unit is marked, it cascades
     the explosion.

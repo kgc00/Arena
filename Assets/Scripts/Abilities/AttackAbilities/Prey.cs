@@ -22,7 +22,9 @@ namespace Abilities.AttackAbilities {
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) {
             if (projectile == null) return;
 
-            projectile.GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, ProjectileSpeed);
+            projectile
+            .GetComponent<ProjectileComponent>()
+            .Initialize(targetLocation, OnAbilityConnection, Owner.transform.position, ProjectileSpeed, Range);
         }
 
         private GameObject SpawnProjectile() {
@@ -49,7 +51,7 @@ namespace Abilities.AttackAbilities {
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();
-            
+
             if (hitGeometry) {
                 Destroy(projectile);
                 return;

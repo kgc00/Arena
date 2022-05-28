@@ -25,15 +25,15 @@ namespace Utils {
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dropType), dropType, null);
             }
-            
+
             return Instantiate(Resources.Load<GameObject>(path), pos, Quaternion.identity);
         }
-        #endregion 
-        
+        #endregion
+
         #region VFX
         public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, bool identityRot = false) =>
             Instantiate(TypeToVfx(vfxType), pos, identityRot ? Quaternion.identity : Quaternion.Euler(-90, 0, 0));
-            
+
         public static GameObject SpawnVfx(VfxType vfxType, Vector3 pos, Quaternion rotation) =>
             Instantiate(TypeToVfx(vfxType), pos, rotation);
 
@@ -139,17 +139,23 @@ namespace Utils {
         private static readonly Dictionary<MaterialType, string> MaterialResourcePaths = new Dictionary<MaterialType, string> {
             {MaterialType.MarkOutline, $"{Constants.MaterialsPath}MarkOutline"}
         };
-        
+
         #endregion
 
         #region Projectile
         public static GameObject SpawnProjectile(GameObject owner, Vector3 targetLocation,
             List<Action<GameObject, GameObject>> onAbilityConnection, float projectileSpeed = default,
+            float range = Int16.MaxValue,
             float triggerWidthOverride = -1) {
             var projectile = SpawnProjectile(owner);
 
             projectile.GetComponent<ProjectileComponent>()
-                .Initialize(targetLocation, onAbilityConnection, projectileSpeed, Int16.MaxValue, triggerWidthOverride);
+                .Initialize(targetLocation, 
+                    onAbilityConnection, 
+                    owner.transform.position, 
+                    projectileSpeed, 
+                    range, 
+                    triggerWidthOverride);
 
             return projectile;
         }

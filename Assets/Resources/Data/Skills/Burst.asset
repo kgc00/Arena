@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlockCost: 100
   unlocked: 0
-  areaOfEffectRadius: 5
+  areaOfEffectCircularRadius: 4
+  areaOfEffectRectangularWidth: 0
   cooldown: 4
   minimumCooldown: 0
   description: Marks and deals damage to all enemies in target area.
@@ -25,8 +26,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: e0c684769d46f6f42b18c9d961663cfa, type: 3}
   indicatorType: 6
   projectileSpeed: 20
-  range: 8
+  range: 7
   startupTime: 0
+  targetLocationSelectionType: 0
   type: 9
   modifiers: 
   equipableModifiers: 0400000006000000

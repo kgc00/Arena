@@ -1,11 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Common;
 using Components;
 using Controls;
 using Data.Params;
 using Data.Types;
-using DG.Tweening;
 using Units;
 using UnityEngine;
 using Utils;
@@ -16,10 +13,13 @@ namespace Abilities.AttackAbilities {
         private float preFireDelay = 0.5f;
 
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
-            var relativePos = targetLocation - transform.position;
-            var lookRotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            var targetDirection = targetLocation - transform.position;
+            var lookRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
             var weaponTransform = gameObject.GetWeaponTransform();
-            Destroy(MonoHelper.SpawnVfx(VfxType.PiercePullStartup, weaponTransform.position, lookRotation),
+            Destroy(MonoHelper.SpawnVfx(
+                    VfxType.PiercePullStartup, 
+                    weaponTransform.position, 
+                    lookRotation),
                 StartupTime + preFireDelay);
             Owner.InputModifierComponent.AddModifier(InputModifier.CannotMove).AddModifier(InputModifier.CannotRotate);
             yield return new WaitForSeconds(StartupTime);
@@ -32,8 +32,13 @@ namespace Abilities.AttackAbilities {
 
             Destroy(pullGo);
             MonoHelper.SpawnVfx(VfxType.PiercePullLaunch, weaponTransform.position, lookRotation);
-            var projectile =
-                MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed, AreaOfEffectRadius/6);
+            var projectile = MonoHelper.SpawnProjectile(
+                Owner.gameObject, 
+                targetLocation, 
+                OnAbilityConnection, 
+                ProjectileSpeed, 
+                Range, 
+                AreaOfEffectRectangularWidth / 2);
             var tipTransform = projectile.transform.Find("TipTransform") ?? projectile.transform;
             var projectileVFX = MonoHelper.SpawnVfx(VfxType.PiercePullProjectile, tipTransform.position);
             projectileVFX.transform.SetParent(tipTransform);
@@ -46,8 +51,6 @@ namespace Abilities.AttackAbilities {
         }
 
         private GameObject HandlePullEffect(Vector3 targetLocation) {
-            var baseAoERadius = 20f;
-            var forceModifier = 1 - (baseAoERadius / AreaOfEffectRadius);
             var startLocation = Owner.transform.position;
             var heading = targetLocation - startLocation;
             var distance = heading.magnitude;
@@ -56,12 +59,12 @@ namespace Abilities.AttackAbilities {
             overgroundDirection.y = 0f; // remove height from caluclations
             overgroundDirection = overgroundDirection.normalized;
 
-            var centerLocation = (overgroundDirection * (AreaOfEffectRadius / 2)) + startLocation;
-            var bounds = new Vector3(AreaOfEffectRadius / 4, 1, AreaOfEffectRadius);
+            var centerLocation = (overgroundDirection * (Range / 2)) + startLocation;
+            var bounds = new Vector3(AreaOfEffectRectangularWidth, 1, Range);
 
             var offset = overgroundDirection * 1.5f;
             centerLocation += offset;
-            targetLocation += (overgroundDirection * AreaOfEffectRadius); /* ensure the pull component's z 
+            targetLocation += (overgroundDirection * AreaOfEffectRectangularWidth); /* ensure the pull component's z 
                                                                 always points away from player */
 
             var angle = Mathf.Atan2(heading.x, heading.z) * Mathf.Rad2Deg;
@@ -82,19 +85,19 @@ namespace Abilities.AttackAbilities {
                     null,
                     null,
                     AffectedFactions,
-                    force: Force + Force * forceModifier)
+                    Force)
                 .gameObject;
         }
 
         private IEnumerator HandleEnterPullEffect(Collider arg1, Rigidbody arg2, float arg3, Transform arg4) {
-            if (!arg1.gameObject.transform.root.TryGetComponent<Unit>(out var unit)) 
+            if (!arg1.gameObject.transform.root.TryGetComponent<Unit>(out var unit))
                 yield return StartCoroutine(ForceStrategies.Strategies[ForceStrategyType.ForceAlongLocalX](arg1, arg2, arg3, arg4));
 
-            if (unit.StatusComponent.IsStunned()) 
+            if (unit.StatusComponent.IsStunned())
                 yield return StartCoroutine(ForceStrategies.Strategies[ForceStrategyType.ForceAlongLocalX](arg1, arg2, arg3, arg4));
 
             unit.StatusComponent.AddStatus(StatusType.Stunned, Duration, 1);
-            
+
             yield return StartCoroutine(ForceStrategies.Strategies[ForceStrategyType.ForceAlongLocalX](arg1, arg2, arg3, arg4));
         }
 
@@ -112,13 +115,13 @@ namespace Abilities.AttackAbilities {
 
             this.PostNotification(NotificationType.DidConnectPierceAndPull);
             var isMarked = unit.StatusComponent.StatusType.HasFlag(StatusType.Marked);
-            
+
             if (isMarked) {
                 unit.StatusComponent.TriggerStatus(StatusType.Marked, this);
-            }else {
+            } else {
                 unit.HealthComponent.DamageOwner(Damage, this, Owner);
             }
-            
+
             var spawnPos = unit.transform.position;
             spawnPos.y = projectile != null ? projectile.transform.position.y : 1.0f;
             MonoHelper.SpawnVfx(VfxType.PiercePullImpact, spawnPos, unit.transform.rotation);

@@ -29335,6 +29335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseRadius: 0
+  baseRadiusOverride: -1
 --- !u!1 &7862266630359797318
 GameObject:
   m_ObjectHideFlags: 0

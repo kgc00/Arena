@@ -36,7 +36,7 @@ namespace UI.Targeting {
                 _arrowPrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_arrow_enemy");
                 _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle_enemy");
                 _rectanglePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_square_enemy");
-                
+
             } else {
                 _arrowPrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_arrow");
                 _circlePrefab = Resources.Load<GameObject>($"{Constants.PrefabsPath}targeting_circle");
@@ -61,11 +61,14 @@ namespace UI.Targeting {
                 _arrow.gameObject.SetActive(true);
             }
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Circle)) {
-                _circle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
+                _circle.SetSizeAndLocation(intent.ability.AreaOfEffectCircularRadius, intent.targetingData);
                 _circle.gameObject.SetActive(true);
             }
             if (intent.ability.IndicatorType.HasFlag(IndicatorType.Rectangle)) {
-                _rectangle.SetSizeAndLocation(intent.ability.AreaOfEffectRadius, intent.targetingData);
+                _rectangle.SetSizeAndLocation(
+                    intent.ability.AreaOfEffectRectangularWidth, 
+                    intent.ability.Range, 
+                    intent.targetingData);
                 _rectangle.gameObject.SetActive(true);
             }
         }
@@ -81,7 +84,7 @@ namespace UI.Targeting {
         private void HandleShopToggle(bool isVisible, Unit purchasingUnit) {
             DisableTargetingUI();
         }
-        
+
         public void DisableTargetingUI() {
             _arrow.gameObject.SetActive(false);
             _circle.gameObject.SetActive(false);

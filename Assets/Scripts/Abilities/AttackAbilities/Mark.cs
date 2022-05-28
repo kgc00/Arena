@@ -20,7 +20,7 @@ namespace Abilities.AttackAbilities {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             yield return new WaitForSeconds(StartupTime);
             this.PostNotification(NotificationType.DidCastMark);
-            var proj = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed);
+            var proj = MonoHelper.SpawnProjectile(Owner.gameObject, targetLocation, OnAbilityConnection, ProjectileSpeed, Range);
             var renderer = proj.transform.root.GetComponentInChildren<Renderer>();
             var withFresnel = renderer.materials.ToList();
             withFresnel.Add(_fresnel);
@@ -29,7 +29,7 @@ namespace Abilities.AttackAbilities {
             OnAbilityActivationFinished(Owner, this);
             ExecuteOnAbilityFinished();
         }
-
+        
         protected override void AbilityConnected(GameObject other, GameObject projectile) {
             var hitGeometry = other.gameObject.CompareTag(Tags.Board.ToString());
             var unit = other.transform.root.GetComponentInChildren<Unit>();

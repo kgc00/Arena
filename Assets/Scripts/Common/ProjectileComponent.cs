@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Common {
     public class ProjectileComponent : MonoBehaviour {
+        public static Action<int> onMaxRangeReached = delegate { };
         List<Action<GameObject, GameObject>> onConnected;
         private float speed;
         private float Range;
@@ -15,9 +16,10 @@ namespace Common {
         //optional param for setting projectile speed
         public void Initialize(Vector3 dir,
             List<Action<GameObject, GameObject>> callbacks,
+            Vector3 startPosition,
             float projectileSpeed = default,
             float range = Int16.MaxValue,
-            float triggerWidthOverride = -1, 
+            float triggerWidthOverride = -1,
             bool overrideForwardDir = false) {
             if (overrideForwardDir) {
                 gameObject.transform.LookAt(dir);
@@ -27,7 +29,7 @@ namespace Common {
             onConnected = callbacks;
             speed = projectileSpeed;
             Range = range;
-            InitialPosition = gameObject.transform.position;
+            InitialPosition = startPosition;
             if (triggerWidthOverride == -1) return;
             if (!TryGetComponent<BoxCollider>(out var boxCollider)) return;
             var newSize = boxCollider.size;
@@ -43,6 +45,7 @@ namespace Common {
             }
 
             // to do, maybe some on destroy callback
+            ProjectileComponent.onMaxRangeReached.Invoke(gameObject.GetInstanceID());
             Destroy(gameObject);
         }
 

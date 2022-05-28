@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlockCost: 0
   unlocked: 1
-  areaOfEffectRadius: 9
+  areaOfEffectCircularRadius: 0
+  areaOfEffectRectangularWidth: 3
   cooldown: 6
   minimumCooldown: 0
   description: 

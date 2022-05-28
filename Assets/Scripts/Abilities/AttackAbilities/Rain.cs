@@ -22,14 +22,14 @@ namespace Abilities.AttackAbilities {
         }
 
         private void SpawnAoEEffect(Vector3 updatedTargetLocation) {
-            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var colliderParams = new SphereParams(AreaOfEffectCircularRadius);
             var _ = new GameObject("Rain AoE Effect")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     updatedTargetLocation,
                     updatedTargetLocation,
                     ApplyDamageOverTime,
-                    null, 
+                    null,
                     StopApplyingDamage,
                     AffectedFactions,
                     force: default,
@@ -38,7 +38,7 @@ namespace Abilities.AttackAbilities {
                     )
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.RainScene, updatedTargetLocation, true);
-            vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
+            vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectCircularRadius);
         }
 
         private void HandleAoEComponentDestroyed() {
@@ -52,7 +52,7 @@ namespace Abilities.AttackAbilities {
             }
             _affectedUnits.Clear();
         }
-        
+
         private IEnumerator StopApplyingDamage(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
@@ -61,7 +61,7 @@ namespace Abilities.AttackAbilities {
             if (vfx) {
                 Destroy(vfx.gameObject);
             }
-            
+
             if (!_affectedUnits.Contains(unit)) yield break;
             _affectedUnits.Remove(unit);
         }
@@ -74,13 +74,13 @@ namespace Abilities.AttackAbilities {
         //     yield return StartCoroutine(ApplyDamageOverTime(other, rigidBody, Force, forceComponentTransform));
         //
         // }
-        
+
         private IEnumerator ApplyDamageOverTime(Collider other, Rigidbody rigidBody, float Force,
             Transform forceComponentTransform) {
             var unit = other.transform.root.GetComponentInChildren<Unit>();
             if (unit == null) yield break;
-            if(_affectedUnits.Contains(unit)) yield break;
-            
+            if (_affectedUnits.Contains(unit)) yield break;
+
             _affectedUnits.Add(unit);
             foreach (var cb in OnAbilityConnection)
                 cb(other.gameObject, null);

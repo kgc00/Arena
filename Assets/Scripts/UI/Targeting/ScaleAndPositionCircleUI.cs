@@ -18,18 +18,14 @@ namespace UI.Targeting {
             image.size = Vector3.one * (size * 2);
             _targetingData = targetingData;
             if (_startTransform == null) _startTransform = transform.root;
-            _endPos = _targetingData._behavior == TargetingBehavior.CursorLocation
-                ? MouseHelper.GetWorldPosition()
-                : _targetingData._location;
+            AssignEndPosition();
         }
 
         private void LateUpdate() {
             if (_startTransform == null) _startTransform = transform.root;
             _startPos = _startTransform.position;
             _startPos.y = 0;
-            _endPos = _targetingData._behavior == TargetingBehavior.CursorLocation
-                ? MouseHelper.GetWorldPosition()
-                : _targetingData._location;
+            AssignEndPosition();
             _endPos.y = 0;
             _midpoint = (_startPos + _endPos) / 2;
             _midpoint.y = 0;
@@ -39,6 +35,16 @@ namespace UI.Targeting {
 
             Quaternion rotation = Quaternion.LookRotation(Vector3.up, _heading);
             image.transform.rotation = rotation;
+        }
+
+        private void AssignEndPosition() {
+            if (_targetingData._behavior == TargetingBehavior.CursorLocation) {
+                _endPos = _targetingData._locationOverrideFromAbility != null
+                  ? _targetingData._locationOverrideFromAbility(MouseHelper.GetWorldPosition())
+                  : MouseHelper.GetWorldPosition();
+            } else {
+                _endPos = _targetingData._location;
+            }
         }
     }
 }

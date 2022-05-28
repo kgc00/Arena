@@ -9,13 +9,15 @@ namespace UI.Targeting {
         private Vector3 _endPos;
         private Vector3 _midpoint;
         private Vector3 _heading;
-        private float _size;
+        private float _width;
+        private float _length;
         private Transform _startTransform;
         private TargetingData _targetingData;
 
-        public void SetSizeAndLocation(float size, TargetingData targetingData) {
-            _size = size;
-            image.size =  new Vector3(size / 4, size);
+        public void SetSizeAndLocation(float width, float length, TargetingData targetingData) {
+            _width = width;
+            _length = length;
+            image.size =  new Vector3(_width, _length);
             _targetingData = targetingData;
             if (_startTransform == null) _startTransform = transform.root;
             _endPos = _targetingData._behavior == TargetingBehavior.CursorLocation
@@ -35,7 +37,7 @@ namespace UI.Targeting {
             _midpoint.y = 0;
             _heading = _endPos - _startPos;
             _heading.y = 0f;
-            image.transform.position = _startPos + _heading.normalized * (_size / 2);
+            image.transform.position = _startPos + _heading.normalized * (_length / 2);
 
             Quaternion rotation = Quaternion.LookRotation(Vector3.up, _heading);
             image.transform.rotation = rotation;

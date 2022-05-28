@@ -46,12 +46,11 @@ namespace State.PlayerStates {
                     Owner.Controller.PreviousPress = null;
                     return true;
                 }
-            }
-            else {
+            } else {
                 foreach (var kvp in input.ButtonValues) {
                     var press = kvp.Value;
                     var type = kvp.Key;
-                    
+
                     if (press.HasPerformedPress) {
                         var intent = FormIntent(input, type);
 
@@ -86,9 +85,14 @@ namespace State.PlayerStates {
             Owner.AbilityComponent.equippedAbilitiesByButton.TryGetValue(buttonType, out var ability);
 
             if (ability == null || ability.Cooldown.IsOnCooldown || !ability.Unlocked)
-                return new UnitIntent(null, new TargetingData(TargetingBehavior.CursorLocation, Vector3.zero), Owner);
+                return new UnitIntent(null, new TargetingData(TargetingBehavior.CursorLocation, Vector3.zero, ability.GetFinalizedTargetLocation), Owner);
 
-            return new UnitIntent(ability, new TargetingData(TargetingBehavior.CursorLocation, targetLocation), Owner);
+
+            return new UnitIntent(ability,
+                new TargetingData(TargetingBehavior.CursorLocation,
+                    ability.GetFinalizedTargetLocation(targetLocation),
+                    ability.GetFinalizedTargetLocation),
+                Owner);
         }
     }
 }

@@ -34,9 +34,9 @@ namespace Abilities.AttackAbilities {
             var aoeProjectile = SpawnProjectile();
             InitializeAoEProjectile(updatedTargetLocation.Value, aoeProjectile);
 
-            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, updatedTargetLocation.Value), Owner));
+            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, updatedTargetLocation.Value), Owner));
             yield return new WaitForSeconds(delayBetweenProjectiles);
-            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, updatedTargetLocation.Value), Owner));
+            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, updatedTargetLocation.Value), Owner));
 
             ExecuteOnAbilityFinished();
         }
@@ -54,7 +54,7 @@ namespace Abilities.AttackAbilities {
                     Destroy(projectile);
                     return;
                 }
-                
+
                 var unit = other.GetUnitComponent();
                 if (unit == null) return;
 
@@ -71,22 +71,22 @@ namespace Abilities.AttackAbilities {
             var aoeCallback = new List<Action<Vector3>> { SpawnAoEEffect };
 
             aoeProjectile.GetComponent<ProjectileComponent>()
-                .Initialize(targetLocation, onConnectedCallback, 10f, Single.MaxValue, -1, true);
-                
+                .Initialize(targetLocation, onConnectedCallback, Owner.transform.position,  10f, Single.MaxValue, -1, true);
+
 
             aoeProjectile.AddComponent<ProximityComponent>().Initialize(targetLocation, aoeCallback);
         }
 
 
         private void SpawnAoEEffect(Vector3 updatedTargetLocation) {
-            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var colliderParams = new SphereParams(AreaOfEffectCircularRadius);
             var pGo = new GameObject("ChainFlame AoE Effect")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     updatedTargetLocation,
                     updatedTargetLocation,
                     ForceStrategies.Strategies[ForceStrategyType.ForceAlongHeading],
-                    null, 
+                    null,
                     null,
                     AffectedFactions,
                     force: Force,
@@ -97,14 +97,14 @@ namespace Abilities.AttackAbilities {
                     updatedTargetLocation,
                     updatedTargetLocation,
                     ApplyDamage,
-                    null, 
+                    null,
                     null,
                     AffectedFactions,
                     force: 0,
                     duration: Duration)
                 .gameObject;
             var vfx = MonoHelper.SpawnVfx(VfxType.ChainFlameExplosion, updatedTargetLocation);
-            vfx.GetComponent<SetParticleData>().Initialize(AreaOfEffectRadius);
+            vfx.GetComponent<SetParticleData>().Initialize(AreaOfEffectCircularRadius);
             this.PostNotification(NotificationType.DidConnectChainFlame);
         }
 
@@ -121,7 +121,7 @@ namespace Abilities.AttackAbilities {
         }
 
         private void InitializeProjectile(Vector3 targetLocation, GameObject projectile) => projectile
-            .GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, 10f, Single.MaxValue, -1, true);
+            .GetComponent<ProjectileComponent>().Initialize(targetLocation, OnAbilityConnection, Owner.transform.position, 10f, Single.MaxValue, -1, true);
 
         private GameObject SpawnProjectile() {
             var position = gameObject.transform.position;

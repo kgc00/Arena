@@ -11,17 +11,26 @@ namespace UI.Targeting {
         private Vector3 _heading;
         private Transform _startTransform;
         private Vector3? _overrideEndLocation;
+        TargetingData _targetingData;
 
         public void SetTargetLocation(TargetingData intentTargetingData, bool isAiSkill) {
+            _targetingData = intentTargetingData;
             if (!isAiSkill) return; // quick hack to have the player's arrow always set to mouse pos and the AI set to a static v3
             _overrideEndLocation = intentTargetingData._location;
         }
-        
+
         private void LateUpdate() {
             if (_startTransform == null) _startTransform = transform.root;
             _startPos = _startTransform.position;
             _startPos.y = 0;
-            _endPos = _overrideEndLocation ?? MouseHelper.GetWorldPosition();
+            if (_overrideEndLocation.HasValue) {
+                _endPos = _overrideEndLocation.Value;
+            } else if (_targetingData != null) {
+                _endPos = _targetingData._locationOverrideFromAbility != null
+                      ? _targetingData._locationOverrideFromAbility(MouseHelper.GetWorldPosition())
+                      : MouseHelper.GetWorldPosition();
+            }
+
             _endPos.y = 0;
             _midpoint = (_startPos + _endPos) / 2;
             _midpoint.y = 0;

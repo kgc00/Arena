@@ -75,7 +75,11 @@ namespace UI.InGameShop.AbilitiesScreen.AbilityInspector {
 
             _durationText.SetText(AbilityData.duration.ToString());
             _cooldownText.SetText(AbilityData.cooldown.ToString());
-            _areaOfEffectText.SetText(AbilityData.areaOfEffectRadius.ToString());
+            // todo - better implementation
+            var aoeToUse = AbilityData.areaOfEffectCircularRadius > 0
+                ? AbilityData.areaOfEffectCircularRadius
+                : AbilityData.areaOfEffectRectangularWidth;
+            _areaOfEffectText.SetText(aoeToUse.ToString());
 
             if (AbilityData is AttackAbilityData attackAbilityData) {
                 _damageText.SetText(attackAbilityData.Damage.ToString());

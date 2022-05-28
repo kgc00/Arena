@@ -43,11 +43,11 @@ namespace Abilities.AttackAbilities {
         private void UpdateLocationIfOccupied(ref Vector3 updatedTargetLocation, int depth = 0) {
             // recusively find a new nearby location in a random direction if target is already occupied
             if (depth > 5) return;
-            var overlappedColliders = Physics.OverlapSphere(updatedTargetLocation, AreaOfEffectRadius,
+            var overlappedColliders = Physics.OverlapSphere(updatedTargetLocation, AreaOfEffectCircularRadius,
                 LayerMask.GetMask("Abilities"));
             foreach (var hitCollider in overlappedColliders) {
                 if (hitCollider.gameObject.name != _disruptAoeEffectName) continue;
-                updatedTargetLocation += new Vector3(UnityEngine.Random.Range(-1, 1f) * AreaOfEffectRadius, 0, UnityEngine.Random.Range(-1, 1f) * AreaOfEffectRadius);
+                updatedTargetLocation += new Vector3(UnityEngine.Random.Range(-1, 1f) * AreaOfEffectCircularRadius, 0, UnityEngine.Random.Range(-1, 1f) * AreaOfEffectCircularRadius);
                 UpdateLocationIfOccupied(ref updatedTargetLocation, depth++);
             }
         }
@@ -56,7 +56,7 @@ namespace Abilities.AttackAbilities {
             // use a 'placeholder' to say a disrupt will be spawned in this location shortly
             // avoids the scenario where many disrupts are placed by different units at the same time/location
             // does not interact with anything and does no damage
-            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var colliderParams = new SphereParams(AreaOfEffectCircularRadius);
             var aoeGo = new GameObject(_disruptAoeEffectName)
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
@@ -74,7 +74,7 @@ namespace Abilities.AttackAbilities {
         }
 
         private void SpawnAoEEffect(Vector3 targetLocation) {
-            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var colliderParams = new SphereParams(AreaOfEffectCircularRadius);
             var aoeGo = new GameObject("Disrupt AoE Effect")
                 .AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
@@ -90,7 +90,7 @@ namespace Abilities.AttackAbilities {
                 .gameObject;
             aoeGo.layer = LayerMask.NameToLayer("Abilities");
             var vfx = MonoHelper.SpawnVfx(VfxType.DisruptStartup, targetLocation);
-            vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
+            vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectCircularRadius);
             vfx.transform.SetParent(aoeGo.transform);
         }
 
@@ -101,7 +101,7 @@ namespace Abilities.AttackAbilities {
                 unit.HealthComponent.DamageOwner(Damage);
                 var vfx = MonoHelper.SpawnVfx(VfxType.DisruptTrigger, aoeComponentTransform.position,
                     Quaternion.Euler(90, 0, 0));
-                vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectRadius);
+                vfx.AddComponent<SetParticleData>().Initialize(Duration, AreaOfEffectCircularRadius);
                 Destroy(aoeComponentTransform.root.gameObject);
             }
 

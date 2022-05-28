@@ -16,13 +16,13 @@ namespace Abilities.AttackAbilities {
     public class Roar : AttackAbility {
         public override IEnumerator AbilityActivated(Vector3 targetLocation) {
             var ownerPos = Owner.transform.position;
-            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, ownerPos), Owner));
+            this.PostNotification(NotificationType.AbilityWillActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, ownerPos), Owner));
             yield return new WaitForSeconds(StartupTime);
-            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this,new TargetingData(TargetingBehavior.TargetLocation, ownerPos), Owner));
+            this.PostNotification(NotificationType.AbilityDidActivate, new UnitIntent(this, new TargetingData(TargetingBehavior.TargetLocation, ownerPos), Owner));
             this.PostNotification(NotificationType.DidCastRoar);
             OnAbilityActivationFinished(Owner, this);
             Destroy(MonoHelper.SpawnVfx(VfxType.Roar, ownerPos), Duration - StartupTime);
-            var colliderParams = new SphereParams(AreaOfEffectRadius);
+            var colliderParams = new SphereParams(AreaOfEffectCircularRadius);
             var _ = new GameObject("Pull Force").AddComponent<AoEComponent>()
                 .Initialize(colliderParams,
                     ownerPos,
@@ -31,7 +31,7 @@ namespace Abilities.AttackAbilities {
                     null,
                     null,
                     AffectedFactions,
-                    Force, 
+                    Force,
                     0.25f)
                 .gameObject;
             yield return new WaitForSeconds(Duration);

@@ -30,6 +30,7 @@ namespace State.BossAiStates {
             astarAI.maxSpeed = Owner.StatsComponent.Stats.MovementSpeed.Value;
             astarAI.canMove = true; // isStopped would still control the rotation outside this state 
             astarAI.destination = destination;
+            astarAI.SearchPath();
             
             if (Owner.Animator == null || !Owner.Animator) return;
             Owner.Animator.SetTrigger(Moving);
@@ -53,10 +54,10 @@ namespace State.BossAiStates {
 
 
         public override UnitState HandleUpdate(InputValues input) {
-            var isStunned = base.HandleUpdate(input);
-            if (isStunned != null) return isStunned;
-            
-            UnitState nextState = null;
+            var StunnedState = base.HandleUpdate(input);
+            if (StunnedState != null) return StunnedState;
+
+            // UnitState nextState = null;
             bool invalidTarget = playerTransform == null ||
                                  !targetUnit.StatusComponent.IsVisible();
             if (invalidTarget) return new IdleUnitState(Owner);

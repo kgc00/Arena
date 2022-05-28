@@ -25,7 +25,7 @@ namespace Abilities.AttackAbilities {
 
             projectile
             .GetComponent<ProjectileComponent>()
-            .Initialize(targetLocation, OnAbilityConnection, ProjectileSpeed, Range);
+            .Initialize(targetLocation, OnAbilityConnection, Owner.transform.position, ProjectileSpeed, Range);
         }
 
         private GameObject SpawnProjectile() {

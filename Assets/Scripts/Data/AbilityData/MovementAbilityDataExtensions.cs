@@ -20,7 +20,9 @@ namespace Data.AbilityData {
             instance.indicatorType = data.indicatorType;
             instance.projectileSpeed = data.projectileSpeed;
             instance.startupTime = data.startupTime;
-            instance.areaOfEffectRadius = data.areaOfEffectRadius;
+            instance.areaOfEffectCircularRadius = data.areaOfEffectCircularRadius;
+            instance.areaOfEffectRectangularWidth = data.areaOfEffectRectangularWidth;
+            instance.targetLocationSelectionType = data.targetLocationSelectionType;
             instance.AffectedFactions = data.AffectedFactions;
             instance.Damage = data.Damage;
             instance.MovementSpeedModifier = data.MovementSpeedModifier;

@@ -6,6 +6,7 @@ using Abilities;
 using Common;
 using Components;
 using Controls;
+using CustomCamera;
 using Data.Items;
 using Data.Types;
 using Data.UnitData;
@@ -52,6 +53,7 @@ namespace Units {
         public string poolKey { get; set; }
         [SerializeField] private CapsuleCollider _collider;
         [SerializeField] private EnemyHealthbar _enemyHealthbar;
+        [field: SerializeField] public VCamFollowTarget _vcamFollowTarget; 
 
         public Unit Initialize(Player owner, UnitData data) {
             // properties & fields

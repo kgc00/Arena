@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Linq;
-using Abilities;
-using Abilities.AttackAbilities;
 using Common;
 using Controls;
 using Data.Types;
-using JetBrains.Annotations;
-using UI.InGameShop;
 using Units;
 using UnityEngine;
 using Utils;
-using Utils.NotificationCenter;
 
 namespace State.PlayerStates {
     public class PlayerState : UnitState {
         protected readonly float movementThreshold = 0.1f;
         protected readonly StateSkillBehaviour skillBehaviour;
         private PlayerController _ownerPlayerController;
+        private Vector3 _lookTarget;
 
         protected PlayerState(Unit owner) : base(owner) {
             skillBehaviour = new StateSkillBehaviour(owner);
             _ownerPlayerController = Owner.Controller as PlayerController
                                      ?? throw new Exception("Cannot cast controller to player controller");
         }
-        
+
         public override UnitState HandleUpdate(InputValues input) {
             var isVisibleOrDebug = !Constants.IsDebug && !Owner.InGameShopManager.isShopVisible;
             if (!input.ButtonValues[ButtonType.ShopMenu].HasPerformedPress) return null;
@@ -53,6 +48,7 @@ namespace State.PlayerStates {
             UpdatePlayerRotation(input, motion, movementSpeed.Value);
             UpdatePlayerPositionForce(input, motion, movementSpeed.Value);
             UpdateAnimations(motion); // must occur after rotation has been updated
+            UpdateCameraPosition();
         }
 
         private void UpdateAnimations(Vector3 motion) {
@@ -105,9 +101,27 @@ namespace State.PlayerStates {
             var mousePos = MouseHelper.GetWorldPosition();
 
             // lock y to unit's current y
-            var lookTarget = new Vector3(mousePos.x, Owner.transform.position.y, mousePos.z);
+            _lookTarget = new Vector3(mousePos.x, Owner.transform.position.y, mousePos.z);
 
-            Owner.transform.LookAt(lookTarget);
+            Owner.transform.LookAt(_lookTarget);
+        }
+
+        // todo - make look target an explicit arg
+        private void UpdateCameraPosition() {
+            if (Owner._vcamFollowTarget == null) return;
+            var position = Owner.transform.position;
+            var heading = (_lookTarget - position) / 2;
+            var cameraMaxFollowDistance = Owner._vcamFollowTarget.cameraMaxFollowDistance;
+            var cameraX = Mathf.Clamp(heading.x + position.x, position.x - cameraMaxFollowDistance,
+                position.x + cameraMaxFollowDistance);
+            var cameraZ = Mathf.Clamp(heading.z + position.z, position.z - cameraMaxFollowDistance,
+                position.z + cameraMaxFollowDistance);
+
+            var shouldLerp = false;
+            Owner._vcamFollowTarget.transform.position = shouldLerp
+                ? Vector3.Lerp(Owner._vcamFollowTarget.transform.position,
+                    new Vector3(cameraX, position.y, cameraZ), Time.fixedDeltaTime + 1f)
+                : new Vector3(cameraX, position.y, cameraZ);
         }
 
         private void UpdatePlayerRotationForGamepad(InputValues input, Vector3 motion, float movementSpeed) {
@@ -121,6 +135,8 @@ namespace State.PlayerStates {
             Owner.transform.rotation = Quaternion.Slerp(Owner.transform.rotation,
                 Quaternion.LookRotation(rotationVal),
                 Time.deltaTime * 10f);
+
+            // todo - assign vcam look target position
         }
 
         private Vector3 GetMovementFromInput(InputValues input, float movementSpeed) {
@@ -134,7 +150,10 @@ namespace State.PlayerStates {
 
 
 #if UNITY_EDITOR
-        public override void HandleDrawGizmos() { }
+        public override void HandleDrawGizmos() {
+            // Gizmos.color = Color.green;
+            // Gizmos.DrawSphere(_lookTarget, 1f);
+        }
 #endif
     }
 }
